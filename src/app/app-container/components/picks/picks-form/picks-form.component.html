@@ -1,0 +1,16 @@
+<form [formGroup]="form" class="form">
+  <div [ngStyle]="getPicksStyle()" formArrayName="experts">
+    <ng-container *ngFor="let expert of expertControls.controls; let analystIndex = index">
+      <expert-predictions
+        [parentForm]="getExpertFormGroup(analystIndex)"
+        [games]="games"
+        [teams]="teams"
+        [expertControl]="expert"
+        [index]="analystIndex  "></expert-predictions>
+    </ng-container>
+  </div>
+</form>
+
+<button mat-raised-button (click)="LogValue()">
+  Picks Form Log
+</button>

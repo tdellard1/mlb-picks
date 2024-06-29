@@ -1,0 +1,10 @@
+<div>Expert: <span>{{ expertFormControl.value.name }}</span></div>
+
+<form [formGroup]="parentForm">
+  <div formGroupName="experts">
+    <div [formArrayName]="index">
+      <label>Name</label>
+      <input type="text" formControlName="name"/>
+    </div>
+  </div>
+</form>

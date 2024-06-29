@@ -1,0 +1,16 @@
+<!-- parent-form.component.html -->
+
+    @for (expert of experts.controls; track $index) {
+<!--      <expert-picks [parentForm]="form" [expertFormControl]="expert" [index]="$index"></expert-picks>-->
+      <div>Expert: <span>{{expert.value.name}}</span></div>
+      <div>Games:</div>
+      @for (gameIds of listOfGameIds; track gameIds) {
+        <div>{{ gameIds }}</div>
+      }
+    }
+
+<button (click)="onSubmit()">Submit form</button>
+
+<span>
+  {{ JSON.stringify(form.value) }}
+</span>

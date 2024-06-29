@@ -1,0 +1,31 @@
+
+<form [formGroup]="parentForm" [ngStyle]="getStyles()">
+  <ng-container formArrayName="predictions">
+<span>{{ expertControl['value']['name'] }}</span>
+    <ng-container *ngFor="let prediction of predictions.controls; let i=index">
+      <ng-container [formGroupName]="i">
+<!--        <span>{{ prediction.get('gameID')?.value}}</span>-->
+        <ng-select appearance="outline"
+                   [formGroupName]="'prediction'"
+                   [clearable]="false">
+          @for (option of getOptions(i).controls; track option) {
+            <ng-option [value]="option.value">
+              {{ option.value.option }}
+            </ng-option>
+          }
+        </ng-select>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</form>
+
+<!--
+<ng-container [formGroupName]="analystIndex">
+
+</ng-container>
+-->
+
+
+<!--<button mat-raised-button (click)="LogValue()">-->
+<!--  Expert Predictions Log-->
+<!--</button>-->

@@ -1,0 +1,25 @@
+<button mat-raised-button (click)="LogValue()">
+  See Value
+</button>
+
+<button mat-raised-button (click)="addCustomAnalyst()">
+  Add Analyst
+</button>
+<mat-form-field>
+  <mat-label>Analyst</mat-label>
+  <input matInput placeholder="Analyst Name" [(ngModel)]="analystName" [ngModelOptions]="{standalone: true}">
+</mat-form-field>
+
+<div class="container">
+  <app-game-run-down
+    [teams]="teams"
+    [games]="games"></app-game-run-down>
+
+  <app-picks-form
+    [games]="games"
+    [teams]="teams"
+    [picks]="picks"
+    (savePicks)="emitSavePicks($event)"
+    (addAnalystToPicks)="addAnalystToPicks.emit($event)">
+  </app-picks-form>
+</div>

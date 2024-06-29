@@ -1,0 +1,29 @@
+.list {
+  display: flex;
+  flex-direction: row;
+  overflow: auto;
+  padding: 50px;
+
+  /*transform-style: preserve-3d;*/
+  /*transform: perspective(1000px);*/
+}
+
+.full {
+  /*padding: 50px;*/
+}
+
+.list .card:hover {
+  transition: .5s;
+  /*filter: brightness(1);*/
+  /*transform: translateY(-20px);*/
+}
+
+mat-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  width: fit-content;
+  padding: 5px 10px;
+  margin: 5px;
+}

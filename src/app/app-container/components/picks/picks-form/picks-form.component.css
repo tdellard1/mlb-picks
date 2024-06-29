@@ -1,0 +1,11 @@
+expert-predictions {
+  flex-grow: 1;
+}
+
+.ng-select.right {
+  border: 2px solid green;
+}
+
+.ng-select.wrong {
+  border: 2px solid red;
+}

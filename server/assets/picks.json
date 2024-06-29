@@ -1,0 +1,1653 @@
+{
+  "20240626": {
+    "analysts": [
+      {
+        "firstName": "JDBetsHQ",
+        "picks": [
+          {
+            "winner": "wrong",
+            "gameID": "20240626_PIT@CIN",
+            "pick": "Reds"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240626_PHI@DET",
+            "pick": "Phillies"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240626_ATL@STL",
+            "pick": "Cardinals"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240626_COL@HOU",
+            "pick": "Astros"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240626_TEX@MIL",
+            "pick": "Brewers"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240626_MIA@KC",
+            "pick": "Royals"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240626_OAK@LAA",
+            "pick": "Angels"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240626_WAS@SD",
+            "pick": "Padres"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240626_CLE@BAL",
+            "pick": "Orioles"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240626_NYY@NYM",
+            "pick": "Mets"
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_TOR@BOS",
+            "pick": "Red Sox"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240626_ATL@STL_2",
+            "pick": "Cardinals"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240626_LAD@CHW",
+            "pick": "White Sox"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240626_MIN@ARI",
+            "pick": "Diamondbacks"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240626_CHC@SF",
+            "pick": "Giants"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240626_SEA@TB",
+            "pick": "Rays"
+          }
+        ]
+      },
+      {
+        "firstName": "Ron Romanelli",
+        "picks": [
+          {
+            "winner": "",
+            "gameID": "20240626_PIT@CIN",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_PHI@DET",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_ATL@STL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_COL@HOU",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_TEX@MIL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_MIA@KC",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_OAK@LAA",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_WAS@SD",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_CLE@BAL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_NYY@NYM",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_TOR@BOS",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_ATL@STL_2",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_LAD@CHW",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_MIN@ARI",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_CHC@SF",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_SEA@TB",
+            "pick": ""
+          }
+        ]
+      },
+      {
+        "firstName": "Stump The Spread",
+        "picks": [
+          {
+            "winner": "",
+            "gameID": "20240626_PIT@CIN",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_PHI@DET",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_ATL@STL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_COL@HOU",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_TEX@MIL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_MIA@KC",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_OAK@LAA",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_WAS@SD",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_CLE@BAL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_NYY@NYM",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_TOR@BOS",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_ATL@STL_2",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_LAD@CHW",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_MIN@ARI",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_CHC@SF",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_SEA@TB",
+            "pick": ""
+          }
+        ]
+      },
+      {
+        "firstName": "CBS Sports Expert",
+        "picks": [
+          {
+            "winner": "",
+            "gameID": "20240626_PIT@CIN",
+            "pick": "Reds"
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_PHI@DET",
+            "pick": "Phillies"
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_ATL@STL",
+            "pick": "Braves"
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_COL@HOU",
+            "pick": "Astros"
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_TEX@MIL",
+            "pick": "Brewers"
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_MIA@KC",
+            "pick": "Royals"
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_OAK@LAA",
+            "pick": "Angels"
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_WAS@SD",
+            "pick": "Padres"
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_CLE@BAL",
+            "pick": "Orioles"
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_NYY@NYM",
+            "pick": "Mets"
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_TOR@BOS",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_ATL@STL_2",
+            "pick": "Braves"
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_LAD@CHW",
+            "pick": "Dodgers"
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_MIN@ARI",
+            "pick": "Twins"
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_CHC@SF",
+            "pick": "Cubs"
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_SEA@TB",
+            "pick": "Mariners"
+          }
+        ]
+      },
+      {
+        "firstName": "Odds Trader",
+        "picks": [
+          {
+            "winner": "wrong",
+            "gameID": "20240626_PIT@CIN",
+            "pick": "Reds"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240626_PHI@DET",
+            "pick": "Phillies"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240626_ATL@STL",
+            "pick": "Braves"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240626_COL@HOU",
+            "pick": "Astros"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240626_TEX@MIL",
+            "pick": "Brewers"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240626_MIA@KC",
+            "pick": "Royals"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240626_OAK@LAA",
+            "pick": "Athletics"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240626_WAS@SD",
+            "pick": "Nationals"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240626_CLE@BAL",
+            "pick": "Orioles"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240626_NYY@NYM",
+            "pick": "Yankees"
+          },
+          {
+            "winner": "",
+            "gameID": "20240626_TOR@BOS",
+            "pick": "Blue Jays"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240626_ATL@STL_2",
+            "pick": "Braves"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240626_LAD@CHW",
+            "pick": "Dodgers"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240626_MIN@ARI",
+            "pick": "Twins"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240626_CHC@SF",
+            "pick": "Cubs"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240626_SEA@TB",
+            "pick": "Mariners"
+          }
+        ]
+      }
+    ]
+  },
+  "20240627": {
+    "analysts": [
+      {
+        "firstName": "JDBetsHQ",
+        "picks": [
+          {
+            "winner": "",
+            "gameID": "20240627_MIN@ARI",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_CHC@SF",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_ATL@CHW",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_MIA@PHI",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_TEX@BAL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_NYY@TOR",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_CIN@STL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_CLE@KC",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_DET@LAA",
+            "pick": ""
+          }
+        ]
+      },
+      {
+        "firstName": "Ron Romanelli",
+        "picks": [
+          {
+            "winner": "",
+            "gameID": "20240627_MIN@ARI",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_CHC@SF",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_ATL@CHW",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_MIA@PHI",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_TEX@BAL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_NYY@TOR",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_CIN@STL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_CLE@KC",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_DET@LAA",
+            "pick": ""
+          }
+        ]
+      },
+      {
+        "firstName": "Stump The Spread",
+        "picks": [
+          {
+            "winner": "",
+            "gameID": "20240627_MIN@ARI",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_CHC@SF",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_ATL@CHW",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_MIA@PHI",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_TEX@BAL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_NYY@TOR",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_CIN@STL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_CLE@KC",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_DET@LAA",
+            "pick": ""
+          }
+        ]
+      },
+      {
+        "firstName": "CBS Sports Expert",
+        "picks": [
+          {
+            "winner": "",
+            "gameID": "20240627_MIN@ARI",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_CHC@SF",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_ATL@CHW",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_MIA@PHI",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_TEX@BAL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_NYY@TOR",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_CIN@STL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_CLE@KC",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_DET@LAA",
+            "pick": ""
+          }
+        ]
+      },
+      {
+        "firstName": "Odds Trader",
+        "picks": [
+          {
+            "winner": "",
+            "gameID": "20240627_MIN@ARI",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_CHC@SF",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_ATL@CHW",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_MIA@PHI",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_TEX@BAL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_NYY@TOR",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_CIN@STL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_CLE@KC",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240627_DET@LAA",
+            "pick": ""
+          }
+        ]
+      }
+    ]
+  },
+  "20240628": {
+    "analysts": [
+      {
+        "firstName": "JDBetsHQ",
+        "picks": [
+          {
+            "winner": "right",
+            "gameID": "20240628_MIA@PHI",
+            "pick": "Phillies"
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_WAS@TB",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_TEX@BAL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_NYY@TOR",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_SD@BOS",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_HOU@NYM",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_COL@CHW",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_PIT@ATL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_CLE@KC",
+            "pick": ""
+          },
+          {
+            "winner": "right",
+            "gameID": "20240628_CHC@MIL",
+            "pick": "Brewers"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_CIN@STL",
+            "pick": "Reds"
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_DET@LAA",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_OAK@ARI",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_MIN@SEA",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_LAD@SF",
+            "pick": ""
+          }
+        ]
+      },
+      {
+        "firstName": "Ron Romanelli",
+        "picks": [
+          {
+            "winner": "right",
+            "gameID": "20240628_MIA@PHI",
+            "pick": "Phillies"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240628_WAS@TB",
+            "pick": "Rays"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240628_TEX@BAL",
+            "pick": "Orioles"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240628_NYY@TOR",
+            "pick": "Yankees"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_SD@BOS",
+            "pick": "Red Sox"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_HOU@NYM",
+            "pick": "Astros"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240628_COL@CHW",
+            "pick": "White Sox"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240628_PIT@ATL",
+            "pick": "Braves"
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_CLE@KC",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_CHC@MIL",
+            "pick": ""
+          },
+          {
+            "winner": "right",
+            "gameID": "20240628_CIN@STL",
+            "pick": "Cardinals"
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_DET@LAA",
+            "pick": ""
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_OAK@ARI",
+            "pick": "Diamondbacks"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_MIN@SEA",
+            "pick": "Twins"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240628_LAD@SF",
+            "pick": "Giants"
+          }
+        ]
+      },
+      {
+        "firstName": "Stump The Spread",
+        "picks": [
+          {
+            "winner": "right",
+            "gameID": "20240628_MIA@PHI",
+            "pick": "Phillies"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_WAS@TB",
+            "pick": "Nationals"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_TEX@BAL",
+            "pick": "Rangers"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_NYY@TOR",
+            "pick": "Blue Jays"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_SD@BOS",
+            "pick": "Red Sox"
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_HOU@NYM",
+            "pick": ""
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_COL@CHW",
+            "pick": "Rockies"
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_PIT@ATL",
+            "pick": ""
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_CLE@KC",
+            "pick": "Guardians"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240628_CHC@MIL",
+            "pick": "Brewers"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240628_CIN@STL",
+            "pick": "Cardinals"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240628_DET@LAA",
+            "pick": "Angels"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_OAK@ARI",
+            "pick": "Diamondbacks"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240628_MIN@SEA",
+            "pick": "Mariners"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_LAD@SF",
+            "pick": "Dodgers"
+          }
+        ]
+      },
+      {
+        "firstName": "CBS Sports Expert",
+        "picks": [
+          {
+            "winner": "right",
+            "gameID": "20240628_MIA@PHI",
+            "pick": "Phillies"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240628_WAS@TB",
+            "pick": "Rays"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240628_TEX@BAL",
+            "pick": "Orioles"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240628_NYY@TOR",
+            "pick": "Yankees"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240628_SD@BOS",
+            "pick": "Padres"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_HOU@NYM",
+            "pick": "Astros"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_COL@CHW",
+            "pick": "Rockies"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240628_PIT@ATL",
+            "pick": "Braves"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_CLE@KC",
+            "pick": "Guardians"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240628_CHC@MIL",
+            "pick": "Brewers"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_CIN@STL",
+            "pick": "Reds"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_DET@LAA",
+            "pick": "Tigers"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_OAK@ARI",
+            "pick": "Diamondbacks"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_MIN@SEA",
+            "pick": "Twins"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_LAD@SF",
+            "pick": "Dodgers"
+          }
+        ]
+      },
+      {
+        "firstName": "Odds Trader",
+        "picks": [
+          {
+            "winner": "right",
+            "gameID": "20240628_MIA@PHI",
+            "pick": "Phillies"
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_WAS@TB",
+            "pick": ""
+          },
+          {
+            "winner": "right",
+            "gameID": "20240628_TEX@BAL",
+            "pick": "Orioles"
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_NYY@TOR",
+            "pick": ""
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_SD@BOS",
+            "pick": "Red Sox"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_HOU@NYM",
+            "pick": "Astros"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_COL@CHW",
+            "pick": "Rockies"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240628_PIT@ATL",
+            "pick": "Braves"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_CLE@KC",
+            "pick": "Guardians"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_CHC@MIL",
+            "pick": "Cubs"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_CIN@STL",
+            "pick": "Reds"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_DET@LAA",
+            "pick": "Tigers"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_OAK@ARI",
+            "pick": "Diamondbacks"
+          },
+          {
+            "winner": "right",
+            "gameID": "20240628_MIN@SEA",
+            "pick": "Mariners"
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_LAD@SF",
+            "pick": "Dodgers"
+          }
+        ]
+      },
+      {
+        "firstName": "My Picks",
+        "picks": [
+          {
+            "winner": "right",
+            "gameID": "20240628_MIA@PHI",
+            "pick": "Phillies"
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_WAS@TB",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_TEX@BAL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_NYY@TOR",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_SD@BOS",
+            "pick": ""
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_HOU@NYM",
+            "pick": "Astros"
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_COL@CHW",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_PIT@ATL",
+            "pick": ""
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_CLE@KC",
+            "pick": "Guardians"
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_CHC@MIL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_CIN@STL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_DET@LAA",
+            "pick": ""
+          },
+          {
+            "winner": "wrong",
+            "gameID": "20240628_OAK@ARI",
+            "pick": "Diamondbacks"
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_MIN@SEA",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240628_LAD@SF",
+            "pick": ""
+          }
+        ]
+      }
+    ]
+  },
+  "20240629": {
+    "analysts": [
+      {
+        "firstName": "JDBetsHQ",
+        "picks": [
+          {
+            "winner": "",
+            "gameID": "20240629_COL@CHW",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_CIN@STL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_NYY@TOR",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_MIA@PHI",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_WAS@TB",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_SD@BOS",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_PIT@ATL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_OAK@ARI",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_HOU@NYM",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_CLE@KC",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_CHC@MIL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_TEX@BAL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_LAD@SF",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_DET@LAA",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_MIN@SEA",
+            "pick": ""
+          }
+        ]
+      },
+      {
+        "firstName": "Ron Romanelli",
+        "picks": [
+          {
+            "winner": "",
+            "gameID": "20240629_COL@CHW",
+            "pick": "Rockies"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_CIN@STL",
+            "pick": "Cardinals"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_NYY@TOR",
+            "pick": "Blue Jays"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_MIA@PHI",
+            "pick": "Phillies"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_WAS@TB",
+            "pick": "Rays"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_SD@BOS",
+            "pick": "Red Sox"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_PIT@ATL",
+            "pick": "Braves"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_OAK@ARI",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_HOU@NYM",
+            "pick": "Mets"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_CLE@KC",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_CHC@MIL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_TEX@BAL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_LAD@SF",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_DET@LAA",
+            "pick": "Angels"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_MIN@SEA",
+            "pick": "Twins"
+          }
+        ]
+      },
+      {
+        "firstName": "Stump The Spread",
+        "picks": [
+          {
+            "winner": "",
+            "gameID": "20240629_COL@CHW",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_CIN@STL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_NYY@TOR",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_MIA@PHI",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_WAS@TB",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_SD@BOS",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_PIT@ATL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_OAK@ARI",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_HOU@NYM",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_CLE@KC",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_CHC@MIL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_TEX@BAL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_LAD@SF",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_DET@LAA",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_MIN@SEA",
+            "pick": ""
+          }
+        ]
+      },
+      {
+        "firstName": "CBS Sports Expert",
+        "picks": [
+          {
+            "winner": "",
+            "gameID": "20240629_COL@CHW",
+            "pick": "Rockies"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_CIN@STL",
+            "pick": "Cardinals"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_NYY@TOR",
+            "pick": "Yankees"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_MIA@PHI",
+            "pick": "Phillies"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_WAS@TB",
+            "pick": "Nationals"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_SD@BOS",
+            "pick": "Padres"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_PIT@ATL",
+            "pick": "Braves"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_OAK@ARI",
+            "pick": "Diamondbacks"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_HOU@NYM",
+            "pick": "Astros"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_CLE@KC",
+            "pick": "Guardians"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_CHC@MIL",
+            "pick": "Cubs"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_TEX@BAL",
+            "pick": "Orioles"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_LAD@SF",
+            "pick": "Dodgers"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_DET@LAA",
+            "pick": "Tigers"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_MIN@SEA",
+            "pick": "Twins"
+          }
+        ]
+      },
+      {
+        "firstName": "Odds Trader",
+        "picks": [
+          {
+            "winner": "",
+            "gameID": "20240629_COL@CHW",
+            "pick": "Rockies"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_CIN@STL",
+            "pick": "Reds"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_NYY@TOR",
+            "pick": "Yankees"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_MIA@PHI",
+            "pick": "Phillies"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_WAS@TB",
+            "pick": "Rays"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_SD@BOS",
+            "pick": "Padres"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_PIT@ATL",
+            "pick": "Braves"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_OAK@ARI",
+            "pick": "Diamondbacks"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_HOU@NYM",
+            "pick": "Astros"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_CLE@KC",
+            "pick": "Royals"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_CHC@MIL",
+            "pick": "Cubs"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_TEX@BAL",
+            "pick": "Orioles"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_LAD@SF",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_DET@LAA",
+            "pick": "Angels"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_MIN@SEA",
+            "pick": "Twins"
+          }
+        ]
+      },
+      {
+        "firstName": "Odds Shark",
+        "picks": [
+          {
+            "winner": "",
+            "gameID": "20240629_COL@CHW",
+            "pick": "White Sox"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_CIN@STL",
+            "pick": "Cardinals"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_NYY@TOR",
+            "pick": "Yankees"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_MIA@PHI",
+            "pick": "Phillies"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_WAS@TB",
+            "pick": "Rays"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_SD@BOS",
+            "pick": "Padres"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_PIT@ATL",
+            "pick": "Braves"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_OAK@ARI",
+            "pick": "Diamondbacks"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_HOU@NYM",
+            "pick": "Astros"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_CLE@KC",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_CHC@MIL",
+            "pick": "Brewers"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_TEX@BAL",
+            "pick": ""
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_LAD@SF",
+            "pick": "Dodgers"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_DET@LAA",
+            "pick": "Tigers"
+          },
+          {
+            "winner": "",
+            "gameID": "20240629_MIN@SEA",
+            "pick": ""
+          }
+        ]
+      }
+    ]
+  }
+}
