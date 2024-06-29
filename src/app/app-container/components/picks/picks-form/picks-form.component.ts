@@ -5,8 +5,6 @@ import {NgSelectModule} from "@ng-select/ng-select";
 import {Analyst, Analysts, GamePick} from "../../../../common/resolvers/picks.resolver";
 import {Game} from "../../../../common/model/game.interface";
 import {Teams} from "../../../../common/model/team.interface";
-import {MatButton} from "@angular/material/button";
-import {ExpertPredictionsComponent} from "../expert-predictions/expert-predictions.component";
 
 @Component({
   selector: 'app-picks-form',
@@ -16,9 +14,7 @@ import {ExpertPredictionsComponent} from "../expert-predictions/expert-predictio
     NgForOf,
     NgSelectModule,
     ReactiveFormsModule,
-    NgStyle,
-    MatButton,
-    ExpertPredictionsComponent
+    NgStyle
   ],
   templateUrl: './picks-form.component.html',
   styleUrl: './picks-form.component.css'
@@ -32,68 +28,49 @@ export class PicksFormComponent implements OnInit, OnDestroy, OnChanges {
   @Output() addAnalystToPicks: EventEmitter<any> = new EventEmitter();
 
   analystList: string[] = ['JDBetsHQ', 'Ron Romanelli', 'Stump The Spread', 'CBS Sports Expert', 'Odds Trader'];
-  form: FormGroup = new FormGroup<any>({
-    experts: new FormArray([])
-  });
+  form: FormGroup = new FormGroup<any>({});
 
   constructor(private fb: FormBuilder) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    // if (changes['picks'] !== undefined && !changes['picks'].isFirstChange()) {
-    //   this.form = this.fb.group({
-    //     analysts: this.fb.array([])
-    //   });
-    //
-    //   this.loadFormWithAnalystData(this.picks);
-    // }
+    if (changes['picks'] !== undefined && !changes['picks'].isFirstChange()) {
+      this.form = this.fb.group({
+        analysts: this.fb.array([])
+      });
+
+      this.loadFormWithAnalystData(this.picks);
+    }
   }
 
   ngOnInit() {
-    this.analystList.forEach((expert: string, index: number) => {
-      const newExpertControl: FormGroup = this.createExpertControl(expert);
-      this.expertControls.push(newExpertControl);
-
-      // this.games.forEach(game => {
-      //   const newPredictionControl: FormGroup = this.createPredictionControl(game);
-      //   this.getExpertPredictions(index).push(newPredictionControl);
-      // });
+    this.form = this.fb.group({
+      analysts: this.fb.array([])
     });
+
+    if (this.picks) {
+      this.loadFormWithAnalystData(this.picks);
+    } else {
+      this.loadForm();
+    }
   }
 
-  get expertControls(): FormArray {
-    return this.form.get('experts') as FormArray;
+  analysts(): FormArray {
+    return this.form.get('analysts') as FormArray;
   }
 
-  getExpertFormGroup(expertIndex: number): FormGroup {
-    return (this.form.get('experts') as FormArray).at(expertIndex) as FormGroup;
-  }
-
-  getExpertPredictions(expertIndex: number) {
-    return this.getExpertFormGroup(expertIndex).get('predictions') as FormArray;
-  }
-
-  createExpertControl(expert: string = ''): FormGroup {
+  newAnalysts(analyst: string = ''): FormGroup {
     return this.fb.group({
-      name: expert,
-      predictions: this.fb.array([])
-    });
-  }
-
-  createPredictionControl({gameID}: Game) {
-    return this.fb.group({
-      prediction: [''],
-      correct: [],
-      gameID,
+      firstName: analyst,
+      picks: this.fb.array([])
     });
   }
 
   analystPicks(index: number): FormArray {
-    return this.expertControls
+    return this.analysts()
       .at(index)
       .get('picks') as FormArray;
   }
 
-/*
   newPick(game: Game = {} as Game, pick: string = '', analyst: string = ''): FormGroup {
     const {gameID, boxScore}: Game = game;
     let winningTeam = '';
@@ -119,14 +96,15 @@ export class PicksFormComponent implements OnInit, OnDestroy, OnChanges {
     const pickObject: any = {winner, gameID, pick};
     return this.fb.group(pickObject);
   }
+
   loadForm() {
     this.analystList.forEach((analyst: string, index: number) => {
-      const newAnalyst: FormGroup = this.createExpertControl(analyst);
-      this.expertControls().push(newAnalyst);
+      const newAnalyst: FormGroup = this.newAnalysts(analyst);
+      this.analysts().push(newAnalyst);
 
       this.games.forEach((game: Game) => {
         const pick = this.newPick(game);
-        (this.expertControls().at(index).get('picks') as FormArray).push(pick);
+        (this.analysts().at(index).get('picks') as FormArray).push(pick);
       });
     });
   }
@@ -134,8 +112,8 @@ export class PicksFormComponent implements OnInit, OnDestroy, OnChanges {
   loadFormWithAnalystData(formValue: Analysts) {
     console.log('loadFormWithAnalystData');
     formValue.analysts.forEach(({firstName}: Analyst, index: number) => {
-      const newAnalyst: FormGroup = this.createExpertControl(firstName);
-      this.expertControls().push(newAnalyst);
+      const newAnalyst: FormGroup = this.newAnalysts(firstName);
+      this.analysts().push(newAnalyst);
 
       this.games.forEach((game: Game) => {
         let checkedPick = '';
@@ -150,11 +128,10 @@ export class PicksFormComponent implements OnInit, OnDestroy, OnChanges {
         }
 
         const pick = this.newPick(game, checkedPick, firstName);
-        (this.expertControls().at(index).get('picks') as FormArray).push(pick);
+        (this.analysts().at(index).get('picks') as FormArray).push(pick);
       });
     });
   }
-  */
 
   getPicksStyle() {
     let columnLength: number;
@@ -166,8 +143,12 @@ export class PicksFormComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     return {
-      display: 'flex',
-      'flex-direction': 'row',
+      display: 'grid',
+      'grid-template-columns': `repeat(${columnLength}, 1fr)`,
+      'grid-template-rows': `repeat(${this.games.length + 1}, 1fr)`,
+      'grid-auto-flow': `column`,
+      'grid-gap': '10px',
+      padding: '5px'
     };
   }
 
@@ -186,10 +167,4 @@ export class PicksFormComponent implements OnInit, OnDestroy, OnChanges {
     // console.log('pick: ', pick.value);
     return pick['value']['winner'];
   }
-  //
-  LogValue() {
-    console.log('form: ', this.form.value);
-  }
-
-  protected readonly JSON = JSON;
 }

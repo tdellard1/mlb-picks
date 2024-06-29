@@ -22,7 +22,7 @@ export class GameRunDownComponent {
     return {
       display: 'grid',
       'grid-template-columns': ` 100px min-content min-content 1fr`,
-      'grid-template-rows': `repeat(${this.games.length + 1}, 36px)`,
+      'grid-template-rows': `repeat(${this.games.length + 1}, 1fr)`,
       'grid-gap': '10px'
     };
   }
