@@ -1,5 +1,12 @@
 .container {
   /*width: 1080px;*/
-  margin: 0 auto;
-  height: 100vh;
+  /*margin: 0 auto;*/
+  /*height: 90vh;*/
+}
+
+mat-tab-group {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  top: 0;
 }

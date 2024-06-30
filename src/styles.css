@@ -1,9 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-/*.ng-select-container.ng-has-value {*/
-/*  border-color: red;*/
-/*  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075), 0 0 0 3px rgba(0,126,255,0.1);*/
-/*}*/
-
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

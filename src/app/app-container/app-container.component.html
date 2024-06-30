@@ -1,4 +1,16 @@
 <mat-tab-group>
+  <mat-tab label="Slate">
+    <ng-template matTabContent>
+      <div class="container">
+        <slate-container
+          [slate]="convertToSlate((picks$ | async)!)"
+          [schedules]="(schedules$ | async)!"
+          [dailySchedule]="(dailySchedule$ | async)!"
+          [boxScoreSchedule]="(boxScores$ | async)!"
+          [teams]="(teams$ | async)!"></slate-container>
+      </div>
+    </ng-template>
+  </mat-tab>
   <mat-tab label="Picks">
     <ng-template matTabContent>
       <div class="container">
@@ -8,13 +20,6 @@
           [dailySchedule]="(dailySchedule$ | async)!"
           [teamSchedulesWithBoxScores]="(boxScores$ | async)!"
           [teams]="(teams$ | async)!"></app-picks>
-      </div>
-    </ng-template>
-  </mat-tab>
-  <mat-tab label="Charts">
-    <ng-template matTabContent>
-      <div class="container">
-        <app-charts></app-charts>
       </div>
     </ng-template>
   </mat-tab>

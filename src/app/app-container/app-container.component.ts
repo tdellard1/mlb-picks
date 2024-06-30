@@ -8,10 +8,11 @@ import {PicksComponent} from "./components/picks/picks.component";
 import {Observable} from "rxjs";
 import {Game} from "../common/model/game.interface";
 import {map, tap} from "rxjs/operators";
-import {AsyncPipe} from "@angular/common";
+import {AsyncPipe, NgStyle} from "@angular/common";
 import {Player} from "../common/model/players.interface";
 import {ChartsComponent} from "./components/charts/charts.component";
 import {Picks, Slate} from "../common/resolvers/picks.resolver";
+import {SlateContainerComponent} from "../Slate/feature/slate-container/slate-container.component";
 
 @Component({
   selector: 'app-container',
@@ -25,7 +26,9 @@ import {Picks, Slate} from "../common/resolvers/picks.resolver";
     PicksComponent,
     AsyncPipe,
     MatTabContent,
-    ChartsComponent
+    ChartsComponent,
+    SlateContainerComponent,
+    NgStyle
   ],
   templateUrl: './app-container.component.html',
   styleUrl: './app-container.component.css'
