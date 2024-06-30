@@ -11,7 +11,7 @@ import {map, tap} from "rxjs/operators";
 import {AsyncPipe} from "@angular/common";
 import {Player} from "../common/model/players.interface";
 import {ChartsComponent} from "./components/charts/charts.component";
-import {Picks} from "../common/resolvers/picks.resolver";
+import {Picks, Slate} from "../common/resolvers/picks.resolver";
 
 @Component({
   selector: 'app-container',
@@ -56,5 +56,9 @@ export class AppContainerComponent {
     }
 
     localStorage.setItem('lastUpdated', JSON.stringify(new Date().setHours(0, 0, 0, 0)));
+  }
+
+  convertToSlate(picks: Picks): Slate {
+    return new Slate(picks);
   }
 }

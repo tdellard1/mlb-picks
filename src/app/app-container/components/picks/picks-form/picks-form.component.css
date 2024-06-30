@@ -2,6 +2,11 @@ expert-predictions {
   flex-grow: 1;
 }
 
+div {
+  display: flex;
+  flex-direction: row;
+}
+
 .ng-select.right {
   border: 2px solid green;
 }

@@ -5,7 +5,7 @@ import {
   OnDestroy,
   Output,
 } from '@angular/core';
-import {Analysts} from "../../../../common/resolvers/picks.resolver";
+import {Analysts, Experts} from "../../../../common/resolvers/picks.resolver";
 import {Game} from "../../../../common/model/game.interface";
 import {Teams} from "../../../../common/model/team.interface";
 import {FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -44,7 +44,7 @@ import {GameRunDownComponent} from "../game-run-down/game-run-down.component";
   styleUrl: './picks-view.component.css'
 })
 export class PicksViewComponent {
-  @Input() picks: Analysts = {} as Analysts;
+  @Input() experts: Experts = [];
   @Input() games: Game[] = [];
   @Input() teams: Teams = {} as Teams;
 
@@ -58,7 +58,7 @@ export class PicksViewComponent {
   constructor(private fb: FormBuilder) {}
 
   emitSavePicks(value: any) {
-    console.log('emitSavePicks: ', value);
+    // console.log('emitSavePicks: ', value);
     this.savePicks.emit(value);
   }
 

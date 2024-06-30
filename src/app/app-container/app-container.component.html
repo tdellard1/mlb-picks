@@ -3,7 +3,7 @@
     <ng-template matTabContent>
       <div class="container">
         <app-picks
-          [picks]="(picks$ | async)!"
+          [slate]="convertToSlate((picks$ | async)!)"
           [schedules]="(schedules$ | async)!"
           [dailySchedule]="(dailySchedule$ | async)!"
           [teamSchedulesWithBoxScores]="(boxScores$ | async)!"

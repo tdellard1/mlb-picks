@@ -14,6 +14,7 @@ export class ApiService {
   };
 
   post<T>(url: string, body: any): Observable<any> {
+    console.log('body: ', body);
     return this.http.post<T>(url,  body);
   };
 }

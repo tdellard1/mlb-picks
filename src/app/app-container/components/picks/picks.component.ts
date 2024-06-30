@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {Game} from "../../../common/model/game.interface";
 import {Teams} from "../../../common/model/team.interface";
-import {Analyst, Analysts, GamePick, Picks} from "../../../common/resolvers/picks.resolver";
+import {Analyst, Analysts, Expert, Experts, ExpertGamePick, Picks, Slate} from "../../../common/resolvers/picks.resolver";
 import {PicksViewComponent} from "./picks-view/picks-view.component";
 import {MatChipListbox, MatChipOption} from "@angular/material/chips";
 import {BehaviorSubject, Observable} from "rxjs";
@@ -27,16 +27,16 @@ import {BackendApiService} from "../../../common/services/backend-api/backend-ap
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PicksComponent implements OnInit {
-  @Input() picks: Picks = {};
+  @Input() slate!: Slate;
   @Input() dailySchedule: Game[] = [];
   @Input() schedules: TeamSchedule[] = [];
   @Input() teamSchedulesWithBoxScores: TeamSchedule[] = [];
   @Input() teams: Teams = {} as Teams;
 
-  private pickSubject: BehaviorSubject<Analysts> = new BehaviorSubject<Analysts>({} as Analysts);
+  private expertsSubject: BehaviorSubject<Experts> = new BehaviorSubject<Experts>([] as Experts);
   private gamesSubject: BehaviorSubject<Game[]> = new BehaviorSubject<Game[]>([]);
 
-  protected pick$: Observable<Analysts> = this.pickSubject.asObservable();
+  protected experts$: Observable<Experts> = this.expertsSubject.asObservable();
   protected games$: Observable<Game[]> = this.gamesSubject.asObservable();
 
   dateSelected: string = '';
@@ -47,7 +47,7 @@ export class PicksComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.datesAvailable = Object.keys(this.picks);
+    this.datesAvailable = [...this.slate.dates.keys()];
     const anyAvailableDateInPicks: boolean = !!this.datesAvailable.length;
     const today: string = this.getCurrentDay();
     let lastDateAvailableInPick;
@@ -56,18 +56,18 @@ export class PicksComponent implements OnInit {
     if (lastDateAvailableInPick !== today) this.datesAvailable.push(today);
 
     if (anyAvailableDateInPicks) {
-      this.setUpPickForToday();
-    } else {
       const availablePickDateIsToday: boolean = lastDateAvailableInPick === today;
       this.setUpPickForToday(availablePickDateIsToday);
+    } else {
+      this.setUpPickForToday();
     }
   }
 
   setUpPickForToday(havePicksForToday: boolean = false) {
     if (havePicksForToday) {
-      this.pickSubject.next(this.picks[this.getCurrentDay()]);
+      this.expertsSubject.next(this.slate.dates.get(this.getCurrentDay())!);
     } else {
-      this.pickSubject.next(undefined as unknown as Analysts);
+      this.expertsSubject.next([] as Experts);
     }
 
     this.gamesSubject.next(this.sortGames(this.dailySchedule));
@@ -76,15 +76,15 @@ export class PicksComponent implements OnInit {
   changeDate(selectedDate: any) {
     this.dateSelected = selectedDate;
     const isDateToday: boolean = selectedDate === this.getCurrentDay();
-    const picksForSelectedDay: Analysts = this.picks[selectedDate];
-    const needToGetScheduleFromPicks: boolean = !!picksForSelectedDay && !!picksForSelectedDay.analysts && !!picksForSelectedDay.analysts[0];
+    const picksForSelectedDay: Experts = this.slate.dates.get(selectedDate)!;
+    const needToGetScheduleFromPicks: boolean = !!picksForSelectedDay && !!picksForSelectedDay[0];
 
     // If there are picks, sort games based on pick order(should be consistent for all analyst)
     if (needToGetScheduleFromPicks) {
-      const {picks} = picksForSelectedDay.analysts[0];
+      const {predictions} = picksForSelectedDay[0];
 
       // Sort games based on picks order
-      const games: Game[] = picks.map((gp: GamePick) => {
+      const games: Game[] = predictions.map((gp: ExpertGamePick) => {
         if (isDateToday) {
           return ensure(this.dailySchedule.find((game: Game) => game.gameID === gp.gameID));
         } else {
@@ -97,10 +97,10 @@ export class PicksComponent implements OnInit {
         }
       });
 
-      this.pickSubject.next(this.picks[selectedDate]);
+      this.expertsSubject.next(this.slate.dates.get(selectedDate)!);
       this.gamesSubject.next(games);
     } else {
-      this.pickSubject.next(undefined as unknown as Analysts);
+      this.expertsSubject.next(undefined as unknown as Experts);
       this.gamesSubject.next(this.sortedGames);
     }
   }
@@ -130,19 +130,21 @@ export class PicksComponent implements OnInit {
       });
   }
 
-  protected savePicks(event: any) {
-    const updatedPicks: Picks = Object.assign({}, this.picks);
-    updatedPicks[this.dateSelected] = event;
+  protected savePicks({experts}: any) {
+    const updatedPicks: Slate = Object.assign({}, this.slate);
+    updatedPicks.dates.set(this.dateSelected, experts);
 
-    this.backEndApiService.updatePicks(updatedPicks).subscribe((value: any) => {
+    console.log('updatedPicks: ', updatedPicks);
+
+    this.backEndApiService.updateSlates(updatedPicks).subscribe((value: any) => {
       console.log(value['message']);
     });
   }
 
   protected readonly getDateString = getDateString;
 
-  addAnalystToPicks(analyst: Analyst) {
-    this.picks[this.dateSelected].analysts.push(analyst);
-    this.pickSubject.next(Object.assign({}, this.picks[this.dateSelected]));
-  }
+  // addAnalystToPicks(analyst: Analyst) {
+  //   this.slate[this.dateSelected].push(analyst);
+  //   this.expertsSubject.next(Object.assign({}, this.slate[this.dateSelected]));
+  // }
 }
