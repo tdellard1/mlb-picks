@@ -61,6 +61,28 @@ export class PicksComponent implements OnInit {
     } else {
       this.setUpPickForToday();
     }
+
+    const oddsTrader: ExpertGamePick[] = [...this.slate.dates]
+      .map(value => value[1])
+      .map((experts: Experts) => experts
+        .filter((expert: Expert) => expert.name === 'Odds Trader')
+      ).flat().map((expert: Expert) => expert.predictions).flat();
+
+    const oddsTraderCorrect: number = oddsTrader.filter(({correct}: ExpertGamePick) => correct === true).map(({correct}: ExpertGamePick) => correct).length;
+    const oddsTraderWrong: number = oddsTrader.filter(({correct}: ExpertGamePick) => correct === false).map(({correct}: ExpertGamePick) => correct).length;
+
+    console.log('odds Trader record: ', oddsTraderCorrect, ' - ', oddsTraderWrong );
+
+    const cbsSports: ExpertGamePick[] = [...this.slate.dates]
+      .map(value => value[1])
+      .map((experts: Experts) => experts
+        .filter((expert: Expert) => expert.name === 'CBS Sports Expert')
+      ).flat().map((expert: Expert) => expert.predictions).flat();
+
+    const cbsSportsCorrect: number = cbsSports.filter(({correct}: ExpertGamePick) => correct === true).map(({correct}: ExpertGamePick) => correct).length;
+    const cbsSportsWrong: number = cbsSports.filter(({correct}: ExpertGamePick) => correct === false).map(({correct}: ExpertGamePick) => correct).length;
+
+    console.log('CBS Sports Experts record: ', cbsSportsCorrect, ' - ', cbsSportsWrong );
   }
 
   setUpPickForToday(havePicksForToday: boolean = false) {
