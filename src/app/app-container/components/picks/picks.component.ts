@@ -71,7 +71,7 @@ export class PicksComponent implements OnInit {
     const oddsTraderCorrect: number = oddsTrader.filter(({correct}: ExpertGamePick) => correct === true).map(({correct}: ExpertGamePick) => correct).length;
     const oddsTraderWrong: number = oddsTrader.filter(({correct}: ExpertGamePick) => correct === false).map(({correct}: ExpertGamePick) => correct).length;
 
-    console.log('odds Trader record: ', oddsTraderCorrect, ' - ', oddsTraderWrong );
+    // console.log('odds Trader record: ', oddsTraderCorrect, ' - ', oddsTraderWrong );
 
     const cbsSports: ExpertGamePick[] = [...this.slate.dates]
       .map(value => value[1])
@@ -82,10 +82,11 @@ export class PicksComponent implements OnInit {
     const cbsSportsCorrect: number = cbsSports.filter(({correct}: ExpertGamePick) => correct === true).map(({correct}: ExpertGamePick) => correct).length;
     const cbsSportsWrong: number = cbsSports.filter(({correct}: ExpertGamePick) => correct === false).map(({correct}: ExpertGamePick) => correct).length;
 
-    console.log('CBS Sports Experts record: ', cbsSportsCorrect, ' - ', cbsSportsWrong );
+    // console.log('CBS Sports Experts record: ', cbsSportsCorrect, ' - ', cbsSportsWrong );
   }
 
   setUpPickForToday(havePicksForToday: boolean = false) {
+
     if (havePicksForToday) {
       this.expertsSubject.next(this.slate.dates.get(this.getCurrentDay())!);
     } else {

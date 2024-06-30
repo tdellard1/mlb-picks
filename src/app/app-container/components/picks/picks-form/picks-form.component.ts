@@ -39,7 +39,7 @@ export class PicksFormComponent implements OnDestroy, OnChanges {
   constructor(private fb: FormBuilder) {}
 
   ngOnChanges(): void {
-    const expertList: string[] = this.expertsData.length ? this.expertsData.map(value => value.name) : this.analystList;
+    const expertList: string[] = this.expertsData?.length ? this.expertsData.map(value => value.name) : this.analystList;
     this.addExpertControls(expertList);
   }
 
@@ -53,7 +53,7 @@ export class PicksFormComponent implements OnDestroy, OnChanges {
   }
 
   getExpertData(expertIndex: number): Expert {
-    return this.expertsData.at(expertIndex)!;
+    return this.expertsData?.at(expertIndex)!;
   }
 
   get experts(): FormArray {

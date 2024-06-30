@@ -6,6 +6,7 @@ import {MatButton} from "@angular/material/button";
 import {Game} from "../../../../common/model/game.interface";
 import {Teams} from "../../../../common/model/team.interface";
 import {Expert, ExpertGamePick} from "../../../../common/resolvers/picks.resolver";
+import {BoxScore} from "../../../../common/model/box-score.interface";
 
 @Component({
   selector: 'expert-predictions',
@@ -47,7 +48,33 @@ export class ExpertPredictionsComponent implements OnInit {
     return this.getPrediction(index).get('options') as FormArray;
   }
 
-  private createPredictionControl(gameID: string, gamePick?: ExpertGamePick): FormGroup {
+  ngOnInit(): void {
+    this.games.forEach(({gameID, home, away, boxScore}: Game, index: number) => {
+      const prediction: ExpertGamePick = this.expert?.predictions?.at(index)!;
+      const boxScoreData: BoxScore = boxScore!;
+      const newPredictionControl: FormGroup = this.createPredictionControl(gameID, prediction, boxScoreData);
+      this.predictions.push(newPredictionControl);
+
+      const options: FormGroup[] = [
+        this.createOptions('-'),
+        this.createOptions(this.teams.getTeamName(away)),
+        this.createOptions(this.teams.getTeamName(home)),
+        this.createOptions('Total: Over'),
+        this.createOptions('Total: Under'),
+      ];
+
+      options.forEach((option: FormGroup) => {
+        this.getOptions(index).push(option);
+      });
+    });
+  }
+
+  private createPredictionControl(gameID: string, gamePick?: ExpertGamePick, boxScoreData?: BoxScore): FormGroup {
+    let winningTeam;
+    if (boxScoreData) {
+      winningTeam = this.getWinningTeam(boxScoreData);
+    }
+
     if (gamePick && gamePick.prediction && gamePick.correct !== undefined && gamePick.correct !== null) {
       return this.fb.group({
         gameID,
@@ -56,11 +83,27 @@ export class ExpertPredictionsComponent implements OnInit {
         correct: [gamePick.correct]
       });
     } else if (gamePick && gamePick.prediction) {
-      return this.fb.group({
-        gameID,
-        prediction: [gamePick.prediction],
-        options: this.fb.array([]),
-      });
+      if (!winningTeam) {
+        return this.fb.group({
+          gameID,
+          prediction: [gamePick.prediction],
+          options: this.fb.array([]),
+        });
+      } else if (winningTeam === gamePick.prediction) {
+        return this.fb.group({
+          gameID,
+          prediction: [gamePick.prediction],
+          options: this.fb.array([]),
+          correct: [true]
+        });
+      } else {
+        return this.fb.group({
+          gameID,
+          prediction: [gamePick.prediction],
+          options: this.fb.array([]),
+          correct: [false]
+        });
+      }
     } else {
       return this.fb.group({
         gameID,
@@ -76,24 +119,14 @@ export class ExpertPredictionsComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
-    this.games.forEach(({gameID, home, away}: Game, index: number) => {
-      const prediction: ExpertGamePick = this.expert.predictions.at(index)!;
-      const newPredictionControl: FormGroup = this.createPredictionControl(gameID, prediction);
-      this.predictions.push(newPredictionControl);
-
-      const options: FormGroup[] = [
-        this.createOptions('-'),
-        this.createOptions(this.teams.getTeamName(away)),
-        this.createOptions(this.teams.getTeamName(home)),
-        this.createOptions('Total: Over'),
-        this.createOptions('Total: Under'),
-      ];
-
-      options.forEach((option: FormGroup) => {
-        this.getOptions(index).push(option);
-      });
-    });
+  private getWinningTeam(boxScore: BoxScore) {
+    if (boxScore.awayResult === 'W') {
+      return this.teams.getTeamName(boxScore.away);
+    } else if (boxScore.homeResult === 'W') {
+      return this.teams.getTeamName(boxScore.home);
+    } else {
+      return undefined;
+    }
   }
 
   protected getStyles() {
