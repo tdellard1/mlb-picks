@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, OnChanges, OnDestroy, Output} from '@angular/core';
-import {Expert, Experts} from "../../../common/resolvers/picks.resolver";
 import {Game} from "../../../common/model/game.interface";
 import {Teams} from "../../../common/model/team.interface";
 import {FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgForOf} from "@angular/common";
 import {SlatePredictionsComponent} from "../slate-predictions/slate-predictions.component";
+import {Expert, Experts} from "../../data-access/expert.interface";
 
 @Component({
   selector: 'slate-form',

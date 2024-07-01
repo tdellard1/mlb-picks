@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgSelectModule} from "@ng-select/ng-select";
-import {Expert, ExpertGamePick} from "../../../common/resolvers/picks.resolver";
 import {Game} from "../../../common/model/game.interface";
 import {Teams} from "../../../common/model/team.interface";
 import {BoxScore} from "../../../common/model/box-score.interface";
 import {NgStyle} from "@angular/common";
+import {Expert, GamePick} from "../../data-access/expert.interface";
 
 @Component({
   selector: 'slate-predictions',
@@ -47,7 +47,7 @@ export class SlatePredictionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.games.forEach(({gameID, home, away, boxScore}: Game, index: number) => {
-      const prediction: ExpertGamePick | undefined = this.expert?.predictions?.at(index);
+      const prediction: GamePick | undefined = this.expert?.predictions?.at(index);
       const boxScoreData: BoxScore = boxScore!;
       const newPredictionControl: FormGroup = this.createPredictionControl(gameID, prediction, boxScoreData);
       this.predictions.push(newPredictionControl);
@@ -66,7 +66,7 @@ export class SlatePredictionsComponent implements OnInit {
     });
   }
 
-  private createPredictionControl(gameID: string, gamePick?: ExpertGamePick, boxScoreData?: BoxScore): FormGroup {
+  private createPredictionControl(gameID: string, gamePick?: GamePick, boxScoreData?: BoxScore): FormGroup {
     let winningTeam;
     if (boxScoreData) {
       winningTeam = this.getWinningTeam(boxScoreData);

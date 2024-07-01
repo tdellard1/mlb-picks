@@ -1,15 +1,14 @@
 import {Component, HostListener} from '@angular/core';
-import {Team, Teams} from "../common/model/team.interface";
+import {Teams} from "../common/model/team.interface";
 import {TeamSchedule} from "../common/model/team-schedule.interface";
 import {ActivatedRoute, Data, RouterLink, RouterOutlet} from "@angular/router";
 import {MatTab, MatTabContent, MatTabGroup} from "@angular/material/tabs";
 import {AnalysisComponent} from "../analysis/analysis.component";
 import {Observable} from "rxjs";
 import {Game} from "../common/model/game.interface";
-import {map, tap} from "rxjs/operators";
+import {map} from "rxjs/operators";
 import {AsyncPipe, NgStyle} from "@angular/common";
 import {Player} from "../common/model/players.interface";
-import {Picks, Slate} from "../common/resolvers/picks.resolver";
 import {SlateContainerComponent} from "../Slate/feature/slate-container/slate-container.component";
 import {Slates} from "../Slate/data-access/slate.model";
 
@@ -36,7 +35,6 @@ export class AppContainerComponent {
   teams$: Observable<Teams>;
   schedules$: Observable<TeamSchedule[]>;
   boxScores$: Observable<TeamSchedule[]>;
-  picks$: Observable<Picks>;
   slates$: Observable<Slates>;
 
   constructor(private activatedRoute: ActivatedRoute) {
@@ -45,7 +43,6 @@ export class AppContainerComponent {
     this.players$ = this.activatedRoute.data.pipe(map((data: Data) => data['players']));
     this.schedules$ = this.activatedRoute.data.pipe(map((data: Data) => data['schedules']));
     this.boxScores$ = this.activatedRoute.data.pipe(map((data: Data) => data['boxScores']));
-    this.picks$ = this.activatedRoute.data.pipe(map((data: Data) => data['picks']));
     this.slates$ = this.activatedRoute.data.pipe(map((data: Data) => data['slates']));
   }
 
@@ -58,9 +55,5 @@ export class AppContainerComponent {
     }
 
     localStorage.setItem('lastUpdated', JSON.stringify(new Date().setHours(0, 0, 0, 0)));
-  }
-
-  convertToSlate(picks: Picks): Slate {
-    return new Slate(picks);
   }
 }

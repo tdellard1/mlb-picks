@@ -2,9 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Game, Games} from "../../../common/model/game.interface";
 import {TeamSchedule} from "../../../common/model/team-schedule.interface";
 import {Teams} from "../../../common/model/team.interface";
-import {NewSlate, Slates} from "../../data-access/slate.model";
+import {Slate, Slates} from "../../data-access/slate.model";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
-import {Expert, Experts, Slate} from "../../../common/resolvers/picks.resolver";
 import {AsyncPipe, DatePipe} from "@angular/common";
 import {BehaviorSubject, Observable} from "rxjs";
 import {SlateDetailsComponent} from "../slate-details/slate-details.component";
@@ -17,6 +16,7 @@ import {MatInput} from "@angular/material/input";
 import {BackendApiService} from "../../../common/services/backend-api/backend-api.service";
 import {MatDivider} from "@angular/material/divider";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
+import {Expert, Experts} from "../../data-access/expert.interface";
 
 @Component({
   selector: 'slate-container',
@@ -54,7 +54,7 @@ export class SlateContainerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dates = this.slates.map(({date}: NewSlate) => date);
+    this.dates = this.slates.map(({date}: Slate) => date);
 
     const today: string = this.today!;
     if (!this.dates.includes(today)) {
@@ -88,7 +88,7 @@ export class SlateContainerComponent implements OnInit {
       this.gamesSubject.next(gamesForDate);
     }
 
-    const slate: NewSlate | undefined = this.getSlateFor(this.selectedDate);
+    const slate: Slate | undefined = this.getSlateFor(this.selectedDate);
 
     if (slate) {
       this.expertsSubject.next(slate.experts);
@@ -116,7 +116,7 @@ export class SlateContainerComponent implements OnInit {
     if (slateIndex !== -1) {
       this.slates[slateIndex].experts = experts;
     } else {
-      this.slates.push(new NewSlate(this.selectedDate, experts));
+      this.slates.push(new Slate(this.selectedDate, experts));
     }
 
     this.backendApiService.updateSlates(this.slates).subscribe(res => {
@@ -125,10 +125,10 @@ export class SlateContainerComponent implements OnInit {
   }
 
   private get currentSlateIndex() {
-    return this.slates.findIndex(({date}: NewSlate) => date === this.selectedDate);
+    return this.slates.findIndex(({date}: Slate) => date === this.selectedDate);
   }
 
-  private getSlateFor(yyyyMMdd: string): NewSlate | undefined {
-    return this.slates.find(({date}: NewSlate) => date === yyyyMMdd);
+  private getSlateFor(yyyyMMdd: string): Slate | undefined {
+    return this.slates.find(({date}: Slate) => date === yyyyMMdd);
   }
 }

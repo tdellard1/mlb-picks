@@ -1,8 +1,9 @@
-import {Experts} from "../../common/resolvers/picks.resolver";
+import {Experts} from "./expert.interface";
 
-export declare type Slates = NewSlate[];
 
-export class NewSlate {
+export declare type Slates = Slate[];
+
+export class Slate {
   experts: Experts;
   date: string;
 

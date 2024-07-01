@@ -1,6 +1,6 @@
 import {BoxScore} from "./box-score.interface";
 import {TeamSchedule} from "./team-schedule.interface";
-import {Expert, ExpertGamePick} from "../resolvers/picks.resolver";
+import {Expert, GamePick} from "../../Slate/data-access/expert.interface";
 
 export interface Game {
   gameID: string;
@@ -100,7 +100,7 @@ export class Games {
   }
 
   static getSlateGamesFromPreviousExpertPredictions(expert: Expert, boxScoreSchedules: TeamSchedule[], schedules: TeamSchedule[]): Game[] {
-    const gameIDs: string[] = expert.predictions.map(({gameID}: ExpertGamePick) => gameID);
+    const gameIDs: string[] = expert.predictions.map(({gameID}: GamePick) => gameID);
 
     const boxScoreGames: Game[] = Games.getGamesWithBoxScores(boxScoreSchedules);
     const scheduleGames: Game[] = Games.getGamesFromSchedules(schedules);

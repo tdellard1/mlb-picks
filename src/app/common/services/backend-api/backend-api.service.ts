@@ -3,7 +3,6 @@ import {ApiService} from "../api-services/api.service";
 import {TeamSchedule} from "../../model/team-schedule.interface";
 import {map} from "rxjs/operators";
 import {first} from "rxjs";
-import {Picks, Slate} from "../../resolvers/picks.resolver";
 import {Slates} from "../../../Slate/data-access/slate.model";
 
 @Injectable({
@@ -33,10 +32,6 @@ export class BackendApiService {
       .subscribe(value => {
       console.log('addSchedules: ', value);
     });
-  }
-
-  updatePicks(picks: Picks) {
-    return this.apiService.post('http://localhost:3000/api/picks', picks).pipe(first());
   }
 
   updateSlates(slates: Slates) {

@@ -6,7 +6,6 @@ const teams = require('./assets/teams.json');
 const players = require('./assets/players.json');
 const schedules = require('./assets/schedules.json');
 const boxScore = require('./assets/boxScore.json');
-const picks = require('./assets/picks.json');
 const slates = require('./assets/slates.json');
 const cors = require('cors');
 const { writeFile, readFile } = require("fs");
@@ -17,7 +16,6 @@ app.use(express.urlencoded({limit: '50mb', extended: true}));
 app.use(cors());
 
 const boxScoreURL = './assets/boxScore.json';
-const picksURL = './assets/picks.json';
 const schedulesURL = './assets/schedules.json';
 const slatesURL = './assets/slates.json';
 
@@ -46,24 +44,9 @@ app.get('/api/slates', (req, res) => {
   res.json({ slates });
 });
 
-app.get('/api/picks', (req, res) => {
-  res.json({ picks });
-});
-
 app.post('/api/boxScore', (req, res) => {
   console.log('req: ', req.body);
   writeFile(boxScoreURL, JSON.stringify(req.body, null, 2), err => {
-    if (err) {
-      console.log("Failed to write updated data to file");
-      return;
-    }
-    res.json({"message": "Updated file successfully"});
-  });
-});
-
-app.post('/api/picks', (req, res) => {
-  console.log('req: ', req.body);
-  writeFile(picksURL, JSON.stringify(req.body, null, 2), err => {
     if (err) {
       console.log("Failed to write updated data to file");
       return;
