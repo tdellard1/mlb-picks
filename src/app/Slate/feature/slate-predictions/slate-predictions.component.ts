@@ -47,7 +47,7 @@ export class SlatePredictionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.games.forEach(({gameID, home, away, boxScore}: Game, index: number) => {
-      const prediction: ExpertGamePick = this.expert?.predictions?.at(index)!;
+      const prediction: ExpertGamePick | undefined = this.expert?.predictions?.at(index);
       const boxScoreData: BoxScore = boxScore!;
       const newPredictionControl: FormGroup = this.createPredictionControl(gameID, prediction, boxScoreData);
       this.predictions.push(newPredictionControl);

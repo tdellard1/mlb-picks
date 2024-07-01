@@ -9,14 +9,14 @@
   <mat-divider vertical class="divider"></mat-divider>
   <mat-slide-toggle [(ngModel)]="showTeamCity">{{showTeamCity ? 'Team City' : 'Team Name'}}</mat-slide-toggle>
   <mat-divider vertical class="divider"></mat-divider>
-  <h3>{{expertName}}</h3>
+  <span>{{expertName}}</span>
   <div class="spacer"></div>
   <mat-form-field>
     <mat-label>Analyst</mat-label>
     <input matInput placeholder="Analyst Name" [(ngModel)]="expertName" [ngModelOptions]="{standalone: true}">
   </mat-form-field>
 
-  <button mat-raised-button>
+  <button mat-raised-button (click)="addExpertToSlate()">
     Add Analyst
   </button>
 

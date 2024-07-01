@@ -4,7 +4,7 @@ import {TeamSchedule} from "../../../common/model/team-schedule.interface";
 import {Teams} from "../../../common/model/team.interface";
 import {NewSlate, Slates} from "../../data-access/slate.model";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
-import {Experts, Slate} from "../../../common/resolvers/picks.resolver";
+import {Expert, Experts, Slate} from "../../../common/resolvers/picks.resolver";
 import {AsyncPipe, DatePipe} from "@angular/common";
 import {BehaviorSubject, Observable} from "rxjs";
 import {SlateDetailsComponent} from "../slate-details/slate-details.component";
@@ -50,7 +50,8 @@ export class SlateContainerComponent implements OnInit {
   showTeamCity: boolean = false;
 
   constructor(private datePipe: DatePipe,
-              private backendApiService: BackendApiService) {}
+              private backendApiService: BackendApiService) {
+  }
 
   ngOnInit(): void {
     this.dates = this.slates.map(({date}: NewSlate) => date);
@@ -66,15 +67,28 @@ export class SlateContainerComponent implements OnInit {
     this.chooseDate(yyyyMMdd);
   }
 
+  addExpertToSlate() {
+    if (this.expertName === '') return;
+
+    const newExpert: Expert = {
+      name: this.expertName,
+      predictions: []
+    } as Expert;
+
+    this.slates[this.currentSlateIndex].experts.push(newExpert);
+    this.chooseDate(this.selectedDate);
+  }
+
   chooseDate(yyyyMMdd: string) {
-    if (yyyyMMdd === this.today) {
+    this.selectedDate = yyyyMMdd;
+    if (this.selectedDate === this.today) {
       this.gamesSubject.next(this.gamesToday);
     } else {
-      const gamesForDate: Game[] = Games.getGamesWithBoxScoresForDate(this.boxScoreSchedule, yyyyMMdd);
+      const gamesForDate: Game[] = Games.getGamesWithBoxScoresForDate(this.boxScoreSchedule, this.selectedDate);
       this.gamesSubject.next(gamesForDate);
     }
 
-    const slate: NewSlate | undefined = this.slates.find(({date}: NewSlate) => date === yyyyMMdd);
+    const slate: NewSlate | undefined = this.getSlateFor(this.selectedDate);
 
     if (slate) {
       this.expertsSubject.next(slate.experts);
@@ -98,7 +112,7 @@ export class SlateContainerComponent implements OnInit {
   }
 
   updateSlate({experts}: { experts: Experts }) {
-    const slateIndex: number = this.slates.findIndex(({date}: NewSlate) => date === this.selectedDate);
+    const slateIndex: number = this.currentSlateIndex;
     if (slateIndex !== -1) {
       this.slates[slateIndex].experts = experts;
     } else {
@@ -108,5 +122,13 @@ export class SlateContainerComponent implements OnInit {
     this.backendApiService.updateSlates(this.slates).subscribe(res => {
       console.log('response: ', res);
     });
+  }
+
+  private get currentSlateIndex() {
+    return this.slates.findIndex(({date}: NewSlate) => date === this.selectedDate);
+  }
+
+  private getSlateFor(yyyyMMdd: string): NewSlate | undefined {
+    return this.slates.find(({date}: NewSlate) => date === yyyyMMdd);
   }
 }

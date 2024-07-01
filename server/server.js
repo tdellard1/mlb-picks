@@ -84,7 +84,7 @@ app.post('/api/slates', (req, res) => {
 });
 
 app.post('/api/schedules', (req, res) => {
-  console.log('req: ', req.body);
+  console.log('req: ', JSON.stringify(req.body));
   writeFile(schedulesURL, JSON.stringify(req.body, null, 2), err => {
     if (err) {
       console.log("Failed to write updated data to file");
