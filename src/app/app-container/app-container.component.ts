@@ -4,15 +4,14 @@ import {TeamSchedule} from "../common/model/team-schedule.interface";
 import {ActivatedRoute, Data, RouterLink, RouterOutlet} from "@angular/router";
 import {MatTab, MatTabContent, MatTabGroup} from "@angular/material/tabs";
 import {AnalysisComponent} from "../analysis/analysis.component";
-import {PicksComponent} from "./components/picks/picks.component";
 import {Observable} from "rxjs";
 import {Game} from "../common/model/game.interface";
 import {map, tap} from "rxjs/operators";
 import {AsyncPipe, NgStyle} from "@angular/common";
 import {Player} from "../common/model/players.interface";
-import {ChartsComponent} from "./components/charts/charts.component";
 import {Picks, Slate} from "../common/resolvers/picks.resolver";
 import {SlateContainerComponent} from "../Slate/feature/slate-container/slate-container.component";
+import {Slates} from "../Slate/data-access/slate.model";
 
 @Component({
   selector: 'app-container',
@@ -23,10 +22,8 @@ import {SlateContainerComponent} from "../Slate/feature/slate-container/slate-co
     RouterOutlet,
     MatTabGroup,
     MatTab,
-    PicksComponent,
     AsyncPipe,
     MatTabContent,
-    ChartsComponent,
     SlateContainerComponent,
     NgStyle
   ],
@@ -40,6 +37,7 @@ export class AppContainerComponent {
   schedules$: Observable<TeamSchedule[]>;
   boxScores$: Observable<TeamSchedule[]>;
   picks$: Observable<Picks>;
+  slates$: Observable<Slates>;
 
   constructor(private activatedRoute: ActivatedRoute) {
     this.teams$ = this.activatedRoute.data.pipe(map((data: Data) => data['teams']));
@@ -48,6 +46,7 @@ export class AppContainerComponent {
     this.schedules$ = this.activatedRoute.data.pipe(map((data: Data) => data['schedules']));
     this.boxScores$ = this.activatedRoute.data.pipe(map((data: Data) => data['boxScores']));
     this.picks$ = this.activatedRoute.data.pipe(map((data: Data) => data['picks']));
+    this.slates$ = this.activatedRoute.data.pipe(map((data: Data) => data['slates']));
   }
 
   @HostListener('window:beforeunload', ['$event'])

@@ -4,6 +4,7 @@ import {TeamSchedule} from "../../model/team-schedule.interface";
 import {map} from "rxjs/operators";
 import {first} from "rxjs";
 import {Picks, Slate} from "../../resolvers/picks.resolver";
+import {Slates} from "../../../Slate/data-access/slate.model";
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,15 @@ export class BackendApiService {
 
   getSchedules() {
     return this.apiService.get<{schedules: TeamSchedule[]}>('http://localhost:3000/api/schedules')
+      // .pipe(
+      //   map(({schedules}: {schedules: TeamSchedule[]}) => schedules),
+      // );
+  }
+
+  getSlates() {
+    return this.apiService.get<{slates: Slates}>('http://localhost:3000/api/slates')
       .pipe(
-        map(({schedules}: {schedules: TeamSchedule[]}) => schedules),
+        map(({slates}: {slates: Slates}) => slates),
       );
   }
 
@@ -31,14 +39,7 @@ export class BackendApiService {
     return this.apiService.post('http://localhost:3000/api/picks', picks).pipe(first());
   }
 
-  updateSlates(picks: Slate) {
-    const convMap: any = {};
-
-    for (const [date, experts] of picks.dates) {
-      convMap[date] = experts;
-    }
-
-    // console.log('is this being hit', convMap);
-    return this.apiService.post('http://localhost:3000/api/experts', convMap).pipe(first());
+  updateSlates(slates: Slates) {
+    return this.apiService.post('http://localhost:3000/api/slates', slates).pipe(first());
   }
 }

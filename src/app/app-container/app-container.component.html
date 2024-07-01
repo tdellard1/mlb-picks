@@ -3,23 +3,11 @@
     <ng-template matTabContent>
       <div class="container">
         <slate-container
-          [slate]="convertToSlate((picks$ | async)!)"
+          [slates]="(slates$ | async)!"
           [schedules]="(schedules$ | async)!"
           [dailySchedule]="(dailySchedule$ | async)!"
           [boxScoreSchedule]="(boxScores$ | async)!"
           [teams]="(teams$ | async)!"></slate-container>
-      </div>
-    </ng-template>
-  </mat-tab>
-  <mat-tab label="Picks">
-    <ng-template matTabContent>
-      <div class="container">
-        <app-picks
-          [slate]="convertToSlate((picks$ | async)!)"
-          [schedules]="(schedules$ | async)!"
-          [dailySchedule]="(dailySchedule$ | async)!"
-          [teamSchedulesWithBoxScores]="(boxScores$ | async)!"
-          [teams]="(teams$ | async)!"></app-picks>
       </div>
     </ng-template>
   </mat-tab>

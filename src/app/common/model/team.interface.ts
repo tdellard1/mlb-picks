@@ -27,12 +27,20 @@ export class Teams {
     return espnLogo1;
   }
 
-  getHomeTeam({home}: Game) {
+  getHomeTeamName({home}: Game) {
     return this.getTeamName(home);
   }
 
-  getAwayTeam({away}: Game) {
+  getAwayTeamName({away}: Game) {
     return this.getTeamName(away);
+  }
+
+  getHomeTeamCity({home}: Game) {
+    return this.getTeamCity(home);
+  }
+
+  getAwayTeamCity({away}: Game) {
+    return this.getTeamCity(away);
   }
 
   private getTeam(teamAbv: string): Team {

@@ -7,7 +7,7 @@ const players = require('./assets/players.json');
 const schedules = require('./assets/schedules.json');
 const boxScore = require('./assets/boxScore.json');
 const picks = require('./assets/picks.json');
-const experts = require('./assets/experts.json');
+const slates = require('./assets/slates.json');
 const cors = require('cors');
 const { writeFile, readFile } = require("fs");
 
@@ -19,7 +19,7 @@ app.use(cors());
 const boxScoreURL = './assets/boxScore.json';
 const picksURL = './assets/picks.json';
 const schedulesURL = './assets/schedules.json';
-const expertsURL = './assets/experts.json';
+const slatesURL = './assets/slates.json';
 
 app.get('/', (req, res) => {
   res.send('Hello World from Node.js server!');
@@ -42,8 +42,8 @@ app.get('/api/boxScore', (req, res) => {
   res.json({ boxScore });
 });
 
-app.get('/api/experts', (req, res) => {
-  res.json({ experts });
+app.get('/api/slates', (req, res) => {
+  res.json({ slates });
 });
 
 app.get('/api/picks', (req, res) => {
@@ -72,9 +72,9 @@ app.post('/api/picks', (req, res) => {
   });
 });
 
-app.post('/api/experts', (req, res) => {
+app.post('/api/slates', (req, res) => {
   console.log('req: ', req.body);
-  writeFile(expertsURL, JSON.stringify(req.body, null, 2), err => {
+  writeFile(slatesURL, JSON.stringify(req.body, null, 2), err => {
     if (err) {
       console.log("Failed to write updated data to file");
       return;

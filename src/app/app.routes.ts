@@ -7,6 +7,7 @@ import {dataGuard} from "./common/guards/data.guard";
 import {boxScoresResolver} from "./common/resolvers/box-scores.resolver";
 import {scheduleResolver} from "./common/resolvers/schedule.resolver";
 import {picksResolver} from "./common/resolvers/picks.resolver";
+import {slatesResolver} from "./common/resolvers/slates.resolver";
 
 export const routes: Routes = [
   { path: '',
@@ -18,7 +19,8 @@ export const routes: Routes = [
       schedules: scheduleResolver,
       dailySchedule: dailyScheduleResolver,
       boxScores: boxScoresResolver,
-      picks: picksResolver
+      picks: picksResolver,
+      slates: slatesResolver
     }
   }
 ];

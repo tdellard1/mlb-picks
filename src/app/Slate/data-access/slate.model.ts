@@ -6,8 +6,7 @@ export class NewSlate {
   experts: Experts;
   date: string;
 
-
-  constructor(experts: Experts, date: string) {
+  constructor(date: string, experts: Experts) {
     this.experts = experts;
     this.date = date;
   }
