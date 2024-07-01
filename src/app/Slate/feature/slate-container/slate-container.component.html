@@ -11,6 +11,7 @@
   <mat-divider vertical class="divider"></mat-divider>
   <span>{{expertName}}</span>
   <div class="spacer"></div>
+
   <mat-form-field>
     <mat-label>Analyst</mat-label>
     <input matInput placeholder="Analyst Name" [(ngModel)]="expertName" [ngModelOptions]="{standalone: true}">
@@ -32,5 +33,7 @@
   <slate-form [teams]="teams"
               [games]="(games$ | async)!"
               [expertsData]="(experts$ | async)!"
+              [expertsList]="expertsList"
+              (updateSlate)="updateSlateFromSelection($event)"
               (saveExpertPredictions)="updateSlate($event)"></slate-form>
 </div>

@@ -17,5 +17,5 @@
 }
 
 .container-item > *:nth-child(4n + 2) {
-  text-align: right;
+  /*text-align: left;*/
 }

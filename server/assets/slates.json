@@ -5,99 +5,321 @@
         "name": "JDBetsHQ",
         "predictions": [
           {
-            "gameID": "20240626_PIT@CIN",
-            "prediction": "Reds",
-            "winner": "wrong",
-            "correct": false
+            "gameID": "20240626_PHI@DET",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
-            "gameID": "20240626_PHI@DET",
-            "prediction": "Phillies",
-            "winner": "right",
-            "correct": true
+            "gameID": "20240626_PIT@CIN",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_ATL@STL",
-            "prediction": "Cardinals",
-            "winner": "wrong",
-            "correct": false
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_COL@HOU",
-            "prediction": "Astros",
-            "winner": "right",
-            "correct": true
-          },
-          {
-            "gameID": "20240626_TEX@MIL",
-            "prediction": "Brewers",
-            "winner": "right",
-            "correct": true
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_MIA@KC",
-            "prediction": "Royals",
-            "winner": "right",
-            "correct": true
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240626_TEX@MIL",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_OAK@LAA",
-            "prediction": "Angels",
-            "winner": "right",
-            "correct": true
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_WAS@SD",
-            "prediction": "Padres",
-            "winner": "right",
-            "correct": true
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_CLE@BAL",
-            "prediction": "Orioles",
-            "winner": "right",
-            "correct": true
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_NYY@NYM",
-            "prediction": "Mets",
-            "winner": "right",
-            "correct": true
-          },
-          {
-            "gameID": "20240626_TOR@BOS",
-            "prediction": "Red Sox",
-            "winner": ""
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_ATL@STL_2",
-            "prediction": "Cardinals",
-            "winner": "right",
-            "correct": true
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_LAD@CHW",
-            "prediction": "White Sox",
-            "winner": "wrong",
-            "correct": false
-          },
-          {
-            "gameID": "20240626_MIN@ARI",
-            "prediction": "Diamondbacks",
-            "winner": "wrong",
-            "correct": false
-          },
-          {
-            "gameID": "20240626_CHC@SF",
-            "prediction": "Giants",
-            "winner": "right",
+            "prediction": "Dodgers",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
+            "gameID": "20240626_MIN@ARI",
+            "prediction": "Twins",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
+          },
+          {
+            "gameID": "20240626_CHC@SF",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
             "gameID": "20240626_SEA@TB",
-            "prediction": "Rays",
-            "winner": "wrong",
-            "correct": false
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           }
         ]
       },
@@ -105,84 +327,331 @@
         "name": "Ron Romanelli",
         "predictions": [
           {
-            "gameID": "20240626_PIT@CIN",
-            "prediction": "",
-            "winner": ""
+            "gameID": "20240626_PHI@DET",
+            "prediction": "Phillies",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
-            "gameID": "20240626_PHI@DET",
+            "gameID": "20240626_PIT@CIN",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_ATL@STL",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_COL@HOU",
-            "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240626_TEX@MIL",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Astros",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240626_MIA@KC",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Royals",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
+          },
+          {
+            "gameID": "20240626_TEX@MIL",
+            "prediction": "Rangers",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240626_OAK@LAA",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Angels",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240626_WAS@SD",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Nationals",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240626_CLE@BAL",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Orioles",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240626_NYY@NYM",
-            "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240626_TOR@BOS",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Yankees",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240626_ATL@STL_2",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_LAD@CHW",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Dodgers",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240626_MIN@ARI",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Twins",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240626_CHC@SF",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Giants",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240626_SEA@TB",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Rays",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           }
         ]
       },
@@ -190,84 +659,319 @@
         "name": "Stump The Spread",
         "predictions": [
           {
-            "gameID": "20240626_PIT@CIN",
-            "prediction": "",
-            "winner": ""
-          },
-          {
             "gameID": "20240626_PHI@DET",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240626_PIT@CIN",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_ATL@STL",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_COL@HOU",
             "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240626_TEX@MIL",
-            "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_MIA@KC",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240626_TEX@MIL",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_OAK@LAA",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_WAS@SD",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_CLE@BAL",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_NYY@NYM",
             "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240626_TOR@BOS",
-            "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_ATL@STL_2",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_LAD@CHW",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_MIN@ARI",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_CHC@SF",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_SEA@TB",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           }
         ]
       },
@@ -275,84 +979,333 @@
         "name": "CBS Sports Expert",
         "predictions": [
           {
-            "gameID": "20240626_PIT@CIN",
+            "gameID": "20240626_PHI@DET",
             "prediction": "Reds",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
-            "gameID": "20240626_PHI@DET",
+            "gameID": "20240626_PIT@CIN",
             "prediction": "Phillies",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240626_ATL@STL",
             "prediction": "Braves",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240626_COL@HOU",
             "prediction": "Astros",
-            "winner": ""
-          },
-          {
-            "gameID": "20240626_TEX@MIL",
-            "prediction": "Brewers",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240626_MIA@KC",
+            "prediction": "Brewers",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
+          },
+          {
+            "gameID": "20240626_TEX@MIL",
             "prediction": "Royals",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240626_OAK@LAA",
             "prediction": "Angels",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240626_WAS@SD",
             "prediction": "Padres",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240626_CLE@BAL",
             "prediction": "Orioles",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240626_NYY@NYM",
             "prediction": "Mets",
-            "winner": ""
-          },
-          {
-            "gameID": "20240626_TOR@BOS",
-            "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240626_ATL@STL_2",
-            "prediction": "Braves",
-            "winner": ""
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240626_LAD@CHW",
-            "prediction": "Dodgers",
-            "winner": ""
+            "prediction": "Braves",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240626_MIN@ARI",
-            "prediction": "Twins",
-            "winner": ""
+            "prediction": "Dodgers",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240626_CHC@SF",
-            "prediction": "Cubs",
-            "winner": ""
+            "prediction": "Twins",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240626_SEA@TB",
-            "prediction": "Mariners",
-            "winner": ""
+            "prediction": "Cubs",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           }
         ]
       },
@@ -360,99 +1313,660 @@
         "name": "Odds Trader",
         "predictions": [
           {
-            "gameID": "20240626_PIT@CIN",
+            "gameID": "20240626_PHI@DET",
             "prediction": "Reds",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
-            "gameID": "20240626_PHI@DET",
+            "gameID": "20240626_PIT@CIN",
             "prediction": "Phillies",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240626_ATL@STL",
             "prediction": "Braves",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240626_COL@HOU",
             "prediction": "Astros",
-            "winner": "right",
-            "correct": true
-          },
-          {
-            "gameID": "20240626_TEX@MIL",
-            "prediction": "Brewers",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240626_MIA@KC",
+            "prediction": "Brewers",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
+          },
+          {
+            "gameID": "20240626_TEX@MIL",
             "prediction": "Royals",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240626_OAK@LAA",
             "prediction": "Athletics",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
             "gameID": "20240626_WAS@SD",
             "prediction": "Nationals",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
             "gameID": "20240626_CLE@BAL",
             "prediction": "Orioles",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240626_NYY@NYM",
             "prediction": "Yankees",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
-            "gameID": "20240626_TOR@BOS",
-            "prediction": "Blue Jays",
-            "winner": ""
-          },
-          {
             "gameID": "20240626_ATL@STL_2",
-            "prediction": "Braves",
-            "winner": "wrong",
+            "prediction": "Blue Jays",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
             "gameID": "20240626_LAD@CHW",
-            "prediction": "Dodgers",
-            "winner": "right",
-            "correct": true
+            "prediction": "Braves",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240626_MIN@ARI",
-            "prediction": "Twins",
-            "winner": "right",
+            "prediction": "Dodgers",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240626_CHC@SF",
-            "prediction": "Cubs",
-            "winner": "wrong",
-            "correct": false
+            "prediction": "Twins",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240626_SEA@TB",
-            "prediction": "Mariners",
-            "winner": "right",
+            "prediction": "Cubs",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
+          }
+        ]
+      },
+      {
+        "name": "2eZ Sports Betting",
+        "predictions": [
+          {
+            "gameID": "20240626_PHI@DET",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240626_PIT@CIN",
+            "prediction": "Reds",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
+          },
+          {
+            "gameID": "20240626_ATL@STL",
+            "prediction": "Braves",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
+          },
+          {
+            "gameID": "20240626_COL@HOU",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240626_MIA@KC",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240626_TEX@MIL",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240626_OAK@LAA",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240626_WAS@SD",
+            "prediction": "Nationals",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
+          },
+          {
+            "gameID": "20240626_CLE@BAL",
+            "prediction": "Guardians",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
+          },
+          {
+            "gameID": "20240626_NYY@NYM",
+            "prediction": "Mets",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
+          },
+          {
+            "gameID": "20240626_ATL@STL_2",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240626_LAD@CHW",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240626_MIN@ARI",
+            "prediction": "Twins",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
+          },
+          {
+            "gameID": "20240626_CHC@SF",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240626_SEA@TB",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           }
         ]
       }
@@ -467,47 +1981,194 @@
           {
             "gameID": "20240627_MIN@ARI",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240627_CHC@SF",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240627_ATL@CHW",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Braves",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240627_MIA@PHI",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Phillies",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240627_TEX@BAL",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Orioles",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240627_NYY@TOR",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240627_CIN@STL",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240627_CLE@KC",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240627_DET@LAA",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           }
         ]
       },
@@ -516,48 +2177,198 @@
         "predictions": [
           {
             "gameID": "20240627_MIN@ARI",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Twins",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240627_CHC@SF",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Giants",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240627_ATL@CHW",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240627_MIA@PHI",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Phillies",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240627_TEX@BAL",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Orioles",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240627_NYY@TOR",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Yankees",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240627_CIN@STL",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240627_CLE@KC",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240627_DET@LAA",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Tigers",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           }
         ]
       },
@@ -567,47 +2378,191 @@
           {
             "gameID": "20240627_MIN@ARI",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240627_CHC@SF",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240627_ATL@CHW",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240627_MIA@PHI",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240627_TEX@BAL",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240627_NYY@TOR",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240627_CIN@STL",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240627_CLE@KC",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240627_DET@LAA",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           }
         ]
       },
@@ -616,48 +2571,201 @@
         "predictions": [
           {
             "gameID": "20240627_MIN@ARI",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Diamondbacks",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240627_CHC@SF",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Cubs",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240627_ATL@CHW",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Braves",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240627_MIA@PHI",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Phillies",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240627_TEX@BAL",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Orioles",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240627_NYY@TOR",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Yankees",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240627_CIN@STL",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Reds",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240627_CLE@KC",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Guardians",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240627_DET@LAA",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Tigers",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           }
         ]
       },
@@ -666,48 +2774,201 @@
         "predictions": [
           {
             "gameID": "20240627_MIN@ARI",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Twins",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240627_CHC@SF",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Cubs",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240627_ATL@CHW",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Braves",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240627_MIA@PHI",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Phillies",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240627_TEX@BAL",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Orioles",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240627_NYY@TOR",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Yankees",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240627_CIN@STL",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Reds",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240627_CLE@KC",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Royals",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240627_DET@LAA",
-            "prediction": "",
-            "winner": ""
+            "prediction": "Tigers",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           }
         ]
       }
@@ -722,80 +2983,320 @@
           {
             "gameID": "20240628_MIA@PHI",
             "prediction": "Phillies",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240628_WAS@TB",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240628_TEX@BAL",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240628_NYY@TOR",
             "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240628_SD@BOS",
-            "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240628_HOU@NYM",
-            "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240628_COL@CHW",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240628_HOU@NYM",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240628_SD@BOS",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240628_PIT@ATL",
             "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240628_CLE@KC",
-            "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240628_CHC@MIL",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240628_CLE@KC",
             "prediction": "Brewers",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240628_CIN@STL",
             "prediction": "Reds",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
             "gameID": "20240628_DET@LAA",
             "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240628_OAK@ARI",
-            "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240628_MIN@SEA",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240628_OAK@ARI",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240628_LAD@SF",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           }
         ]
       },
@@ -805,88 +3306,328 @@
           {
             "gameID": "20240628_MIA@PHI",
             "prediction": "Phillies",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240628_WAS@TB",
             "prediction": "Rays",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240628_TEX@BAL",
             "prediction": "Orioles",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240628_NYY@TOR",
             "prediction": "Yankees",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
-            "gameID": "20240628_SD@BOS",
+            "gameID": "20240628_COL@CHW",
             "prediction": "Red Sox",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
             "gameID": "20240628_HOU@NYM",
             "prediction": "Astros",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
-            "gameID": "20240628_COL@CHW",
+            "gameID": "20240628_SD@BOS",
             "prediction": "White Sox",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240628_PIT@ATL",
             "prediction": "Braves",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
-          },
-          {
-            "gameID": "20240628_CLE@KC",
-            "prediction": "",
-            "winner": ""
           },
           {
             "gameID": "20240628_CHC@MIL",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240628_CLE@KC",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240628_CIN@STL",
             "prediction": "Cardinals",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240628_DET@LAA",
             "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240628_OAK@ARI",
-            "prediction": "Diamondbacks",
-            "winner": "wrong",
-            "correct": false
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240628_MIN@SEA",
+            "prediction": "Diamondbacks",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
+          },
+          {
+            "gameID": "20240628_OAK@ARI",
             "prediction": "Twins",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
             "gameID": "20240628_LAD@SF",
             "prediction": "Giants",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           }
         ]
@@ -897,89 +3638,329 @@
           {
             "gameID": "20240628_MIA@PHI",
             "prediction": "Phillies",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240628_WAS@TB",
             "prediction": "Nationals",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
             "gameID": "20240628_TEX@BAL",
             "prediction": "Rangers",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
             "gameID": "20240628_NYY@TOR",
             "prediction": "Blue Jays",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
-            "gameID": "20240628_SD@BOS",
+            "gameID": "20240628_COL@CHW",
             "prediction": "Red Sox",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
             "gameID": "20240628_HOU@NYM",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
-            "gameID": "20240628_COL@CHW",
+            "gameID": "20240628_SD@BOS",
             "prediction": "Rockies",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
             "gameID": "20240628_PIT@ATL",
             "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240628_CLE@KC",
-            "prediction": "Guardians",
-            "winner": "wrong",
-            "correct": false
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240628_CHC@MIL",
+            "prediction": "Guardians",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
+          },
+          {
+            "gameID": "20240628_CLE@KC",
             "prediction": "Brewers",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240628_CIN@STL",
             "prediction": "Cardinals",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240628_DET@LAA",
             "prediction": "Angels",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
-            "gameID": "20240628_OAK@ARI",
+            "gameID": "20240628_MIN@SEA",
             "prediction": "Diamondbacks",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
-            "gameID": "20240628_MIN@SEA",
+            "gameID": "20240628_OAK@ARI",
             "prediction": "Mariners",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240628_LAD@SF",
             "prediction": "Dodgers",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           }
         ]
@@ -990,91 +3971,331 @@
           {
             "gameID": "20240628_MIA@PHI",
             "prediction": "Phillies",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240628_WAS@TB",
             "prediction": "Rays",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240628_TEX@BAL",
             "prediction": "Orioles",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240628_NYY@TOR",
             "prediction": "Yankees",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
-            "gameID": "20240628_SD@BOS",
+            "gameID": "20240628_COL@CHW",
             "prediction": "Padres",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240628_HOU@NYM",
             "prediction": "Astros",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
-            "gameID": "20240628_COL@CHW",
+            "gameID": "20240628_SD@BOS",
             "prediction": "Rockies",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
             "gameID": "20240628_PIT@ATL",
             "prediction": "Braves",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
-            "gameID": "20240628_CLE@KC",
+            "gameID": "20240628_CHC@MIL",
             "prediction": "Guardians",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
-            "gameID": "20240628_CHC@MIL",
+            "gameID": "20240628_CLE@KC",
             "prediction": "Brewers",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240628_CIN@STL",
             "prediction": "Reds",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
             "gameID": "20240628_DET@LAA",
             "prediction": "Tigers",
-            "winner": "wrong",
-            "correct": false
-          },
-          {
-            "gameID": "20240628_OAK@ARI",
-            "prediction": "Diamondbacks",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
             "gameID": "20240628_MIN@SEA",
+            "prediction": "Diamondbacks",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
+          },
+          {
+            "gameID": "20240628_OAK@ARI",
             "prediction": "Twins",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
             "gameID": "20240628_LAD@SF",
             "prediction": "Dodgers",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           }
         ]
@@ -1085,89 +4306,329 @@
           {
             "gameID": "20240628_MIA@PHI",
             "prediction": "Phillies",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240628_WAS@TB",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240628_TEX@BAL",
             "prediction": "Orioles",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240628_NYY@TOR",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
-            "gameID": "20240628_SD@BOS",
+            "gameID": "20240628_COL@CHW",
             "prediction": "Red Sox",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
             "gameID": "20240628_HOU@NYM",
             "prediction": "Astros",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
-            "gameID": "20240628_COL@CHW",
+            "gameID": "20240628_SD@BOS",
             "prediction": "Rockies",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
             "gameID": "20240628_PIT@ATL",
             "prediction": "Braves",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
-            "gameID": "20240628_CLE@KC",
+            "gameID": "20240628_CHC@MIL",
             "prediction": "Guardians",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
-            "gameID": "20240628_CHC@MIL",
+            "gameID": "20240628_CLE@KC",
             "prediction": "Cubs",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
             "gameID": "20240628_CIN@STL",
             "prediction": "Reds",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
             "gameID": "20240628_DET@LAA",
             "prediction": "Tigers",
-            "winner": "wrong",
-            "correct": false
-          },
-          {
-            "gameID": "20240628_OAK@ARI",
-            "prediction": "Diamondbacks",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           },
           {
             "gameID": "20240628_MIN@SEA",
+            "prediction": "Diamondbacks",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
+          },
+          {
+            "gameID": "20240628_OAK@ARI",
             "prediction": "Mariners",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240628_LAD@SF",
             "prediction": "Dodgers",
-            "winner": "wrong",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": false
           }
         ]
@@ -1178,81 +4639,321 @@
           {
             "gameID": "20240628_MIA@PHI",
             "prediction": "Phillies",
-            "winner": "right",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
             "correct": true
           },
           {
             "gameID": "20240628_WAS@TB",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240628_TEX@BAL",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240628_NYY@TOR",
             "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240628_SD@BOS",
-            "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240628_HOU@NYM",
-            "prediction": "Astros",
-            "winner": "wrong",
-            "correct": false
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240628_COL@CHW",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240628_HOU@NYM",
+            "prediction": "Astros",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
+          },
+          {
+            "gameID": "20240628_SD@BOS",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240628_PIT@ATL",
             "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240628_CLE@KC",
-            "prediction": "Guardians",
-            "winner": "wrong",
-            "correct": false
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240628_CHC@MIL",
+            "prediction": "Guardians",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
+          },
+          {
+            "gameID": "20240628_CLE@KC",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240628_CIN@STL",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240628_DET@LAA",
             "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240628_OAK@ARI",
-            "prediction": "Diamondbacks",
-            "winner": "wrong",
-            "correct": false
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240628_MIN@SEA",
+            "prediction": "Diamondbacks",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
+          },
+          {
+            "gameID": "20240628_OAK@ARI",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240628_LAD@SF",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           }
         ]
       }
@@ -1267,77 +4968,317 @@
           {
             "gameID": "20240629_COL@CHW",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240629_CIN@STL",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240629_NYY@TOR",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240629_MIA@PHI",
             "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240629_WAS@TB",
-            "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240629_SD@BOS",
-            "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240629_PIT@ATL",
-            "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240629_OAK@ARI",
-            "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240629_HOU@NYM",
-            "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240629_CLE@KC",
-            "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240629_CHC@MIL",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
-            "gameID": "20240629_TEX@BAL",
+            "gameID": "20240629_CLE@KC",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240629_HOU@NYM",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240629_OAK@ARI",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240629_PIT@ATL",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240629_SD@BOS",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240629_WAS@TB",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240629_LAD@SF",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240629_TEX@BAL",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240629_DET@LAA",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240629_MIN@SEA",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           }
         ]
       },
@@ -1347,77 +5288,327 @@
           {
             "gameID": "20240629_COL@CHW",
             "prediction": "Rockies",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240629_CIN@STL",
             "prediction": "Cardinals",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240629_NYY@TOR",
             "prediction": "Blue Jays",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240629_MIA@PHI",
             "prediction": "Phillies",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
-            "gameID": "20240629_WAS@TB",
+            "gameID": "20240629_CHC@MIL",
             "prediction": "Rays",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
-            "gameID": "20240629_SD@BOS",
+            "gameID": "20240629_CLE@KC",
             "prediction": "Red Sox",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
-            "gameID": "20240629_PIT@ATL",
+            "gameID": "20240629_HOU@NYM",
             "prediction": "Braves",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240629_OAK@ARI",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
-            "gameID": "20240629_HOU@NYM",
+            "gameID": "20240629_PIT@ATL",
             "prediction": "Mets",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
-            "gameID": "20240629_CLE@KC",
+            "gameID": "20240629_SD@BOS",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
-            "gameID": "20240629_CHC@MIL",
+            "gameID": "20240629_WAS@TB",
             "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240629_TEX@BAL",
-            "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240629_LAD@SF",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240629_TEX@BAL",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240629_DET@LAA",
             "prediction": "Angels",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240629_MIN@SEA",
             "prediction": "Twins",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           }
         ]
       },
@@ -1427,77 +5618,317 @@
           {
             "gameID": "20240629_COL@CHW",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240629_CIN@STL",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240629_NYY@TOR",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240629_MIA@PHI",
             "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240629_WAS@TB",
-            "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240629_SD@BOS",
-            "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240629_PIT@ATL",
-            "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240629_OAK@ARI",
-            "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240629_HOU@NYM",
-            "prediction": "",
-            "winner": ""
-          },
-          {
-            "gameID": "20240629_CLE@KC",
-            "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240629_CHC@MIL",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
-            "gameID": "20240629_TEX@BAL",
+            "gameID": "20240629_CLE@KC",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240629_HOU@NYM",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240629_OAK@ARI",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240629_PIT@ATL",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240629_SD@BOS",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240629_WAS@TB",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240629_LAD@SF",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240629_TEX@BAL",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240629_DET@LAA",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240629_MIN@SEA",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           }
         ]
       },
@@ -1507,77 +5938,332 @@
           {
             "gameID": "20240629_COL@CHW",
             "prediction": "Rockies",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240629_CIN@STL",
             "prediction": "Cardinals",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240629_NYY@TOR",
             "prediction": "Yankees",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240629_MIA@PHI",
             "prediction": "Phillies",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
-            "gameID": "20240629_WAS@TB",
+            "gameID": "20240629_CHC@MIL",
             "prediction": "Nationals",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
-            "gameID": "20240629_SD@BOS",
+            "gameID": "20240629_CLE@KC",
             "prediction": "Padres",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
-            "gameID": "20240629_PIT@ATL",
+            "gameID": "20240629_HOU@NYM",
             "prediction": "Braves",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240629_OAK@ARI",
             "prediction": "Diamondbacks",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
-            "gameID": "20240629_HOU@NYM",
+            "gameID": "20240629_PIT@ATL",
             "prediction": "Astros",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
-            "gameID": "20240629_CLE@KC",
+            "gameID": "20240629_SD@BOS",
             "prediction": "Guardians",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
-            "gameID": "20240629_CHC@MIL",
+            "gameID": "20240629_WAS@TB",
             "prediction": "Cubs",
-            "winner": ""
-          },
-          {
-            "gameID": "20240629_TEX@BAL",
-            "prediction": "Orioles",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240629_LAD@SF",
+            "prediction": "Orioles",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
+          },
+          {
+            "gameID": "20240629_TEX@BAL",
             "prediction": "Dodgers",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240629_DET@LAA",
             "prediction": "Tigers",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240629_MIN@SEA",
             "prediction": "Twins",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           }
         ]
       },
@@ -1587,77 +6273,331 @@
           {
             "gameID": "20240629_COL@CHW",
             "prediction": "Rockies",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240629_CIN@STL",
             "prediction": "Reds",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240629_NYY@TOR",
             "prediction": "Yankees",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240629_MIA@PHI",
             "prediction": "Phillies",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
-            "gameID": "20240629_WAS@TB",
+            "gameID": "20240629_CHC@MIL",
             "prediction": "Rays",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
-            "gameID": "20240629_SD@BOS",
+            "gameID": "20240629_CLE@KC",
             "prediction": "Padres",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
-            "gameID": "20240629_PIT@ATL",
+            "gameID": "20240629_HOU@NYM",
             "prediction": "Braves",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240629_OAK@ARI",
             "prediction": "Diamondbacks",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
-            "gameID": "20240629_HOU@NYM",
+            "gameID": "20240629_PIT@ATL",
             "prediction": "Astros",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
-            "gameID": "20240629_CLE@KC",
+            "gameID": "20240629_SD@BOS",
             "prediction": "Royals",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
-            "gameID": "20240629_CHC@MIL",
+            "gameID": "20240629_WAS@TB",
             "prediction": "Cubs",
-            "winner": ""
-          },
-          {
-            "gameID": "20240629_TEX@BAL",
-            "prediction": "Orioles",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240629_LAD@SF",
+            "prediction": "Orioles",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
+          },
+          {
+            "gameID": "20240629_TEX@BAL",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
             "gameID": "20240629_DET@LAA",
             "prediction": "Angels",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240629_MIN@SEA",
             "prediction": "Twins",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           }
         ]
       },
@@ -1667,77 +6607,329 @@
           {
             "gameID": "20240629_COL@CHW",
             "prediction": "White Sox",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
             "gameID": "20240629_CIN@STL",
             "prediction": "Cardinals",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240629_NYY@TOR",
             "prediction": "Yankees",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240629_MIA@PHI",
             "prediction": "Phillies",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
-            "gameID": "20240629_WAS@TB",
+            "gameID": "20240629_CHC@MIL",
             "prediction": "Rays",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
-            "gameID": "20240629_SD@BOS",
+            "gameID": "20240629_CLE@KC",
             "prediction": "Padres",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
-            "gameID": "20240629_PIT@ATL",
+            "gameID": "20240629_HOU@NYM",
             "prediction": "Braves",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240629_OAK@ARI",
             "prediction": "Diamondbacks",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
           },
           {
-            "gameID": "20240629_HOU@NYM",
+            "gameID": "20240629_PIT@ATL",
             "prediction": "Astros",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
-            "gameID": "20240629_CLE@KC",
+            "gameID": "20240629_SD@BOS",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           },
           {
-            "gameID": "20240629_CHC@MIL",
+            "gameID": "20240629_WAS@TB",
             "prediction": "Brewers",
-            "winner": ""
-          },
-          {
-            "gameID": "20240629_TEX@BAL",
-            "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240629_LAD@SF",
+            "prediction": "",
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240629_TEX@BAL",
             "prediction": "Dodgers",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240629_DET@LAA",
             "prediction": "Tigers",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": false
           },
           {
             "gameID": "20240629_MIN@SEA",
             "prediction": "",
-            "winner": ""
+            "options": [
+              {
+                "option": "-"
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
           }
         ]
       }
@@ -2088,7 +7280,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240630_MIA@PHI",
@@ -2109,7 +7302,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240630_SD@BOS",
@@ -2130,7 +7324,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240630_NYY@TOR",
@@ -2151,7 +7346,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240630_HOU@NYM",
@@ -2172,7 +7368,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240630_WAS@TB",
@@ -2193,7 +7390,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240630_CHC@MIL",
@@ -2235,7 +7433,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240630_COL@CHW",
@@ -2277,7 +7476,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240630_LAD@SF",
@@ -2298,7 +7498,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240630_DET@LAA",
@@ -2340,7 +7541,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240630_OAK@ARI",
@@ -2361,7 +7563,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240630_TEX@BAL",

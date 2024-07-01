@@ -1,11 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {Game} from "../../../common/model/game.interface";
 import {Teams} from "../../../common/model/team.interface";
 import {BoxScore} from "../../../common/model/box-score.interface";
-import {NgStyle} from "@angular/common";
+import {NgIf, NgStyle} from "@angular/common";
 import {Expert, GamePick} from "../../data-access/expert.interface";
+import {MatIcon} from "@angular/material/icon";
 
 @Component({
   selector: 'slate-predictions',
@@ -14,7 +15,9 @@ import {Expert, GamePick} from "../../data-access/expert.interface";
     FormsModule,
     NgSelectModule,
     ReactiveFormsModule,
-    NgStyle
+    NgStyle,
+    MatIcon,
+    NgIf
   ],
   templateUrl: './slate-predictions.component.html',
   styleUrl: './slate-predictions.component.css'
@@ -22,10 +25,12 @@ import {Expert, GamePick} from "../../data-access/expert.interface";
 export class SlatePredictionsComponent implements OnInit {
   @Input() form!: FormGroup;
   @Input() index!: number;
-
   @Input() expert!: Expert;
   @Input() games!: Game[];
   @Input() teams!: Teams;
+  @Output() newSelectionMade: EventEmitter<any> = new EventEmitter();
+
+  showPredictions: boolean = true;
 
   constructor(private fb: FormBuilder) {}
 
@@ -145,5 +150,9 @@ export class SlatePredictionsComponent implements OnInit {
   getWrongClass({value}: AbstractControl) {
     if (value.correct !== undefined) return !value.correct;
     return undefined;
+  }
+
+  changeTriggered() {
+    this.newSelectionMade.emit();
   }
 }

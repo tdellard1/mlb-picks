@@ -17,6 +17,7 @@ import {BackendApiService} from "../../../common/services/backend-api/backend-ap
 import {MatDivider} from "@angular/material/divider";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {Expert, Experts} from "../../data-access/expert.interface";
+import {ExpertRecords} from "../../data-access/expert-records.model";
 
 @Component({
   selector: 'slate-container',
@@ -44,16 +45,27 @@ export class SlateContainerComponent implements OnInit {
   protected experts$: Observable<Experts> = this.expertsSubject.asObservable();
   protected games$: Observable<Game[]> = this.gamesSubject.asObservable();
 
+  expertRecords: ExpertRecords = {} as ExpertRecords;
   expertName: string = '';
+  expertsList: string[] = [];
   selectedDate: string = '';
-  dates: string[] = [];
   showTeamCity: boolean = false;
+  dates: string[] = [];
 
   constructor(private datePipe: DatePipe,
               private backendApiService: BackendApiService) {
   }
 
   ngOnInit(): void {
+    this.expertsList = this.slates.map(value => value.experts.map(value1 => value1.name)).flat().filter((expert, index: number, array: string[]) => index === array
+      .findIndex((o) => o === expert));
+
+    this.selectedDate = this.setDatesAndGetMostRecent();
+    this.chooseDate(this.selectedDate);
+    this.expertRecords = new ExpertRecords(this.slates, this.teams);
+  }
+
+  setDatesAndGetMostRecent(): string {
     this.dates = this.slates.map(({date}: Slate) => date);
 
     const today: string = this.today!;
@@ -61,13 +73,10 @@ export class SlateContainerComponent implements OnInit {
       this.dates.push(today);
     }
 
-    const yyyyMMdd: string = this.dates.slice().pop()!;
-    this.selectedDate = yyyyMMdd;
-
-    this.chooseDate(yyyyMMdd);
+    return this.dates.slice().pop()!
   }
 
-  addExpertToSlate() {
+  protected addExpertToSlate() {
     if (this.expertName === '') return;
 
     const newExpert: Expert = {
@@ -79,7 +88,7 @@ export class SlateContainerComponent implements OnInit {
     this.chooseDate(this.selectedDate);
   }
 
-  chooseDate(yyyyMMdd: string) {
+  protected chooseDate(yyyyMMdd: string) {
     this.selectedDate = yyyyMMdd;
     if (this.selectedDate === this.today) {
       this.gamesSubject.next(this.gamesToday);
@@ -97,7 +106,7 @@ export class SlateContainerComponent implements OnInit {
     }
   }
 
-  getDate(yyyyMMdd: string): Date {
+  protected getDate(yyyyMMdd: string): Date {
     const formattedDate = yyyyMMdd.replace(/(\d{4})(\d{2})(\d{2})/g, '$1/$2/$3');
 
     return new Date(formattedDate);
@@ -107,11 +116,22 @@ export class SlateContainerComponent implements OnInit {
     return new Games(this.dailySchedule.slice()).sortedGames;
   }
 
-  get today() {
+  private get today() {
     return this.datePipe.transform(new Date(), 'yyyyMMdd');
   }
 
-  updateSlate({experts}: { experts: Experts }) {
+  /* --------------------------------------------- */
+  /* ------------- SLATE METHODS ----------------- */
+  /* --------------------------------------------- */
+  private get currentSlateIndex() {
+    return this.slates.findIndex(({date}: Slate) => date === this.selectedDate);
+  }
+
+  private getSlateFor(yyyyMMdd: string): Slate | undefined {
+    return this.slates.find(({date}: Slate) => date === yyyyMMdd);
+  }
+
+  protected updateSlate({experts}: { experts: Experts }) {
     const slateIndex: number = this.currentSlateIndex;
     if (slateIndex !== -1) {
       this.slates[slateIndex].experts = experts;
@@ -124,11 +144,14 @@ export class SlateContainerComponent implements OnInit {
     });
   }
 
-  private get currentSlateIndex() {
-    return this.slates.findIndex(({date}: Slate) => date === this.selectedDate);
-  }
+  updateSlateFromSelection({experts}: { experts: Experts }) {
+    const slateIndex: number = this.currentSlateIndex;
+    if (slateIndex !== -1) {
+      this.slates[slateIndex].experts = experts;
+    } else {
+      this.slates.push(new Slate(this.selectedDate, experts));
+    }
 
-  private getSlateFor(yyyyMMdd: string): Slate | undefined {
-    return this.slates.find(({date}: Slate) => date === yyyyMMdd);
+    this.chooseDate(this.selectedDate);
   }
 }

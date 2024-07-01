@@ -22,8 +22,10 @@ export class SlateFormComponent implements OnChanges, OnDestroy {
   @Input() teams!: Teams;
   @Input() expertsData!: Experts;
   @Input() games!: Game[];
+  @Input() expertsList!: string[];
 
   @Output() saveExpertPredictions: EventEmitter<{experts: Experts}> = new EventEmitter();
+  @Output() updateSlate: EventEmitter<{experts: Experts}> = new EventEmitter();
 
   defaultExperts: string[] = ['JDBetsHQ', 'Ron Romanelli', 'Stump The Spread', 'CBS Sports Expert', 'Odds Trader'];
   form: FormGroup = new FormGroup({
@@ -34,7 +36,7 @@ export class SlateFormComponent implements OnChanges, OnDestroy {
   constructor(private fb: FormBuilder) {}
 
   ngOnChanges(): void {
-    const expertList: string[] = this.expertsData?.length ? this.expertsData.map(value => value.name) : this.defaultExperts;
+    const expertList: string[] = this.expertsList?.length ? this.expertsList : this.defaultExperts;
     this.addControlForEachExpert(expertList);
   }
 
@@ -69,5 +71,9 @@ export class SlateFormComponent implements OnChanges, OnDestroy {
 
   ngOnDestroy(): void {
     this.saveExpertPredictions.emit(this.form.value);
+  }
+
+  updateSlateAfterSelection() {
+    this.updateSlate.emit(this.form.value);
   }
 }
