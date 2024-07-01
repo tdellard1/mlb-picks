@@ -1,0 +1,17 @@
+.form {
+  flex-grow: 1;
+}
+
+.ng-select {
+  /*min-width: 150px;*/
+  /*max-width: 250px;*/
+}
+
+.ng-select.right {
+  border: 2px solid green;
+}
+
+.ng-select.wrong {
+  border: 2px solid red;
+}
+

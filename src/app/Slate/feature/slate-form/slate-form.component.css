@@ -1,0 +1,12 @@
+:host {
+  width: 100%;
+}
+
+div {
+  display: flex;
+  flex-direction: row;
+}
+
+slate-predictions {
+  flex-grow: 1;
+}

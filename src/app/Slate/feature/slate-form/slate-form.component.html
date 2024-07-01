@@ -1,0 +1,12 @@
+<form [formGroup]="form" class="form">
+  <div formArrayName="experts">
+    <ng-container *ngFor="let expert of experts.controls; let expertIndex = index">
+      <slate-predictions
+        [form]="getExpertFormGroup(expertIndex)"
+        [games]="games"
+        [expert]="getExpertData(expertIndex)"
+        [teams]="teams"
+        [index]="expertIndex"></slate-predictions>
+    </ng-container>
+  </div>
+</form>

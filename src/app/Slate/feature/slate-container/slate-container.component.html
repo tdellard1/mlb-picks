@@ -1,0 +1,36 @@
+<div class="date-selector">
+  <mat-chip-listbox>
+    @for (date of dates; track date) {
+      <mat-chip-option [value]="date"
+                       [selected]="date === selectedDate"
+                       (selectionChange)="chooseDate(date)">{{ getDate(date) | date }}</mat-chip-option>
+    }
+  </mat-chip-listbox>
+  <mat-divider vertical class="divider"></mat-divider>
+  <mat-slide-toggle [(ngModel)]="showTeamCity">{{showTeamCity ? 'Team City' : 'Team Name'}}</mat-slide-toggle>
+  <mat-divider vertical class="divider"></mat-divider>
+  <h3>{{expertName}}</h3>
+  <div class="spacer"></div>
+  <mat-form-field>
+    <mat-label>Analyst</mat-label>
+    <input matInput placeholder="Analyst Name" [(ngModel)]="expertName" [ngModelOptions]="{standalone: true}">
+  </mat-form-field>
+
+  <button mat-raised-button>
+    Add Analyst
+  </button>
+
+
+
+
+</div>
+<div class="container-grid">
+  <slate-details
+    [games]="(games$ | async)!"
+    [getTeamName]="showTeamCity"
+    [teams]="teams"></slate-details>
+  <slate-form [teams]="teams"
+              [games]="(games$ | async)!"
+              [expertsData]="(experts$ | async)!"
+              (saveExpertPredictions)="updateSlate($event)"></slate-form>
+</div>
