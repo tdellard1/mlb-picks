@@ -1,20 +1,13 @@
 <mat-tab-group>
-  <mat-tab label="Picks">
+  <mat-tab label="Slate">
     <ng-template matTabContent>
       <div class="container">
-        <app-picks
-          [picks]="(picks$ | async)!"
+        <slate-container
+          [slates]="(slates$ | async)!"
           [schedules]="(schedules$ | async)!"
           [dailySchedule]="(dailySchedule$ | async)!"
-          [teamSchedulesWithBoxScores]="(boxScores$ | async)!"
-          [teams]="(teams$ | async)!"></app-picks>
-      </div>
-    </ng-template>
-  </mat-tab>
-  <mat-tab label="Charts">
-    <ng-template matTabContent>
-      <div class="container">
-        <app-charts></app-charts>
+          [boxScoreSchedule]="(boxScores$ | async)!"
+          [teams]="(teams$ | async)!"></slate-container>
       </div>
     </ng-template>
   </mat-tab>

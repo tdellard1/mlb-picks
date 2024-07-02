@@ -371,7 +371,7 @@ export class AnalysisViewComponent implements OnInit {
         }
       },
       title: {
-        text: "The Average Batting Average Per Game",
+        text: "Average Batting Strikeouts Per Game",
         align: "center"
       },
     };

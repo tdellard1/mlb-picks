@@ -1,0 +1,38 @@
+<form [formGroup]="form" [ngStyle]="getStyles()">
+  <ng-container formArrayName="predictions">
+    <div class="flex-row">
+      <span>{{ name }}</span>
+      <mat-icon
+        class="visibility"
+        fontIcon="visibility"
+        *ngIf="showPredictions"
+        (click)="showPredictions = !showPredictions"></mat-icon>
+      <mat-icon
+        class="visibility"
+        fontIcon="visibility_off"
+        *ngIf="!showPredictions"
+        (click)="showPredictions = !showPredictions"></mat-icon>
+    </div>
+
+    @for (_ of predictions.controls; track $index) {
+      <div
+        [formGroupName]="$index"
+        [ngStyle]="{'display': showPredictions ? '' : 'none'}">
+        <ng-select appearance="outline"
+                   [class.right]="getRightClass(_)"
+                   [class.wrong]="getWrongClass(_)"
+                   [formControlName]="'prediction'"
+                   (change)="changeTriggered()"
+                   [clearable]="false">
+          @for (option of getOptions($index).controls; track option) {
+            <ng-option [value]="option.value.option">
+              {{ option.value.option }}
+            </ng-option>
+          }
+        </ng-select>
+
+      </div>
+    }
+  </ng-container>
+</form>
+

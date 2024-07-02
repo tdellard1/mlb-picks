@@ -39,10 +39,10 @@ export const scheduleResolver: ResolveFn<TeamSchedule[]>  = (): Observable<TeamS
     })
   );
   return backendApiService.getSchedules()
-    .pipe(
-      switchMap((schedules: TeamSchedule[]) => validateSchedule(schedules) ? of(schedules) : getSchedulesFromDatabase)
-    );
-
+    // .pipe(
+      // switchMap((schedules: TeamSchedule[]) => validateSchedule(schedules) ? of(schedules) : getSchedulesFromDatabase)
+    // );
+;
   // return backendApiService.getSchedules();
 
   function validateSchedule(schedules: TeamSchedule[]): boolean {

@@ -1,4 +1,6 @@
 import {BoxScore} from "./box-score.interface";
+import {TeamSchedule} from "./team-schedule.interface";
+import {Expert, GamePick} from "../../Slate/data-access/expert.interface";
 
 export interface Game {
   gameID: string;
@@ -42,20 +44,76 @@ export class Games {
     this.games = games;
   }
 
-  getGamesInChronologicalOrder() {
-    return this.games.sort((a, b) => {
+  get sortedGames(): Game[] {
+    return this.games.slice().sort((a, b) => {
       const chronologicalOrder: number = this.getTimeAsDate(a) - this.getTimeAsDate(b);
       const alphabeticalOrder: number = a.away > b.away ? 1 : -1;
 
-      return chronologicalOrder === 0 ? alphabeticalOrder : chronologicalOrder;
+      return chronologicalOrder || alphabeticalOrder;
     });
   }
 
-  getGame(gameID: string): Game {
-    const game: Game | undefined = this.games.find(game => game.gameID === gameID);
-    if (game === undefined) throw new Error(`No such game: ${gameID}`);
+  static getGamesWithBoxScoresForDate(schedules: TeamSchedule[], yyyyMMdd: string): Game[] {
+    const gamesWithBoxScore: Game[] = schedules
+      .slice()
+      .map(({schedule}: TeamSchedule) => schedule)
+      .flat()
+      .filter(({boxScore}: Game) => !!boxScore)
+      .filter(({gameDate}: Game) => gameDate === yyyyMMdd)
+      .filter(({gameID}: Game, index: number, array: Game[]) => index === array
+        .findIndex((o) => o.gameID === gameID));
 
-    return game;
+    const games: Games = new Games(gamesWithBoxScore);
+
+    return games.sortedGames;
+  }
+
+  static getGamesWithBoxScores(schedules: TeamSchedule[]): Game[] {
+    return schedules
+      .slice()
+      .map(({schedule}: TeamSchedule) => schedule)
+      .flat()
+      .filter(({boxScore}: Game) => !!boxScore)
+      .filter(({gameID}: Game, index: number, array: Game[]) => index === array
+        .findIndex((o) => o.gameID === gameID));
+  }
+
+  static getGamesFromSchedules(schedules: TeamSchedule[]): Game[] {
+    return schedules
+      .slice()
+      .map(({schedule}: TeamSchedule) => schedule)
+      .flat()
+      .filter(({gameID}: Game, index: number, array: Game[]) => index === array
+        .findIndex((o) => o.gameID === gameID));
+  }
+
+  static getGamesFromDate(schedules: TeamSchedule[], yyyyMMdd: string): Game[] {
+    console.log('schedules In game interface: ', schedules);
+    return schedules
+      .slice()
+      .map(({schedule}: TeamSchedule) => schedule)
+      .flat()
+      .filter(({gameDate}: Game) => gameDate === yyyyMMdd)
+      .filter(({gameID}: Game, index: number, array: Game[]) => index === array
+        .findIndex((o) => o.gameID === gameID))
+      ;
+  }
+
+  static getSlateGamesFromPreviousExpertPredictions(expert: Expert, boxScoreSchedules: TeamSchedule[], schedules: TeamSchedule[]): Game[] {
+    const gameIDs: string[] = expert.predictions.map(({gameID}: GamePick) => gameID);
+
+    const boxScoreGames: Game[] = Games.getGamesWithBoxScores(boxScoreSchedules);
+    const scheduleGames: Game[] = Games.getGamesFromSchedules(schedules);
+
+    return gameIDs.map((gameID: string) => {
+      let game: Game | undefined = boxScoreGames.find((boxScoreGame: Game) => boxScoreGame.gameID === gameID);
+      if (!game) {
+        game = scheduleGames.find((scheduleGame: Game) => scheduleGame.gameID === gameID);
+      }
+      if (!game) game = { gameID } as Game;
+
+      return game;
+    });
   }
 
   private getTimeAsDate({gameTime}: Game) {

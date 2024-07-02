@@ -63,7 +63,7 @@ export class Tank01ApiService {
   }
 
   getDailySchedule(outdated: boolean): Observable<Array<Game>> {
-    const gameDate: string = ensure(this.datePipe.transform(new Date(), 'yyyyMMdd'));
+    const gameDate: string = this.datePipe.transform(new Date(), 'yyyyMMdd')!;
     const games: Array<Game> = ensure(JSON.parse(localStorage.getItem('daily-schedule') || '[]'));
 
 

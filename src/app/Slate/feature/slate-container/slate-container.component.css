@@ -1,0 +1,22 @@
+.container-grid {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+
+ .date-selector {
+   display: flex;
+   align-items: center;
+   margin: 5px;
+   padding: 5px;
+ }
+
+ .divider {
+   height: 35px;
+   margin: auto 10px;
+ }
+
+ .spacer {
+   flex-grow: 1;
+ }

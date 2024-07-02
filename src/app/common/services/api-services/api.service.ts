@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {HttpOptions} from "../../model/http-options.model";
 
@@ -14,6 +14,7 @@ export class ApiService {
   };
 
   post<T>(url: string, body: any): Observable<any> {
+    console.log('body: ', body);
     return this.http.post<T>(url,  body);
   };
 }

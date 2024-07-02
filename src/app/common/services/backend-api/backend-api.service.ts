@@ -3,7 +3,7 @@ import {ApiService} from "../api-services/api.service";
 import {TeamSchedule} from "../../model/team-schedule.interface";
 import {map} from "rxjs/operators";
 import {first} from "rxjs";
-import {Picks} from "../../resolvers/picks.resolver";
+import {Slates} from "../../../Slate/data-access/slate.model";
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,13 @@ export class BackendApiService {
       );
   }
 
+  getSlates() {
+    return this.apiService.get<{slates: Slates}>('http://localhost:3000/api/slates')
+      .pipe(
+        map(({slates}: {slates: Slates}) => slates),
+      );
+  }
+
   addSchedules(schedules: TeamSchedule[]) {
     this.apiService
       .post('http://localhost:3000/api/schedules', schedules)
@@ -27,7 +34,7 @@ export class BackendApiService {
     });
   }
 
-  updatePicks(picks: Picks) {
-    return this.apiService.post('http://localhost:3000/api/picks', picks).pipe(first());
+  updateSlates(slates: Slates) {
+    return this.apiService.post('http://localhost:3000/api/slates', slates).pipe(first());
   }
 }
