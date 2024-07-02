@@ -84,11 +84,11 @@ export class Games {
       .map(({schedule}: TeamSchedule) => schedule)
       .flat()
       .filter(({gameID}: Game, index: number, array: Game[]) => index === array
-        .findIndex((o) => o.gameID === gameID))
-      ;
+        .findIndex((o) => o.gameID === gameID));
   }
 
   static getGamesFromDate(schedules: TeamSchedule[], yyyyMMdd: string): Game[] {
+    console.log('schedules In game interface: ', schedules);
     return schedules
       .slice()
       .map(({schedule}: TeamSchedule) => schedule)

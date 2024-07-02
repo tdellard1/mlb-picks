@@ -13,9 +13,9 @@ export class BackendApiService {
 
   getSchedules() {
     return this.apiService.get<{schedules: TeamSchedule[]}>('http://localhost:3000/api/schedules')
-      // .pipe(
-      //   map(({schedules}: {schedules: TeamSchedule[]}) => schedules),
-      // );
+      .pipe(
+        map(({schedules}: {schedules: TeamSchedule[]}) => schedules),
+      );
   }
 
   getSlates() {

@@ -57,8 +57,7 @@ export class SlateContainerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.expertsList = this.slates.map(value => value.experts.map(value1 => value1.name)).flat().filter((expert, index: number, array: string[]) => index === array
-      .findIndex((o) => o === expert));
+    this.expertsList = this.allHistoricalSlateExperts;
 
     this.selectedDate = this.setDatesAndGetMostRecent();
     this.chooseDate(this.selectedDate);
@@ -73,7 +72,12 @@ export class SlateContainerComponent implements OnInit {
       this.dates.push(today);
     }
 
-    return this.dates.slice().pop()!
+    const tomorrow: string = this.tomorrow!;
+    if (!this.dates.includes(tomorrow)) {
+      this.dates.push(tomorrow);
+    }
+
+    return this.dates.slice(0, -1).pop()!
   }
 
   protected addExpertToSlate() {
@@ -90,7 +94,11 @@ export class SlateContainerComponent implements OnInit {
 
   protected chooseDate(yyyyMMdd: string) {
     this.selectedDate = yyyyMMdd;
-    if (this.selectedDate === this.today) {
+    if (this.selectedDate === this.tomorrow) {
+      console.log('schedules In game interface: ', this.allSchedules);
+      const gamesForDate: Game[] = Games.getGamesFromDate(this.allSchedules, this.selectedDate);
+      this.gamesSubject.next(new Games(gamesForDate).sortedGames);
+    } else if (this.selectedDate === this.today) {
       this.gamesSubject.next(this.gamesToday);
     } else {
       const gamesForDate: Game[] = Games.getGamesWithBoxScoresForDate(this.boxScoreSchedule, this.selectedDate);
@@ -120,6 +128,13 @@ export class SlateContainerComponent implements OnInit {
     return this.datePipe.transform(new Date(), 'yyyyMMdd');
   }
 
+  private get tomorrow() {
+    const today =  new Date();
+    const tomorrow =  new Date(today.setDate(today.getDate() + 1));
+
+    return this.datePipe.transform(tomorrow, 'yyyyMMdd');
+  }
+
   /* --------------------------------------------- */
   /* ------------- SLATE METHODS ----------------- */
   /* --------------------------------------------- */
@@ -129,6 +144,11 @@ export class SlateContainerComponent implements OnInit {
 
   private getSlateFor(yyyyMMdd: string): Slate | undefined {
     return this.slates.find(({date}: Slate) => date === yyyyMMdd);
+  }
+
+  private get allHistoricalSlateExperts(): string[] {
+    return this.slates.map(value => value.experts.map(value1 => value1.name)).flat().filter((expert, index: number, array: string[]) => index === array
+      .findIndex((o) => o === expert));
   }
 
   protected updateSlate({experts}: { experts: Experts }) {

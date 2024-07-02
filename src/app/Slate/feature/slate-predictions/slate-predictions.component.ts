@@ -58,7 +58,7 @@ export class SlatePredictionsComponent implements OnInit {
       this.predictions.push(newPredictionControl);
 
       const options: FormGroup[] = [
-        this.createOptions('-'),
+        this.createOptions(' '),
         this.createOptions(this.teams.getTeamName(away)),
         this.createOptions(this.teams.getTeamName(home)),
         this.createOptions('Total: Over'),
@@ -134,7 +134,7 @@ export class SlatePredictionsComponent implements OnInit {
   protected getStyles() {
     return {
       display: 'grid',
-      'grid-template-columns': '1fr',
+      'grid-template-columns': '200px',
       'grid-template-rows': `repeat(${this.games.length + 1}, 40px)`,
       'grid-auto-flow': `column`,
       'grid-gap': '10px',

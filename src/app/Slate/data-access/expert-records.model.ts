@@ -8,10 +8,6 @@ export class ExpertRecords {
   constructor(slates: Slates, teams: Teams) {
     for (const slate of slates) {
       for (const expert of slate.experts) {
-        if (expert.name === 'Odds Shark') {
-          console.log('Predictions For Odds Shark', slate.experts);
-        }
-
         const exportRecord: ExpertRecord | undefined = this.getExpertRecord(expert.name);
         if (exportRecord) {
           exportRecord.loadDataFromNewExpert(expert);
@@ -20,8 +16,6 @@ export class ExpertRecords {
         }
       }
     }
-
-    console.log('experts: ', this.experts);
   }
 
   getExpertRecord(name: string): ExpertRecord | undefined {
