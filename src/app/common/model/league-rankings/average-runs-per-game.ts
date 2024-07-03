@@ -83,7 +83,7 @@ export class AverageRunsPerGame {
       } else {
         throw new TypeError('Team is not home or away: ' + team);
       }
-    })
+    });
   }
 
   private lastNumberOfGames(games: Game[], n: number): Game[] {

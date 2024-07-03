@@ -78,6 +78,8 @@ export class AnalysisViewComponent implements OnInit {
 
     const analysisData: AnalysisData = new AnalysisData(this.teamSchedules);
 
+    console.log(this.teamSchedules);
+
 
     this.runsPerGameAverageChartOptions = {} as ChartOptions;
     this.averageBattingAverageChartOptions = {} as ChartOptions;

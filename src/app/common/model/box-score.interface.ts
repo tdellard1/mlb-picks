@@ -7,7 +7,7 @@ export interface BoxScore {
   Umpires: string;
   gameStatus: string;
   Attendance: string;
-  teamStats: { [team: string]: TeamStats };
+  teamStats: TeamStatsWrapper;
   gameDate: string;
   Venue: string;
   currentCount: string;
@@ -30,6 +30,10 @@ export interface BoxScore {
   startingLineups: any;
 }
 
+export interface TeamStatsWrapper {
+  home: TeamStats;
+  away: TeamStats;
+}
 
 export interface Decision {
   decision: string;

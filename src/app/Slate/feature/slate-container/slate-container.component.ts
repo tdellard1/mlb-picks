@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Game, Games} from "../../../common/model/game.interface";
-import {TeamSchedule} from "../../../common/model/team-schedule.interface";
-import {Teams} from "../../../common/model/team.interface";
+import {TeamSchedule, TeamAnalytics} from "../../../common/model/team-schedule.interface";
+import {Team, Teams} from "../../../common/model/team.interface";
 import {Slate, Slates} from "../../data-access/slate.model";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import {AsyncPipe, DatePipe} from "@angular/common";
@@ -18,6 +18,7 @@ import {MatDivider} from "@angular/material/divider";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {Expert, Experts} from "../../data-access/expert.interface";
 import {ExpertRecords} from "../../data-access/expert-records.model";
+import {AnalyticsUtils} from "../../../common/utils/analytics.utils";
 
 @Component({
   selector: 'slate-container',
@@ -59,6 +60,7 @@ export class SlateContainerComponent implements OnInit {
   ngOnInit(): void {
     this.expertsList = this.allHistoricalSlateExperts;
 
+    this.experiment();
     this.selectedDate = this.setDatesAndGetMostRecent();
     this.chooseDate(this.selectedDate);
     this.expertRecords = new ExpertRecords(this.slates, this.teams);
@@ -173,5 +175,14 @@ export class SlateContainerComponent implements OnInit {
     }
 
     this.chooseDate(this.selectedDate);
+  }
+
+  private experiment() {
+
+    const val: TeamAnalytics[] = this.boxScoreSchedule.map(({team, schedule}: TeamSchedule) => {
+      return new TeamAnalytics(team, schedule);
+    });
+
+    console.log(val);
   }
 }
