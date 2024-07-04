@@ -18,11 +18,6 @@ const boxScoreURL = './server/assets/boxScore.json';
 const schedulesURL = './server/assets/schedules.json';
 const slatesURL = './server/assets/slates.json';
 
-
-app.get('/', (req, res) => {
-  res.send('Hello World from Node.js server!');
-});
-
 // route for handling requests from the Angular client
 app.get('/api/teams', (req, res) => {
   res.json({ teams });
