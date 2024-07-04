@@ -73,7 +73,7 @@ app.post('/api/schedules', (req, res) => {
 });
 
 app.use(express.static(path.join(__dirname, '/dist/mlb-picks/browser')));
-app.use('/*', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '/dist/mlb-picks/browser/index.html'));
 });
 
