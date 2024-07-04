@@ -18,11 +18,6 @@ const boxScoreURL = './server/assets/boxScore.json';
 const schedulesURL = './server/assets/schedules.json';
 const slatesURL = './server/assets/slates.json';
 
-app.use(express.static(path.join(__dirname, '/dist/mlb-picks/browser')));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/dist/mlb-picks/browser/index.html'));
-});
-
 // route for handling requests from the Angular client
 app.get('/api/teams', (req, res) => {
   res.json({ teams });
@@ -75,6 +70,11 @@ app.post('/api/schedules', (req, res) => {
     }
     res.json({"message": "Updated file successfully"});
   });
+});
+
+app.use(express.static(path.join(__dirname, '/dist/mlb-picks/browser')));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '/dist/mlb-picks/browser/index.html'));
 });
 
 app.listen(process.env.PORT || port, () => {
