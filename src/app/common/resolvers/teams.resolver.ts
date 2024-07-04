@@ -6,7 +6,7 @@ import {ApiService} from "../services/api-services/api.service";
 import {map} from "rxjs/operators";
 
 export const teamsResolver: ResolveFn<Teams> = (): Observable<Teams> => {
-  return inject(ApiService).get<{teams: Team[]}>('http://localhost:3000/api/teams')
+  return inject(ApiService).get<{teams: Team[]}>('https://dazzling-canyonlands-93084-106125d12a27.herokuapp.com/api/teams')
     .pipe(
       map(({teams}: {teams: Team[]}) => new Teams(teams))
     );

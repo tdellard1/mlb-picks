@@ -6,7 +6,7 @@ import {ApiService} from "../services/api-services/api.service";
 import {map} from "rxjs/operators";
 
 export const playersResolver: ResolveFn<Player[]> = (): Observable<Player[]> => {
-  return inject(ApiService).get<{players: Player[]}>('http://localhost:3000/api/players')
+  return inject(ApiService).get<{players: Player[]}>('https://dazzling-canyonlands-93084-106125d12a27.herokuapp.com/api/players')
     .pipe(
       map(({players}: {players: Player[]}) => players)
     );

@@ -9,17 +9,18 @@ import {Slates} from "../../../Slate/data-access/slate.model";
   providedIn: 'root'
 })
 export class BackendApiService {
+  private url: string = 'https://dazzling-canyonlands-93084-106125d12a27.herokuapp.com/';
   constructor(private apiService: ApiService) {}
 
   getSchedules() {
-    return this.apiService.get<{schedules: TeamSchedule[]}>(process.env.LOCAL_URL)
+    return this.apiService.get<{schedules: TeamSchedule[]}>(this.url + 'api/schedules')
       .pipe(
         map(({schedules}: {schedules: TeamSchedule[]}) => schedules),
       );
   }
 
   getSlates() {
-    return this.apiService.get<{slates: Slates}>('http://localhost:3000/api/slates')
+    return this.apiService.get<{slates: Slates}>(this.url + 'api/slates')
       .pipe(
         map(({slates}: {slates: Slates}) => slates),
       );
@@ -27,7 +28,7 @@ export class BackendApiService {
 
   addSchedules(schedules: TeamSchedule[]) {
     this.apiService
-      .post('http://localhost:3000/api/schedules', schedules)
+      .post(this.url + 'api/schedules', schedules)
       .pipe(first())
       .subscribe(value => {
       console.log('addSchedules: ', value);
@@ -35,6 +36,6 @@ export class BackendApiService {
   }
 
   updateSlates(slates: Slates) {
-    return this.apiService.post('http://localhost:3000/api/slates', slates).pipe(first());
+    return this.apiService.post(this.url + 'api/slates', slates).pipe(first());
   }
 }

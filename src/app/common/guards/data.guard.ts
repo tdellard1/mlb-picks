@@ -16,7 +16,7 @@ import {
 export const dataGuard: CanActivateFn = (): boolean => {
   const apiService: ApiService = inject(ApiService);
   const tank01ApiService: Tank01ApiService = inject(Tank01ApiService);
-  const getBoxScores: Observable<BoxScore[]> = apiService.get<{boxScore: TeamSchedule[]}>('http://localhost:3000/api/boxScore')
+  const getBoxScores: Observable<BoxScore[]> = apiService.get<{boxScore: TeamSchedule[]}>('https://dazzling-canyonlands-93084-106125d12a27.herokuapp.com/api/boxScore')
     .pipe(
       map(({boxScore}: {boxScore: TeamSchedule[]}) => boxScore),
       map((teamSchedules: TeamSchedule[]) => {
@@ -27,7 +27,7 @@ export const dataGuard: CanActivateFn = (): boolean => {
         return allBoxScores.filter(Boolean);
       })
     );
-  const getSchedule: Observable<TeamSchedule[]> = apiService.get<{schedules: TeamSchedule[]}>('http://localhost:3000/api/schedules')
+  const getSchedule: Observable<TeamSchedule[]> = apiService.get<{schedules: TeamSchedule[]}>('https://dazzling-canyonlands-93084-106125d12a27.herokuapp.com/api/schedules')
     .pipe(map(({schedules}: {schedules: TeamSchedule[]}) => schedules))
 
   combineLatest([getSchedule, getBoxScores]).pipe(
@@ -57,7 +57,7 @@ export const dataGuard: CanActivateFn = (): boolean => {
 
         console.log('gamesWithoutBoxScores: ', gamesWithoutBoxScores, gamesWithoutBoxScores.length);
 
-        apiService.post('http://localhost:3000/api/boxScore', scheduleWithMostRecentGamesAndAllBoxScores).pipe(first()).subscribe(value => {
+        apiService.post('https://dazzling-canyonlands-93084-106125d12a27.herokuapp.com/api/boxScore', scheduleWithMostRecentGamesAndAllBoxScores).pipe(first()).subscribe(value => {
           console.log('returned value: ', value);
         });
       });
