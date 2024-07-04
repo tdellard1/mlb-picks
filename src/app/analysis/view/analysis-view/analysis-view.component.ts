@@ -79,31 +79,25 @@ export class AnalysisViewComponent implements OnChanges {
     const homeTeam: string = this.homeTeamAnalytics.team;
     const awayTeam: string = this.awayTeamAnalytics.team;
 
-    const battingAveragesEachGameHome: number[] = this.homeTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.battingAverage!)!;
-    const battingAveragesEachGameAway: number[] = this.awayTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.battingAverage!)!;
-
     const battingAveragesHome: number[] = this.homeTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameBattingAverage!)!;
     const battingAveragesAway: number[] = this.awayTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameBattingAverage!)!;
-    this.charts.push(this.returnChart(battingAveragesHome, battingAveragesAway, 'Batting Averages Per Game(s)', homeTeam, awayTeam, battingAveragesEachGameHome, battingAveragesEachGameAway));
+    this.charts.push(this.returnChart(battingAveragesHome, battingAveragesAway, 'Batting Averages Per Game(s)', homeTeam, awayTeam));
 
-    // const runsPerGameAverageHome: number[] = this.homeTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameRunsPerGameAverage!)!;
-    // const runsPerGameAverageAway: number[] = this.awayTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameRunsPerGameAverage!)!;
-    // this.charts.push(this.returnChart(runsPerGameAverageHome, runsPerGameAverageAway, 'Runs Per Game(s) Average', homeTeam, awayTeam));
-    //
-    // const sluggingAverageHome: number[] = this.homeTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameSluggingPercentage!)!;
-    // const sluggingAverageAway: number[] = this.awayTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameSluggingPercentage!)!;
-    // this.charts.push(this.returnChart(sluggingAverageHome, sluggingAverageAway, 'Slugging Percentage Per Game(s) Average', homeTeam, awayTeam));
-    //
-    // const onBasePercentageHome: number[] = this.homeTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameOnBasePercentage!)!;
-    // const onBasePercentageAway: number[] = this.awayTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameOnBasePercentage!)!;
-    // this.charts.push(this.returnChart(onBasePercentageHome, onBasePercentageAway, 'On Base Percentage Per Game(s) Average', homeTeam, awayTeam));
-    //
-    // const onBasePlusSluggingHome: number[] = this.homeTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameOnBasePlusSlugging!)!;
-    // const onBasePlusSluggingAway: number[] = this.awayTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameOnBasePlusSlugging!)!;
-    // this.charts.push(this.returnChart(onBasePlusSluggingHome, onBasePlusSluggingAway, 'On Base Plus Slugging Per Game(s) Average', homeTeam, awayTeam));
+    const runsPerGameAverageHome: number[] = this.homeTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameRunsPerGameAverage!)!;
+    const runsPerGameAverageAway: number[] = this.awayTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameRunsPerGameAverage!)!;
+    this.charts.push(this.returnChart(runsPerGameAverageHome, runsPerGameAverageAway, 'Runs Per Game(s) Average', homeTeam, awayTeam));
 
-    console.log('analytics', this.homeTeamAnalytics);
-    // console.log('battingAvg: ', battingAverages);
+    const sluggingAverageHome: number[] = this.homeTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameSluggingPercentage!)!;
+    const sluggingAverageAway: number[] = this.awayTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameSluggingPercentage!)!;
+    this.charts.push(this.returnChart(sluggingAverageHome, sluggingAverageAway, 'Slugging Percentage Per Game(s) Average', homeTeam, awayTeam));
+
+    const onBasePercentageHome: number[] = this.homeTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameOnBasePercentage!)!;
+    const onBasePercentageAway: number[] = this.awayTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameOnBasePercentage!)!;
+    this.charts.push(this.returnChart(onBasePercentageHome, onBasePercentageAway, 'On Base Percentage Per Game(s) Average', homeTeam, awayTeam));
+
+    const onBasePlusSluggingHome: number[] = this.homeTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameOnBasePlusSlugging!)!;
+    const onBasePlusSluggingAway: number[] = this.awayTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameOnBasePlusSlugging!)!;
+    this.charts.push(this.returnChart(onBasePlusSluggingHome, onBasePlusSluggingAway, 'On Base Plus Slugging Per Game(s) Average', homeTeam, awayTeam));
 
     const analysisData: AnalysisData = new AnalysisData(this.teamSchedules);
 
@@ -169,8 +163,6 @@ export class AnalysisViewComponent implements OnChanges {
     statisticName: string,
     homeTeamName: string,
     awayTeamName: string,
-    addedHomeTeamData?: (string | number)[],
-    addedAwayTeamData?: (string | number)[],
     ) {
     return {
       chart: {
@@ -199,30 +191,16 @@ export class AnalysisViewComponent implements OnChanges {
       },
       series: [
         {
-          name: `${homeTeamName} - Batting Avg For Game`,
-          data: addedHomeTeamData,
-          // color: 'green'
-        },
-        {
           name: homeTeamName,
-          data: homeTeamData,
-          // color: 'green'
-        },
-        {
-          name: `${awayTeamName} - Batting Avg For Game`,
-          data: awayTeamData,
-          // color: 'red'
+          data: homeTeamData
         },
         {
           name: awayTeamName,
-          data: addedAwayTeamData,
-          // color: 'red'
+          data: awayTeamData
         },
       ],
       stroke: {
-        width: 5,
-        curve: "smooth",
-        dashArray: [5,0,0,5]
+        curve: "smooth"
       },
       xaxis: {
         title: {
