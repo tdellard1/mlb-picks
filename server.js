@@ -19,58 +19,58 @@ const schedulesURL = './server/assets/schedules.json';
 const slatesURL = './server/assets/slates.json';
 
 // route for handling requests from the Angular client
-app.get('/api/teams', (req, res) => {
-  res.json({ teams });
-});
-
-app.get('/api/players', (req, res) => {
-  res.json({ players });
-});
-
-app.get('/api/schedules', (req, res) => {
-  res.json({ schedules });
-});
-
-app.get('/api/boxScore', (req, res) => {
-  res.json({ boxScore });
-});
-
-app.get('/api/slates', (req, res) => {
-  res.json({ slates });
-});
-
-app.post('/api/boxScore', (req, res) => {
-  console.log('req: ', req.body);
-  writeFile(boxScoreURL, JSON.stringify(req.body, null, 2), err => {
-    if (err) {
-      console.log("Failed to write updated data to file");
-      return;
-    }
-    res.json({"message": "Updated file successfully"});
-  });
-});
-
-app.post('/api/slates', (req, res) => {
-  console.log('req: ', req.body);
-  writeFile(slatesURL, JSON.stringify(req.body, null, 2), err => {
-    if (err) {
-      console.log("Failed to write updated data to file");
-      return;
-    }
-    res.json({"message": "Updated file successfully"});
-  });
-});
-
-app.post('/api/schedules', (req, res) => {
-  console.log('req: ', JSON.stringify(req.body));
-  writeFile(schedulesURL, JSON.stringify(req.body, null, 2), err => {
-    if (err) {
-      console.log("Failed to write updated data to file");
-      return;
-    }
-    res.json({"message": "Updated file successfully"});
-  });
-});
+// app.get('/api/teams', (req, res) => {
+//   res.json({ teams });
+// });
+//
+// app.get('/api/players', (req, res) => {
+//   res.json({ players });
+// });
+//
+// app.get('/api/schedules', (req, res) => {
+//   res.json({ schedules });
+// });
+//
+// app.get('/api/boxScore', (req, res) => {
+//   res.json({ boxScore });
+// });
+//
+// app.get('/api/slates', (req, res) => {
+//   res.json({ slates });
+// });
+//
+// app.post('/api/boxScore', (req, res) => {
+//   console.log('req: ', req.body);
+//   writeFile(boxScoreURL, JSON.stringify(req.body, null, 2), err => {
+//     if (err) {
+//       console.log("Failed to write updated data to file");
+//       return;
+//     }
+//     res.json({"message": "Updated file successfully"});
+//   });
+// });
+//
+// app.post('/api/slates', (req, res) => {
+//   console.log('req: ', req.body);
+//   writeFile(slatesURL, JSON.stringify(req.body, null, 2), err => {
+//     if (err) {
+//       console.log("Failed to write updated data to file");
+//       return;
+//     }
+//     res.json({"message": "Updated file successfully"});
+//   });
+// });
+//
+// app.post('/api/schedules', (req, res) => {
+//   console.log('req: ', JSON.stringify(req.body));
+//   writeFile(schedulesURL, JSON.stringify(req.body, null, 2), err => {
+//     if (err) {
+//       console.log("Failed to write updated data to file");
+//       return;
+//     }
+//     res.json({"message": "Updated file successfully"});
+//   });
+// });
 
 app.use(express.static(path.join(__dirname, '/dist/mlb-picks/browser')));
 app.get('/', (req, res) => {
