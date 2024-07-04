@@ -1,48 +1,33 @@
-<!--<mat-grid-list cols="11" rowHeight="35px">-->
-<!--  @for (tile of analysisTiles; track tile) {-->
-<!--    <mat-grid-tile-->
-<!--      [colspan]="tile.cols"-->
-<!--      [rowspan]="tile.rows"-->
-<!--      [style.background]="tile.color">{{tile.text}}</mat-grid-tile>-->
-<!--  }-->
-<!--</mat-grid-list>-->
+<!--<div class="full" style="text-align:center">-->
+<!--  <apx-chart-->
+<!--    [series]="runsPerGameAverageChartOptions.series"-->
+<!--    [chart]="runsPerGameAverageChartOptions.chart"-->
+<!--    [xaxis]="runsPerGameAverageChartOptions.xaxis"-->
+<!--    [title]="runsPerGameAverageChartOptions.title"></apx-chart>-->
+<!--</div>-->
 
-<h3>{{awayTeamName}} vs. {{homeTeamName}}</h3>
+<!--<div class="full" style="text-align:center">-->
+<!--  <apx-chart-->
+<!--    [series]="averageBattingAverageChartOptions.series"-->
+<!--    [chart]="averageBattingAverageChartOptions.chart"-->
+<!--    [xaxis]="averageBattingAverageChartOptions.xaxis"-->
+<!--    [title]="averageBattingAverageChartOptions.title"></apx-chart>-->
+<!--</div>-->
 
-<div class="list">
-  <mat-card appearance="outlined" class="card" *ngFor="let game of games" (click)="makeEverythingWork(game)">
-    <img alt="none" [ngSrc]="getHomeTeamImage(game)!" width="35" height="35">
-    <span>VS.</span>
-    <img alt="none" [ngSrc]="getAwayTeamImage(game)!" width="35" height="35">
-  </mat-card>
-</div>
-
-
-
-<button mat-fab extended (click)="nextGame()">
-  <span>Next</span>
-  <mat-icon>arrow_forward</mat-icon>
-</button>
-<div class="full" style="text-align:center">
-  <apx-chart
-    [series]="runsPerGameAverageChartOptions.series"
-    [chart]="runsPerGameAverageChartOptions.chart"
-    [xaxis]="runsPerGameAverageChartOptions.xaxis"
-    [title]="runsPerGameAverageChartOptions.title"></apx-chart>
-</div>
+<!--<div class="full" style="text-align:center">-->
+<!--  <apx-chart-->
+<!--    [series]="strikeoutAverageChartOptions.series"-->
+<!--    [chart]="strikeoutAverageChartOptions.chart"-->
+<!--    [xaxis]="strikeoutAverageChartOptions.xaxis"-->
+<!--    [title]="strikeoutAverageChartOptions.title"></apx-chart>-->
+<!--</div>-->
 
 <div class="full" style="text-align:center">
-  <apx-chart
-    [series]="averageBattingAverageChartOptions.series"
-    [chart]="averageBattingAverageChartOptions.chart"
-    [xaxis]="averageBattingAverageChartOptions.xaxis"
-    [title]="averageBattingAverageChartOptions.title"></apx-chart>
-</div>
-
-<div class="full" style="text-align:center">
-  <apx-chart
-    [series]="strikeoutAverageChartOptions.series"
-    [chart]="strikeoutAverageChartOptions.chart"
-    [xaxis]="strikeoutAverageChartOptions.xaxis"
-    [title]="strikeoutAverageChartOptions.title"></apx-chart>
+  @for (chart of charts; track chart) {
+    <apx-chart
+      [series]="chart.series"
+      [chart]="chart.chart"
+      [xaxis]="chart.xaxis"
+      [title]="chart.title"></apx-chart>
+  }
 </div>

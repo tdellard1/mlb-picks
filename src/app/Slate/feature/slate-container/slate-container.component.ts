@@ -18,7 +18,6 @@ import {MatDivider} from "@angular/material/divider";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {Expert, Experts} from "../../data-access/expert.interface";
 import {ExpertRecords} from "../../data-access/expert-records.model";
-import {AnalyticsUtils} from "../../../common/utils/analytics.utils";
 
 @Component({
   selector: 'slate-container',

@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {Game} from "../../../common/model/game.interface";
 import {Teams} from "../../../common/model/team.interface";
-import {TeamSchedule} from "../../../common/model/team-schedule.interface";
+import {Analytics, TeamAnalytics, TeamSchedule} from "../../../common/model/team-schedule.interface";
 import {ensure} from "../../../common/utils/array.utils";
 import {AnalysisData} from "../../../common/model/analysis.interface";
 import {LeagueRanking} from "../../../common/model/average-runs-per-game.interface";
@@ -47,16 +47,18 @@ export type ChartOptions = {
   templateUrl: './analysis-view.component.html',
   styleUrl: './analysis-view.component.css'
 })
-export class AnalysisViewComponent implements OnInit {
-  @Input() games: Game[] = [];
+export class AnalysisViewComponent implements OnChanges {
+  @Input() game: Game = {} as Game;
   @Input() teams: Teams = {} as Teams;
   @Input() teamSchedules: TeamSchedule[] = [];
+  @Input() boxScoreSchedule: TeamSchedule[] = [];
+  @Input() homeTeamAnalytics: TeamAnalytics = {} as TeamAnalytics;
+  @Input() awayTeamAnalytics: TeamAnalytics = {} as TeamAnalytics;
 
   currentGame: Game = {} as Game;
-  homeTeamName: string = '';
-  awayTeamName: string = '';
 
-  private _index: number = 0;
+  charts: ChartOptions[] = [];
+
   public runsPerGameAverageChartOptions: ChartOptions = {} as ChartOptions;
   public averageBattingAverageChartOptions: ChartOptions = {} as ChartOptions;
   public strikeoutAverageChartOptions: ChartOptions = {} as ChartOptions;
@@ -65,21 +67,45 @@ export class AnalysisViewComponent implements OnInit {
     this.setUpChart();
   }
 
-  ngOnInit(): void {
-    this.currentGame = this.games[this._index];
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.currentGame = this.game;
     this.makeEverythingWork(this.currentGame);
   }
 
   makeEverythingWork(game: Game) {
+    this.charts = [];
     const {home, away}: Game = game;
+    const homeTeam: string = this.homeTeamAnalytics.team;
+    const awayTeam: string = this.awayTeamAnalytics.team;
 
-    this.homeTeamName = this.teams.getTeamFullName(home);
-    this.awayTeamName = this.teams.getTeamFullName(away);
+    const battingAveragesEachGameHome: number[] = this.homeTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.battingAverage!)!;
+    const battingAveragesEachGameAway: number[] = this.awayTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.battingAverage!)!;
+
+    const battingAveragesHome: number[] = this.homeTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameBattingAverage!)!;
+    const battingAveragesAway: number[] = this.awayTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameBattingAverage!)!;
+    this.charts.push(this.returnChart(battingAveragesHome, battingAveragesAway, 'Batting Averages Per Game(s)', homeTeam, awayTeam, battingAveragesEachGameHome, battingAveragesEachGameAway));
+
+    // const runsPerGameAverageHome: number[] = this.homeTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameRunsPerGameAverage!)!;
+    // const runsPerGameAverageAway: number[] = this.awayTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameRunsPerGameAverage!)!;
+    // this.charts.push(this.returnChart(runsPerGameAverageHome, runsPerGameAverageAway, 'Runs Per Game(s) Average', homeTeam, awayTeam));
+    //
+    // const sluggingAverageHome: number[] = this.homeTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameSluggingPercentage!)!;
+    // const sluggingAverageAway: number[] = this.awayTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameSluggingPercentage!)!;
+    // this.charts.push(this.returnChart(sluggingAverageHome, sluggingAverageAway, 'Slugging Percentage Per Game(s) Average', homeTeam, awayTeam));
+    //
+    // const onBasePercentageHome: number[] = this.homeTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameOnBasePercentage!)!;
+    // const onBasePercentageAway: number[] = this.awayTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameOnBasePercentage!)!;
+    // this.charts.push(this.returnChart(onBasePercentageHome, onBasePercentageAway, 'On Base Percentage Per Game(s) Average', homeTeam, awayTeam));
+    //
+    // const onBasePlusSluggingHome: number[] = this.homeTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameOnBasePlusSlugging!)!;
+    // const onBasePlusSluggingAway: number[] = this.awayTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.averagePerGameOnBasePlusSlugging!)!;
+    // this.charts.push(this.returnChart(onBasePlusSluggingHome, onBasePlusSluggingAway, 'On Base Plus Slugging Per Game(s) Average', homeTeam, awayTeam));
+
+    console.log('analytics', this.homeTeamAnalytics);
+    // console.log('battingAvg: ', battingAverages);
 
     const analysisData: AnalysisData = new AnalysisData(this.teamSchedules);
-
-    console.log(this.teamSchedules);
-
 
     this.runsPerGameAverageChartOptions = {} as ChartOptions;
     this.averageBattingAverageChartOptions = {} as ChartOptions;
@@ -133,8 +159,104 @@ export class AnalysisViewComponent implements OnInit {
   }
 
   nextGame() {
-    this._index++;
-    this.makeEverythingWork(this.games[this._index]);
+    // this._index++;
+    // this.makeEverythingWork(this.game);
+  }
+
+  private returnChart(
+    homeTeamData: (string | number)[],
+    awayTeamData: (string | number)[],
+    statisticName: string,
+    homeTeamName: string,
+    awayTeamName: string,
+    addedHomeTeamData?: (string | number)[],
+    addedAwayTeamData?: (string | number)[],
+    ) {
+    return {
+      chart: {
+        height: 300,
+        width: 500,
+        type: "line",
+        foreColor: 'orange',
+        fontFamily: 'Helvetica',
+        background: 'white',
+        sparkline: {
+          //   enabled: true
+        },
+        dropShadow: {
+          enabled: true,
+          blur: 20,
+        },
+        zoom: {
+          enabled: false
+        },
+        animations: {
+          enabled: false
+        }
+      } as ApexChart,
+      dataLabels: {
+        enabled: false
+      },
+      series: [
+        {
+          name: `${homeTeamName} - Batting Avg For Game`,
+          data: addedHomeTeamData,
+          // color: 'green'
+        },
+        {
+          name: homeTeamName,
+          data: homeTeamData,
+          // color: 'green'
+        },
+        {
+          name: `${awayTeamName} - Batting Avg For Game`,
+          data: awayTeamData,
+          // color: 'red'
+        },
+        {
+          name: awayTeamName,
+          data: addedAwayTeamData,
+          // color: 'red'
+        },
+      ],
+      stroke: {
+        width: 5,
+        curve: "smooth",
+        dashArray: [5,0,0,5]
+      },
+      xaxis: {
+        title: {
+          text: 'Games Ago'
+        },
+        categories: [
+          "15",
+          "14",
+          "13",
+          "12",
+          "11",
+          "10",
+          "9",
+          "8",
+          "7",
+          "6",
+          "5",
+          "4",
+          "3",
+          "2",
+          "1",
+        ]
+      },
+      grid: {
+        row: {
+          colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+          opacity: 0.5
+        }
+      },
+      title: {
+        text: statisticName,
+        align: "center"
+      },
+    } as ChartOptions;
   }
 
   private setUpChart() {
@@ -154,6 +276,9 @@ export class AnalysisViewComponent implements OnInit {
           blur: 20,
         },
         zoom: {
+          enabled: false
+        },
+        animations: {
           enabled: false
         }
       } as ApexChart,
@@ -377,13 +502,5 @@ export class AnalysisViewComponent implements OnInit {
         align: "center"
       },
     };
-  }
-
-  getHomeTeamImage({home}: Game) {
-    return this.teams.getTeamLogo(home);
-  }
-
-  getAwayTeamImage({away}: Game) {
-    return this.teams.getTeamLogo(away);
   }
 }

@@ -1,0 +1,14 @@
+<h3>{{ teams.getTeamFullName(selectedGame.away) }} vs. {{ teams.getTeamFullName(selectedGame.home) }}</h3>
+
+<div class="container">
+  @for (game of games; track game.gameID) {
+    <mat-card
+      appearance="outlined"
+      [class.selected]="game.gameID === selectedGame.gameID"
+      (click)="onGameSelected(game)">
+      <img alt="none" [ngSrc]="teams.getTeamLogo(game.away)" width="35" height="35">
+      <span>VS.</span>
+      <img alt="none" [ngSrc]="teams.getTeamLogo(game.home)" width="35" height="35">
+    </mat-card>
+  }
+</div>

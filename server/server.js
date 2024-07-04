@@ -10,7 +10,7 @@ const slates = require('./assets/slates.json');
 const cors = require('cors');
 const { writeFile, readFile } = require("fs");
 
-app.use(express.static(path.join(__dirname, '../dist')));
+app.use(express.static(path.join(__dirname, '../dist/mlb-picks/browser')));
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb', extended: true}));
 app.use(cors());
@@ -18,6 +18,7 @@ app.use(cors());
 const boxScoreURL = './assets/boxScore.json';
 const schedulesURL = './assets/schedules.json';
 const slatesURL = './assets/slates.json';
+
 
 app.get('/', (req, res) => {
   res.send('Hello World from Node.js server!');
@@ -75,6 +76,10 @@ app.post('/api/schedules', (req, res) => {
     }
     res.json({"message": "Updated file successfully"});
   });
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/mlb-picks/browser/index.html'));
 });
 
 app.listen(port, () => {

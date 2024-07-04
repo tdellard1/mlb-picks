@@ -1,4 +1,12 @@
+<analysis-game-selector
+  [games]="games"
+  [teams]="teams"
+  (gameSelected)="selectGame($event)"></analysis-game-selector>
+
 <analysis-component-view
   [teams]="teams"
-  [games]="games"
+  [game]="(game$ | async)!"
+  [boxScoreSchedule]="boxScoreSchedule"
+  [awayTeamAnalytics]="(awayTeamAnalytics$ | async)!"
+  [homeTeamAnalytics]="(homeTeamAnalytics$ | async)!"
   [teamSchedules]="teamSchedules"></analysis-component-view>

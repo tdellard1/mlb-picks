@@ -20,9 +20,7 @@ export const dataGuard: CanActivateFn = (): boolean => {
     .pipe(
       map(({boxScore}: {boxScore: TeamSchedule[]}) => boxScore),
       map((teamSchedules: TeamSchedule[]) => {
-        const allGames: Game[] = teamSchedules.map((teamSchedule: TeamSchedule) => {
-          return teamSchedule.schedule
-        }).flat();
+        const allGames: Game[] = teamSchedules.map((teamSchedule: TeamSchedule) => teamSchedule.schedule).flat();
         const allBoxScores: any[] = allGames
           .filter((game: Game) => game.boxScore !== undefined)
           .map((game: Game) => game.boxScore);
@@ -35,6 +33,13 @@ export const dataGuard: CanActivateFn = (): boolean => {
   combineLatest([getSchedule, getBoxScores]).pipe(
     first()
   ).subscribe(([teamSchedules, boxScores]: [TeamSchedule[], BoxScore[]]) => {
+    const gameStatuses: string[] = teamSchedules.map(teamSchedule => teamSchedule.schedule)!.flat().map(game => game.gameStatus!);
+    const allStatuses = new Set(gameStatuses);
+    console.log('allStatuses: ', allStatuses);
+
+
+
+    // Getting games that are before today, if it is a new day, then we get new games and throw away the 16th game.
     const scheduleWithMostRecentGames: TeamSchedule[] = teamSchedules.map(getScheduleWith15MostRecentGames);
     const scheduleWithMostRecentGamesAndSomeBoxScores: TeamSchedule[] = addBoxScoresToSchedule(scheduleWithMostRecentGames, boxScores);
     const gamesWithoutBoxScores: Set<string> = new Set(getGamesWithoutBoxScores(scheduleWithMostRecentGamesAndSomeBoxScores));
