@@ -12,7 +12,7 @@ export class BackendApiService {
   constructor(private apiService: ApiService) {}
 
   getSchedules() {
-    return this.apiService.get<{schedules: TeamSchedule[]}>('http://localhost:3000/api/schedules')
+    return this.apiService.get<{schedules: TeamSchedule[]}>(process.env.LOCAL_URL)
       .pipe(
         map(({schedules}: {schedules: TeamSchedule[]}) => schedules),
       );
