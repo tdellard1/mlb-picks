@@ -10,7 +10,6 @@ const slates = require('./server/assets/slates.json');
 const cors = require('cors');
 const { writeFile, readFile } = require("fs");
 
-app.use(express.static(path.join(__dirname, '/dist/mlb-picks/browser')));
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb', extended: true}));
 app.use(cors());
@@ -78,7 +77,8 @@ app.post('/api/schedules', (req, res) => {
   });
 });
 
-app.get('*', (req, res) => {
+app.use(express.static(path.join(__dirname, '/dist/mlb-picks/browser')));
+app.use('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '/dist/mlb-picks/browser/index.html'));
 });
 
