@@ -1,0 +1,7 @@
+:host {
+  padding-top: 5px;
+}
+
+mat-expansion-panel {
+  margin: 10px 5px;
+}

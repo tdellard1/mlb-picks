@@ -1,0 +1,37 @@
+<mat-accordion *ngIf="handsetPortrait">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <span>
+          {{chartData.nameOfChart}}
+        </span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <apx-chart
+      [grid]="chartOptions.grid"
+      [chart]="chartOptions.chart"
+      [xaxis]="chartOptions.xaxis"
+      [yaxis]="chartOptions.yaxis"
+      [title]="chartOptions.title"
+      [stroke]="chartOptions.stroke"
+      [legend]="chartOptions.legend"
+      [series]="chartOptions.series"
+      [markers]="chartOptions.markers"
+      [tooltip]="chartOptions.tooltip"
+      [dataLabels]="chartOptions.dataLabels"></apx-chart>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<apx-chart
+  *ngIf="!handsetPortrait"
+  [grid]="chartOptions.grid"
+  [chart]="chartOptions.chart"
+  [xaxis]="chartOptions.xaxis"
+  [yaxis]="chartOptions.yaxis"
+  [title]="chartOptions.title"
+  [stroke]="chartOptions.stroke"
+  [legend]="chartOptions.legend"
+  [series]="chartOptions.series"
+  [markers]="chartOptions.markers"
+  [tooltip]="chartOptions.tooltip"
+  [dataLabels]="chartOptions.dataLabels"></apx-chart>
