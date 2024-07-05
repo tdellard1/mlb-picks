@@ -13,8 +13,8 @@ import {NgForOf, NgOptimizedImage} from "@angular/common";
 
 import {NgApexchartsModule
 } from "ng-apexcharts";
-import {ChartData, ChartOptions} from "../../../Rename/data-access/chart-options";
 import {LineChartComponent} from "../../../Rename/ui/line-chart/line-chart.component";
+import {ChartData, ChartOptions} from "../../../Rename/data-access/chart-options";
 
 @Component({
   selector: 'analysis-component-view',
