@@ -4,12 +4,13 @@ import {TeamSchedule} from "../../model/team-schedule.interface";
 import {map} from "rxjs/operators";
 import {first} from "rxjs";
 import {Slates} from "../../../Slate/data-access/slate.model";
+import {environment} from "../../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackendApiService {
-  private url: string = 'https://dazzling-canyonlands-93084-106125d12a27.herokuapp.com/';
+  private url: string = environment.apiUrl;
   constructor(private apiService: ApiService) {}
 
   getSchedules() {

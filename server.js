@@ -10,8 +10,8 @@ const slates = require('./server/assets/slates.json');
 const cors = require('cors');
 const { writeFile, readFile } = require("fs");
 
-app.use(express.json({limit: '50mb'}));
-app.use(express.urlencoded({limit: '50mb', extended: true}));
+app.use(express.json({limit: '150mb'}));
+app.use(express.urlencoded({limit: '150mb', extended: true}));
 app.use(cors());
 
 const boxScoreURL = './server/assets/boxScore.json';

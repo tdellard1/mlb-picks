@@ -1,33 +1,5 @@
 <!--<div class="full" style="text-align:center">-->
-<!--  <apx-chart-->
-<!--    [series]="runsPerGameAverageChartOptions.series"-->
-<!--    [chart]="runsPerGameAverageChartOptions.chart"-->
-<!--    [xaxis]="runsPerGameAverageChartOptions.xaxis"-->
-<!--    [title]="runsPerGameAverageChartOptions.title"></apx-chart>-->
+@for (chart of charts; track chart) {
+  <line-chart [chartData]="chart"></line-chart>
+}
 <!--</div>-->
-
-<!--<div class="full" style="text-align:center">-->
-<!--  <apx-chart-->
-<!--    [series]="averageBattingAverageChartOptions.series"-->
-<!--    [chart]="averageBattingAverageChartOptions.chart"-->
-<!--    [xaxis]="averageBattingAverageChartOptions.xaxis"-->
-<!--    [title]="averageBattingAverageChartOptions.title"></apx-chart>-->
-<!--</div>-->
-
-<!--<div class="full" style="text-align:center">-->
-<!--  <apx-chart-->
-<!--    [series]="strikeoutAverageChartOptions.series"-->
-<!--    [chart]="strikeoutAverageChartOptions.chart"-->
-<!--    [xaxis]="strikeoutAverageChartOptions.xaxis"-->
-<!--    [title]="strikeoutAverageChartOptions.title"></apx-chart>-->
-<!--</div>-->
-
-<div class="full" style="text-align:center">
-  @for (chart of charts; track chart) {
-    <apx-chart
-      [series]="chart.series"
-      [chart]="chart.chart"
-      [xaxis]="chart.xaxis"
-      [title]="chart.title"></apx-chart>
-  }
-</div>

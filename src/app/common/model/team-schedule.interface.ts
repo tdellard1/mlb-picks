@@ -2,6 +2,7 @@ import {Game} from "./game.interface";
 import {Team, Teams} from "./team.interface";
 import {BoxScore} from "./box-score.interface";
 import {TeamAnalyticsUtils} from "../utils/team-analytics.utils";
+import {roundToDecimalPlace} from "../utils/general.utils";
 
 export interface TeamSchedule {
   team: string,
@@ -25,28 +26,39 @@ export class TeamAnalytics {
 }
 
 export class Analytics {
-  averagePerGameBattingAverage?: number;
-  battingAverage?: number;
-  averagePerGameRunsPerGameAverage?: number;
-  // runsPerGameAverage?: number;
+  battingAveragePerGame?: number;
+  battingAverageForGame?: number;
+  runsPerGame?: number;
+  runsForGame?: number;
   averagePerGameSluggingPercentage?: number;
-  // sluggingAverage?: number;
+  sluggingPercentage?: number;
   averagePerGameOnBasePercentage?: number;
-  // onBasePercentage?: number;
+  onBasePercentage?: number;
   averagePerGameOnBasePlusSlugging?: number;
-  // onBasePlusSlugging?: number;
+  onBasePlusSlugging?: number;
   averagePerGameWeightedOnBaseAverage?: number;
   weightedRunsAboveAverage?: number;
 
 
   constructor(team: string, boxScores: BoxScore[], whichGame: number) {
     const boxScore: BoxScore = boxScores.slice(whichGame - 1, whichGame)[0]!;
-    this.averagePerGameBattingAverage = TeamAnalyticsUtils.getTeamBattingAverages(team, boxScores);
-    this.battingAverage = Number(TeamAnalyticsUtils.getTeamBattingAverage(team, boxScore).toFixed(3));
-    this.averagePerGameRunsPerGameAverage = TeamAnalyticsUtils.getTeamRunsPerGameAverages(team, boxScores);
+
+    this.battingAveragePerGame = TeamAnalyticsUtils.getTeamBattingAverages(team, boxScores);
+    this.battingAverageForGame = Number(TeamAnalyticsUtils.getTeamBattingAverage(team, boxScore).toFixed(3));
+
+    this.runsPerGame = TeamAnalyticsUtils.getTeamRunsPerGameAverages(team, boxScores);
+    this.runsForGame = TeamAnalyticsUtils.getTeamRunsForGame(team, boxScore);
+
     this.averagePerGameSluggingPercentage = TeamAnalyticsUtils.getTeamSluggingAverages(team, boxScores);
+    this.sluggingPercentage = Number(TeamAnalyticsUtils.getTeamSluggingAverage(team, boxScore).toFixed(3));
+
+
     this.averagePerGameOnBasePercentage = TeamAnalyticsUtils.getOnBasePercentageAverages(team, boxScores);
+    this.onBasePercentage = Number(TeamAnalyticsUtils.getTeamOnBasePercentage(team, boxScore).toFixed(3));
+
     this.averagePerGameOnBasePlusSlugging = TeamAnalyticsUtils.getOnBasePlusSluggingAverages(team, boxScores);
+    this.onBasePlusSlugging = roundToDecimalPlace((this.onBasePercentage + this.sluggingPercentage), 3);
+
     this.averagePerGameWeightedOnBaseAverage = TeamAnalyticsUtils.getWeightedOnBaseAverages(team, boxScores);
   }
 }

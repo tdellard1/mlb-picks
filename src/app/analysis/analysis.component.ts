@@ -41,6 +41,7 @@ export class AnalysisComponent implements OnInit {
   protected awayTeamAnalytics$: Observable<TeamAnalytics> = this.awayTeamAnalyticsSubject.asObservable();
 
   ngOnInit(): void {
+    console.log('boxScoreSchedule', this.boxScoreSchedule);
     this.boxScoreSchedule.forEach(({team, schedule}: TeamSchedule) => {
       this.teamAnalytics.push(new TeamAnalytics(team, schedule));
       this.teamAnalyticsMap.set(team, new TeamAnalytics(team, schedule));

@@ -33,11 +33,6 @@ export class Tank01ApiService {
               private datePipe: DatePipe) {}
 
   getAllTeams(): Observable<Array<Team>> {
-    const teams: Array<Team> | null = JSON.parse(localStorage.getItem('teams') || '[]');
-
-    if (teams?.length) {
-      return of(teams);
-    } else {
       // Come back and try this as strings of boolean
       const teamStats: boolean = true;
       const topPerformers: boolean = true;
@@ -48,7 +43,6 @@ export class Tank01ApiService {
           topPerformers
         })
         .pipe(map((value: { body: Team[] }) => value.body || []));
-    }
   }
 
   getAllPlayers(): Observable<Array<Player>> {

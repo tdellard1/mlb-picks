@@ -44,14 +44,14 @@ export class TeamAnalyticsUtils {
 
   static getTeamRunsPerGameAverages(team: string, boxScores: BoxScore[]) {
     const runsPerGameForAllGames: number[] = boxScores.map((boxScore: BoxScore) => {
-      return TeamAnalyticsUtils.getTeamRunsPerGameAverage(team, boxScore);
+      return TeamAnalyticsUtils.getTeamRunsForGame(team, boxScore);
     });
 
     const runsPerGameAverageTotal: number = sum(runsPerGameForAllGames) / boxScores.length;
     return roundToDecimalPlace(runsPerGameAverageTotal, 2);
   }
 
-  static getTeamRunsPerGameAverage(teamAbbreviation: string, boxScore: BoxScore) {
+  static getTeamRunsForGame(teamAbbreviation: string, boxScore: BoxScore) {
     const {home, away}: LineScore = ensure(boxScore?.lineScore);
     if (home.team === teamAbbreviation) {
       return Number(home.R);
@@ -119,6 +119,12 @@ export class TeamAnalyticsUtils {
   /* ------------------------------------------------------------------------------------------- */
 
   static getOnBasePlusSluggingAverages(team: string, boxScores: BoxScore[]) {
+    const onBasePercentage: number = TeamAnalyticsUtils.getOnBasePercentageAverages(team, boxScores);
+    const sluggingPercentage: number = TeamAnalyticsUtils.getTeamSluggingAverages(team, boxScores);
+    return roundToDecimalPlace((onBasePercentage + sluggingPercentage), 3);
+  }
+
+  static getOnBasePlusSluggingAverage(team: string, boxScores: BoxScore[]) {
     const onBasePercentage: number = TeamAnalyticsUtils.getOnBasePercentageAverages(team, boxScores);
     const sluggingPercentage: number = TeamAnalyticsUtils.getTeamSluggingAverages(team, boxScores);
     return roundToDecimalPlace((onBasePercentage + sluggingPercentage), 3);

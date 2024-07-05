@@ -22,3 +22,7 @@ export function sum(numbers: number[]): number {
 export function roundToDecimalPlace(number: number, decimal: number): number {
   return Number(number.toFixed(decimal));
 }
+
+export function deepCopy(value: any): any {
+  return JSON.parse(JSON.stringify(value))
+}
