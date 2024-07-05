@@ -3,7 +3,7 @@ import {Teams} from "../common/model/team.interface";
 import {TeamSchedule} from "../common/model/team-schedule.interface";
 import {ActivatedRoute, Data, RouterLink, RouterOutlet} from "@angular/router";
 import {MatTab, MatTabContent, MatTabGroup} from "@angular/material/tabs";
-import {AnalysisComponent} from "../analysis/analysis.component";
+import {AnalysisContainerComponent} from "../Analysis/feature/analysis-container/analysis-container.component";
 import {Observable} from "rxjs";
 import {Game} from "../common/model/game.interface";
 import {map} from "rxjs/operators";
@@ -17,7 +17,7 @@ import {Slates} from "../Slate/data-access/slate.model";
   standalone: true,
   imports: [
     RouterLink,
-    AnalysisComponent,
+    AnalysisContainerComponent,
     RouterOutlet,
     MatTabGroup,
     MatTab,

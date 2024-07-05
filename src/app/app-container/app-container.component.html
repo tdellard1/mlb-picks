@@ -2,11 +2,11 @@
   <mat-tab label="Analysis">
     <ng-template matTabContent>
       <div class="container">
-        <analysis-component
+        <analysis-container-component
           [games]="(dailySchedule$ | async)!"
           [teams]="(teams$ | async)!"
           [boxScoreSchedule]="(boxScores$ | async)!"
-          [teamSchedules]="(boxScores$ | async)!"></analysis-component>
+          [teamSchedules]="(boxScores$ | async)!"></analysis-container-component>
       </div>
     </ng-template>
   </mat-tab>

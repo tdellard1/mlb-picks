@@ -1,15 +1,15 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AnalysisViewComponent} from "./view/analysis-view/analysis-view.component";
-import {Game} from "../common/model/game.interface";
-import {Teams} from "../common/model/team.interface";
-import {TeamAnalytics, TeamSchedule} from "../common/model/team-schedule.interface";
+import {AnalysisViewComponent} from "../analysis-view/analysis-view.component";
+import {Game} from "../../../common/model/game.interface";
+import {Teams} from "../../../common/model/team.interface";
+import {TeamAnalytics, TeamSchedule} from "../../../common/model/team-schedule.interface";
 import {MatCard} from "@angular/material/card";
 import {AsyncPipe, NgForOf, NgOptimizedImage} from "@angular/common";
 import {BehaviorSubject, Observable} from "rxjs";
-import {AnalysisGameSelectorComponent} from "../Rename/ui/analysis-game-selector/analysis-game-selector.component";
+import {AnalysisGameSelectorComponent} from "../../ui/analysis-game-selector/analysis-game-selector.component";
 
 @Component({
-  selector: 'analysis-component',
+  selector: 'analysis-container-component',
   standalone: true,
   imports: [
     AnalysisViewComponent,
@@ -19,10 +19,10 @@ import {AnalysisGameSelectorComponent} from "../Rename/ui/analysis-game-selector
     AsyncPipe,
     AnalysisGameSelectorComponent
   ],
-  templateUrl: './analysis.component.html',
-  styleUrl: './analysis.component.css'
+  templateUrl: './analysis-container.component.html',
+  styleUrl: './analysis-container.component.css'
 })
-export class AnalysisComponent implements OnInit {
+export class AnalysisContainerComponent implements OnInit {
   @Input() games: Game[] = [];
   @Input() teams: Teams = {} as Teams;
   @Input() teamSchedules: TeamSchedule[] = [];
