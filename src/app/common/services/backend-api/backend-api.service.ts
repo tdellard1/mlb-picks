@@ -11,7 +11,7 @@ import {Team, Teams} from "../../model/team.interface";
   providedIn: 'root'
 })
 export class BackendApiService {
-  serverUrl: string = isDevMode() ? 'http://localhost:3000/' : 'https://dazzling-canyonlands-93084-106125d12a27.herokuapp.com/';
+  serverUrl: string = isDevMode() ? 'http://localhost:3000/' : 'https://mlb-picks-9d2945b4c1f1.herokuapp.com/';
   constructor(private apiService: ApiService) {}
 
   getSchedules(): Observable<TeamSchedule[]> {

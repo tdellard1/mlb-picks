@@ -1,4 +1,4 @@
-import {Component, Input, isDevMode, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AnalysisViewComponent} from "../analysis-view/analysis-view.component";
 import {Game} from "../../../common/model/game.interface";
 import {Teams} from "../../../common/model/team.interface";
@@ -41,9 +41,6 @@ export class AnalysisContainerComponent implements OnInit {
   protected awayTeamAnalytics$: Observable<TeamAnalytics> = this.awayTeamAnalyticsSubject.asObservable();
 
   ngOnInit(): void {
-
-    console.log('isDevMode: ', isDevMode());
-    console.log('boxScoreSchedule', this.boxScoreSchedule);
     this.boxScoreSchedule.forEach(({team, schedule}: TeamSchedule) => {
       this.teamAnalytics.push(new TeamAnalytics(team, schedule));
       this.teamAnalyticsMap.set(team, new TeamAnalytics(team, schedule));
