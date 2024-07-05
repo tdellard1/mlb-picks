@@ -4,24 +4,22 @@ import {TeamSchedule} from "../../model/team-schedule.interface";
 import {map} from "rxjs/operators";
 import {first} from "rxjs";
 import {Slates} from "../../../Slate/data-access/slate.model";
-import {environment} from "../../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackendApiService {
-  private url: string = environment.apiUrl;
   constructor(private apiService: ApiService) {}
 
   getSchedules() {
-    return this.apiService.get<{schedules: TeamSchedule[]}>(this.url + 'api/schedules')
+    return this.apiService.get<{schedules: TeamSchedule[]}>('api/schedules')
       .pipe(
         map(({schedules}: {schedules: TeamSchedule[]}) => schedules),
       );
   }
 
   getSlates() {
-    return this.apiService.get<{slates: Slates}>(this.url + 'api/slates')
+    return this.apiService.get<{slates: Slates}>('api/slates')
       .pipe(
         map(({slates}: {slates: Slates}) => slates),
       );
@@ -29,7 +27,7 @@ export class BackendApiService {
 
   addSchedules(schedules: TeamSchedule[]) {
     this.apiService
-      .post(this.url + 'api/schedules', schedules)
+      .post('api/schedules', schedules)
       .pipe(first())
       .subscribe(value => {
       console.log('addSchedules: ', value);
@@ -37,6 +35,6 @@ export class BackendApiService {
   }
 
   updateSlates(slates: Slates) {
-    return this.apiService.post(this.url + 'api/slates', slates).pipe(first());
+    return this.apiService.post('api/slates', slates).pipe(first());
   }
 }

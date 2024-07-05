@@ -12,12 +12,11 @@ import {
   getGamesWithoutBoxScores,
   getScheduleWith15MostRecentGames,
 } from "../utils/schedule.utils";
-import {environment} from "../../../environments/environment";
 
 export const dataGuard: CanActivateFn = (): boolean => {
   const apiService: ApiService = inject(ApiService);
   const tank01ApiService: Tank01ApiService = inject(Tank01ApiService);
-  const getBoxScores: Observable<BoxScore[]> = apiService.get<{boxScore: TeamSchedule[]}>(environment.apiUrl + 'api/boxScore')
+  const getBoxScores: Observable<BoxScore[]> = apiService.get<{boxScore: TeamSchedule[]}>('api/boxScore')
     .pipe(
       map(({boxScore}: {boxScore: TeamSchedule[]}) => boxScore),
       map((teamSchedules: TeamSchedule[]) => {
@@ -28,7 +27,7 @@ export const dataGuard: CanActivateFn = (): boolean => {
         return allBoxScores.filter(Boolean);
       })
     );
-  const getSchedule: Observable<TeamSchedule[]> = apiService.get<{schedules: TeamSchedule[]}>(environment.apiUrl + 'api/schedules')
+  const getSchedule: Observable<TeamSchedule[]> = apiService.get<{schedules: TeamSchedule[]}>('api/schedules')
     .pipe(map(({schedules}: {schedules: TeamSchedule[]}) => schedules))
 
   combineLatest([getSchedule, getBoxScores]).pipe(
@@ -58,7 +57,7 @@ export const dataGuard: CanActivateFn = (): boolean => {
 
         console.log('gamesWithoutBoxScores: ', gamesWithoutBoxScores, gamesWithoutBoxScores.length);
 
-        apiService.post(environment.apiUrl + 'api/boxScore', scheduleWithMostRecentGamesAndAllBoxScores).pipe(first()).subscribe(value => {
+        apiService.post('api/boxScore', scheduleWithMostRecentGamesAndAllBoxScores).pipe(first()).subscribe(value => {
           console.log('returned value: ', value);
         });
       });
