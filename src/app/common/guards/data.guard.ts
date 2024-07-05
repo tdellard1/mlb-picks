@@ -1,7 +1,6 @@
 import {CanActivateFn} from '@angular/router';
 import {inject} from "@angular/core";
 import {Tank01ApiService} from "../services/api-services/tank01-api.service";
-import {ApiService} from "../services/api-services/api.service";
 import {combineLatest, first, mergeAll, mergeMap, Observable, of, toArray} from "rxjs";
 import {map} from "rxjs/operators";
 import {TeamSchedule} from "../model/team-schedule.interface";
@@ -12,13 +11,14 @@ import {
   getGamesWithoutBoxScores,
   getScheduleWith15MostRecentGames,
 } from "../utils/schedule.utils";
+import {BackendApiService} from "../services/backend-api/backend-api.service";
 
 export const dataGuard: CanActivateFn = (): boolean => {
-  const apiService: ApiService = inject(ApiService);
   const tank01ApiService: Tank01ApiService = inject(Tank01ApiService);
-  const getBoxScores: Observable<BoxScore[]> = apiService.get<{boxScore: TeamSchedule[]}>('api/boxScore')
+  const backendApiService: BackendApiService = inject(BackendApiService);
+
+  const getBoxScores: Observable<BoxScore[]> = backendApiService.getBoxScores()
     .pipe(
-      map(({boxScore}: {boxScore: TeamSchedule[]}) => boxScore),
       map((teamSchedules: TeamSchedule[]) => {
         const allGames: Game[] = teamSchedules.map((teamSchedule: TeamSchedule) => teamSchedule.schedule).flat();
         const allBoxScores: any[] = allGames
@@ -27,8 +27,7 @@ export const dataGuard: CanActivateFn = (): boolean => {
         return allBoxScores.filter(Boolean);
       })
     );
-  const getSchedule: Observable<TeamSchedule[]> = apiService.get<{schedules: TeamSchedule[]}>('api/schedules')
-    .pipe(map(({schedules}: {schedules: TeamSchedule[]}) => schedules))
+  const getSchedule: Observable<TeamSchedule[]> = backendApiService.getSchedules();
 
   combineLatest([getSchedule, getBoxScores]).pipe(
     first()
@@ -57,7 +56,7 @@ export const dataGuard: CanActivateFn = (): boolean => {
 
         console.log('gamesWithoutBoxScores: ', gamesWithoutBoxScores, gamesWithoutBoxScores.length);
 
-        apiService.post('api/boxScore', scheduleWithMostRecentGamesAndAllBoxScores).pipe(first()).subscribe(value => {
+        backendApiService.updateBoxScore(scheduleWithMostRecentGamesAndAllBoxScores).pipe(first()).subscribe(value => {
           console.log('returned value: ', value);
         });
       });
