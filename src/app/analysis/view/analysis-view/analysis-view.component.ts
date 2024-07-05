@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {Game} from "../../../common/model/game.interface";
 import {Teams} from "../../../common/model/team.interface";
@@ -11,16 +11,8 @@ import {MatFabButton} from "@angular/material/button";
 import {MatCard} from "@angular/material/card";
 import {NgForOf, NgOptimizedImage} from "@angular/common";
 
-import {
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexXAxis,
-  ApexDataLabels,
-  ApexTitleSubtitle,
-  ApexStroke,
-  ApexGrid, NgApexchartsModule
+import {NgApexchartsModule
 } from "ng-apexcharts";
-import {BreakpointObserver} from "@angular/cdk/layout";
 import {ChartData, ChartOptions} from "../../../Rename/data-access/chart-options";
 import {LineChartComponent} from "../../../Rename/ui/line-chart/line-chart.component";
 
