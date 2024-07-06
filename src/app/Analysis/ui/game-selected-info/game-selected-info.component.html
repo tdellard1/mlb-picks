@@ -1,0 +1,22 @@
+<div class="image-container">
+  <img alt="none" [ngSrc]="away.espnLogo1" fill>
+</div>
+
+<div class="flex-column">
+  <span>{{away.wins}} - {{away.loss}}</span>
+  <span>{{away.teamName}}</span>
+</div>
+
+<div class="flex-column">
+  <span>{{ getDate(game) | date: 'shortTime' }}</span>
+  <span>&#64;</span>
+</div>
+
+<div class="flex-column">
+  <span>{{home.wins}} - {{home.loss}}</span>
+  <span>{{home.teamName}}</span>
+</div>
+
+<div class="image-container">
+  <img alt="none" [ngSrc]="home.espnLogo1" fill>
+</div>

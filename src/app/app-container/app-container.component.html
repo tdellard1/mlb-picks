@@ -3,8 +3,8 @@
     <ng-template matTabContent>
       <div class="container">
         <analysis-container-component
-          [games]="(dailySchedule$ | async)!"
           [teams]="(teams$ | async)!"
+          [dailySchedule]="(dailySchedule$ | async)!"
           [boxScoreSchedule]="(boxScores$ | async)!"
           [mlbTeamSchedules]="(mlbSchedules$ | async)!"
           [teamSchedules]="(boxScores$ | async)!"></analysis-container-component>

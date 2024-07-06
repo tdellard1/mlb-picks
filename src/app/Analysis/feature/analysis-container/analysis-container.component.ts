@@ -24,7 +24,8 @@ import {MLBTeamSchedule} from "../../data-access/mlb-team-schedule.model";
   styleUrl: './analysis-container.component.css'
 })
 export class AnalysisContainerComponent implements OnInit {
-  @Input() games: Game[] = [];
+  @Input() dailySchedule!: Game[];
+
   @Input() teams: Teams = {} as Teams;
   @Input() teamSchedules: TeamSchedule[] = [];
   @Input() boxScoreSchedule: TeamSchedule[] = [];
@@ -48,10 +49,9 @@ export class AnalysisContainerComponent implements OnInit {
       this.teamAnalyticsMap.set(team, new TeamAnalytics(team, schedule));
     });
 
-    this.gamesMap = this.games.reduce((previousValue: Map<string, Game>, game: Game) => {
-      previousValue.set(game.gameID, game);
-      return previousValue;
-    }, new Map<string, Game>());
+    this.dailySchedule.forEach((game: Game) => {
+      this.gamesMap.set(game.gameID, game)
+    });
   }
 
   selectGame({gameID, away, home}: Game) {

@@ -43,7 +43,7 @@ export class Teams {
     return this.getTeamCity(away);
   }
 
-  private getTeam(teamAbv: string): Team {
+  getTeam(teamAbv: string): Team {
     const team: Team | undefined = this.teams.find((team: Team) => team.teamAbv === teamAbv);
     if (team === undefined) throw new Error(`No such team: ${teamAbv}`);
 
