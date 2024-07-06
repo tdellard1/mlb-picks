@@ -1,7 +1,7 @@
 import {Injectable, isDevMode} from '@angular/core';
 import {ApiService} from "../api-services/api.service";
 import {TeamSchedule} from "../../model/team-schedule.interface";
-import {map} from "rxjs/operators";
+import {map, tap} from "rxjs/operators";
 import {first, Observable} from "rxjs";
 import {Slates} from "../../../Slate/data-access/slate.model";
 import {Player} from "../../model/players.interface";
@@ -15,36 +15,24 @@ export class BackendApiService {
   constructor(private apiService: ApiService) {}
 
   getSchedules(): Observable<TeamSchedule[]> {
-    return this.apiService.get<{schedules: TeamSchedule[]}>(this.serverUrl + 'api/schedules')
-      .pipe(
-        map(({schedules}: {schedules: TeamSchedule[]}) => schedules),
-      );
+    return this.apiService.get<TeamSchedule[]>(this.serverUrl + 'api/schedules');
   }
 
   getBoxScores(): Observable<TeamSchedule[]> {
-    return this.apiService.get<{boxScore: TeamSchedule[]}>(this.serverUrl + 'api/boxScore')
-      .pipe(map(({boxScore}: {boxScore: TeamSchedule[]}) => boxScore));
+    return this.apiService.get<TeamSchedule[]>(this.serverUrl + 'api/boxScores');
   }
 
   getPlayers(): Observable<Player[]> {
-    return this.apiService.get<{players: Player[]}>(this.serverUrl + 'api/players')
-      .pipe(map(({players}: {players: Player[]}) => players));
+    return this.apiService.get<Player[]>(this.serverUrl + 'api/players');
   }
 
   getTeams(): Observable<Teams> {
-    return this.apiService.get<{teams: Team[]}>(this.serverUrl + 'api/teams')
-      .pipe(map(({teams}: {teams: Team[]}) => new Teams(teams)));
+    return this.apiService.get<Team[]>(this.serverUrl + 'api/teams')
+      .pipe(map((teams: Team[]) => new Teams(teams)));
   }
 
-  updateBoxScore(boxScore: TeamSchedule[]) {
-    return this.apiService.post(this.serverUrl + 'api/boxScore', boxScore);
-  }
-
-  getSlates() {
-    return this.apiService.get<{slates: Slates}>(this.serverUrl + 'api/slates')
-      .pipe(
-        map(({slates}: {slates: Slates}) => slates),
-      );
+  getSlates(): Observable<Slates> {
+    return this.apiService.get<Slates>(this.serverUrl + 'api/slates');
   }
 
   addSchedules(schedules: TeamSchedule[]) {
@@ -54,6 +42,10 @@ export class BackendApiService {
       .subscribe(value => {
       console.log('addSchedules: ', value);
     });
+  }
+
+  updateBoxScore(boxScore: TeamSchedule[]) {
+    return this.apiService.post(this.serverUrl + 'api/boxScores', boxScore);
   }
 
   updateSlates(slates: Slates) {
