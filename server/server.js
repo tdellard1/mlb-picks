@@ -5,7 +5,7 @@ const port = 3000;
 const path = require('path');
 const apiRouter = require("./routes");
 const cors = require('cors');
-const pathToClientApp = '/dist/mlb-picks/browser';
+const pathToClientApp = '../dist/mlb-picks/browser';
 
 app.use(json({limit: '150mb'}));
 app.use(urlencoded({limit: '150mb', extended: true}));
