@@ -23,6 +23,6 @@ export function roundToDecimalPlace(number: number, decimal: number): number {
   return Number(number.toFixed(decimal));
 }
 
-export function deepCopy(value: any): any {
-  return JSON.parse(JSON.stringify(value))
+export function deepCopy<T>(value: any): any {
+  return JSON.parse(JSON.stringify(value)) as T;
 }

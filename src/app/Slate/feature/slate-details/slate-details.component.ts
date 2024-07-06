@@ -1,15 +1,15 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Game} from "../../../common/model/game.interface";
 import {Teams} from "../../../common/model/team.interface";
-import {NgForOf, NgStyle} from "@angular/common";
-import { getStartTimeString } from '../../../common/utils/date.utils';
+import {DatePipe, NgForOf, NgStyle} from "@angular/common";
 
 @Component({
   selector: 'slate-details',
   standalone: true,
   imports: [
     NgForOf,
-    NgStyle
+    NgStyle,
+    DatePipe
   ],
   templateUrl: './slate-details.component.html',
   styleUrl: './slate-details.component.css'
@@ -28,5 +28,7 @@ export class SlateDetailsComponent {
     };
   }
 
-  protected readonly getStartTimeString = getStartTimeString;
+  getDate({gameTime_epoch}: Game): Date {
+    return new Date(Number(gameTime_epoch) * 1000);
+  }
 }

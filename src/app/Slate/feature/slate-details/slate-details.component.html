@@ -5,12 +5,12 @@
   <span>Home</span>
   <ng-container *ngFor="let game of games">
     @if (getTeamName) {
-      <span>{{ getStartTimeString(game.gameTime) }}</span>
+      <span>{{ getDate(game) | date: 'shortTime' }}</span>
       <span>{{ teams.getAwayTeamCity(game) }}</span>
       <span>vs.</span>
       <span>{{ teams.getHomeTeamCity(game) }}</span>
     } @else {
-      <span>{{ getStartTimeString(game.gameTime) }}</span>
+      <span>{{ getDate(game) | date: 'shortTime' }}</span>
       <span>{{ teams.getAwayTeamName(game) }}</span>
       <span>vs.</span>
       <span>{{ teams.getHomeTeamName(game) }}</span>
