@@ -7,6 +7,7 @@ import {MatCard} from "@angular/material/card";
 import {AsyncPipe, NgForOf, NgOptimizedImage} from "@angular/common";
 import {BehaviorSubject, Observable} from "rxjs";
 import {AnalysisGameSelectorComponent} from "../../ui/analysis-game-selector/analysis-game-selector.component";
+import {MLBTeamSchedule} from "../../data-access/mlb-team-schedule.model";
 
 @Component({
   selector: 'analysis-container-component',
@@ -27,6 +28,7 @@ export class AnalysisContainerComponent implements OnInit {
   @Input() teams: Teams = {} as Teams;
   @Input() teamSchedules: TeamSchedule[] = [];
   @Input() boxScoreSchedule: TeamSchedule[] = [];
+  @Input() mlbTeamSchedules!: MLBTeamSchedule[];
 
   teamAnalytics: TeamAnalytics[] = [];
   teamAnalyticsMap: Map<string, TeamAnalytics> = new Map();

@@ -5,8 +5,8 @@ import {dailyScheduleResolver} from "./common/resolvers/daily-schedule.resolver"
 import {AppContainerComponent} from "./app-container/app-container.component";
 import {dataGuard} from "./common/guards/data.guard";
 import {boxScoresResolver} from "./common/resolvers/box-scores.resolver";
-import {scheduleResolver} from "./common/resolvers/schedule.resolver";
 import {slatesResolver} from "./common/resolvers/slates.resolver";
+import {mlbSchedulesResolver} from "./common/resolvers/mlb-schedules.resolver";
 
 export const routes: Routes = [
   { path: '',
@@ -15,7 +15,7 @@ export const routes: Routes = [
     resolve: {
       teams: teamsResolver,
       players: playersResolver,
-      schedules: scheduleResolver,
+      mlbSchedules: mlbSchedulesResolver,
       dailySchedule: dailyScheduleResolver,
       boxScores: boxScoresResolver,
       slates: slatesResolver

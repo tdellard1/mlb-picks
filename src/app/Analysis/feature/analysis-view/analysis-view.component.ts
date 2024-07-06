@@ -3,9 +3,6 @@ import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {Game} from "../../../common/model/game.interface";
 import {Teams} from "../../../common/model/team.interface";
 import {Analytics, TeamAnalytics, TeamSchedule} from "../../../common/model/team-schedule.interface";
-import {ensure} from "../../../common/utils/array.utils";
-import {AnalysisData} from "../../../common/model/analysis.interface";
-import {LeagueRanking} from "../../../common/model/average-runs-per-game.interface";
 import {MatIcon} from "@angular/material/icon";
 import {MatFabButton} from "@angular/material/button";
 import {MatCard} from "@angular/material/card";
@@ -36,7 +33,6 @@ import {ChartData, ChartOptions} from "../../data-access/chart-options";
 export class AnalysisViewComponent implements OnChanges {
   @Input() game: Game = {} as Game;
   @Input() teams: Teams = {} as Teams;
-  @Input() teamSchedules: TeamSchedule[] = [];
   @Input() boxScoreSchedule: TeamSchedule[] = [];
   @Input() homeTeamAnalytics: TeamAnalytics = {} as TeamAnalytics;
   @Input() awayTeamAnalytics: TeamAnalytics = {} as TeamAnalytics;
@@ -46,16 +42,15 @@ export class AnalysisViewComponent implements OnChanges {
 
   public runsPerGameAverageChartOptions: ChartOptions = {} as ChartOptions;
   public averageBattingAverageChartOptions: ChartOptions = {} as ChartOptions;
-  public strikeoutAverageChartOptions: ChartOptions = {} as ChartOptions;
 
 
   ngOnChanges(changes: SimpleChanges): void {
     this.charts = [];
     this.currentGame = this.game;
-    this.makeEverythingWork(this.currentGame);
+    this.makeEverythingWork();
   }
 
-  makeEverythingWork(game: Game) {
+  makeEverythingWork() {
     const homeTeam: string = this.teams.getTeamName(this.homeTeamAnalytics.team);
     const awayTeam: string = this.teams.getTeamName(this.awayTeamAnalytics.team);
 
@@ -151,17 +146,17 @@ export class AnalysisViewComponent implements OnChanges {
 
 
 
-    const analysisData: AnalysisData = new AnalysisData(this.teamSchedules);
+    // const analysisData: AnalysisData = new AnalysisData(this.teamSchedules);
 
     this.runsPerGameAverageChartOptions = {} as ChartOptions;
     this.averageBattingAverageChartOptions = {} as ChartOptions;
 
-    const rpgLeagueHigh: any[] = [];
-    const rpgLeagueLow: any[] = [];
+    // const rpgLeagueHigh: any[] = [];
+    // const rpgLeagueLow: any[] = [];
 
     for (let i = 15; i > 0; --i) {
-      rpgLeagueHigh.push(ensure(analysisData.averageRunsPerGameModel.League[i].find((leagueRanking: LeagueRanking) => leagueRanking.rank === '1')).value)
-      rpgLeagueLow.push(ensure(analysisData.averageRunsPerGameModel.League[i].find((leagueRanking: LeagueRanking) => leagueRanking.rank === '30')).value)
+      // rpgLeagueHigh.push(ensure(analysisData.averageRunsPerGameModel.League[i].find((leagueRanking: LeagueRanking) => leagueRanking.rank === '1')).value)
+      // rpgLeagueLow.push(ensure(analysisData.averageRunsPerGameModel.League[i].find((leagueRanking: LeagueRanking) => leagueRanking.rank === '30')).value)
     }
 
     // this.runsPerGameAverageChartOptions.series[0].data = rpgLeagueHigh;
@@ -171,12 +166,12 @@ export class AnalysisViewComponent implements OnChanges {
     // this.runsPerGameAverageChartOptions.series[2].data = [...analysisData.averageRunsPerGameModel.Team[away].values()].reverse();
     // this.runsPerGameAverageChartOptions.series[2].name = this.teams.getTeamFullName(away);
 
-    const abaLeagueHigh: any[] = [];
-    const abaLeagueLow: any[] = [];
+    // const abaLeagueHigh: any[] = [];
+    // const abaLeagueLow: any[] = [];
 
     for (let i = 15; i > 0; --i) {
-      abaLeagueHigh.push(ensure(analysisData.battingAverageModel.League[i].find((leagueRanking: LeagueRanking) => leagueRanking.rank === '1')).value)
-      abaLeagueLow.push(ensure(analysisData.battingAverageModel.League[i].find((leagueRanking: LeagueRanking) => leagueRanking.rank === '30')).value)
+      // abaLeagueHigh.push(ensure(analysisData.battingAverageModel.League[i].find((leagueRanking: LeagueRanking) => leagueRanking.rank === '1')).value)
+      // abaLeagueLow.push(ensure(analysisData.battingAverageModel.League[i].find((leagueRanking: LeagueRanking) => leagueRanking.rank === '30')).value)
     }
 
     // this.averageBattingAverageChartOptions.series[0].data = abaLeagueHigh;
@@ -186,12 +181,12 @@ export class AnalysisViewComponent implements OnChanges {
     // this.averageBattingAverageChartOptions.series[2].data = [...analysisData.battingAverageModel.getTeamValues(away)].reverse();
     // this.averageBattingAverageChartOptions.series[2].name = this.teams.getTeamFullName(away);
 
-    const soLeagueHigh: any[] = [];
-    const soLeagueLow: any[] = [];
+    // const soLeagueHigh: any[] = [];
+    // const soLeagueLow: any[] = [];
 
     for (let i = 15; i > 0; --i) {
-      soLeagueHigh.push(ensure(analysisData.strikeoutModel.League[i].find((leagueRanking: LeagueRanking) => leagueRanking.rank === '1')).value)
-      soLeagueLow.push(ensure(analysisData.strikeoutModel.League[i].find((leagueRanking: LeagueRanking) => leagueRanking.rank === '30')).value)
+      // soLeagueHigh.push(ensure(analysisData.strikeoutModel.League[i].find((leagueRanking: LeagueRanking) => leagueRanking.rank === '1')).value)
+      // soLeagueLow.push(ensure(analysisData.strikeoutModel.League[i].find((leagueRanking: LeagueRanking) => leagueRanking.rank === '30')).value)
     }
 
     // this.strikeoutAverageChartOptions.series[0].data = soLeagueHigh;

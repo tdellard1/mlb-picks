@@ -1,6 +1,7 @@
 import {BoxScore} from "./box-score.interface";
 import {TeamSchedule} from "./team-schedule.interface";
 import {Expert, GamePick} from "../../Slate/data-access/expert.interface";
+import {MLBTeamSchedule} from "../../Analysis/data-access/mlb-team-schedule.model";
 
 export interface Game {
   gameID: string;
@@ -87,11 +88,11 @@ export class Games {
         .findIndex((o) => o.gameID === gameID));
   }
 
-  static getGamesFromDate(schedules: TeamSchedule[], yyyyMMdd: string): Game[] {
+  static getGamesFromDate(schedules: MLBTeamSchedule[], yyyyMMdd: string): Game[] {
     console.log('schedules In game interface: ', schedules);
     return schedules
       .slice()
-      .map(({schedule}: TeamSchedule) => schedule)
+      .map((teamSchedule: MLBTeamSchedule) => teamSchedule.getSchedule())
       .flat()
       .filter(({gameDate}: Game) => gameDate === yyyyMMdd)
       .filter(({gameID}: Game, index: number, array: Game[]) => index === array

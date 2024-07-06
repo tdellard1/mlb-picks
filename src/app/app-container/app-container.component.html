@@ -6,6 +6,7 @@
           [games]="(dailySchedule$ | async)!"
           [teams]="(teams$ | async)!"
           [boxScoreSchedule]="(boxScores$ | async)!"
+          [mlbTeamSchedules]="(mlbSchedules$ | async)!"
           [teamSchedules]="(boxScores$ | async)!"></analysis-container-component>
       </div>
     </ng-template>
@@ -15,7 +16,6 @@
       <div class="container">
         <slate-container
           [slates]="(slates$ | async)!"
-          [schedules]="(schedules$ | async)!"
           [dailySchedule]="(dailySchedule$ | async)!"
           [boxScoreSchedule]="(boxScores$ | async)!"
           [teams]="(teams$ | async)!"></slate-container>

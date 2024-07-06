@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Game, Games} from "../../../common/model/game.interface";
 import {TeamSchedule, TeamAnalytics} from "../../../common/model/team-schedule.interface";
-import {Team, Teams} from "../../../common/model/team.interface";
+import {Teams} from "../../../common/model/team.interface";
 import {Slate, Slates} from "../../data-access/slate.model";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import {AsyncPipe, DatePipe} from "@angular/common";
@@ -35,7 +35,6 @@ import {ExpertRecords} from "../../data-access/expert-records.model";
 export class SlateContainerComponent implements OnInit {
   @Input() slates!: Slates;
   @Input() dailySchedule!: Game[];
-  @Input('schedules') allSchedules!: TeamSchedule[];
   @Input() boxScoreSchedule!: TeamSchedule[];
   @Input() teams!: Teams;
 
@@ -96,9 +95,10 @@ export class SlateContainerComponent implements OnInit {
   protected chooseDate(yyyyMMdd: string) {
     this.selectedDate = yyyyMMdd;
     if (this.selectedDate === this.tomorrow) {
-      console.log('schedules In game interface: ', this.allSchedules);
-      const gamesForDate: Game[] = Games.getGamesFromDate(this.allSchedules, this.selectedDate);
-      this.gamesSubject.next(new Games(gamesForDate).sortedGames);
+      // Replace this and Tomorrow with requesting a new daily schedule from tank01
+      // console.log('schedules In game interface: ', this.allSchedules);
+      // const gamesForDate: Game[] = Games.getGamesFromDate(this.allSchedules, this.selectedDate);
+      // this.gamesSubject.next(new Games(gamesForDate).sortedGames);
     } else if (this.selectedDate === this.today) {
       this.gamesSubject.next(this.gamesToday);
     } else {

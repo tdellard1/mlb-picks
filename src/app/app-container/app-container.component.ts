@@ -11,6 +11,7 @@ import {AsyncPipe, NgStyle} from "@angular/common";
 import {Player} from "../common/model/players.interface";
 import {SlateContainerComponent} from "../Slate/feature/slate-container/slate-container.component";
 import {Slates} from "../Slate/data-access/slate.model";
+import {MLBTeamSchedule} from "../Analysis/data-access/mlb-team-schedule.model";
 
 @Component({
   selector: 'app-container',
@@ -33,7 +34,7 @@ export class AppContainerComponent {
   dailySchedule$: Observable<Game[]>;
   players$: Observable<Player[]>;
   teams$: Observable<Teams>;
-  schedules$: Observable<TeamSchedule[]>;
+  mlbSchedules$: Observable<MLBTeamSchedule[]>;
   boxScores$: Observable<TeamSchedule[]>;
   slates$: Observable<Slates>;
 
@@ -41,7 +42,7 @@ export class AppContainerComponent {
     this.teams$ = this.activatedRoute.data.pipe(map((data: Data) => data['teams']));
     this.dailySchedule$ = this.activatedRoute.data.pipe(map((data: Data) => data['dailySchedule']));
     this.players$ = this.activatedRoute.data.pipe(map((data: Data) => data['players']));
-    this.schedules$ = this.activatedRoute.data.pipe(map((data: Data) => data['schedules']));
+    this.mlbSchedules$ = this.activatedRoute.data.pipe(map((data: Data) => data['mlbSchedules']));
     this.boxScores$ = this.activatedRoute.data.pipe(map((data: Data) => data['boxScores']));
     this.slates$ = this.activatedRoute.data.pipe(map((data: Data) => data['slates']));
   }

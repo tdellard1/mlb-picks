@@ -1,11 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { ResolveFn } from '@angular/router';
+import {mlbSchedulesResolver} from "./mlb-schedules.resolver";
+import 'jasmine'
+import {MLBTeamSchedule} from "../../Analysis/data-access/mlb-team-schedule.model";
 
-import { scheduleResolver } from './schedule.resolver';
 
 describe('mlbDataResolver', () => {
-  const executeResolver: ResolveFn<boolean> = (...resolverParameters) =>
-      TestBed.runInInjectionContext(() => scheduleResolver(...resolverParameters));
+  const executeResolver: ResolveFn<MLBTeamSchedule[]> = (...resolverParameters) =>
+      TestBed.runInInjectionContext(() => mlbSchedulesResolver(...resolverParameters));
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
