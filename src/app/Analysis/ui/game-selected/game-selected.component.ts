@@ -4,20 +4,19 @@ import {Team} from "../../../common/model/team.interface";
 import {DatePipe, NgOptimizedImage} from "@angular/common";
 
 @Component({
-  selector: 'game-selected-info',
+  selector: 'game-selected',
   standalone: true,
   imports: [
     DatePipe,
     NgOptimizedImage
   ],
-  templateUrl: './game-selected-info.component.html',
-  styleUrl: './game-selected-info.component.css'
+  templateUrl: './game-selected.component.html',
+  styleUrl: './game-selected.component.css'
 })
-export class GameSelectedInfoComponent {
+export class GameSelectedComponent {
   @Input() game!: Game;
   @Input() home!: Team;
   @Input() away!: Team;
-
 
   getDate({gameTime_epoch}: Game): Date {
     return new Date(Number(gameTime_epoch) * 1000);

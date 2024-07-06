@@ -10,8 +10,11 @@ h3 {
   text-align: center;
 }
 
-.flex-column {
+.flex-grow {
   flex-grow: 1;
+}
+
+.flex-column {
   display: flex;
   flex-direction: column;
   justify-content: center;

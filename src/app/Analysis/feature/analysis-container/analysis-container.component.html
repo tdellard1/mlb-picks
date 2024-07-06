@@ -1,7 +1,8 @@
-<analysis-game-selector
-  [dailySchedule]="dailySchedule"
-  [teams]="teams"
-  (gameSelected)="selectGame($event)"></analysis-game-selector>
+<game-selected
+  [home]="(home$ | async)!"
+  [away]="(away$ | async)!"
+  [game]="(game$ | async)!"></game-selected>
+
 
 <analysis-component-view
   [teams]="teams"
@@ -9,3 +10,9 @@
   [boxScoreSchedule]="boxScoreSchedule"
   [awayTeamAnalytics]="(awayTeamAnalytics$ | async)!"
   [homeTeamAnalytics]="(homeTeamAnalytics$ | async)!"></analysis-component-view>
+
+<game-selector
+  [teams]="teams"
+  [game]="(game$ | async)!"
+  [dailySchedule]="dailySchedule"
+  (gameSelected)="selectGame($event)"></game-selector>
