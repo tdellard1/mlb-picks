@@ -8,7 +8,8 @@ import {MatFabButton} from "@angular/material/button";
 import {MatCard} from "@angular/material/card";
 import {NgForOf, NgOptimizedImage} from "@angular/common";
 
-import {NgApexchartsModule
+import {
+  NgApexchartsModule
 } from "ng-apexcharts";
 import {LineChartComponent} from "../../ui/line-chart/line-chart.component";
 import {ChartData, ChartOptions} from "../../data-access/chart-options";
@@ -40,11 +41,8 @@ export class AnalysisViewComponent implements OnChanges {
   currentGame: Game = {} as Game;
   charts: ChartData[] = [];
 
-  public runsPerGameAverageChartOptions: ChartOptions = {} as ChartOptions;
-  public averageBattingAverageChartOptions: ChartOptions = {} as ChartOptions;
 
-
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.charts = [];
     this.currentGame = this.game;
     this.makeEverythingWork();
@@ -56,145 +54,61 @@ export class AnalysisViewComponent implements OnChanges {
 
     const battingAveragesHome: number[] = this.homeTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.battingAverageForGame!)!;
     const battingAveragesAway: number[] = this.awayTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.battingAverageForGame!)!;
-    this.charts.push({
-      nameOfChart: 'Batting Average',
-      series: [
-        {
-          data: battingAveragesHome,
-          name: `${homeTeam} - Batting Averages`
-        },
-        {
-          data: battingAveragesAway,
-          name: `${awayTeam} - Batting Averages`
-        },
-      ]
-    } as ChartData);
+    this.charts.push(this.createChart('Batting Average',
+      `${homeTeam} - Batting Averages`,
+      battingAveragesHome,
+      `${awayTeam} - Batting Averages`,
+      battingAveragesAway));
 
     const runsForGameHome: number[] = this.homeTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.runsForGame!)!;
     const runsForGameAway: number[] = this.awayTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.runsForGame!)!;
-    this.charts.push({
-      nameOfChart: 'Runs For Games',
-      series: [
-        {
-          data: runsForGameHome,
-          name: `${homeTeam} - Runs`
-        },
-        {
-          data: runsForGameAway,
-          name: `${awayTeam} - Runs`
-        },
-      ]
-    } as ChartData);
+    this.charts.push(this.createChart('Runs For Games',
+      `${homeTeam} - Runs`,
+      runsForGameHome,
+      `${awayTeam} - Runs`,
+      runsForGameAway));
 
     const sluggingPercentageHome: number[] = this.homeTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.sluggingPercentage!)!;
     const sluggingPercentageAway: number[] = this.awayTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.sluggingPercentage!)!;
-    this.charts.push({
-      nameOfChart: 'Slugging Percentage',
-      series: [
-        {
-          data: sluggingPercentageHome,
-          name: `${homeTeam} - Slugging Percentage`
-        },
-        {
-          data: sluggingPercentageAway,
-          name: `${awayTeam} - Slugging Percentage`
-        },
-      ]
-    } as ChartData);
+    this.charts.push(this.createChart('Slugging Percentage',
+      `${homeTeam} - Slugging Percentage`,
+      sluggingPercentageHome,
+      `${awayTeam} - Slugging Percentage`,
+      sluggingPercentageAway));
+
 
     const onBasePercentageHome: number[] = this.homeTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.onBasePercentage!)!;
     const onBasePercentageAway: number[] = this.awayTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.onBasePercentage!)!;
-    this.charts.push({
-      nameOfChart: 'On Base Percentage',
-      series: [
-        {
-          data: onBasePercentageHome,
-          name: `${homeTeam} - On Base Percentage`
-        },
-        {
-          data: onBasePercentageAway,
-          name: `${awayTeam} - On Base Percentage`
-        },
-      ]
-    } as ChartData);
+    this.charts.push(this.createChart('On Base Percentage',
+      `${homeTeam} - On Base Percentage`,
+      onBasePercentageHome,
+      `${awayTeam} - On Base Percentage`,
+      onBasePercentageAway));
 
 
     const onBasePlusSluggingHome: number[] = this.homeTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.onBasePlusSlugging!)!;
     const onBasePlusSluggingAway: number[] = this.awayTeamAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.onBasePlusSlugging!)!;
-    this.charts.push({
-      nameOfChart: 'On Base Plus Slugging',
+    this.charts.push(this.createChart(
+      'On Base Plus Slugging',
+      `${homeTeam} - On Base Plus Slugging`,
+      onBasePlusSluggingHome,
+      `${awayTeam} - On Base Plus Slugging`,
+      onBasePlusSluggingAway));
+  }
+
+  private createChart(nameOfChart: string, homeTeamLabel: string, homeTeamData: any[], awayTeamLabel: string, awayTeamData: any[]) {
+    return {
+      nameOfChart,
       series: [
         {
-          data: onBasePlusSluggingHome,
-          name: `${homeTeam} - On Base Plus Slugging`
+          data: homeTeamData,
+          name: homeTeamLabel
         },
         {
-          data: onBasePlusSluggingAway,
-          name: `${awayTeam} - On Base Plus Slugging`
+          data: awayTeamData,
+          name: awayTeamLabel
         },
       ]
-    } as ChartData);
-
-
-
-
-
-
-
-
-
-
-
-
-    // const analysisData: AnalysisData = new AnalysisData(this.teamSchedules);
-
-    this.runsPerGameAverageChartOptions = {} as ChartOptions;
-    this.averageBattingAverageChartOptions = {} as ChartOptions;
-
-    // const rpgLeagueHigh: any[] = [];
-    // const rpgLeagueLow: any[] = [];
-
-    for (let i = 15; i > 0; --i) {
-      // rpgLeagueHigh.push(ensure(analysisData.averageRunsPerGameModel.League[i].find((leagueRanking: LeagueRanking) => leagueRanking.rank === '1')).value)
-      // rpgLeagueLow.push(ensure(analysisData.averageRunsPerGameModel.League[i].find((leagueRanking: LeagueRanking) => leagueRanking.rank === '30')).value)
-    }
-
-    // this.runsPerGameAverageChartOptions.series[0].data = rpgLeagueHigh;
-    // this.runsPerGameAverageChartOptions.series[3].data = rpgLeagueLow;
-    // this.runsPerGameAverageChartOptions.series[1].data = [...analysisData.averageRunsPerGameModel.Team[home].values()].reverse();
-    // this.runsPerGameAverageChartOptions.series[1].name = this.teams.getTeamFullName(home);
-    // this.runsPerGameAverageChartOptions.series[2].data = [...analysisData.averageRunsPerGameModel.Team[away].values()].reverse();
-    // this.runsPerGameAverageChartOptions.series[2].name = this.teams.getTeamFullName(away);
-
-    // const abaLeagueHigh: any[] = [];
-    // const abaLeagueLow: any[] = [];
-
-    for (let i = 15; i > 0; --i) {
-      // abaLeagueHigh.push(ensure(analysisData.battingAverageModel.League[i].find((leagueRanking: LeagueRanking) => leagueRanking.rank === '1')).value)
-      // abaLeagueLow.push(ensure(analysisData.battingAverageModel.League[i].find((leagueRanking: LeagueRanking) => leagueRanking.rank === '30')).value)
-    }
-
-    // this.averageBattingAverageChartOptions.series[0].data = abaLeagueHigh;
-    // this.averageBattingAverageChartOptions.series[3].data = abaLeagueLow;
-    // this.averageBattingAverageChartOptions.series[1].data = [...analysisData.battingAverageModel.getTeamValues(home)].reverse();
-    // this.averageBattingAverageChartOptions.series[1].name = this.teams.getTeamFullName(home);
-    // this.averageBattingAverageChartOptions.series[2].data = [...analysisData.battingAverageModel.getTeamValues(away)].reverse();
-    // this.averageBattingAverageChartOptions.series[2].name = this.teams.getTeamFullName(away);
-
-    // const soLeagueHigh: any[] = [];
-    // const soLeagueLow: any[] = [];
-
-    for (let i = 15; i > 0; --i) {
-      // soLeagueHigh.push(ensure(analysisData.strikeoutModel.League[i].find((leagueRanking: LeagueRanking) => leagueRanking.rank === '1')).value)
-      // soLeagueLow.push(ensure(analysisData.strikeoutModel.League[i].find((leagueRanking: LeagueRanking) => leagueRanking.rank === '30')).value)
-    }
-
-    // this.strikeoutAverageChartOptions.series[0].data = soLeagueHigh;
-    // this.strikeoutAverageChartOptions.series[3].data = soLeagueLow;
-    // this.strikeoutAverageChartOptions.series[1].data = [...analysisData.strikeoutModel.getTeamValues(home)].reverse();
-    // this.strikeoutAverageChartOptions.series[1].name = this.teams.getTeamFullName(home);
-    // this.strikeoutAverageChartOptions.series[2].data = [...analysisData.strikeoutModel.getTeamValues(away)].reverse();
-    // this.strikeoutAverageChartOptions.series[2].name = this.teams.getTeamFullName(away);
-
+    } as ChartData
   }
 }
