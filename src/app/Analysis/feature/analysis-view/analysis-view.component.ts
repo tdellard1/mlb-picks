@@ -1,18 +1,25 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges} from '@angular/core';
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {Game} from "../../../common/model/game.interface";
 import {Teams} from "../../../common/model/team.interface";
-import {Analytics, TeamAnalytics, TeamSchedule} from "../../../common/model/team-schedule.interface";
+import {Analytics, TeamAnalytics} from "../../../common/model/team-schedule.interface";
 import {MatIcon} from "@angular/material/icon";
 import {MatFabButton} from "@angular/material/button";
 import {MatCard} from "@angular/material/card";
-import {NgForOf, NgOptimizedImage} from "@angular/common";
+import {NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 
 import {
   NgApexchartsModule
 } from "ng-apexcharts";
 import {LineChartComponent} from "../../ui/line-chart/line-chart.component";
-import {ChartData, ChartOptions} from "../../data-access/chart-options";
+import {ChartData} from "../../data-access/chart-options";
+import {
+  MatAccordion,
+  MatExpansionPanel,
+  MatExpansionPanelHeader,
+  MatExpansionPanelTitle
+} from "@angular/material/expansion";
+import {BreakpointObserver, Breakpoints, BreakpointState} from "@angular/cdk/layout";
 
 @Component({
   selector: 'analysis-component-view',
@@ -26,21 +33,32 @@ import {ChartData, ChartOptions} from "../../data-access/chart-options";
     MatCard,
     NgOptimizedImage,
     NgForOf,
-    LineChartComponent
+    LineChartComponent,
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle,
+    NgIf
   ],
   templateUrl: './analysis-view.component.html',
   styleUrl: './analysis-view.component.css'
 })
 export class AnalysisViewComponent implements OnChanges {
+  constructor(private breakpoint: BreakpointObserver) {
+    this.breakpoint.observe(Breakpoints.HandsetPortrait)
+      .subscribe((bpState: BreakpointState) => {
+        this.handsetPortrait = bpState.matches;
+      });
+  }
+
   @Input() game: Game = {} as Game;
   @Input() teams: Teams = {} as Teams;
-  @Input() boxScoreSchedule: TeamSchedule[] = [];
   @Input() homeTeamAnalytics: TeamAnalytics = {} as TeamAnalytics;
   @Input() awayTeamAnalytics: TeamAnalytics = {} as TeamAnalytics;
 
+  handsetPortrait: boolean = false;
   currentGame: Game = {} as Game;
   charts: ChartData[] = [];
-
 
   ngOnChanges(): void {
     this.charts = [];

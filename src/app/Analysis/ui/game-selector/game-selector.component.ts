@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {MatCard} from "@angular/material/card";
 import {NgOptimizedImage} from "@angular/common";
 import {Game} from "../../../common/model/game.interface";
-import {Team, Teams} from "../../../common/model/team.interface";
+import {Teams} from "../../../common/model/team.interface";
 
 @Component({
   selector: 'game-selector',
@@ -12,12 +12,13 @@ import {Team, Teams} from "../../../common/model/team.interface";
     NgOptimizedImage
   ],
   templateUrl: './game-selector.component.html',
-  styleUrl: './game-selector.component.css'
+  styleUrl: './game-selector.component.css',
 })
 export class GameSelectorComponent {
-  @Input() teams!: Teams;
-  @Input('game') selectedGame!: Game;
   @Input('dailySchedule') _dailySchedule!: Game[];
+  @Input('game') selectedGame!: Game;
+  @Input() teams!: Teams;
+
   @Output() gameSelected: EventEmitter<Game> = new EventEmitter();
 
   onGameSelected(game: Game): void {

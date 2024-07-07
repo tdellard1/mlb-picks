@@ -29,7 +29,7 @@ export interface LineScoreTeam {
   E: string;
   H: string;
   R: string;
-  scoreByInning: scoreByInning;
+  scoresByInning: scoreByInning;
   team: string;
 }
 

@@ -1,3 +1,17 @@
 @for (chart of charts; track chart) {
-  <line-chart [chartData]="chart"></line-chart>
+<!--  <line-chart [chartData]="chart"></line-chart>-->
 }
+
+
+<mat-accordion *ngIf="handsetPortrait">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <span>NRFI vs YRFI</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <ng-container>
+
+    </ng-container>
+  </mat-expansion-panel>
+</mat-accordion>

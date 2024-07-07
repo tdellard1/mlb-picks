@@ -130,6 +130,13 @@ export class TeamAnalyticsUtils {
     return roundToDecimalPlace((onBasePercentage + sluggingPercentage), 3);
   }
 
+  static getHittingStrikeouts(teamAbbreviation: string, {playerStats}: BoxScore) {
+    const players: PlayerStats[] = Array.from(Object.values(playerStats));
+    const playersOnTeam: PlayerStats[] = players.filter((player: PlayerStats) => player.team === teamAbbreviation);
+    const playerHittingStrikeouts: number[] = playersOnTeam.map(({Hitting}: PlayerStats) => Number(Hitting.SO));
+    return sum(playerHittingStrikeouts);
+  }
+
   /* ------------------------------------------------------------------------------------------- */
   /* --------------------------------- Weighted On Base Average -------------------------------- */
   /* ------------------------------------------------------------------------------------------- */
@@ -143,7 +150,7 @@ export class TeamAnalyticsUtils {
     return roundToDecimalPlace(runsPerGameAverageTotal, 3);
   }
 
-  static getWeightedOnBaseAverage(teamAbbreviation: string, {away, home, teamStats, playerStats}: BoxScore) {
+  static getWeightedOnBaseAverage(teamAbbreviation: string, {playerStats}: BoxScore) {
     const players: PlayerStats[] = Array.from(Object.values(playerStats));
     const playersOnTeam: PlayerStats[] = players.filter((player: PlayerStats) => player.team === teamAbbreviation);
 
