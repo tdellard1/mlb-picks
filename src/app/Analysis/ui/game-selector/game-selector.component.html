@@ -1,5 +1,5 @@
-<div class="container">
-  @for (game of dailySchedule; track game.gameID) {
+<div class="container" *ngIf="(dailySchedule | async)! as games">
+  @for (game of games; track game.gameID) {
     <mat-card
       appearance="outlined"
       [class.selected]="game.gameID === selectedGame.gameID"

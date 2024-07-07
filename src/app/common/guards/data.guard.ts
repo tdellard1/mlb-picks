@@ -34,7 +34,7 @@ export const dataGuard: CanActivateFn = (): boolean => {
   ).subscribe(([teamSchedules, boxScores]: [TeamSchedule[], BoxScore[]]) => {
     const gameStatuses: string[] = teamSchedules.map(teamSchedule => teamSchedule.schedule)!.flat().map(game => game.gameStatus!);
     const allStatuses = new Set(gameStatuses);
-    console.log('allStatuses: ', allStatuses);
+    // console.log('allStatuses: ', allStatuses);
 
 
 

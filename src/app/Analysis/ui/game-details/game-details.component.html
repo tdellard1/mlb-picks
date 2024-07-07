@@ -1,4 +1,4 @@
-<div class="game-details-container">
+<div class="game-details-container" *ngIf="(gameSelected$ | async)?.game?.gameID">
   <span class="justify-center">{{(playerFinderOne$ | async)![0].longName}}</span>
   <span></span>
   <span class="justify-center">{{(playerFinderTwo$ | async)![0].longName}}</span>

@@ -1,22 +1,24 @@
-<div class="image-container">
-  <img alt="none" [ngSrc]="away.espnLogo1" fill>
-</div>
+<ng-container *ngIf="(gameSelected | async)?.game?.gameID">
+  <div class="image-container">
+    <img alt="none" [ngSrc]="away.espnLogo1" fill>
+  </div>
 
-<div class="flex-column flex-grow">
-  <span>{{away.wins}} - {{away.loss}}</span>
-  <span>{{away.teamAbv}}</span>
-</div>
+  <div class="flex-column flex-grow">
+    <span>{{away.wins}} - {{away.loss}}</span>
+    <span>{{away.teamAbv}}</span>
+  </div>
 
-<div class="flex-column">
-  <span>{{ getDate(game) | date: 'shortTime' }}</span>
-  <span>&#64;</span>
-</div>
+  <div class="flex-column">
+    <span>{{ getDate(game) | date: 'shortTime' }}</span>
+    <span>&#64;</span>
+  </div>
 
-<div class="flex-column  flex-grow">
-  <span>{{home.wins}} - {{home.loss}}</span>
-  <span>{{home.teamAbv}}</span>
-</div>
+  <div class="flex-column  flex-grow">
+    <span>{{home.wins}} - {{home.loss}}</span>
+    <span>{{home.teamAbv}}</span>
+  </div>
 
-<div class="image-container">
-  <img alt="none" [ngSrc]="home.espnLogo1" fill>
-</div>
+  <div class="image-container">
+    <img alt="none" [ngSrc]="home.espnLogo1" fill>
+  </div>
+</ng-container>

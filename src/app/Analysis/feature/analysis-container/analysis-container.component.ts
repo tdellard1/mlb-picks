@@ -36,13 +36,6 @@ export class AnalysisContainerComponent implements OnInit {
   teamScheduleMap: Map<string, MLBTeamSchedule> = new Map();
   gamesMap: Map<string, Game> = new Map();
 
-  private gameSubject:          BehaviorSubject<Game>           = new BehaviorSubject<Game>({} as Game);
-  private homeSubject:          BehaviorSubject<Team>           = new BehaviorSubject<Team>({} as Team);
-  private awaySubject:          BehaviorSubject<Team>           = new BehaviorSubject<Team>({} as Team);
-
-  protected game$:              Observable<Game>          = this.gameSubject.asObservable();
-  protected home$:              Observable<Team>          = this.homeSubject.asObservable();
-  protected away$:              Observable<Team>          = this.awaySubject.asObservable();
 
   ngOnInit(): void {
     this.dailySchedule.forEach((game: Game) => this.gamesMap.set(game.gameID, game));
@@ -50,14 +43,6 @@ export class AnalysisContainerComponent implements OnInit {
       const {team}: MLBTeamSchedule = mLBTeamSchedule;
       this.teamScheduleMap.set(team, mLBTeamSchedule);
     });
-
-    this.selectGame(this.dailySchedule[0]);
-  }
-
-  selectGame({gameID, away, home}: Game) {
-    this.gameSubject.next(this.gamesMap.get(gameID)!);
-    this.homeSubject.next(this.teams.getTeam(home));
-    this.awaySubject.next(this.teams.getTeam(away));
   }
 }
 

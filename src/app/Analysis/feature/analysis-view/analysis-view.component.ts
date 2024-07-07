@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {Game} from "../../../common/model/game.interface";
-import {Teams} from "../../../common/model/team.interface";
+import {Team, Teams} from "../../../common/model/team.interface";
 import {Analytics, TeamAnalytics} from "../../../common/model/team-schedule.interface";
 import {MatIcon} from "@angular/material/icon";
 import {MatFabButton} from "@angular/material/button";
@@ -21,10 +21,11 @@ import {
 } from "@angular/material/expansion";
 import {MLBTeamSchedule} from "../../data-access/mlb-team-schedule.model";
 import {ActivatedRoute, Data} from "@angular/router";
-import {map} from "rxjs/operators";
-import {BehaviorSubject, first, Observable} from "rxjs";
+import {map, tap} from "rxjs/operators";
+import {filter, first, Observable} from "rxjs";
 import {NrfiPanelComponent} from "../../ui/nrfi-panel/nrfi-panel.component";
 import {MLBGame} from "../../data-access/mlb-game.model";
+import {GameSelectorService, GameSelectorState} from "../../data-access/services/game-selector.service";
 
 @Component({
   selector: 'analysis-component-view',
@@ -45,21 +46,27 @@ import {MLBGame} from "../../data-access/mlb-game.model";
   styleUrl: './analysis-view.component.css',
   encapsulation: ViewEncapsulation.None
 })
-export class AnalysisViewComponent implements OnChanges {
-  @Input() game: Game = {} as Game;
-  @Input() teams: Teams = {} as Teams;
+export class AnalysisViewComponent {
+  gameSelected$: Observable<GameSelectorState> = this.gameSelectorService.selectedGameInfo.pipe(
+    tap(({game, home, away}: GameSelectorState) => {
+      this.gameSelected(game, away, home);
+    })
+  );
 
   private teamScheduleMap: Map<string, MLBTeamSchedule> = new Map();
 
-  private homeSubject: BehaviorSubject<MLBTeamSchedule> = new BehaviorSubject<MLBTeamSchedule>({} as MLBTeamSchedule);
-  private awaySubject: BehaviorSubject<MLBTeamSchedule> = new BehaviorSubject<MLBTeamSchedule>({} as MLBTeamSchedule);
+  protected home$: Observable<MLBTeamSchedule> = this.gameSelectorService.home.pipe(
+    filter(({teamAbv}: Team) => !!teamAbv),
+    map(({teamAbv}: Team) => this.teamScheduleMap.get(teamAbv)!));
 
-  protected home$: Observable<MLBTeamSchedule> = this.homeSubject.asObservable();
-  protected away$: Observable<MLBTeamSchedule> = this.awaySubject.asObservable();
+  protected away$: Observable<MLBTeamSchedule> = this.gameSelectorService.away.pipe(
+    filter(({teamAbv}: Team) => !!teamAbv),
+    map(({teamAbv}: Team) => this.teamScheduleMap.get(teamAbv)!));
 
   charts: ChartData[] = [];
 
-  constructor(private activatedRoute: ActivatedRoute) {
+  constructor(private activatedRoute: ActivatedRoute,
+              private gameSelectorService: GameSelectorService) {
     this.activatedRoute.data.pipe(first(),
       map((data: Data) => data['mlbSchedules'] as MLBTeamSchedule[]))
       .subscribe((schedules: MLBTeamSchedule[]) => {
@@ -69,44 +76,37 @@ export class AnalysisViewComponent implements OnChanges {
       });
   }
 
-
-
-  ngOnChanges(changes: SimpleChanges): void {
-    const game: Game = changes['game'].currentValue as Game;
-
-    if (game) {
+  gameSelected(game: Game, away: Team, home: Team) {
+    if (game.gameID) {
       this.charts = [];
-      const {home, away}: Game = game;
-      const homeSchedule: MLBTeamSchedule = this.teamScheduleMap.get(home)!;
-      const awaySchedule: MLBTeamSchedule = this.teamScheduleMap.get(away)!;
-      this.homeSubject.next(homeSchedule);
-      this.awaySubject.next(awaySchedule);
-      this.makeEverythingWork(new TeamAnalytics(away, awaySchedule.analysisSchedule), new TeamAnalytics(home, homeSchedule.analysisSchedule));
+      this.makeEverythingWork(away, home);
     }
   }
 
-  makeEverythingWork(away: TeamAnalytics, home: TeamAnalytics) {
-    const homeTeam: string = this.teams.getTeamName(home.team);
-    const awayTeam: string = this.teams.getTeamName(away.team);
+  makeEverythingWork(away: Team, home: Team) {
+    const homeAnalytics: TeamAnalytics = new TeamAnalytics(away.teamAbv, this.teamScheduleMap.get(away.teamAbv)!?.analysisSchedule);
+    const awayAnalytics: TeamAnalytics = new TeamAnalytics(home.teamAbv, this.teamScheduleMap.get(home.teamAbv)!?.analysisSchedule);
+    const homeTeam: string = home.teamName;
+    const awayTeam: string = away.teamName;
 
-    const battingAveragesHome: number[] = home.analytics?.slice().reverse().map((analytics: Analytics) => analytics.battingAverageForGame!)!;
-    const battingAveragesAway: number[] = away.analytics?.slice().reverse().map((analytics: Analytics) => analytics.battingAverageForGame!)!;
+    const battingAveragesHome: number[] = homeAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.battingAverageForGame!)!;
+    const battingAveragesAway: number[] = awayAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.battingAverageForGame!)!;
     this.charts.push(this.createChart('Batting Average',
       `${homeTeam} - Batting Averages`,
       battingAveragesHome,
       `${awayTeam} - Batting Averages`,
       battingAveragesAway));
 
-    const runsForGameHome: number[] = home.analytics?.slice().reverse().map((analytics: Analytics) => analytics.runsForGame!)!;
-    const runsForGameAway: number[] = away.analytics?.slice().reverse().map((analytics: Analytics) => analytics.runsForGame!)!;
+    const runsForGameHome: number[] = homeAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.runsForGame!)!;
+    const runsForGameAway: number[] = awayAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.runsForGame!)!;
     this.charts.push(this.createChart('Runs For Games',
       `${homeTeam} - Runs`,
       runsForGameHome,
       `${awayTeam} - Runs`,
       runsForGameAway));
 
-    const sluggingPercentageHome: number[] = home.analytics?.slice().reverse().map((analytics: Analytics) => analytics.sluggingPercentage!)!;
-    const sluggingPercentageAway: number[] = away.analytics?.slice().reverse().map((analytics: Analytics) => analytics.sluggingPercentage!)!;
+    const sluggingPercentageHome: number[] = homeAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.sluggingPercentage!)!;
+    const sluggingPercentageAway: number[] = awayAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.sluggingPercentage!)!;
     this.charts.push(this.createChart('Slugging Percentage',
       `${homeTeam} - Slugging Percentage`,
       sluggingPercentageHome,
@@ -114,8 +114,8 @@ export class AnalysisViewComponent implements OnChanges {
       sluggingPercentageAway));
 
 
-    const onBasePercentageHome: number[] = home.analytics?.slice().reverse().map((analytics: Analytics) => analytics.onBasePercentage!)!;
-    const onBasePercentageAway: number[] = away.analytics?.slice().reverse().map((analytics: Analytics) => analytics.onBasePercentage!)!;
+    const onBasePercentageHome: number[] = homeAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.onBasePercentage!)!;
+    const onBasePercentageAway: number[] = awayAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.onBasePercentage!)!;
     this.charts.push(this.createChart('On Base Percentage',
       `${homeTeam} - On Base Percentage`,
       onBasePercentageHome,
@@ -123,8 +123,8 @@ export class AnalysisViewComponent implements OnChanges {
       onBasePercentageAway));
 
 
-    const onBasePlusSluggingHome: number[] = home.analytics?.slice().reverse().map((analytics: Analytics) => analytics.onBasePlusSlugging!)!;
-    const onBasePlusSluggingAway: number[] = away.analytics?.slice().reverse().map((analytics: Analytics) => analytics.onBasePlusSlugging!)!;
+    const onBasePlusSluggingHome: number[] = homeAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.onBasePlusSlugging!)!;
+    const onBasePlusSluggingAway: number[] = awayAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.onBasePlusSlugging!)!;
     this.charts.push(this.createChart(
       'On Base Plus Slugging',
       `${homeTeam} - On Base Plus Slugging`,
@@ -133,8 +133,8 @@ export class AnalysisViewComponent implements OnChanges {
       onBasePlusSluggingAway));
 
 
-    const hittingStrikeOutHome: number[] = this.teamScheduleMap.get(home.team)?.analysisSchedule.map((game: MLBGame) => game.saberMetrics.hittingStrikeouts!)!;
-    const hittingStrikeOutAway: number[] = this.teamScheduleMap.get(away.team)?.analysisSchedule.map((game: MLBGame) => game.saberMetrics.hittingStrikeouts!)!;
+    const hittingStrikeOutHome: number[] = this.teamScheduleMap.get(homeAnalytics.team)?.analysisSchedule.map((game: MLBGame) => game.saberMetrics.hittingStrikeouts!)!;
+    const hittingStrikeOutAway: number[] = this.teamScheduleMap.get(awayAnalytics.team)?.analysisSchedule.map((game: MLBGame) => game.saberMetrics.hittingStrikeouts!)!;
     this.charts.push(this.createChart(
       'Hitting Strikeouts',
       `${homeTeam} - Hitting Strikeouts`,

@@ -1,30 +1,37 @@
 import {Component, Input} from '@angular/core';
 import {Game} from "../../../common/model/game.interface";
 import {Team} from "../../../common/model/team.interface";
-import {PlayerInfo} from "../../data-access/player-info.model";
 import {filter, Observable} from "rxjs";
 import {Player} from "../../../common/model/players.interface";
-import {map} from "rxjs/operators";
+import {map, tap} from "rxjs/operators";
 import {ActivatedRoute, Data} from "@angular/router";
-import {AsyncPipe} from "@angular/common";
+import {AsyncPipe, NgIf} from "@angular/common";
+import {GameSelectorService, GameSelectorState} from "../../data-access/services/game-selector.service";
 
 @Component({
   selector: 'game-details',
   standalone: true,
   imports: [
-    AsyncPipe
+    AsyncPipe,
+    NgIf
   ],
   templateUrl: './game-details.component.html',
   styleUrl: './game-details.component.css'
 })
 export class GameDetailsComponent {
-  constructor(private activatedRoute: ActivatedRoute) {
-  }
+  constructor(private activatedRoute: ActivatedRoute, private gameSelectorService: GameSelectorService) {}
 
-  @Input() game!: Game;
-  @Input() home!: Team;
-  @Input() away!: Team;
-  // @Input() homePitcher!: PlayerInfo;
+  gameSelected$: Observable<GameSelectorState> = this.gameSelectorService.selectedGameInfo.pipe(
+    tap(({game, home, away}: GameSelectorState) => {
+      this.game = game;
+      this.away = away;
+      this.home = home;
+    })
+  );
+
+  game!: Game;
+  home!: Team;
+  away!: Team;
 
   playerFinderOne$: Observable<Player[]> = this.activatedRoute.data.pipe(
     map((data: Data) => data['players'] as Player[]),

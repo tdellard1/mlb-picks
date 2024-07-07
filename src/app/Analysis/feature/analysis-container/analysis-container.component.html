@@ -1,21 +1,9 @@
-<game-selected
-  [home]="(home$ | async)!"
-  [away]="(away$ | async)!"
-  [game]="(game$ | async)!"></game-selected>
+<game-selected></game-selected>
 
 <mat-divider></mat-divider>
 
-<game-details
-  [home]="(home$ | async)!"
-  [away]="(away$ | async)!"
-  [game]="(game$ | async)!"></game-details>
+<game-details></game-details>
 
-<analysis-component-view
-  [teams]="teams"
-  [game]="(game$ | async)!"></analysis-component-view>
+<analysis-component-view></analysis-component-view>
 
-<game-selector
-  [teams]="teams"
-  [game]="(game$ | async)!"
-  [dailySchedule]="dailySchedule"
-  (gameSelected)="selectGame($event)"></game-selector>
+<game-selector [teams]="teams"></game-selector>
