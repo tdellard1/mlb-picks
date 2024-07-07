@@ -25,6 +25,7 @@ export interface Pitching {
   ['Batters Faced']: string;
   SO: string;
   Pitches: string;
+  WHIP: string;
 }
 
 export interface Fielding {

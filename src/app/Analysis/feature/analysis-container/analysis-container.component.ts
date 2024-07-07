@@ -5,10 +5,11 @@ import {Team, Teams} from "../../../common/model/team.interface";
 import {TeamAnalytics, TeamSchedule} from "../../../common/model/team-schedule.interface";
 import {MatCard} from "@angular/material/card";
 import {AsyncPipe, NgForOf, NgOptimizedImage} from "@angular/common";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, EMPTY, mergeAll, mergeMap, Observable, of, toArray} from "rxjs";
 import {MLBTeamSchedule} from "../../data-access/mlb-team-schedule.model";
 import {GameSelectorComponent} from "../../ui/game-selector/game-selector.component";
 import {GameSelectedComponent} from "../../ui/game-selected/game-selected.component";
+import {GameDetailsComponent} from "../../ui/game-details/game-details.component";
 
 @Component({
   selector: 'analysis-container-component',
@@ -20,7 +21,8 @@ import {GameSelectedComponent} from "../../ui/game-selected/game-selected.compon
     NgOptimizedImage,
     AsyncPipe,
     GameSelectorComponent,
-    GameSelectedComponent
+    GameSelectedComponent,
+    GameDetailsComponent
   ],
   templateUrl: './analysis-container.component.html',
   styleUrl: './analysis-container.component.css'
