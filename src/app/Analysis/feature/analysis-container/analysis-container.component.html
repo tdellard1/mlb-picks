@@ -3,6 +3,8 @@
   [away]="(away$ | async)!"
   [game]="(game$ | async)!"></game-selected>
 
+<mat-divider></mat-divider>
+
 <game-details
   [home]="(home$ | async)!"
   [away]="(away$ | async)!"
@@ -10,11 +12,7 @@
 
 <analysis-component-view
   [teams]="teams"
-  [game]="(game$ | async)!"
-  [homeMLBTeamSchedule]="(homeTeamSchedule$ | async)!"
-  [awayMLBTeamSchedule]="(awayTeamSchedule$ | async)!"
-  [awayTeamAnalytics]="(awayTeamAnalytics$ | async)!"
-  [homeTeamAnalytics]="(homeTeamAnalytics$ | async)!"></analysis-component-view>
+  [game]="(game$ | async)!"></analysis-component-view>
 
 <game-selector
   [teams]="teams"

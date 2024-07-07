@@ -2,27 +2,4 @@
   <line-chart [chartData]="chart"></line-chart>
 }
 
-
-<mat-accordion *ngIf="handsetPortrait">
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <span>NRFI vs YRFI</span>
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <div class="runs-first-inning-container">
-      <span class="label">NRFI (No Runs First Inning) </span>
-      <div class="no-runs-first-inning">
-        <span>{{awayMLBTeamSchedule.runsFirstInning.awayNoRunsFirstInningPct}}%</span>
-        <span class="spacer"></span>
-        <span>{{homeMLBTeamSchedule.runsFirstInning.homeNoRunsFirstInningPct}}%</span>
-      </div>
-      <span class="label">YRFI (Yes Runs First Inning) </span>
-      <div class="no-runs-first-inning">
-        <span>{{awayMLBTeamSchedule.runsFirstInning.awayYesRunsFirstInningPct}}%</span>
-        <span class="spacer"></span>
-        <span>{{homeMLBTeamSchedule.runsFirstInning.homeYesRunsFirstInningPct}}%</span>
-      </div>
-    </div>
-  </mat-expansion-panel>
-</mat-accordion>
+<nrfi-panel [away]="(away$ | async)!" [home]="(home$ | async)!"></nrfi-panel>

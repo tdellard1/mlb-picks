@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AnalysisViewComponent} from "../analysis-view/analysis-view.component";
 import {Game} from "../../../common/model/game.interface";
 import {Team, Teams} from "../../../common/model/team.interface";
-import {TeamAnalytics} from "../../../common/model/team-schedule.interface";
 import {MatCard} from "@angular/material/card";
 import {AsyncPipe, NgForOf, NgOptimizedImage} from "@angular/common";
 import {BehaviorSubject, Observable, } from "rxjs";
@@ -10,6 +9,7 @@ import {MLBTeamSchedule} from "../../data-access/mlb-team-schedule.model";
 import {GameSelectorComponent} from "../../ui/game-selector/game-selector.component";
 import {GameSelectedComponent} from "../../ui/game-selected/game-selected.component";
 import {GameDetailsComponent} from "../../ui/game-details/game-details.component";
+import {MatDivider} from "@angular/material/divider";
 
 @Component({
   selector: 'analysis-container-component',
@@ -22,7 +22,8 @@ import {GameDetailsComponent} from "../../ui/game-details/game-details.component
     AsyncPipe,
     GameSelectorComponent,
     GameSelectedComponent,
-    GameDetailsComponent
+    GameDetailsComponent,
+    MatDivider
   ],
   templateUrl: './analysis-container.component.html',
   styleUrl: './analysis-container.component.css'
@@ -33,36 +34,21 @@ export class AnalysisContainerComponent implements OnInit {
   @Input() mlbTeamSchedules!: MLBTeamSchedule[];
 
   teamScheduleMap: Map<string, MLBTeamSchedule> = new Map();
-  teamAnalyticsMap: Map<string, TeamAnalytics> = new Map();
   gamesMap: Map<string, Game> = new Map();
 
-  private gameSubject: BehaviorSubject<Game> = new BehaviorSubject<Game>({} as Game);
-  protected game$: Observable<Game> = this.gameSubject.asObservable();
+  private gameSubject:          BehaviorSubject<Game>           = new BehaviorSubject<Game>({} as Game);
+  private homeSubject:          BehaviorSubject<Team>           = new BehaviorSubject<Team>({} as Team);
+  private awaySubject:          BehaviorSubject<Team>           = new BehaviorSubject<Team>({} as Team);
 
-  private homeTeamSubject: BehaviorSubject<Team> = new BehaviorSubject<Team>({} as Team);
-  protected home$: Observable<Team> = this.homeTeamSubject.asObservable();
-
-  private awayTeamSubject: BehaviorSubject<Team> = new BehaviorSubject<Team>({} as Team);
-  protected away$: Observable<Team> = this.awayTeamSubject.asObservable();
-
-  private homeTeamAnalyticsSubject: BehaviorSubject<TeamAnalytics> = new BehaviorSubject<TeamAnalytics>({} as TeamAnalytics);
-  protected homeTeamAnalytics$: Observable<TeamAnalytics> = this.homeTeamAnalyticsSubject.asObservable();
-
-  private awayTeamAnalyticsSubject: BehaviorSubject<TeamAnalytics> = new BehaviorSubject<TeamAnalytics>({} as TeamAnalytics);
-  protected awayTeamAnalytics$: Observable<TeamAnalytics> = this.awayTeamAnalyticsSubject.asObservable();
-
-  private homeTeamScheduleSubject: BehaviorSubject<MLBTeamSchedule> = new BehaviorSubject<MLBTeamSchedule>({} as MLBTeamSchedule);
-  protected homeTeamSchedule$: Observable<MLBTeamSchedule> = this.homeTeamScheduleSubject.asObservable();
-
-  private awayTeamScheduleSubject: BehaviorSubject<MLBTeamSchedule> = new BehaviorSubject<MLBTeamSchedule>({} as MLBTeamSchedule);
-  protected awayTeamSchedule$: Observable<MLBTeamSchedule> = this.awayTeamScheduleSubject.asObservable();
+  protected game$:              Observable<Game>          = this.gameSubject.asObservable();
+  protected home$:              Observable<Team>          = this.homeSubject.asObservable();
+  protected away$:              Observable<Team>          = this.awaySubject.asObservable();
 
   ngOnInit(): void {
     this.dailySchedule.forEach((game: Game) => this.gamesMap.set(game.gameID, game));
     this.mlbTeamSchedules.forEach((mLBTeamSchedule: MLBTeamSchedule) => {
-      const {analysisSchedule, team}: MLBTeamSchedule = mLBTeamSchedule;
+      const {team}: MLBTeamSchedule = mLBTeamSchedule;
       this.teamScheduleMap.set(team, mLBTeamSchedule);
-      this.teamAnalyticsMap.set(team, new TeamAnalytics(team, analysisSchedule));
     });
 
     this.selectGame(this.dailySchedule[0]);
@@ -70,12 +56,8 @@ export class AnalysisContainerComponent implements OnInit {
 
   selectGame({gameID, away, home}: Game) {
     this.gameSubject.next(this.gamesMap.get(gameID)!);
-    this.homeTeamAnalyticsSubject.next(this.teamAnalyticsMap.get(home)!);
-    this.awayTeamAnalyticsSubject.next(this.teamAnalyticsMap.get(away)!);
-    this.homeTeamSubject.next(this.teams.getTeam(home));
-    this.awayTeamSubject.next(this.teams.getTeam(away));
-    this.homeTeamScheduleSubject.next(this.teamScheduleMap.get(home)!);
-    this.awayTeamScheduleSubject.next(this.teamScheduleMap.get(away)!)
+    this.homeSubject.next(this.teams.getTeam(home));
+    this.awaySubject.next(this.teams.getTeam(away));
   }
 }
 

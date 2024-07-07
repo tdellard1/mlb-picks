@@ -3,13 +3,15 @@ import {MatCard} from "@angular/material/card";
 import {NgOptimizedImage} from "@angular/common";
 import {Game} from "../../../common/model/game.interface";
 import {Teams} from "../../../common/model/team.interface";
+import {MatDivider} from "@angular/material/divider";
 
 @Component({
   selector: 'game-selector',
   standalone: true,
   imports: [
     MatCard,
-    NgOptimizedImage
+    NgOptimizedImage,
+    MatDivider
   ],
   templateUrl: './game-selector.component.html',
   styleUrl: './game-selector.component.css',
