@@ -1,0 +1,13 @@
+.game-details-container {
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
+  grid-template-rows: auto;
+}
+
+.game-details-container > *:nth-child(3) {
+  justify-self: self-end;
+}
+
+.game-details-container > *:nth-child(3n + 2) {
+  justify-self: center;
+}
