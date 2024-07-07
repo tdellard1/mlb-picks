@@ -32,27 +32,38 @@ export class AnalysisContainerComponent implements OnInit {
   @Input() dailySchedule!: Game[];
   @Input() mlbTeamSchedules!: MLBTeamSchedule[];
 
+  teamScheduleMap: Map<string, MLBTeamSchedule> = new Map();
   teamAnalyticsMap: Map<string, TeamAnalytics> = new Map();
   gamesMap: Map<string, Game> = new Map();
 
   private gameSubject: BehaviorSubject<Game> = new BehaviorSubject<Game>({} as Game);
-  private homeTeamSubject: BehaviorSubject<Team> = new BehaviorSubject<Team>({} as Team);
-  private awayTeamSubject: BehaviorSubject<Team> = new BehaviorSubject<Team>({} as Team);
-
-  private homeTeamAnalyticsSubject: BehaviorSubject<TeamAnalytics> = new BehaviorSubject<TeamAnalytics>({} as TeamAnalytics);
-  private awayTeamAnalyticsSubject: BehaviorSubject<TeamAnalytics> = new BehaviorSubject<TeamAnalytics>({} as TeamAnalytics);
-
   protected game$: Observable<Game> = this.gameSubject.asObservable();
+
+  private homeTeamSubject: BehaviorSubject<Team> = new BehaviorSubject<Team>({} as Team);
   protected home$: Observable<Team> = this.homeTeamSubject.asObservable();
+
+  private awayTeamSubject: BehaviorSubject<Team> = new BehaviorSubject<Team>({} as Team);
   protected away$: Observable<Team> = this.awayTeamSubject.asObservable();
 
+  private homeTeamAnalyticsSubject: BehaviorSubject<TeamAnalytics> = new BehaviorSubject<TeamAnalytics>({} as TeamAnalytics);
   protected homeTeamAnalytics$: Observable<TeamAnalytics> = this.homeTeamAnalyticsSubject.asObservable();
+
+  private awayTeamAnalyticsSubject: BehaviorSubject<TeamAnalytics> = new BehaviorSubject<TeamAnalytics>({} as TeamAnalytics);
   protected awayTeamAnalytics$: Observable<TeamAnalytics> = this.awayTeamAnalyticsSubject.asObservable();
+
+  private homeTeamScheduleSubject: BehaviorSubject<MLBTeamSchedule> = new BehaviorSubject<MLBTeamSchedule>({} as MLBTeamSchedule);
+  protected homeTeamSchedule$: Observable<MLBTeamSchedule> = this.homeTeamScheduleSubject.asObservable();
+
+  private awayTeamScheduleSubject: BehaviorSubject<MLBTeamSchedule> = new BehaviorSubject<MLBTeamSchedule>({} as MLBTeamSchedule);
+  protected awayTeamSchedule$: Observable<MLBTeamSchedule> = this.awayTeamScheduleSubject.asObservable();
 
   ngOnInit(): void {
     this.dailySchedule.forEach((game: Game) => this.gamesMap.set(game.gameID, game));
-    this.mlbTeamSchedules.forEach(({analysisSchedule, team}: MLBTeamSchedule) =>
-      this.teamAnalyticsMap.set(team, new TeamAnalytics(team, analysisSchedule)));
+    this.mlbTeamSchedules.forEach((mLBTeamSchedule: MLBTeamSchedule) => {
+      const {analysisSchedule, team}: MLBTeamSchedule = mLBTeamSchedule;
+      this.teamScheduleMap.set(team, mLBTeamSchedule);
+      this.teamAnalyticsMap.set(team, new TeamAnalytics(team, analysisSchedule));
+    });
 
     this.selectGame(this.dailySchedule[0]);
   }
@@ -63,6 +74,8 @@ export class AnalysisContainerComponent implements OnInit {
     this.awayTeamAnalyticsSubject.next(this.teamAnalyticsMap.get(away)!);
     this.homeTeamSubject.next(this.teams.getTeam(home));
     this.awayTeamSubject.next(this.teams.getTeam(away));
+    this.homeTeamScheduleSubject.next(this.teamScheduleMap.get(home)!);
+    this.awayTeamScheduleSubject.next(this.teamScheduleMap.get(away)!)
   }
 }
 

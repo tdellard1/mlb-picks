@@ -20,6 +20,7 @@ import {
   MatExpansionPanelTitle
 } from "@angular/material/expansion";
 import {BreakpointObserver, Breakpoints, BreakpointState} from "@angular/cdk/layout";
+import {MLBTeamSchedule} from "../../data-access/mlb-team-schedule.model";
 
 @Component({
   selector: 'analysis-component-view',
@@ -55,6 +56,8 @@ export class AnalysisViewComponent implements OnChanges {
   @Input() teams: Teams = {} as Teams;
   @Input() homeTeamAnalytics: TeamAnalytics = {} as TeamAnalytics;
   @Input() awayTeamAnalytics: TeamAnalytics = {} as TeamAnalytics;
+  @Input() homeMLBTeamSchedule!: MLBTeamSchedule;
+  @Input() awayMLBTeamSchedule!: MLBTeamSchedule;
 
   handsetPortrait: boolean = false;
   currentGame: Game = {} as Game;

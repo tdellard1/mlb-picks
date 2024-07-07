@@ -1,5 +1,18 @@
-.full {
+.runs-first-inning-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.no-runs-first-inning {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+}
+
+.label {
+  align-self: center;
+}
+
+.spacer {
+  flex-grow: 1;
 }

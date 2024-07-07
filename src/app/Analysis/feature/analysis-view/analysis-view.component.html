@@ -1,5 +1,5 @@
 @for (chart of charts; track chart) {
-<!--  <line-chart [chartData]="chart"></line-chart>-->
+  <line-chart [chartData]="chart"></line-chart>
 }
 
 
@@ -10,8 +10,19 @@
         <span>NRFI vs YRFI</span>
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <ng-container>
-
-    </ng-container>
+    <div class="runs-first-inning-container">
+      <span class="label">NRFI (No Runs First Inning) </span>
+      <div class="no-runs-first-inning">
+        <span>{{awayMLBTeamSchedule.runsFirstInning.awayNoRunsFirstInningPct}}%</span>
+        <span class="spacer"></span>
+        <span>{{homeMLBTeamSchedule.runsFirstInning.homeNoRunsFirstInningPct}}%</span>
+      </div>
+      <span class="label">YRFI (Yes Runs First Inning) </span>
+      <div class="no-runs-first-inning">
+        <span>{{awayMLBTeamSchedule.runsFirstInning.awayYesRunsFirstInningPct}}%</span>
+        <span class="spacer"></span>
+        <span>{{homeMLBTeamSchedule.runsFirstInning.homeYesRunsFirstInningPct}}%</span>
+      </div>
+    </div>
   </mat-expansion-panel>
 </mat-accordion>

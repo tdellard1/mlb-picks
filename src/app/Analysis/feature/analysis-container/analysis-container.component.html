@@ -11,6 +11,8 @@
 <analysis-component-view
   [teams]="teams"
   [game]="(game$ | async)!"
+  [homeMLBTeamSchedule]="(homeTeamSchedule$ | async)!"
+  [awayMLBTeamSchedule]="(awayTeamSchedule$ | async)!"
   [awayTeamAnalytics]="(awayTeamAnalytics$ | async)!"
   [homeTeamAnalytics]="(homeTeamAnalytics$ | async)!"></analysis-component-view>
 

@@ -1,10 +1,10 @@
 <div class="game-details-container">
-  <span>{{game.probableStartingPitchers['away']}}</span>
+  <span class="justify-center">{{(playerFinderOne$ | async)![0].longName}}</span>
   <span></span>
-  <span>{{game.probableStartingPitchers['home']}}</span>
+  <span class="justify-center">{{(playerFinderTwo$ | async)![0].longName}}</span>
 
 
-  <span>{{home.teamStats.Pitching.WHIP}}</span>
-  <span>TEAM WHIP</span>
-  <span>{{away.teamStats.Pitching.WHIP}}</span>
+  <span class="justify-center">{{home.teamStats.Pitching.WHIP}}</span>
+  <span>WHIP</span>
+  <span class="justify-center">{{away.teamStats.Pitching.WHIP}}</span>
 </div>
