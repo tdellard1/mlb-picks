@@ -22,8 +22,6 @@
     "@angular/platform-browser-dynamic": "^18.0.0",
     "@angular/router": "^18.0.0",
     "@ng-select/ng-select": "^13.3.0",
-    "@ngrx/effects": "^18.0.0",
-    "@ngrx/store": "^18.0.0",
     "apexcharts": "^3.49.1",
     "cors": "^2.8.5",
     "express": "^4.19.2",

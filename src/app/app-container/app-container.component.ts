@@ -39,6 +39,7 @@ export class AppContainerComponent {
   slates$: Observable<Slates>;
 
   constructor(private activatedRoute: ActivatedRoute) {
+    this.activatedRoute.data.pipe(map((data: Data) => data['teams'])).subscribe(value => console.log('Resolver Teams? constructor', value));
     this.teams$ = this.activatedRoute.data.pipe(map((data: Data) => data['teams']));
     this.dailySchedule$ = this.activatedRoute.data.pipe(map((data: Data) => data['dailySchedule']));
     this.players$ = this.activatedRoute.data.pipe(map((data: Data) => data['players']));
