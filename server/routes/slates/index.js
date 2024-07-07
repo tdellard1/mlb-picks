@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const slatesURL = '../../assets/slates.json';
+const slatesURL = './server/assets/slates.json';
 const slates = require('../../assets/slates.json');
 const {writeFile} = require("fs");
 
@@ -11,7 +11,7 @@ router.post('/', (req, res) => {
   console.log('Update Teams Requested!');
   writeFile(slatesURL, JSON.stringify(req.body, null, 2), err => {
     if (err) {
-      console.log("Failed to write updated data to file");
+      console.log("Failed to write updated data to file", err);
       return;
     }
     res.json({"message": "Updated file successfully"});

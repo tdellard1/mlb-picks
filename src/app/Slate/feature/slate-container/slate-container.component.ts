@@ -58,7 +58,6 @@ export class SlateContainerComponent implements OnInit {
   ngOnInit(): void {
     this.expertsList = this.allHistoricalSlateExperts;
 
-    this.experiment();
     this.selectedDate = this.setDatesAndGetMostRecent();
     this.chooseDate(this.selectedDate);
     this.expertRecords = new ExpertRecords(this.slates, this.teams);
@@ -72,10 +71,10 @@ export class SlateContainerComponent implements OnInit {
       this.dates.push(today);
     }
 
-    const tomorrow: string = this.tomorrow!;
-    if (!this.dates.includes(tomorrow)) {
-      this.dates.push(tomorrow);
-    }
+    // const tomorrow: string = this.tomorrow!;
+    // if (!this.dates.includes(tomorrow)) {
+    //   this.dates.push(tomorrow);
+    // }
 
     return this.dates.slice(0, -1).pop()!
   }
@@ -174,14 +173,5 @@ export class SlateContainerComponent implements OnInit {
     }
 
     this.chooseDate(this.selectedDate);
-  }
-
-  private experiment() {
-
-    const val: TeamAnalytics[] = this.boxScoreSchedule.map(({team, schedule}: TeamSchedule) => {
-      return new TeamAnalytics(team, schedule);
-    });
-
-    console.log(val);
   }
 }

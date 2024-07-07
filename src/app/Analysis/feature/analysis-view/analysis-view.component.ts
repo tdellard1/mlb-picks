@@ -89,24 +89,24 @@ export class AnalysisViewComponent {
     const homeTeam: string = home.teamName;
     const awayTeam: string = away.teamName;
 
-    const battingAveragesHome: number[] = homeAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.battingAverageForGame!)!;
-    const battingAveragesAway: number[] = awayAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.battingAverageForGame!)!;
+    const battingAveragesHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.battingAverageForGame!)!;
+    const battingAveragesAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.battingAverageForGame!)!;
     this.charts.push(this.createChart('Batting Average',
       `${homeTeam} - Batting Averages`,
       battingAveragesHome,
       `${awayTeam} - Batting Averages`,
       battingAveragesAway));
 
-    const runsForGameHome: number[] = homeAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.runsForGame!)!;
-    const runsForGameAway: number[] = awayAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.runsForGame!)!;
+    const runsForGameHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.runsForGame!)!;
+    const runsForGameAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.runsForGame!)!;
     this.charts.push(this.createChart('Runs For Games',
       `${homeTeam} - Runs`,
       runsForGameHome,
       `${awayTeam} - Runs`,
       runsForGameAway));
 
-    const sluggingPercentageHome: number[] = homeAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.sluggingPercentage!)!;
-    const sluggingPercentageAway: number[] = awayAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.sluggingPercentage!)!;
+    const sluggingPercentageHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.sluggingPercentage!)!;
+    const sluggingPercentageAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.sluggingPercentage!)!;
     this.charts.push(this.createChart('Slugging Percentage',
       `${homeTeam} - Slugging Percentage`,
       sluggingPercentageHome,
@@ -114,8 +114,8 @@ export class AnalysisViewComponent {
       sluggingPercentageAway));
 
 
-    const onBasePercentageHome: number[] = homeAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.onBasePercentage!)!;
-    const onBasePercentageAway: number[] = awayAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.onBasePercentage!)!;
+    const onBasePercentageHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.onBasePercentage!)!;
+    const onBasePercentageAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.onBasePercentage!)!;
     this.charts.push(this.createChart('On Base Percentage',
       `${homeTeam} - On Base Percentage`,
       onBasePercentageHome,
@@ -123,8 +123,8 @@ export class AnalysisViewComponent {
       onBasePercentageAway));
 
 
-    const onBasePlusSluggingHome: number[] = homeAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.onBasePlusSlugging!)!;
-    const onBasePlusSluggingAway: number[] = awayAnalytics.analytics?.slice().reverse().map((analytics: Analytics) => analytics.onBasePlusSlugging!)!;
+    const onBasePlusSluggingHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.onBasePlusSlugging!)!;
+    const onBasePlusSluggingAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.onBasePlusSlugging!)!;
     this.charts.push(this.createChart(
       'On Base Plus Slugging',
       `${homeTeam} - On Base Plus Slugging`,

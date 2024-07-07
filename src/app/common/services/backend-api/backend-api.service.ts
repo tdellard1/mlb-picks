@@ -49,6 +49,6 @@ export class BackendApiService {
   }
 
   updateSlates(slates: Slates) {
-    return this.apiService.post('api/slates', slates).pipe(first());
+    return this.apiService.post(this.serverUrl + 'api/slates', slates).pipe(first());
   }
 }
