@@ -1,5 +1,6 @@
 import {GameStats} from "./game-stats.interface";
 import {Game} from "./game.interface";
+import {RosterPlayer} from "./roster.interface";
 
 export class Teams {
  teams: Team[];
@@ -68,4 +69,5 @@ export interface Team {
   conference: string;
   topPerformers: GameStats;
   teamStats: GameStats;
+  roster?: RosterPlayer[];
 }

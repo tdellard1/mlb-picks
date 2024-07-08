@@ -42,3 +42,9 @@ export interface TeamHittingStats {
   ['3B']: string;   // Triples
   GIDP: string;     // Ground Into Double Play
 }
+
+export interface Injury {
+  description: string;
+  injDate: string;
+  designation: string;
+}

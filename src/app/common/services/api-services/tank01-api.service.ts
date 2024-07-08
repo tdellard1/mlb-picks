@@ -19,6 +19,7 @@ import {BoxScore} from "../../model/box-score.interface";
 export class Tank01ApiService {
   private readonly tank01_Url: string = 'https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/';
   private readonly GET_TEAM_SCHEDULE_URL: string = 'getMLBTeamSchedule';
+  private readonly GET_TEAM_ROSTER_URL: string = 'getMLBTeamRoster';
   private readonly GET_DAILY_SCHEDULE_URL: string = 'getMLBGamesForDate';
   private readonly GET_ALL_PLAYERS_URL: string = 'getMLBPlayerList';
   private readonly GET_BOX_SCORE_URL: string = 'getMLBBoxScore';
@@ -160,4 +161,13 @@ export class Tank01ApiService {
 
     return truthy && validLength && validGameAmount;
   }
+
+
+
+  getRoster(teamAbv: string, getStats: boolean = true): Observable<any> {
+    return this.get<{ body: Game[] }>(
+      this.GET_TEAM_ROSTER_URL, {teamAbv, getStats})
+      .pipe(map((value: { body: { team: string, roster: any[]} }) => value.body || []));
+  }
+
 }

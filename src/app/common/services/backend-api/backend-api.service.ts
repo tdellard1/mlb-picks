@@ -6,6 +6,7 @@ import {first, Observable} from "rxjs";
 import {Slates} from "../../../Slate/data-access/slate.model";
 import {Player} from "../../model/players.interface";
 import {Team, Teams} from "../../model/team.interface";
+import {BoxScore} from "../../model/box-score.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,16 @@ export class BackendApiService {
     return this.apiService.get<TeamSchedule[]>(this.serverUrl + 'api/schedules');
   }
 
+  getRosters(): Observable<any> {
+    return this.apiService.get<any>(this.serverUrl + 'api/rosters');
+  }
+
   getBoxScores(): Observable<TeamSchedule[]> {
     return this.apiService.get<TeamSchedule[]>(this.serverUrl + 'api/boxScores');
+  }
+
+  getBoxScoresOnly(): Observable<BoxScore[]> {
+    return this.apiService.get<BoxScore[]>(this.serverUrl + 'api/boxScores/only');
   }
 
   getPlayers(): Observable<Player[]> {
@@ -42,6 +51,14 @@ export class BackendApiService {
       .subscribe(value => {
       console.log('addSchedules: ', value);
     });
+  }
+
+  updateRosters(rosters: any []) {
+    return this.apiService.post(this.serverUrl + 'api/rosters', rosters);
+  }
+
+  updateBoxScoresOnly(boxScores: BoxScore[]) {
+    return this.apiService.post(this.serverUrl + 'api/boxScores/only', boxScores);
   }
 
   updateBoxScore(boxScore: TeamSchedule[]) {
