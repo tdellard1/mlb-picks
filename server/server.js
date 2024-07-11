@@ -7,14 +7,15 @@ const apiRouter = require("./routes");
 const cors = require('cors');
 const pathToClientApp = '../dist/mlb-picks/browser';
 
-app.use(json({limit: '150mb'}));
-app.use(urlencoded({limit: '150mb', extended: true}));
+app.use(json({limit: '250mb'}));
+app.use(urlencoded({limit: '250mb', extended: true}));
 app.use(cors());
 
 app.use(express.static(path.join(__dirname, pathToClientApp)));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, pathToClientApp + '/index.html'));
 });
+
 
 app.use('/api', apiRouter);
 

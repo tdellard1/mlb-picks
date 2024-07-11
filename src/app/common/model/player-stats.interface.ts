@@ -13,6 +13,7 @@ export interface PlayerStats {
   Fielding: PlayerFieldingStats;
   teamID: string;
   playerID: string;
+  mlbID: string;
 }
 
 export interface PlayerPitchingStats extends TeamPitchingStats {

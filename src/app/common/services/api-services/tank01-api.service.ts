@@ -12,6 +12,8 @@ import {DatePipe} from "@angular/common";
 import {ensure} from "../../utils/array.utils";
 import {TeamSchedule} from "../../model/team-schedule.interface";
 import {BoxScore} from "../../model/box-score.interface";
+import {PlayerStats} from "../../model/player-stats.interface";
+import {RosterPlayer} from "../../model/roster.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +23,8 @@ export class Tank01ApiService {
   private readonly GET_TEAM_SCHEDULE_URL: string = 'getMLBTeamSchedule';
   private readonly GET_TEAM_ROSTER_URL: string = 'getMLBTeamRoster';
   private readonly GET_DAILY_SCHEDULE_URL: string = 'getMLBGamesForDate';
+  private readonly GET_GAMES_FOR_PLAYER: string = 'getMLBGamesForPlayer';
+  private readonly GET_PLAYER_INFO: string = 'getMLBPlayerInfo';
   private readonly GET_ALL_PLAYERS_URL: string = 'getMLBPlayerList';
   private readonly GET_BOX_SCORE_URL: string = 'getMLBBoxScore';
   private readonly GET_ALL_TEAMS_URL: string = 'getMLBTeams';
@@ -57,13 +61,11 @@ export class Tank01ApiService {
     }
   }
 
-  getDailySchedule(outdated: boolean): Observable<Array<Game>> {
-    const gameDate: string = this.datePipe.transform(new Date(), 'yyyyMMdd')!;
-    const games: Array<Game> = ensure(JSON.parse(localStorage.getItem('daily-schedule') || '[]'));
+  getDailySchedule(yyyyMMdd?: string): Observable<Array<Game>> {
+    const gameDate: string = yyyyMMdd || this.datePipe.transform(new Date(), 'yyyyMMdd')!;
 
-
-    return (outdated || games.length < 1) ? this.get<{ body: Game[] }>(this.GET_DAILY_SCHEDULE_URL, {gameDate})
-      .pipe(map((value: { body: Game[] }) => value.body || [])) : of(games);
+    return this.get<{ body: Game[] }>(this.GET_DAILY_SCHEDULE_URL, {gameDate})
+      .pipe(map((value: { body: Game[] }) => value.body || []));
   }
 
   getAllSchedules(): TeamSchedule[] {
@@ -170,4 +172,16 @@ export class Tank01ApiService {
       .pipe(map((value: { body: { team: string, roster: any[]} }) => value.body || []));
   }
 
+
+  getGamesForPlayer(playerID: string, season: string = '2024'): Observable<{[gameId: string]: PlayerStats}> {
+    return this.get<{ body: {[gameId: string]: PlayerStats} }>(
+      this.GET_GAMES_FOR_PLAYER, {playerID, season})
+      .pipe(map((value: { body: {[gameId: string]: PlayerStats} }) => value.body || []));
+  }
+
+  getPlayerInfo(playerID: string, getStats: boolean = true, season: string = '2024'): Observable<RosterPlayer> {
+    return this.get<{ body: RosterPlayer }>(
+      this.GET_PLAYER_INFO, {playerID, getStats, season})
+      .pipe(map((value: { body: RosterPlayer} ) => value.body || []));
+  }
 }

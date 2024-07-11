@@ -10,6 +10,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/only', (req, res) => {
+  console.log('requesting BoxScores');
   res.json(boxScoresOnly);
 });
 

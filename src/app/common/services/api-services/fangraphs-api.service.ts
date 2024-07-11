@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {HttpOptions} from "../../model/http-options.model";
+import {Game} from "../../model/game.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -22,4 +23,10 @@ export class FanGraphsApiService {
 
     return this.http.get<T>(this.apiUrl + url, options);
   };
+
+  private readonly GET_DAILY_SCHEDULE: string = 'data';
+
+  getBattingStats(): Observable<Array<Game>> {
+    return this.get<any>(this.GET_DAILY_SCHEDULE);
+  }
 }

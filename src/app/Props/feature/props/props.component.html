@@ -1,0 +1,25 @@
+@for (game of dailySchedule; track game) {
+  <div *ngIf="players.get(game.probableStartingPitchers.away) as awayPitcher; else NoStartingPitcher">
+    <span>{{ awayPitcher.team }}</span> -
+    <span>{{ awayPitcher.longName }}</span> -
+    <span>24 NRFI Record: {{ get24NRFI(awayPitcher) }}</span>
+    <span>&nbsp;Streak: {{ getNRFIStreak(awayPitcher) }}</span>
+  </div>
+
+  <br/>
+
+  <div *ngIf="players.get(game.probableStartingPitchers.home) as homePitcher; else NoStartingPitcher">
+    <span>{{ homePitcher.team || game.home }}</span> -
+    <span>{{ homePitcher.longName }}</span> -
+    <span>24 NRFI Record: {{ get24NRFI(homePitcher) }}</span>
+    <span>&nbsp;Streak: {{ getNRFIStreak(homePitcher) }}</span>
+  </div>
+
+  <ng-template #NoStartingPitcher>
+    <div>
+      <span>No Starting Pitcher Yet</span>
+    </div>
+  </ng-template>
+
+  <mat-divider></mat-divider>
+}

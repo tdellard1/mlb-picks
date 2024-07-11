@@ -7,6 +7,7 @@ import {roundToDecimalPlace} from "../utils/general.utils";
 export interface TeamSchedule {
   team: string,
   schedule: Game[],
+  // games?: Map<string, Game>,
   teamDetails?: Team,
 }
 

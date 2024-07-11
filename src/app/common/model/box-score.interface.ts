@@ -40,3 +40,12 @@ export interface Decision {
   playerID: string;
   team: string;
 }
+
+
+export function listOfBoxScoresToListOfPlayerStats(boxScores: BoxScore[]): PlayerStats[] {
+  return boxScores.map((boxScore: BoxScore) => convertPlayerStatsToArray(boxScore)).flat();
+}
+
+export function convertPlayerStatsToArray({playerStats}: BoxScore): PlayerStats[] {
+  return Object.values(playerStats);
+}

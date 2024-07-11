@@ -7,6 +7,7 @@ import {Slates} from "../../../Slate/data-access/slate.model";
 import {Player} from "../../model/players.interface";
 import {Team, Teams} from "../../model/team.interface";
 import {BoxScore} from "../../model/box-score.interface";
+import {RosterPlayer} from "../../model/roster.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +32,8 @@ export class BackendApiService {
     return this.apiService.get<BoxScore[]>(this.serverUrl + 'api/boxScores/only');
   }
 
-  getPlayers(): Observable<Player[]> {
-    return this.apiService.get<Player[]>(this.serverUrl + 'api/players');
+  getPlayers(): Observable<RosterPlayer[]> {
+    return this.apiService.get<RosterPlayer[]>(this.serverUrl + 'api/players');
   }
 
   getTeams(): Observable<Teams> {
@@ -44,13 +45,14 @@ export class BackendApiService {
     return this.apiService.get<Slates>(this.serverUrl + 'api/slates');
   }
 
-  addSchedules(schedules: TeamSchedule[]) {
-    this.apiService
+  getState(): Observable<TeamSchedule[]> {
+    return this.apiService.get<TeamSchedule[]>(this.serverUrl + 'api/state');
+  }
+
+  addSchedules(schedules: TeamSchedule[]): Observable<any> {
+    return this.apiService
       .post(this.serverUrl + 'api/schedules', schedules)
-      .pipe(first())
-      .subscribe(value => {
-      console.log('addSchedules: ', value);
-    });
+      .pipe(first());
   }
 
   updateRosters(rosters: any []) {
@@ -58,7 +60,7 @@ export class BackendApiService {
   }
 
   updateBoxScoresOnly(boxScores: BoxScore[]) {
-    return this.apiService.post(this.serverUrl + 'api/boxScores/only', boxScores);
+    return this.apiService.post<BoxScore[]>(this.serverUrl + 'api/boxScores/only', boxScores);
   }
 
   updateBoxScore(boxScore: TeamSchedule[]) {
@@ -67,5 +69,9 @@ export class BackendApiService {
 
   updateSlates(slates: Slates) {
     return this.apiService.post(this.serverUrl + 'api/slates', slates).pipe(first());
+  }
+
+  updateState(schedules: TeamSchedule[]) {
+    return this.apiService.post<TeamSchedule[]>(this.serverUrl + 'api/state', schedules).pipe(first());
   }
 }

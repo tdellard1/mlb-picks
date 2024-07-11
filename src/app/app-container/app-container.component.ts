@@ -11,6 +11,9 @@ import {AsyncPipe, NgStyle} from "@angular/common";
 import {SlateContainerComponent} from "../Slate/feature/slate-container/slate-container.component";
 import {Slates} from "../Slate/data-access/slate.model";
 import {MLBTeamSchedule} from "../Analysis/data-access/mlb-team-schedule.model";
+import {PropsComponent} from "../Props/feature/props/props.component";
+import {StateService} from "../common/services/state.service";
+import {BackendApiService} from "../common/services/backend-api/backend-api.service";
 
 @Component({
   selector: 'app-container',
@@ -24,7 +27,8 @@ import {MLBTeamSchedule} from "../Analysis/data-access/mlb-team-schedule.model";
     AsyncPipe,
     MatTabContent,
     SlateContainerComponent,
-    NgStyle
+    NgStyle,
+    PropsComponent
   ],
   templateUrl: './app-container.component.html',
   styleUrl: './app-container.component.css'

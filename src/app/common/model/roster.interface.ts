@@ -5,13 +5,15 @@ import {
   TeamHittingStats,
   TeamPitchingStats,
 } from "./team-stats.interface";
+import {PlayerStats} from "./player-stats.interface";
+import {Player} from "./players.interface";
 
 export interface Roster {
   team: string;
   roster: RosterPlayer[];
 }
 
-export interface RosterPlayer {
+export interface RosterPlayer extends Player{
   fantasyProsLink: string;
   jerseyNum: string;
   yahooLink: string;
@@ -23,7 +25,7 @@ export interface RosterPlayer {
   yahooPlayerID: string;
   bat: string;
   pos: string;
-  teamID: string;
+  // teamID: string;
   mlbIDFull: string;
   rotoWirePlayerIDFull: string;
   rotoWirePlayerID: string;
@@ -33,16 +35,18 @@ export interface RosterPlayer {
   mlbLink: string;
   mlbHeadshot: string;
   weight: string;
-  team: string;
+  // team: string;
   teamAbv: string;
   throw: string;
   bDay: string;
   cbsPlayerID: string;
-  longName: string;
-  playerID: string;
+  // longName: string;
+  // playerID: string;
   stats: RosterTeamStats;
   injury: Injury;
-  games?: any[];
+  games?: PlayerStats[];
+  gamesMap?: Map<string, PlayerStats>;
+  allGamesSaved: boolean;
 }
 
 export interface RosterTeamStats {

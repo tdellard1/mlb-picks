@@ -15,7 +15,7 @@ export function getDateObject<T>(dateGiven: string): Date {
   return new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
 }
 
-export class Tank01Date {
+export class Tank01DateTime {
   _date: Date
 
   constructor(yyyyMMdd: string, time: string) {
@@ -30,6 +30,20 @@ export class Tank01Date {
 
     this._date = new Date(formattedDate);
     this._date.setHours(hourMeridiemAdjusted, Number(minute));
+  }
+
+  get timeStamp() {
+    return this._date.getTime();
+  }
+}
+
+export class Tank01Date {
+  _date: Date
+
+  constructor(yyyyMMdd: string) {
+    const formattedDate = yyyyMMdd.replace(/(\d{4})(\d{2})(\d{2})/g, '$1/$2/$3');
+
+    this._date = new Date(formattedDate);
   }
 
   get timeStamp() {

@@ -7,6 +7,7 @@ import {MatDivider} from "@angular/material/divider";
 import {Tank01ApiService} from "../../../common/services/api-services/tank01-api.service";
 import {map, tap} from "rxjs/operators";
 import {GameSelectorService} from "../../data-access/services/game-selector.service";
+import {ActivatedRoute, Data} from "@angular/router";
 
 @Component({
   selector: 'game-selector',
@@ -23,9 +24,11 @@ import {GameSelectorService} from "../../data-access/services/game-selector.serv
 })
 export class GameSelectorComponent {
   constructor(private tank01ApiService: Tank01ApiService,
-              private gameSelectorService: GameSelectorService) {}
+              private gameSelectorService: GameSelectorService,
+              private activatedRoute: ActivatedRoute) {}
 
-  dailySchedule = this.tank01ApiService.getDailySchedule(true).pipe(
+  dailySchedule = this.activatedRoute.data.pipe(
+    map((data: Data) => data['dailySchedule'] as Game[]),
     map((games: Game[]) => games.sort(this.dailyScheduleSorter)),
     tap((games: Game[]) => this.onGameSelected(games[0]))
   );

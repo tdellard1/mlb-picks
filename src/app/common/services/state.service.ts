@@ -1,156 +1,232 @@
-import {Injectable} from '@angular/core';
-import {deepCopy} from "../utils/general.utils";
+import {Injectable, OnDestroy} from '@angular/core';
+import {convertArrayToMap, convertMapToArray, deepCopy} from "../utils/general.utils";
 import {TeamSchedule} from "../model/team-schedule.interface";
-import {Team, Teams} from "../model/team.interface";
-import {Player} from "../model/players.interface";
+import {Team} from "../model/team.interface";
 import {Roster, RosterPlayer} from "../model/roster.interface";
-import {BoxScore} from "../model/box-score.interface";
+import {BoxScore, listOfBoxScoresToListOfPlayerStats} from "../model/box-score.interface";
 import {PlayerStats} from "../model/player-stats.interface";
 import {Game} from "../model/game.interface";
-import {AnalysisUtils} from "../utils/analysis.utils";
-import {mergeAll, mergeMap, of, toArray} from "rxjs";
-import {Tank01ApiService} from "./api-services/tank01-api.service";
 import {BackendApiService} from "./backend-api/backend-api.service";
+import {StateUtils} from "../utils/state.utils";
+import {LoggerService} from "./logger.service";
+import {Player} from "../model/players.interface";
 
 @Injectable({
   providedIn: 'root'
 })
-export class StateService {
-  public _schedules: TeamSchedule[] = [];
-  public schedules_: Map<string, TeamSchedule> = new Map<string, TeamSchedule>();
-
-  private _teams: Team[] = [];
-  private teams_: Map<string, Team> = new Map<string, Team>();
-
-  private _rosters: Roster[] = [];
-  private rosters_: Map<string, RosterPlayer[]> = new Map<string, RosterPlayer[]>();
-
-  private _boxScores: BoxScore[] = [];
-  private _playerStats: PlayerStats[] = [];
-
-
-  constructor(private tank01ApiService: Tank01ApiService,
-              private backendApiService: BackendApiService) {}
-
-  // Step 5
-  build() {
-    const gameIDsToRetrieve: string[] = [];
-
-    this._schedules.forEach((teamSchedule) => {
-      const {schedule}: TeamSchedule = deepCopy(teamSchedule);
-
-      // remove games from start of schedule that do not have boxScores
-      while (schedule.shift()?.boxScore === undefined) {}
-
-      // Starting with games with boxScores, get all games before today that do not have box scores
-      const gameIDs: string[] = schedule
-        .filter(AnalysisUtils.gamesBeforeToday)
-        .filter(({boxScore}: Game) => !boxScore)
-        .map(({gameID}) => gameID);
-
-      gameIDsToRetrieve.push(...gameIDs)
-      this.schedules_.set(teamSchedule.team, teamSchedule);
-    });
-
-    if (gameIDsToRetrieve.length > 0) {
-      of(new Set(gameIDsToRetrieve)).pipe(
-        mergeAll(),
-        mergeMap((gameID: string) => this.tank01ApiService.getBoxScoreForGame(gameID)),
-        toArray()
-      ).subscribe((newBoxScores: BoxScore[]) => {
-        this._boxScores.push(...newBoxScores);
-
-        this.backendApiService.updateBoxScoresOnly(this._boxScores).subscribe(value => console.log('updated BoxScores? ', value));
-      });
-    }
+export class StateService implements OnDestroy {
+  constructor(private backendApiService: BackendApiService,
+              private logger: LoggerService) {
   }
 
-// Step 4
-  addSchedules(schedules: TeamSchedule[]): any {
-    this._schedules = schedules;
+// Domain: Single daily (if desired) requested data
+  private _schedules: Map<string, TeamSchedule> = new Map();
 
-    schedules.forEach((schedule: TeamSchedule) => {
-      // Add BoxScores to Schedule Games
-      schedule.schedule.forEach((game: Game) => {
-        const boxScoreIndex = this._boxScores.findIndex((boxScore: BoxScore) => boxScore.gameID === game.gameID);
+  private _teams: Map<string, Team> = new Map();
+  /** Payer Info + PLayer Stats = Roster Player */
+  private _rosterPlayers: Map<string, RosterPlayer> = new Map();
 
-        if (boxScoreIndex !== -1) {
-          game.boxScore = this._boxScores[boxScoreIndex];
-        }
+  // More dynamic data that bas to be requested upon need, and incorporated into Domain objects
+  private _playerStats: Map<string, PlayerStats> = new Map();
+  newBoxScores: Map<string, BoxScore> = new Map<string, BoxScore>();
+  private _boxScores: Map<string, BoxScore> = new Map();
+
+
+  loadState(teamSchedules: TeamSchedule[]) {
+    // const teams: Team[] = teamSchedules.map(({teamDetails}) => teamDetails!);
+    // const games: Game[] = teamSchedules.map(({schedule}) => schedule!).flat();
+    // const boxScores: BoxScore[] = teamSchedules.map(({schedule}) => schedule.map(({boxScore}) => boxScore!)).flat();
+    // const rosterPlayers: RosterPlayer[] = teams.map(({roster}) => roster!).flat();
+    // const playerStats: PlayerStats[] = rosterPlayers.map(({games}) => games!).flat();
+
+    // this._schedules = new Map(teamSchedules.map((schedule) => ([schedule.team, schedule])));
+    // this._teams = new Map(teams.map((team) => ([team.teamAbv, team])));
+    // // this._games = new Map(games.map((game) => ([game.gameID, game])));
+    // this._boxScores = new Map(boxScores.filter(Boolean).map((boxScore) => ([boxScore.gameID, boxScore])));
+    // this._rosterPlayers = new Map(rosterPlayers.map((rosterPlayer) => ([rosterPlayer.playerID, rosterPlayer])));
+    // this._playerStats = new Map(playerStats.filter(Boolean).map((playerStats) => ([`${playerStats.playerID}:${playerStats.gameID}`, playerStats])));
+  }
+
+  loadStateSlices(teams: Team[], players: RosterPlayer[], rosters: Roster[], schedules: TeamSchedule[], boxScores: BoxScore[]) {
+    // BoxScores must filter suspended and postponed games not have null player Stats
+    const usableBoxScores = boxScores.filter((boxScore: BoxScore) => {
+      return boxScore.gameStatus !== 'Postponed'
+    });
+
+
+
+    /** Start with BoxScores, this is going to determine all stats for everything */
+    this._boxScores = new Map(boxScores.filter(Boolean).map((boxScore) => ([boxScore.gameID, boxScore])));
+
+
+    /** Add PlayerStats Map from box Scores */
+    const playerStats: PlayerStats[] = listOfBoxScoresToListOfPlayerStats(usableBoxScores);
+    this._playerStats = new Map(playerStats.map((playerStats) => ([`${playerStats.playerID}:${playerStats.gameID}`, playerStats])));
+    const tempRosterMap: Map<string, RosterPlayer> = new Map();
+
+    rosters.forEach(({roster}: Roster) => {
+      roster.forEach((rosterPlayer: RosterPlayer) => {
+        tempRosterMap.set(rosterPlayer.playerID, rosterPlayer);
       });
+    });
 
-      // Add Team Details to Schedule
-      const teamAbr: string = schedule.team;
-      const teamDetails = this.teams_.get(teamAbr);
-      if (teamDetails) {
-        schedule.teamDetails = teamDetails;
+    players.forEach((player: RosterPlayer) => {
+      const rosterPlayer: RosterPlayer | undefined = tempRosterMap.get(player.playerID);
+
+       if (rosterPlayer) {
+         const gamesForPlayer: PlayerStats[] = playerStats.filter(({playerID}) => playerID === rosterPlayer.playerID);
+         if (gamesForPlayer.length) {
+           rosterPlayer.games = gamesForPlayer;
+         }
+         this._rosterPlayers.set(rosterPlayer.playerID, rosterPlayer);
+       } else {
+         const gamesForPlayer: PlayerStats[] = playerStats.filter(({playerID}) => playerID === player.playerID);
+         if (gamesForPlayer.length) {
+           player.games = gamesForPlayer;
+         }
+         this._rosterPlayers.set(player.playerID, player);
+       }
+    });
+
+    const updatedTeams = teams.map((team: Team) => {
+      /** Add Rosters To Teams */
+      team.roster = StateUtils.playersOnRoster(team.teamAbv, this._rosterPlayers);
+
+      return team;
+    });
+
+    this._teams = new Map(updatedTeams.map((team) => ([team.teamAbv, team])));
+
+    const updatedSchedules: TeamSchedule[] = schedules.map((teamSchedule: TeamSchedule) => {
+      /** Add Teams To Schedule */
+      if (this._teams.has(teamSchedule.team)) {
+        teamSchedule.teamDetails = this._teams.get(teamSchedule.team);
       }
 
-      // this.schedules_.set(teamAbr, schedule);
-    });
-
-    return this;
-  }
-
-
-  // Step 3
-  addTeams(teams: Team[]) {
-    this._teams = teams;
-    this._teams.forEach((team: Team) => {
-      const rosterPlayers: RosterPlayer[] | undefined = this.rosters_.get(team.teamAbv);
-      if (rosterPlayers) {
-        team.roster = rosterPlayers;
-      }
-
-      this.teams_.set(team.teamAbv, team);
-    });
-
-    return this;
-  }
-
-  // Step 2
-  addRosters(rosters: Roster[]): this {
-    this._rosters = rosters;
-    this._rosters.forEach(({roster, team}: Roster) => {
-      const playersOnTeam: PlayerStats[] = this._playerStats.filter((playerStats: PlayerStats) => playerStats.team === team);
-
-      playersOnTeam.forEach((player: PlayerStats) => {
-        const matchingRosterPlayer: RosterPlayer | undefined = roster.find(({playerID}: RosterPlayer) => player.playerID === playerID);
-
-        if (matchingRosterPlayer) {
-          if (matchingRosterPlayer.games === undefined) {
-            matchingRosterPlayer.games = [];
-          }
-
-          const hasNoGame = matchingRosterPlayer.games.findIndex(value => value['gameID'] === player.gameID) === -1;
-
-          if (hasNoGame) {
-            matchingRosterPlayer.games.push(player);
-          }
+      /** Add BoxScores To Schedule */
+      teamSchedule.schedule = teamSchedule.schedule.map((game: Game) => {
+        if (this._boxScores.has(game.gameID)) {
+          game.boxScore = this._boxScores.get(game.gameID);
         }
+
+        return game;
       });
 
-      this.rosters_.set(team, roster);
+      return teamSchedule;
     });
 
-    return this;
+    this._schedules = new Map(updatedSchedules.map((schedule) => ([schedule.team, schedule])));
+
+
+    // this.backendApiService.updateBoxScoresOnly(convertMapToArray(this._boxScores)).subscribe(console.log);
   }
 
-  // Step 1:
-  addBoxScores(boxScores: BoxScore[]): this {
-    this._boxScores = boxScores;
-    const playerStatsPerGame: { [playerId: string]: PlayerStats }[] = this._boxScores
-      .filter(({playerStats}: BoxScore) => !!playerStats)
-      .map(({playerStats}: BoxScore) => playerStats);
+  saveRosters() {
+    return this.backendApiService.updateRosters(convertMapToArray(this._rosterPlayers));
+  }
 
-    playerStatsPerGame.forEach((playerStats: { [playerId: string]: PlayerStats }) =>
-      Object.values(playerStats).forEach((player: PlayerStats) => {
-        if (player) {
-          this._playerStats.push(player);
+  saveState() {
+    return this.backendApiService.updateState(convertMapToArray(this._schedules));
+  }
+
+  addBoxScore(boxScore: BoxScore): void {
+    this.newBoxScores.set(boxScore.gameID, boxScore);
+  }
+
+  getPlayersWithoutFullGames(playerIDs: string[]): RosterPlayer[] {
+    return convertMapToArray<RosterPlayer>(this._rosterPlayers).filter((player: RosterPlayer) => !player.allGamesSaved);
+  }
+
+  getPlayersWithFullGames(playerIDs: string[]): RosterPlayer[] {
+    return convertMapToArray<RosterPlayer>(this._rosterPlayers).filter((player: RosterPlayer) => player.allGamesSaved);
+  }
+
+
+  getAllPlayers() {
+    return convertMapToArray<RosterPlayer>(this._rosterPlayers);
+  }
+
+  getHittingStreaks() {
+    StateUtils.getHittingStreaks(this._rosterPlayers);
+  }
+
+  /** Method to return the PlayerIDs not a part of rosters that need more info */
+  requiredPlayerIDInfos(...boxScores: BoxScore[]) {
+    const playerStats = listOfBoxScoresToListOfPlayerStats(boxScores);
+    const playerIDs = playerStats.map((playerStats: PlayerStats) => {
+      return this.isPlayerApartOfRoster(playerStats) ? '' : playerStats.playerID;
+    });
+
+    return playerIDs.filter(Boolean);
+  }
+
+  // If player is not a part of a roster, then we need to retrieve the playerInfo, then add it to A roster.
+  private isPlayerApartOfRoster({playerID}: PlayerStats): boolean {
+    return this._rosterPlayers.has(playerID);
+  }
+
+  addRosterPlayersAndTriggerUpwards(rosterPlayers: RosterPlayer[]) {
+    rosterPlayers.forEach((player: RosterPlayer) => {
+      if (player.team) {
+        console.log('players team: ', player);
+        if (this._teams.get(player.team) === undefined) {
+          console.log(this._teams, player);
         }
-      }));
+        const team: Team = deepCopy<Team>(this._teams.get(player.team));
+        const teamRosterMap = convertArrayToMap(team.roster!, 'playerID');
+        teamRosterMap.set(player.playerID, Object.assign({}, player, {allGamesSaved: true}));
 
-    return this;
+        team.roster = convertMapToArray(teamRosterMap);
+        this._teams.set(team.teamAbv, team);
+
+        /** This should be outside the roster for each loop, but I need to figure out how to handle a player not having an assigned team */
+        const uniqueListOfTeamsChanged: Set<string> = new Set(rosterPlayers.map((rosterPlayer: RosterPlayer) => rosterPlayer.team));
+
+        [...uniqueListOfTeamsChanged].filter(Boolean).forEach((team: string) => {
+          const schedule: TeamSchedule = deepCopy(this._schedules.get(team));
+          schedule.teamDetails = this._teams.get(team);
+
+          this._schedules.set(team, schedule);
+        });
+      } else {
+        this._rosterPlayers.set(player.playerID, player);
+        this.logger.warn(`Player has no team: ${player}`);
+      }
+    });
+  }
+
+  extractState(): TeamSchedule[] {
+    return convertMapToArray<TeamSchedule>(this._schedules);
+  }
+
+  hasPlayer(playerID: string): boolean {
+    return this._rosterPlayers.has(playerID);
+  }
+
+  getPlayer(playerID: string): RosterPlayer | undefined {
+    return this._rosterPlayers.get(playerID);
+  }
+
+  get allPlayers(): Map<string, RosterPlayer> {
+    return this._rosterPlayers;
+  }
+
+  getPlayers(playerIDs: string[]): RosterPlayer[] {
+    return convertMapToArray<RosterPlayer>(this._rosterPlayers)
+      .filter((player: RosterPlayer) => playerIDs.includes(player.playerID))
+    // .filter((player: RosterPlayer) => player.allGamesSaved);
+  }
+
+  ngOnDestroy(): void {
+    this.saveState();
+  }
+
+  getPitcherNRFIRecord(rosterPlayer: RosterPlayer) {
+    return StateUtils.getNoRunsFirstInningRecord(this._boxScores, rosterPlayer);
+  }
+
+  getNRFIStreak(rosterPlayer: RosterPlayer) {
+    return StateUtils.getNoRunsFirstInningStreak(this._boxScores, rosterPlayer);
   }
 }
 
