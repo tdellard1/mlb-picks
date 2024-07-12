@@ -9,10 +9,6 @@ import {GameSelectorComponent} from "../../ui/game-selector/game-selector.compon
 import {GameSelectedComponent} from "../../ui/game-selected/game-selected.component";
 import {GameDetailsComponent} from "../../ui/game-details/game-details.component";
 import {MatDivider} from "@angular/material/divider";
-import {StateService} from "../../../common/services/state.service";
-import {Tank01ApiService} from "../../../common/services/api-services/tank01-api.service";
-import {BoxScore} from "../../../common/model/box-score.interface";
-import {deepCopy} from "../../../common/utils/general.utils";
 
 @Component({
   selector: 'analysis-container-component',
@@ -38,10 +34,6 @@ export class AnalysisContainerComponent implements OnInit {
 
   teamScheduleMap: Map<string, MLBTeamSchedule> = new Map();
   gamesMap: Map<string, Game> = new Map();
-
-
-  constructor(private stateService: StateService,
-              private tank01ApiService: Tank01ApiService) {}
 
   ngOnInit(): void {
     this.dailySchedule.forEach((game: Game) => this.gamesMap.set(game.gameID, game));

@@ -4,5 +4,5 @@ import {TeamSchedule} from "../model/team-schedule.interface";
 import {BackendApiService} from "../services/backend-api/backend-api.service";
 
 export const boxScoresResolver: ResolveFn<TeamSchedule[]> = () => {
-  return inject(BackendApiService).getBoxScores()
+  return inject(BackendApiService).getSchedules()
 };

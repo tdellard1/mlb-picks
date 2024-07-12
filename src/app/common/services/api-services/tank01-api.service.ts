@@ -50,48 +50,11 @@ export class Tank01ApiService {
         .pipe(map((value: { body: Team[] }) => value.body || []));
   }
 
-  getAllPlayers(): Observable<Array<Player>> {
-    const players: Array<Player> | null = JSON.parse(localStorage.getItem('players') || '[]');
-
-    if (players?.length) {
-      return of(players);
-    } else {
-      return this.get<{ body: Player[] }>(this.GET_ALL_PLAYERS_URL)
-        .pipe(map((value: { body: Player[] }) => value.body || []));
-    }
-  }
-
   getDailySchedule(yyyyMMdd?: string): Observable<Array<Game>> {
     const gameDate: string = yyyyMMdd || this.datePipe.transform(new Date(), 'yyyyMMdd')!;
 
     return this.get<{ body: Game[] }>(this.GET_DAILY_SCHEDULE_URL, {gameDate})
       .pipe(map((value: { body: Game[] }) => value.body || []));
-  }
-
-  getAllSchedules(): TeamSchedule[] {
-    const schedules: Array<TeamSchedule> = JSON.parse(localStorage.getItem('schedules') || '[]');
-
-    if (schedules?.length) {
-      return schedules;
-    }
-
-    return [];
-  }
-
-  getTeamCachedSchedule(teamAbv: string, season: string = '2024'): Observable<TeamSchedule> {
-    const schedules: Array<TeamSchedule> = ensure(JSON.parse(localStorage.getItem('schedules') || '[]'));
-
-    if (schedules?.length) {
-      const teamSchedule: TeamSchedule | undefined = schedules.find(({team}: TeamSchedule) => team === teamAbv);
-
-      if (teamSchedule) {
-        return of(teamSchedule);
-      }
-    }
-
-    return this.get<{ body: Game[] }>(
-      this.GET_TEAM_SCHEDULE_URL, {teamAbv, season})
-      .pipe(map((value: { body: { team: string, schedule: Game[]} }) => value.body || []));
   }
 
   getTeamSchedule(teamAbv: string, season: string = '2024'): Observable<TeamSchedule> {
@@ -113,55 +76,6 @@ export class Tank01ApiService {
     return this.get<{ body: BoxScore }>(
       this.GET_BOX_SCORE_URL, {gameID})
       .pipe(map((value: { body: BoxScore }) => value.body || []));
-  }
-
-  getBoxScoreForSchedule({schedule}: TeamSchedule): Observable<BoxScore[]> {
-    return of(schedule).pipe(
-      mergeAll(),
-      mergeMap((game: Game) => this.getBoxScoreForGame(game.gameID).pipe(take(1))),
-      toArray(),
-    )
-  }
-
-  getSchedulesWithBoxScoresIncluded(): TeamSchedule[] {
-    const teamScheduleWithBoxScores: Array<TeamSchedule> = ensure(JSON.parse(localStorage.getItem('teamScheduleWithBoxScores') || '[]'));
-
-    if (teamScheduleWithBoxScores?.length === 30) {
-        return teamScheduleWithBoxScores;
-    }
-
-    return [];
-  }
-
-  getValidScheduleForBoxScore(): TeamSchedule[] | undefined {
-    const schedulesOne: TeamSchedule[] = this.getSchedulesWithBoxScoresIncluded();
-
-    if (schedulesOne && this.scheduleMeetsCriteria(schedulesOne)) {
-      return schedulesOne;
-    }
-
-    const schedulesTwo: TeamSchedule[] = this.getAllSchedules();
-
-    if (schedulesTwo && this.scheduleMeetsCriteria(schedulesTwo)) {
-      return schedulesTwo;
-    }
-
-    return undefined;
-
-  }
-
-  scheduleMeetsCriteria(schedules: TeamSchedule[]): boolean {
-    /**
-     * In order to be a valid schedule with Box Scores, the schedule must:
-     * 1. Be truthy
-     * 2. Have 30 schedules (for 30 teams)
-     * 3. Have 15 of the most recent games for each team's schedule
-     */
-    const truthy: boolean = schedules !== undefined && schedules !== null;
-    const validLength: boolean = schedules.length === 30;
-    const validGameAmount: boolean = schedules.every(({schedule}: TeamSchedule) => schedule.length > 14);
-
-    return truthy && validLength && validGameAmount;
   }
 
 

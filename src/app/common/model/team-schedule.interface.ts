@@ -1,5 +1,5 @@
 import {Game} from "./game.interface";
-import {Team, Teams} from "./team.interface";
+import {Team} from "./team.interface";
 import {BoxScore} from "./box-score.interface";
 import {TeamAnalyticsUtils} from "../utils/team-analytics.utils";
 import {roundToDecimalPlace} from "../utils/general.utils";
@@ -7,7 +7,6 @@ import {roundToDecimalPlace} from "../utils/general.utils";
 export interface TeamSchedule {
   team: string,
   schedule: Game[],
-  // games?: Map<string, Game>,
   teamDetails?: Team,
 }
 

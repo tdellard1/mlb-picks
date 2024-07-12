@@ -151,21 +151,54 @@ export class StateUtils {
     const boxScoresOfGames: BoxScore[] = gameIDs
       .map((gameID: string) => boxScoreMap.get(gameID)!)
       .sort((a: BoxScore, b: BoxScore) => {
-      const aDateObject: Tank01Date = new Tank01Date(a.gameID.slice(0, 8));
-      const bDateObject: Tank01Date = new Tank01Date(b.gameID.slice(0, 8));
+        const aDateObject: Tank01Date = new Tank01Date(a.gameID.slice(0, 8));
+        const bDateObject: Tank01Date = new Tank01Date(b.gameID.slice(0, 8));
 
-      return aDateObject.timeStamp - bDateObject.timeStamp; })
+        return aDateObject.timeStamp - bDateObject.timeStamp;
+      })
       .filter((boxScore: BoxScore) => boxScore.playerStats[playerID].started === 'True');
 
     let NRFI = 0;
 
     // @ts-ignore
     let boxScore = boxScoresOfGames.pop();
-    while (boxScore && pitcherThrewNoRunnerFirstInning(boxScore, playerID)) {
-      NRFI++;
-      boxScore = boxScoresOfGames.pop();
+
+    if (boxScore) {
+      const firstResult: boolean = pitcherThrewNoRunnerFirstInning(boxScore, playerID);
+      while (boxScore && firstResult === pitcherThrewNoRunnerFirstInning(boxScore, playerID)) {
+        if (firstResult) {
+          NRFI++;
+        } else {
+          --NRFI;
+        }
+        boxScore = boxScoresOfGames.pop();
+      }
     }
 
     return `${NRFI}`;
+  }
+
+  static getTeamNRFI(team: string, teamSchedule: TeamSchedule, boxScoresMap: any): string {
+    const games: Game[] = teamSchedule.schedule.filter((game: Game) => game.boxScore !== undefined);
+
+    const totalGames = games.length;
+    let gamesWithNRFI: number = 0;
+    games.forEach(({boxScore}: Game) => {
+      if (boxScore?.lineScore) {
+        const isAway: boolean = boxScore.lineScore.away.team === team;
+
+        if (isAway && boxScore.lineScore.away.scoresByInning['1'] === '0') {
+          gamesWithNRFI++;
+        } else if (boxScore.lineScore.home.scoresByInning['1'] === '0') {
+          gamesWithNRFI++;
+        }
+      }
+    });
+
+    const NRFIRatio: number = gamesWithNRFI / totalGames;
+    const NRFIRatioRounded = NRFIRatio.toFixed(2);
+    const NRFIPercentage: number = Number(NRFIRatioRounded) * 100;
+
+    return NRFIPercentage.toString();
   }
 }

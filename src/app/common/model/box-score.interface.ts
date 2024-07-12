@@ -42,7 +42,7 @@ export interface Decision {
 }
 
 
-export function listOfBoxScoresToListOfPlayerStats(boxScores: BoxScore[]): PlayerStats[] {
+export function convertBoxScoresToListOfPlayerStats(boxScores: BoxScore[]): PlayerStats[] {
   return boxScores.map((boxScore: BoxScore) => convertPlayerStatsToArray(boxScore)).flat();
 }
 

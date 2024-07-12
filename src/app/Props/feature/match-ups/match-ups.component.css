@@ -1,0 +1,13 @@
+:host {
+  display: block;
+  background-color: gray;
+  height: 100%;
+}
+
+label {
+  margin-left: 0;
+  margin-right: auto;
+  padding-left: 4px;
+  padding-right: 0;
+  order: 0;
+}

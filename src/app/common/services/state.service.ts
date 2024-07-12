@@ -2,19 +2,21 @@ import {Injectable, OnDestroy} from '@angular/core';
 import {convertArrayToMap, convertMapToArray, deepCopy} from "../utils/general.utils";
 import {TeamSchedule} from "../model/team-schedule.interface";
 import {Team} from "../model/team.interface";
-import {Roster, RosterPlayer} from "../model/roster.interface";
-import {BoxScore, listOfBoxScoresToListOfPlayerStats} from "../model/box-score.interface";
+import {RosterPlayer} from "../model/roster.interface";
+import {BoxScore, convertBoxScoresToListOfPlayerStats} from "../model/box-score.interface";
 import {PlayerStats} from "../model/player-stats.interface";
 import {Game} from "../model/game.interface";
 import {BackendApiService} from "./backend-api/backend-api.service";
 import {StateUtils} from "../utils/state.utils";
 import {LoggerService} from "./logger.service";
-import {Player} from "../model/players.interface";
+import {createRosterPlayerAndAddToMap, removePostponedGames} from "../utils/state-builder.utils";
 
 @Injectable({
   providedIn: 'root'
 })
 export class StateService implements OnDestroy {
+  private readonly GAME_ID: string = 'gameID';
+  private readonly PLAYER_ID: string = 'playerID';
   constructor(private backendApiService: BackendApiService,
               private logger: LoggerService) {
   }
@@ -31,62 +33,16 @@ export class StateService implements OnDestroy {
   newBoxScores: Map<string, BoxScore> = new Map<string, BoxScore>();
   private _boxScores: Map<string, BoxScore> = new Map();
 
+  loadStateSlices(teams: Team[], players: RosterPlayer[], rosters: RosterPlayer[], schedules: TeamSchedule[], boxScores: BoxScore[]) {
+    const usableBoxScores: BoxScore[] = removePostponedGames(boxScores);
+    this._boxScores = convertArrayToMap(usableBoxScores, this.GAME_ID);
 
-  loadState(teamSchedules: TeamSchedule[]) {
-    // const teams: Team[] = teamSchedules.map(({teamDetails}) => teamDetails!);
-    // const games: Game[] = teamSchedules.map(({schedule}) => schedule!).flat();
-    // const boxScores: BoxScore[] = teamSchedules.map(({schedule}) => schedule.map(({boxScore}) => boxScore!)).flat();
-    // const rosterPlayers: RosterPlayer[] = teams.map(({roster}) => roster!).flat();
-    // const playerStats: PlayerStats[] = rosterPlayers.map(({games}) => games!).flat();
-
-    // this._schedules = new Map(teamSchedules.map((schedule) => ([schedule.team, schedule])));
-    // this._teams = new Map(teams.map((team) => ([team.teamAbv, team])));
-    // // this._games = new Map(games.map((game) => ([game.gameID, game])));
-    // this._boxScores = new Map(boxScores.filter(Boolean).map((boxScore) => ([boxScore.gameID, boxScore])));
-    // this._rosterPlayers = new Map(rosterPlayers.map((rosterPlayer) => ([rosterPlayer.playerID, rosterPlayer])));
-    // this._playerStats = new Map(playerStats.filter(Boolean).map((playerStats) => ([`${playerStats.playerID}:${playerStats.gameID}`, playerStats])));
-  }
-
-  loadStateSlices(teams: Team[], players: RosterPlayer[], rosters: Roster[], schedules: TeamSchedule[], boxScores: BoxScore[]) {
-    // BoxScores must filter suspended and postponed games not have null player Stats
-    const usableBoxScores = boxScores.filter((boxScore: BoxScore) => {
-      return boxScore.gameStatus !== 'Postponed'
-    });
-
-
-
-    /** Start with BoxScores, this is going to determine all stats for everything */
-    this._boxScores = new Map(boxScores.filter(Boolean).map((boxScore) => ([boxScore.gameID, boxScore])));
-
-
-    /** Add PlayerStats Map from box Scores */
-    const playerStats: PlayerStats[] = listOfBoxScoresToListOfPlayerStats(usableBoxScores);
+    const playerStats: PlayerStats[] = convertBoxScoresToListOfPlayerStats(usableBoxScores);
     this._playerStats = new Map(playerStats.map((playerStats) => ([`${playerStats.playerID}:${playerStats.gameID}`, playerStats])));
-    const tempRosterMap: Map<string, RosterPlayer> = new Map();
 
-    rosters.forEach(({roster}: Roster) => {
-      roster.forEach((rosterPlayer: RosterPlayer) => {
-        tempRosterMap.set(rosterPlayer.playerID, rosterPlayer);
-      });
-    });
+    const tempRosterMap: Map<string, RosterPlayer> = convertArrayToMap(rosters, this.PLAYER_ID);
 
-    players.forEach((player: RosterPlayer) => {
-      const rosterPlayer: RosterPlayer | undefined = tempRosterMap.get(player.playerID);
-
-       if (rosterPlayer) {
-         const gamesForPlayer: PlayerStats[] = playerStats.filter(({playerID}) => playerID === rosterPlayer.playerID);
-         if (gamesForPlayer.length) {
-           rosterPlayer.games = gamesForPlayer;
-         }
-         this._rosterPlayers.set(rosterPlayer.playerID, rosterPlayer);
-       } else {
-         const gamesForPlayer: PlayerStats[] = playerStats.filter(({playerID}) => playerID === player.playerID);
-         if (gamesForPlayer.length) {
-           player.games = gamesForPlayer;
-         }
-         this._rosterPlayers.set(player.playerID, player);
-       }
-    });
+    createRosterPlayerAndAddToMap(players, playerStats, tempRosterMap, this._rosterPlayers);
 
     const updatedTeams = teams.map((team: Team) => {
       /** Add Rosters To Teams */
@@ -116,9 +72,6 @@ export class StateService implements OnDestroy {
     });
 
     this._schedules = new Map(updatedSchedules.map((schedule) => ([schedule.team, schedule])));
-
-
-    // this.backendApiService.updateBoxScoresOnly(convertMapToArray(this._boxScores)).subscribe(console.log);
   }
 
   saveRosters() {
@@ -152,7 +105,7 @@ export class StateService implements OnDestroy {
 
   /** Method to return the PlayerIDs not a part of rosters that need more info */
   requiredPlayerIDInfos(...boxScores: BoxScore[]) {
-    const playerStats = listOfBoxScoresToListOfPlayerStats(boxScores);
+    const playerStats = convertBoxScoresToListOfPlayerStats(boxScores);
     const playerIDs = playerStats.map((playerStats: PlayerStats) => {
       return this.isPlayerApartOfRoster(playerStats) ? '' : playerStats.playerID;
     });
@@ -227,6 +180,35 @@ export class StateService implements OnDestroy {
 
   getNRFIStreak(rosterPlayer: RosterPlayer) {
     return StateUtils.getNoRunsFirstInningStreak(this._boxScores, rosterPlayer);
+  }
+
+  getTeamNRFI(team: string) {
+    const teamSchedule = this._schedules.get(team);
+    if (teamSchedule) {
+      return StateUtils.getTeamNRFI(team, teamSchedule, this._boxScores);
+    } else {
+      return 'No NRFI Data';
+    }
+  }
+
+  containsPlayers(players: string[]) {
+    const allPlayers: RosterPlayer[] = convertMapToArray<RosterPlayer>(this._rosterPlayers);
+
+    return players.every((playerID: string): boolean =>
+      allPlayers.findIndex((rosterPlayer: RosterPlayer): boolean =>
+        rosterPlayer.playerID === playerID) !== -1);
+  }
+
+  filterNewPlayers(players: string[]): string[] {
+    const newPlayers: string[] = [];
+
+    players.forEach((playerId: string) => {
+      if (!this._rosterPlayers.has(playerId)) {
+        newPlayers.push(playerId);
+      }
+    });
+
+    return newPlayers;
   }
 }
 

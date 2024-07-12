@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Data} from "@angular/router";
 import {map} from "rxjs/operators";
-import {Game} from "../../../common/model/game.interface";
+import {Game, Games} from "../../../common/model/game.interface";
 import {AsyncPipe, JsonPipe, NgIf} from "@angular/common";
 import {SubscriptionHolder} from "../../../common/components/subscription-holder.component";
 import {StateService} from "../../../common/services/state.service";
@@ -33,7 +33,7 @@ export class PropsComponent extends SubscriptionHolder implements OnDestroy, OnI
     this.subscriptions.push(
       activatedRoute.data.pipe(
         map((data: Data) => data['dailySchedule'] as Game[])
-      ).subscribe((games: Game[]) => this.dailySchedule = games));
+      ).subscribe((games: Game[]) => this.dailySchedule = new Games(games).sortedGames));
   }
 
 
@@ -53,5 +53,9 @@ export class PropsComponent extends SubscriptionHolder implements OnDestroy, OnI
 
   getNRFIStreak(rosterPlayer: RosterPlayer): string {
     return this.stateService.getNRFIStreak(rosterPlayer);
+  }
+
+  getTeamNRFI(team: string) {
+    return this.stateService.getTeamNRFI(team);
   }
 }

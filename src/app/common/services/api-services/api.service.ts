@@ -13,7 +13,7 @@ export class ApiService {
     return this.http.get<T>(url, options);
   };
 
-  post<T>(url: string, body: any): Observable<any> {
+  post<T>(url: string, body: T): Observable<any> {
     return this.http.post<T>(url,  body);
   };
 }

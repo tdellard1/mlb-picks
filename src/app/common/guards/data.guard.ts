@@ -3,28 +3,35 @@ import {inject} from "@angular/core";
 import {firstValueFrom} from "rxjs";
 import {BackendApiService} from "../services/backend-api/backend-api.service";
 import {StateService} from "../services/state.service";
-import {Tank01ApiService} from "../services/api-services/tank01-api.service";
-import {Team, Teams} from "../model/team.interface";
-import {map} from "rxjs/operators";
+import {Team} from "../model/team.interface";
 import {BoxScore} from "../model/box-score.interface";
-import {Roster, RosterPlayer} from "../model/roster.interface";
-import {UpdateStateSlice} from "../services/update-state-slice.service";
-import {Player} from "../model/players.interface";
+import {RosterPlayer} from "../model/roster.interface";
+import {UpdateStateService} from "../services/update-state-slice.service";
+import {LastUpdatedService} from "../services/last-updated.service";
+import {TeamSchedule} from "../model/team-schedule.interface";
 
 export const dataGuard: CanActivateFn = async (): Promise<boolean> => {
-  // const updateStateSlice: UpdateStateSlice = inject(UpdateStateSlice);
+  const updateStateService: UpdateStateService = inject(UpdateStateService);
   const backendApiService: BackendApiService = inject(BackendApiService);
-  // const tank01ApiService: Tank01ApiService = inject(Tank01ApiService);
+  const lastUpdatedService: LastUpdatedService = inject(LastUpdatedService);
   const stateService: StateService = inject(StateService);
 
-  const teams: Team[] = await firstValueFrom(backendApiService.getTeams().pipe(map(({teams}: Teams) => teams)));
-  const players: RosterPlayer[] = await firstValueFrom(backendApiService.getPlayers());
-  const rosters: Roster[] = await firstValueFrom(backendApiService.getRosters());
-  const schedules = await firstValueFrom(backendApiService.getSchedules());
-  const boxScores: BoxScore[] = await firstValueFrom(backendApiService.getBoxScoresOnly());
+  const teams: Team[] = await firstValueFrom(backendApiService.getTeamsArray());
+  const allPlayers: RosterPlayer[] = await firstValueFrom(backendApiService.getPlayers());
+  const rosterPlayers: RosterPlayer[] = await firstValueFrom(backendApiService.getRosters());
+  const schedules: TeamSchedule[] = await firstValueFrom(backendApiService.getSchedules());
+  const boxScores: BoxScore[] = await firstValueFrom(backendApiService.getBoxScores());
 
-  // updateStateSlice.getYesterdaysBoxScores(boxScores);
-  stateService.loadStateSlices(teams, players, rosters, schedules, boxScores);
+  if (lastUpdatedService.refresh) {
+    updateStateService.getYesterdaysBoxScores(boxScores)
+      .subscribe((newBoxScores: BoxScore[]) => {
+      boxScores.push(...newBoxScores);
+      backendApiService.updateBoxScores(boxScores).subscribe(console.log);
+      stateService.loadStateSlices(teams, allPlayers, rosterPlayers, schedules, boxScores);
+    });
+  } else {
+    stateService.loadStateSlices(teams, allPlayers, rosterPlayers, schedules, boxScores);
+  }
 
   return true;
 };

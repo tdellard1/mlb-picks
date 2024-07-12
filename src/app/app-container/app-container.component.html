@@ -2,10 +2,7 @@
   <mat-tab label="Analysis">
     <ng-template matTabContent>
       <div class="container">
-        <analysis-container-component
-          [teams]="(teams$ | async)!"
-          [dailySchedule]="(dailySchedule$ | async)!"
-          [mlbTeamSchedules]="(mlbSchedules$ | async)!"></analysis-container-component>
+        <match-ups></match-ups>
       </div>
     </ng-template>
   </mat-tab>
@@ -23,7 +20,10 @@
   <mat-tab label="Props">
     <ng-template matTabContent>
       <div class="container">
-        <props></props>
+        <analysis-container-component
+          [teams]="(teams$ | async)!"
+          [dailySchedule]="(dailySchedule$ | async)!"
+          [mlbTeamSchedules]="(mlbSchedules$ | async)!"></analysis-container-component>
       </div>
     </ng-template>
   </mat-tab>

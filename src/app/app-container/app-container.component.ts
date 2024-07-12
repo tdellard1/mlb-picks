@@ -12,8 +12,7 @@ import {SlateContainerComponent} from "../Slate/feature/slate-container/slate-co
 import {Slates} from "../Slate/data-access/slate.model";
 import {MLBTeamSchedule} from "../Analysis/data-access/mlb-team-schedule.model";
 import {PropsComponent} from "../Props/feature/props/props.component";
-import {StateService} from "../common/services/state.service";
-import {BackendApiService} from "../common/services/backend-api/backend-api.service";
+import {MatchUpsComponent} from "../Props/feature/match-ups/match-ups.component";
 
 @Component({
   selector: 'app-container',
@@ -28,7 +27,8 @@ import {BackendApiService} from "../common/services/backend-api/backend-api.serv
     MatTabContent,
     SlateContainerComponent,
     NgStyle,
-    PropsComponent
+    PropsComponent,
+    MatchUpsComponent
   ],
   templateUrl: './app-container.component.html',
   styleUrl: './app-container.component.css'

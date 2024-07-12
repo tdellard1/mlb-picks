@@ -4,7 +4,6 @@ import {TeamSchedule} from "../../model/team-schedule.interface";
 import {map, tap} from "rxjs/operators";
 import {first, Observable} from "rxjs";
 import {Slates} from "../../../Slate/data-access/slate.model";
-import {Player} from "../../model/players.interface";
 import {Team, Teams} from "../../model/team.interface";
 import {BoxScore} from "../../model/box-score.interface";
 import {RosterPlayer} from "../../model/roster.interface";
@@ -20,20 +19,20 @@ export class BackendApiService {
     return this.apiService.get<TeamSchedule[]>(this.serverUrl + 'api/schedules');
   }
 
-  getRosters(): Observable<any> {
-    return this.apiService.get<any>(this.serverUrl + 'api/rosters');
+  getRosters(): Observable<RosterPlayer[]> {
+    return this.apiService.get<RosterPlayer[]>(this.serverUrl + 'api/rosters');
   }
 
-  getBoxScores(): Observable<TeamSchedule[]> {
-    return this.apiService.get<TeamSchedule[]>(this.serverUrl + 'api/boxScores');
-  }
-
-  getBoxScoresOnly(): Observable<BoxScore[]> {
-    return this.apiService.get<BoxScore[]>(this.serverUrl + 'api/boxScores/only');
+  getBoxScores(): Observable<BoxScore[]> {
+    return this.apiService.get<BoxScore[]>(this.serverUrl + 'api/boxScores');
   }
 
   getPlayers(): Observable<RosterPlayer[]> {
     return this.apiService.get<RosterPlayer[]>(this.serverUrl + 'api/players');
+  }
+
+  getTeamsArray(): Observable<Team[]> {
+    return this.apiService.get<Team[]>(this.serverUrl + 'api/teams');
   }
 
   getTeams(): Observable<Teams> {
@@ -43,10 +42,6 @@ export class BackendApiService {
 
   getSlates(): Observable<Slates> {
     return this.apiService.get<Slates>(this.serverUrl + 'api/slates');
-  }
-
-  getState(): Observable<TeamSchedule[]> {
-    return this.apiService.get<TeamSchedule[]>(this.serverUrl + 'api/state');
   }
 
   addSchedules(schedules: TeamSchedule[]): Observable<any> {
@@ -59,12 +54,8 @@ export class BackendApiService {
     return this.apiService.post(this.serverUrl + 'api/rosters', rosters);
   }
 
-  updateBoxScoresOnly(boxScores: BoxScore[]) {
-    return this.apiService.post<BoxScore[]>(this.serverUrl + 'api/boxScores/only', boxScores);
-  }
-
-  updateBoxScore(boxScore: TeamSchedule[]) {
-    return this.apiService.post(this.serverUrl + 'api/boxScores', boxScore);
+  updateBoxScores(boxScore: BoxScore[]) {
+    return this.apiService.post<BoxScore[]>(this.serverUrl + 'api/boxScores', boxScore);
   }
 
   updateSlates(slates: Slates) {

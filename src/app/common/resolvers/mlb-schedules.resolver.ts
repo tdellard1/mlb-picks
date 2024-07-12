@@ -22,7 +22,7 @@ export const mlbSchedulesResolver: ResolveFn<MLBTeamSchedule[]>  = (): Observabl
   // );
 
   const schedules$: Observable<TeamSchedule[]> = backendApiService.getSchedules();
-  const boxScores$: Observable<BoxScore[]> = backendApiService.getBoxScores()
+  const boxScores$: Observable<BoxScore[]> = backendApiService.getSchedules()
     .pipe(
       map((teamSchedules: TeamSchedule[]) => {
         const allGames: Game[] = teamSchedules.map((teamSchedule: TeamSchedule) => teamSchedule.schedule).flat();
