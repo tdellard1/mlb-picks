@@ -1,6 +1,5 @@
 const router = require('express').Router();
-const boxScoresOnly = require('../../assets/boxScoresOnly.json');
-const {getStream, getDownloadURL, getStorage, ref, uploadBytes} = require("firebase/storage");
+const {getDownloadURL, getStorage, ref, uploadBytes} = require("firebase/storage");
 
 
 router.get('/', async (req, res) => {

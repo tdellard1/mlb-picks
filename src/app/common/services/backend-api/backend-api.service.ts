@@ -61,8 +61,4 @@ export class BackendApiService {
   updateSlates(slates: Slates) {
     return this.apiService.post(this.serverUrl + 'api/slates', slates).pipe(first());
   }
-
-  updateState(schedules: TeamSchedule[]) {
-    return this.apiService.post<TeamSchedule[]>(this.serverUrl + 'api/state', schedules).pipe(first());
-  }
 }

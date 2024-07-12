@@ -58,6 +58,7 @@ export class SlateContainerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('slate: ', this.slates);
     this.selectedDate = this.setDatesAndGetMostRecent();
     this.chooseDate(this.selectedDate);
     this.expertRecords = new ExpertRecords(this.slates, this.teams);

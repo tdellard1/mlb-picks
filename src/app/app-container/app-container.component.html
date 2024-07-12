@@ -1,29 +1,43 @@
-<mat-tab-group>
-  <mat-tab label="Analysis">
-    <ng-template matTabContent>
-      <div class="container">
-<!--        <match-ups></match-ups>-->
-        <props></props>
-      </div>
-    </ng-template>
-  </mat-tab>
-  <mat-tab label="Slate">
-    <ng-template matTabContent>
-      <div class="container">
-        <slate-container
-          [slates]="(slates$ | async)!"
-          [dailySchedule]="(dailySchedule$ | async)!"
-          [teams]="(teams$ | async)!"></slate-container>
-      </div>
-    </ng-template>
-  </mat-tab>
-  <mat-tab label="Props">
-    <ng-template matTabContent>
-      <div class="container">
-        <analysis-container-component
-          [dailySchedule]="(dailySchedule$ | async)!"
-          [mlbTeamSchedules]="(mlbSchedules$ | async)!"></analysis-container-component>
-      </div>
-    </ng-template>
-  </mat-tab>
-</mat-tab-group>
+<mat-toolbar color="primary">
+  <button mat-icon-button aria-label="Menu icon" (click)="toggleMenu()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <h1>Responsive Material Side Nav</h1>
+</mat-toolbar>
+
+<mat-sidenav-container autosize>
+  <mat-sidenav mode="side">
+    <mat-nav-list>
+      <a mat-list-item (click)="switchPage(Pages.NRFI)">
+        <span class="entry">
+          <mat-icon>house</mat-icon>
+          <span *ngIf="!isCollapsed">NRFI</span>
+        </span>
+      </a>
+      <a mat-list-item (click)="switchPage(Pages.PROPS)">
+        <span class="entry">
+          <mat-icon>house</mat-icon>
+          <span *ngIf="!isCollapsed">PROPS</span>
+        </span>
+      </a>
+      <a mat-list-item (click)="switchPage(Pages.SLATE)">
+        <span class="entry">
+          <mat-icon>house</mat-icon>
+          <span *ngIf="!isCollapsed">SLATE</span>
+        </span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <ng-container [ngSwitch]="selectedPage">
+      <slate-container *ngSwitchCase="Pages.SLATE"
+                  [slates]="(slates$ | async)!"
+                  [dailySchedule]="(dailySchedule$ | async)!"
+                  [teams]="(teams$ | async)!"></slate-container>
+      <analysis-container-component *ngSwitchCase="Pages.PROPS"
+        [dailySchedule]="(dailySchedule$ | async)!"
+        [mlbTeamSchedules]="(mlbSchedules$ | async)!"></analysis-container-component>
+      <props *ngSwitchCase="Pages.NRFI"></props>
+    </ng-container>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,20 +1,27 @@
 const router = require('express').Router();
-const rostersURL = './server/assets/rosters.json';
-const rosters = require('../../assets/rosters.json');
-const {writeFile} = require("fs");
+const {getStorage, ref, uploadBytes, getDownloadURL} = require("firebase/storage");
+const rosterFile = 'rosters.json';
 
-router.get('/', (req, res) => {
-  res.json(rosters);
+router.get('/', async (req, res) => {
+  const storage = getStorage();
+  const storageRef = ref(storage, rosterFile);
+  const file = await getDownloadURL(storageRef);
+
+  fetch(file).then(rostersFile => rostersFile.json()).then((data) => {
+    res.json(data);
+  });
 });
 
 router.post('/', (req, res) => {
-  console.log('Update Rosters Requested!');
-  writeFile(rostersURL, JSON.stringify(req.body, null, 2), err => {
-    if (err) {
-      console.log("Failed to write updated data to file", err);
-      return;
-    }
-    console.log('Update Rosters Successful!');
+  const storage = getStorage();
+  const storageRef = ref(storage, rosterFile);
+
+  const jsn = JSON.stringify(req.body, null, 2);
+  const blob = new Blob([jsn], {type: 'application/json'});
+  const file = new File([blob], rosterFile);
+
+  uploadBytes(storageRef, file).then((snapshot) => {
+    console.log('Uploaded a blob or file!');
     res.json({"message": "Updated file successfully"});
   });
 });
