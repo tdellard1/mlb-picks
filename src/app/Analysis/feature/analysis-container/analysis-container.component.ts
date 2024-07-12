@@ -28,7 +28,6 @@ import {MatDivider} from "@angular/material/divider";
   styleUrl: './analysis-container.component.css'
 })
 export class AnalysisContainerComponent implements OnInit {
-  @Input() teams!: Teams;
   @Input() dailySchedule!: Game[];
   @Input() mlbTeamSchedules!: MLBTeamSchedule[];
 

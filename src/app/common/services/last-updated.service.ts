@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {LoggerService} from "./logger.service";
 
 @Injectable({
   providedIn: 'root'
@@ -6,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class LastUpdatedService {
   private readonly _needToUpdate: boolean;
 
-  constructor() {
+  constructor(private logger: LoggerService) {
     const lastUpdatedString: string | null = localStorage.getItem('lastUpdated');
     let lastUpdated: number;
     if (lastUpdatedString !== null) {
@@ -16,6 +17,7 @@ export class LastUpdatedService {
     }
 
     const today = new Date().setHours(0, 0, 0, 0);
+    this.logger.info(`lastUpdated: ${lastUpdated}, today: ${today}, ${lastUpdated < today}`);
     this._needToUpdate = lastUpdated < today;
   }
 

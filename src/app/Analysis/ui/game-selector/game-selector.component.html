@@ -1,15 +1,15 @@
-<div class="container" *ngIf="(dailySchedule | async)! as games">
+<div class="container" *ngIf="dailySchedule as games">
   @for (game of games; track game.gameID) {
     <mat-card
       appearance="outlined"
       [class.selected]="game.gameID === selectedGame.gameID"
       (click)="onGameSelected(game)">
       <div class="image-container">
-        <img alt="none" [ngSrc]="teams.getTeamLogo(game.away)" fill>
+        <img alt="none" [ngSrc]="teams.get(game.away)!.espnLogo1" fill>
       </div>
       <span>VS.</span>
       <div class="image-container">
-        <img alt="none" [ngSrc]="teams.getTeamLogo(game.home)" fill>
+        <img alt="none" [ngSrc]="teams.get(game.home)!.espnLogo1" fill>
       </div>
     </mat-card>
   }

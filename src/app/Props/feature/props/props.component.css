@@ -1,0 +1,22 @@
+.nrfi-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.image-container {
+  height: 1rem;
+  width: 1.24rem;
+  position: relative;
+}
+
+.mdc-data-table__cell, .mdc-data-table__header-cell {
+  padding-right: 0;
+}
+
+.mat-mdc-row:nth-of-type(4n+3), .mat-mdc-row:nth-of-type(4n+3) + * {
+  background-color: dimgray;
+}
+
+.mat-mdc-header-row {
+  /*background-color: silver;*/
+}

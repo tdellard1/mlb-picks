@@ -1,10 +1,13 @@
-<div class="game-details-container" *ngIf="(gameSelected$ | async)?.game?.gameID">
-  <span class="justify-center">{{(playerFinderOne$ | async)![0].longName}}</span>
-  <span></span>
-  <span class="justify-center">{{(playerFinderTwo$ | async)![0].longName}}</span>
+<ng-container *ngIf="game">
+  <div class="game-details-container" *ngIf="hasDataToDisplayPitchers">
+    <span class="justify-center">{{playersMap.get(game.probableStartingPitchers.away)?.longName}}</span>
+    <span></span>
+    <span class="justify-center">{{playersMap.get(game.probableStartingPitchers.home)?.longName}}</span>
 
 
-  <span class="justify-center">{{home.teamStats.Pitching.WHIP}}</span>
-  <span>WHIP</span>
-  <span class="justify-center">{{away.teamStats.Pitching.WHIP}}</span>
-</div>
+<!--    <span class="justify-center">{{home.teamStats.Pitching.WHIP}}</span>-->
+<!--    <span>WHIP</span>-->
+<!--    <span class="justify-center">{{away.teamStats.Pitching.WHIP}}</span>-->
+  </div>
+</ng-container>
+

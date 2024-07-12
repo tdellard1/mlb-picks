@@ -1,6 +1,5 @@
 import {Component, HostListener} from '@angular/core';
 import {Teams} from "../common/model/team.interface";
-import {TeamSchedule} from "../common/model/team-schedule.interface";
 import {ActivatedRoute, Data, RouterLink, RouterOutlet} from "@angular/router";
 import {MatTab, MatTabContent, MatTabGroup} from "@angular/material/tabs";
 import {AnalysisContainerComponent} from "../Analysis/feature/analysis-container/analysis-container.component";
@@ -37,14 +36,12 @@ export class AppContainerComponent {
   teams$: Observable<Teams>;
   dailySchedule$: Observable<Game[]>;
   mlbSchedules$: Observable<MLBTeamSchedule[]>;
-  boxScores$: Observable<TeamSchedule[]>;
   slates$: Observable<Slates>;
 
   constructor(private activatedRoute: ActivatedRoute) {
     this.teams$ = this.activatedRoute.data.pipe(map((data: Data) => data['teams']));
     this.dailySchedule$ = this.activatedRoute.data.pipe(map((data: Data) => data['dailySchedule']));
     this.mlbSchedules$ = this.activatedRoute.data.pipe(map((data: Data) => data['mlbSchedules']));
-    this.boxScores$ = this.activatedRoute.data.pipe(map((data: Data) => data['boxScores']));
     this.slates$ = this.activatedRoute.data.pipe(map((data: Data) => data['slates']));
   }
 

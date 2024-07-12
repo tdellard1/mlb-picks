@@ -26,10 +26,7 @@ export class StateUtils {
       return {player, team, hitStreak};
     });
 
-    const sortedHittingStreams = playersAndHitStreak.sort((a, b) => b.hitStreak - a.hitStreak)
-
-    console.log('sortedHittingStreams: ', sortedHittingStreams);
-    return sortedHittingStreams;
+    return playersAndHitStreak.sort((a, b) => b.hitStreak - a.hitStreak);
   }
 
   static getHittingStreaks(rosterPlayers: Map<string, RosterPlayer>) {
@@ -45,23 +42,12 @@ export class StateUtils {
           hitStreak++;
           game = gamesCopy.pop();
         }
-      }
 
-      hitters.push({longName, team, hitStreak});
+        hitters.push({longName, team, hitStreak});
+      }
     });
 
     return hitters.sort((a, b) => b.hitStreak - a.hitStreak);
-  }
-
-  static sortPlayersGames(schedules: TeamSchedule[], scheduleIndex: number, playerIndex: number) {
-    const player: RosterPlayer = schedules[scheduleIndex].teamDetails!.roster![playerIndex];
-    const games = deepCopy(player.games);
-    schedules[scheduleIndex].teamDetails!.roster![playerIndex].games = games.sort((a: PlayerStats, b: PlayerStats) => {
-      const aDateObject: Tank01Date = new Tank01Date(a.gameID.slice(0, 8));
-      const bDateObject: Tank01Date = new Tank01Date(b.gameID.slice(0, 8));
-
-      return aDateObject.timeStamp - bDateObject.timeStamp;
-    });
   }
 
   static getNoRunsFirstInningRecord(boxScoreMap: Map<string, BoxScore>, {games, playerID, longName}: RosterPlayer) {
@@ -100,35 +86,6 @@ export class StateUtils {
     return `${NRFI} - ${YRFI}`;
   }
 
-  static addGamesOfPlayer(playerIdentifier: string, allPlayerStats: Map<string, PlayerStats>): PlayerStats[] {
-    const stats: PlayerStats[] = [];
-
-    allPlayerStats.forEach((playerStats: PlayerStats) => {
-      if (playerStats.playerID === playerIdentifier) {
-        stats.push(playerStats)
-      }
-    });
-
-    return stats.sort((a: PlayerStats, b: PlayerStats) => {
-      const aDateObject: Tank01Date = new Tank01Date(a.gameID.slice(0, 8));
-      const bDateObject: Tank01Date = new Tank01Date(b.gameID.slice(0, 8));
-
-      return aDateObject.timeStamp - bDateObject.timeStamp;
-    })
-  }
-
-  static playersOnRoster(teamIdentifier: string, allPlayers: Map<string, RosterPlayer>): RosterPlayer[] {
-    const players: RosterPlayer[] = [];
-
-    allPlayers.forEach((rosterPlayer: RosterPlayer) => {
-      if (rosterPlayer.team === teamIdentifier) {
-        players.push(rosterPlayer)
-      }
-    });
-
-    return players;
-  }
-
   static getNoRunsFirstInningStreak(boxScoreMap: Map<string, BoxScore>, {games, playerID, longName}: RosterPlayer) {
     function pitcherThrewNoRunnerFirstInning({playerStats, lineScore}: BoxScore, playerIdentifier: string) {
       const {team}: PlayerStats = playerStats[playerID];
@@ -160,8 +117,7 @@ export class StateUtils {
 
     let NRFI = 0;
 
-    // @ts-ignore
-    let boxScore = boxScoresOfGames.pop();
+    let boxScore: BoxScore | undefined = boxScoresOfGames.pop();
 
     if (boxScore) {
       const firstResult: boolean = pitcherThrewNoRunnerFirstInning(boxScore, playerID);
@@ -178,27 +134,26 @@ export class StateUtils {
     return `${NRFI}`;
   }
 
-  static getTeamNRFI(team: string, teamSchedule: TeamSchedule, boxScoresMap: any): string {
-    const games: Game[] = teamSchedule.schedule.filter((game: Game) => game.boxScore !== undefined);
+  static getTeamNRFI(team: string, {schedule}: TeamSchedule, boxScoresMap: any): string {
+    const games: Game[] = schedule.filter(({boxScore}: Game) => boxScore !== undefined);
 
     const totalGames = games.length;
     let gamesWithNRFI: number = 0;
     games.forEach(({boxScore}: Game) => {
       if (boxScore?.lineScore) {
         const isAway: boolean = boxScore.lineScore.away.team === team;
+        const isHome: boolean = boxScore.lineScore.home.team === team;
 
         if (isAway && boxScore.lineScore.away.scoresByInning['1'] === '0') {
           gamesWithNRFI++;
-        } else if (boxScore.lineScore.home.scoresByInning['1'] === '0') {
+        } else if (isHome && boxScore.lineScore.home.scoresByInning['1'] === '0') {
           gamesWithNRFI++;
         }
       }
     });
 
     const NRFIRatio: number = gamesWithNRFI / totalGames;
-    const NRFIRatioRounded = NRFIRatio.toFixed(2);
-    const NRFIPercentage: number = Number(NRFIRatioRounded) * 100;
-
-    return NRFIPercentage.toString();
+    const NRFIPercentage: number = NRFIRatio * 100;
+    return NRFIPercentage.toFixed(2);
   }
 }

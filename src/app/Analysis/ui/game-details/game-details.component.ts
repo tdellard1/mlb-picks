@@ -1,12 +1,9 @@
-import {Component, Input} from '@angular/core';
-import {Game} from "../../../common/model/game.interface";
-import {Team} from "../../../common/model/team.interface";
-import {filter, Observable} from "rxjs";
-import {Player} from "../../../common/model/players.interface";
-import {map, tap} from "rxjs/operators";
-import {ActivatedRoute, Data} from "@angular/router";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {AsyncPipe, NgIf} from "@angular/common";
-import {GameSelectorService, GameSelectorState} from "../../data-access/services/game-selector.service";
+import {GameSelectorService} from "../../data-access/services/game-selector.service";
+import {StateService} from "../../../common/services/state.service";
+import {RosterPlayer} from "../../../common/model/roster.interface";
+import {BaseGameSelectorComponent} from "../../../common/components/base-game-selector/base-game-selector.component";
 
 @Component({
   selector: 'game-details',
@@ -16,30 +13,24 @@ import {GameSelectorService, GameSelectorState} from "../../data-access/services
     NgIf
   ],
   templateUrl: './game-details.component.html',
-  styleUrl: './game-details.component.css'
+  styleUrl: './game-details.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GameDetailsComponent {
-  constructor(private activatedRoute: ActivatedRoute, private gameSelectorService: GameSelectorService) {}
+export class GameDetailsComponent extends BaseGameSelectorComponent implements OnInit {
+  playersMap: Map<string, RosterPlayer> = new Map();
 
-  gameSelected$: Observable<GameSelectorState> = this.gameSelectorService.selectedGameInfo.pipe(
-    tap(({game, home, away}: GameSelectorState) => {
-      this.game = game;
-      this.away = away;
-      this.home = home;
-    })
-  );
+  constructor(private stateService: StateService,
+              gameSelectorService: GameSelectorService,
+              changeDetectionRef: ChangeDetectorRef) {
+    super(gameSelectorService,
+      changeDetectionRef);
+  }
 
-  game!: Game;
-  home!: Team;
-  away!: Team;
+  ngOnInit(): void {
+    this.playersMap = this.stateService.allPlayers;
+  }
 
-  playerFinderOne$: Observable<Player[]> = this.activatedRoute.data.pipe(
-    map((data: Data) => data['players'] as Player[]),
-    map((players: Player[]) => players.filter((player: Player) => player.playerID === this.game.probableStartingPitchers['away']))
-  );
-
-  playerFinderTwo$: Observable<Player[]> = this.activatedRoute.data.pipe(
-    map((data: Data) => data['players'] as Player[]),
-    map((players: Player[]) => players.filter((player: Player) => player.playerID === this.game.probableStartingPitchers['home']))
-  );
+  get hasDataToDisplayPitchers() {
+    return this.game.gameID && (this.game.probableStartingPitchers.away || this.game.probableStartingPitchers.home);
+  }
 }

@@ -51,59 +51,62 @@ export class SlatePredictionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.games.forEach(({gameID, home, away, boxScore}: Game, index: number) => {
-      const prediction: GamePick | undefined = this.expert?.predictions?.at(index);
-      const boxScoreData: BoxScore = boxScore!;
-      const newPredictionControl: FormGroup = this.createPredictionControl(gameID, prediction, boxScoreData);
-      this.predictions.push(newPredictionControl);
+      this.games.forEach(({gameID, home, away, boxScore}: Game, index: number) => {
+        const gamePick: GamePick | undefined = this.expert?.predictions?.at(index);
+        const boxScoreData: BoxScore = boxScore!;
+        const newPredictionControl: FormGroup = this.createPredictionControl(gameID, gamePick, boxScoreData);
+        this.predictions.push(newPredictionControl);
 
-      const options: FormGroup[] = [
-        this.createOptions(' '),
-        this.createOptions(this.teams.getTeamName(away)),
-        this.createOptions(this.teams.getTeamName(home)),
-        this.createOptions('Total: Over'),
-        this.createOptions('Total: Under'),
-      ];
+        const options: FormGroup[] = [
+          this.createOptions(' '),
+          this.createOptions(this.teams.getTeamName(away)),
+          this.createOptions(this.teams.getTeamName(home)),
+          this.createOptions('Total: Over'),
+          this.createOptions('Total: Under'),
+        ];
 
-      options.forEach((option: FormGroup) => {
-        this.getOptions(index).push(option);
+        options.forEach((option: FormGroup) => {
+          this.getOptions(index).push(option);
+        });
       });
-    });
   }
 
   private createPredictionControl(gameID: string, gamePick?: GamePick, boxScoreData?: BoxScore): FormGroup {
-    let winningTeam;
+    let winningTeam: string | undefined = undefined;
+
     if (boxScoreData) {
-      winningTeam = this.getWinningTeam(boxScoreData);
+      winningTeam = this.getWinningTeam(boxScoreData!);
     }
 
-    if (gamePick && gamePick.prediction && gamePick.correct !== undefined && gamePick.correct !== null) {
-      return this.fb.group({
-        gameID,
-        prediction: [gamePick.prediction],
-        options: this.fb.array([]),
-        correct: [gamePick.correct]
-      });
-    } else if (gamePick && gamePick.prediction) {
-      if (!winningTeam) {
+    if (gamePick) {
+      const {prediction, correct}: GamePick = gamePick;
+      const hasPredictionAndResult: boolean = !!prediction && correct != null;
+      const hasPredictionAndWinningTeam: boolean = !!prediction && winningTeam !== undefined;
+      const hasPrediction: boolean = !!prediction;
+
+      // Come Back and Account For Total Under/Over
+      if (hasPredictionAndResult) {
         return this.fb.group({
-          gameID,
-          prediction: [gamePick.prediction],
+          gameID, prediction, correct,
           options: this.fb.array([]),
         });
-      } else if (winningTeam === gamePick.prediction) {
+      } else if (hasPredictionAndWinningTeam) {
+        return this.fb.group({
+          gameID, prediction,
+          options: this.fb.array([]),
+          correct: [winningTeam === prediction]
+        });
+      } else if (hasPrediction) {
         return this.fb.group({
           gameID,
           prediction: [gamePick.prediction],
-          options: this.fb.array([]),
-          correct: [true]
+          options: this.fb.array([])
         });
       } else {
         return this.fb.group({
           gameID,
-          prediction: [gamePick.prediction],
+          prediction: [''],
           options: this.fb.array([]),
-          correct: [false]
         });
       }
     } else {
@@ -121,11 +124,15 @@ export class SlatePredictionsComponent implements OnInit {
     })
   }
 
-  private getWinningTeam(boxScore: BoxScore) {
-    if (boxScore.awayResult === 'W') {
-      return this.teams.getTeamName(boxScore.away);
-    } else if (boxScore.homeResult === 'W') {
-      return this.teams.getTeamName(boxScore.home);
+  private getWinningTeam({awayResult, away, homeResult, home}: BoxScore) {
+    if (awayResult == null || homeResult == null) {
+      return undefined;
+    }
+
+    if (awayResult === 'W') {
+      return this.teams.getTeamName(away);
+    } else if (homeResult === 'W') {
+      return this.teams.getTeamName(home);
     } else {
       return undefined;
     }

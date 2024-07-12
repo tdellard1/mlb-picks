@@ -21,6 +21,7 @@ import {tap} from "rxjs/operators";
 export class GameSelectedComponent {
   gameSelected: Observable<GameSelectorState> = this.gameSelectorService.selectedGameInfo.pipe(
     tap((gameSelected: GameSelectorState) => {
+      console.log(gameSelected);
       this.game = gameSelected.game;
       this.away = gameSelected.away;
       this.home = gameSelected.home;
@@ -35,5 +36,9 @@ export class GameSelectedComponent {
 
   getDate({gameTime_epoch}: Game): Date {
     return new Date(Number(gameTime_epoch) * 1000);
+  }
+
+  get hasDataToDisplaySelectedGame() {
+    return this.game.gameID && this.away && this.home;
   }
 }

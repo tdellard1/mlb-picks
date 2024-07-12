@@ -6,10 +6,7 @@ import {map} from "rxjs/operators";
 
 @Injectable({ providedIn: 'root' })
 export class GameSelectorService {
-  private _state: BehaviorSubject<GameSelectorState>;
-  constructor() {
-    this._state = new BehaviorSubject<GameSelectorState>(initialState);
-  }
+  private _state: BehaviorSubject<GameSelectorState> = new BehaviorSubject<GameSelectorState>(initialState);
 
   get state$(): Observable<GameSelectorState> {
     return this._state.asObservable();

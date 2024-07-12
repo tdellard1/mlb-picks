@@ -1,27 +1,47 @@
-@for (game of dailySchedule; track game) {
-  <div *ngIf="players.get(game.probableStartingPitchers.away) as awayPitcher; else NoStartingPitcher">
-    <span>{{ awayPitcher.team }}</span> -
-    <span>{{ awayPitcher.longName }}</span> -
-    <span>24 NRFI: {{ get24NRFI(awayPitcher) }}</span>
-    <span>&nbsp;Streak: {{ getNRFIStreak(awayPitcher) }}</span> -
-    <span>Opponent - {{ game.home }} - NRFI: {{getTeamNRFI(game.home)}}</span>
-  </div>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-  <br/>
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
 
-  <div *ngIf="players.get(game.probableStartingPitchers.home) as homePitcher; else NoStartingPitcher">
-    <span>{{ homePitcher.team || game.home }}</span> -
-    <span>{{ homePitcher.longName }}</span> -
-    <span>24 NRFI: {{ get24NRFI(homePitcher) }}</span>
-    <span>&nbsp;Streak: {{ getNRFIStreak(homePitcher) }}</span>
-    <span>Opponent - {{ game.away }} - NRFI: {{getTeamNRFI(game.away)}}</span>
-  </div>
+  <ng-container matColumnDef="teamAbv">
+    <th mat-header-cell *matHeaderCellDef> </th>
+    <td mat-cell *matCellDef="let element">
+      <div class="image-container">
+        <img [ngSrc]="getTeamLogo(element.teamAbv)" alt="" fill>
+      </div>
+    </td>
+  </ng-container>
 
-  <ng-template #NoStartingPitcher>
-    <div>
-      <span>No Starting Pitcher Yet</span>
-    </div>
-  </ng-template>
+  <ng-container matColumnDef="pitcher">
+    <th mat-header-cell *matHeaderCellDef> Pitchers </th>
+    <td mat-cell *matCellDef="let element"> {{element.pitcher}} </td>
+  </ng-container>
 
-  <mat-divider></mat-divider>
-}
+  <ng-container matColumnDef="record24">
+    <th mat-header-cell *matHeaderCellDef> NRFI Record </th>
+    <td mat-cell *matCellDef="let element"> {{element.record24}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="streak">
+    <th mat-header-cell *matHeaderCellDef> Strk </th>
+    <td mat-cell *matCellDef="let element"> {{element.streak}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="oppTeamAbv">
+    <th mat-header-cell *matHeaderCellDef> Opposing Team </th>
+    <td mat-cell *matCellDef="let element"> {{element.oppTeamAbv}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="oppNRFIpct">
+    <th mat-header-cell *matHeaderCellDef> NRFI % </th>
+    <td mat-cell *matCellDef="let element"> {{element.oppNRFIpct}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="oppStreak">
+    <th mat-header-cell *matHeaderCellDef> Strk </th>
+    <td mat-cell *matCellDef="let element"> {{element.oppStreak}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

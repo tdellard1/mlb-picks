@@ -16339,27 +16339,1717 @@
     "experts": [
       {
         "name": "JDBetsHQ",
-        "predictions": []
+        "predictions": [
+          {
+            "gameID": "20240709_CHC@BAL",
+            "prediction": "Orioles",
+            "correct": false,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_CLE@DET",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_LAD@PHI",
+            "prediction": "Dodgers",
+            "correct": false,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_NYY@TB",
+            "prediction": "Yankees",
+            "correct": false,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_COL@CIN",
+            "prediction": "Rockies",
+            "correct": false,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_OAK@BOS",
+            "prediction": "Athletics",
+            "correct": false,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_WAS@NYM",
+            "prediction": "Nationals",
+            "correct": false,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_MIA@HOU",
+            "prediction": "Astros",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_PIT@MIL",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_TEX@LAA",
+            "prediction": "Angels",
+            "correct": false,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_ATL@ARI",
+            "prediction": "Diamondbacks",
+            "correct": false,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_SEA@SD",
+            "prediction": "Padres",
+            "correct": false,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_TOR@SF",
+            "prediction": "Giants",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          }
+        ]
       },
       {
         "name": "Ron Romanelli",
-        "predictions": []
+        "predictions": [
+          {
+            "gameID": "20240709_CHC@BAL",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_CLE@DET",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_LAD@PHI",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_NYY@TB",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_COL@CIN",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_OAK@BOS",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_WAS@NYM",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_MIA@HOU",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_PIT@MIL",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_TEX@LAA",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_ATL@ARI",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_SEA@SD",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_TOR@SF",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          }
+        ]
       },
       {
         "name": "MLB Gambling Podcast",
-        "predictions": []
+        "predictions": [
+          {
+            "gameID": "20240709_CHC@BAL",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_CLE@DET",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_LAD@PHI",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_NYY@TB",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_COL@CIN",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_OAK@BOS",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_WAS@NYM",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_MIA@HOU",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_PIT@MIL",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_TEX@LAA",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_ATL@ARI",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_SEA@SD",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_TOR@SF",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          }
+        ]
       },
       {
         "name": "CBS Sports Expert",
-        "predictions": []
+        "predictions": [
+          {
+            "gameID": "20240709_CHC@BAL",
+            "prediction": "Orioles",
+            "correct": false,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_CLE@DET",
+            "prediction": "Guardians",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_LAD@PHI",
+            "prediction": "Phillies",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_NYY@TB",
+            "prediction": "Rays",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_COL@CIN",
+            "prediction": "Reds",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_OAK@BOS",
+            "prediction": "Red Sox",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_WAS@NYM",
+            "prediction": "Mets",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_MIA@HOU",
+            "prediction": "Astros",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_PIT@MIL",
+            "prediction": "Brewers",
+            "correct": false,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_TEX@LAA",
+            "prediction": "Rangers",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_ATL@ARI",
+            "prediction": "Diamondbacks",
+            "correct": false,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_SEA@SD",
+            "prediction": "Padres",
+            "correct": false,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_TOR@SF",
+            "prediction": "Blue Jays",
+            "correct": false,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          }
+        ]
       },
       {
         "name": "Odds Trader",
-        "predictions": []
+        "predictions": [
+          {
+            "gameID": "20240709_CHC@BAL",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_CLE@DET",
+            "prediction": "Guardians",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_LAD@PHI",
+            "prediction": "Phillies",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_NYY@TB",
+            "prediction": "Yankees",
+            "correct": false,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_COL@CIN",
+            "prediction": "Reds",
+            "correct": false,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_OAK@BOS",
+            "prediction": "Red Sox",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_WAS@NYM",
+            "prediction": "Mets",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_MIA@HOU",
+            "prediction": "Astros",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_PIT@MIL",
+            "prediction": "Brewers",
+            "correct": false,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_TEX@LAA",
+            "prediction": "Rangers",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_ATL@ARI",
+            "prediction": "Braves",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_SEA@SD",
+            "prediction": "Mariners",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_TOR@SF",
+            "prediction": "Blue Jays",
+            "correct": false,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          }
+        ]
       },
       {
         "name": "PickDawgz",
-        "predictions": []
+        "predictions": [
+          {
+            "gameID": "20240709_CHC@BAL",
+            "prediction": "Orioles",
+            "correct": false,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_CLE@DET",
+            "prediction": "Guardians",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_LAD@PHI",
+            "prediction": "Phillies",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_NYY@TB",
+            "prediction": "Rays",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_COL@CIN",
+            "prediction": "Reds",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_OAK@BOS",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_WAS@NYM",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_MIA@HOU",
+            "prediction": "Astros",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_PIT@MIL",
+            "prediction": "Brewers",
+            "correct": false,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_TEX@LAA",
+            "prediction": "Rangers",
+            "correct": true,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_ATL@ARI",
+            "prediction": "Diamondbacks",
+            "correct": false,
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_SEA@SD",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240709_TOR@SF",
+            "prediction": "Giants",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ],
+            "correct": true
+          }
+        ]
       }
     ],
     "date": "20240709"
@@ -17653,5 +19343,1610 @@
       }
     ],
     "date": "20240711"
+  },
+  {
+    "experts": [
+      {
+        "name": "TeamRankings",
+        "predictions": [
+          {
+            "gameID": "20240712_LAD@DET",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_OAK@PHI",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_CLE@TB",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_NYY@BAL",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_COL@NYM",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_KC@BOS",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_MIA@CIN",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_PIT@CHW",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_TEX@HOU",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_WAS@MIL",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_CHC@STL",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_SEA@LAA",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_ATL@SD",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_TOR@ARI",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_MIN@SF",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Ron Romanelli",
+        "predictions": [
+          {
+            "gameID": "20240712_LAD@DET",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_OAK@PHI",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_CLE@TB",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_NYY@BAL",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_COL@NYM",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_KC@BOS",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_MIA@CIN",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_PIT@CHW",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_TEX@HOU",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_WAS@MIL",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_CHC@STL",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_SEA@LAA",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_ATL@SD",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_TOR@ARI",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_MIN@SF",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "SportsLine",
+        "predictions": [
+          {
+            "gameID": "20240712_LAD@DET",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_OAK@PHI",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_CLE@TB",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_NYY@BAL",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_COL@NYM",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_KC@BOS",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_MIA@CIN",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_PIT@CHW",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_TEX@HOU",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_WAS@MIL",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_CHC@STL",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_SEA@LAA",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_ATL@SD",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_TOR@ARI",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_MIN@SF",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "CBS Sports Expert",
+        "predictions": [
+          {
+            "gameID": "20240712_LAD@DET",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_OAK@PHI",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_CLE@TB",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_NYY@BAL",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_COL@NYM",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_KC@BOS",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_MIA@CIN",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_PIT@CHW",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_TEX@HOU",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_WAS@MIL",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_CHC@STL",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_SEA@LAA",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_ATL@SD",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_TOR@ARI",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_MIN@SF",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Odds Trader",
+        "predictions": [
+          {
+            "gameID": "20240712_LAD@DET",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Dodgers"
+              },
+              {
+                "option": "Tigers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_OAK@PHI",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Athletics"
+              },
+              {
+                "option": "Phillies"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_CLE@TB",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Guardians"
+              },
+              {
+                "option": "Rays"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_NYY@BAL",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Yankees"
+              },
+              {
+                "option": "Orioles"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_COL@NYM",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Rockies"
+              },
+              {
+                "option": "Mets"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_KC@BOS",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Royals"
+              },
+              {
+                "option": "Red Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_MIA@CIN",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Marlins"
+              },
+              {
+                "option": "Reds"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_PIT@CHW",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Pirates"
+              },
+              {
+                "option": "White Sox"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_TEX@HOU",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Rangers"
+              },
+              {
+                "option": "Astros"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_WAS@MIL",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Nationals"
+              },
+              {
+                "option": "Brewers"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_CHC@STL",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Cubs"
+              },
+              {
+                "option": "Cardinals"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_SEA@LAA",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Mariners"
+              },
+              {
+                "option": "Angels"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_ATL@SD",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Braves"
+              },
+              {
+                "option": "Padres"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_TOR@ARI",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Blue Jays"
+              },
+              {
+                "option": "Diamondbacks"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          },
+          {
+            "gameID": "20240712_MIN@SF",
+            "prediction": "",
+            "options": [
+              {
+                "option": " "
+              },
+              {
+                "option": "Twins"
+              },
+              {
+                "option": "Giants"
+              },
+              {
+                "option": "Total: Over"
+              },
+              {
+                "option": "Total: Under"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "date": "20240712"
   }
 ]

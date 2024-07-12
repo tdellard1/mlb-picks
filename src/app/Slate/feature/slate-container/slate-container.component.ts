@@ -18,6 +18,8 @@ import {MatDivider} from "@angular/material/divider";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {Expert, Experts} from "../../data-access/expert.interface";
 import {ExpertRecords} from "../../data-access/expert-records.model";
+import {LoggerService} from "../../../common/services/logger.service";
+import {StateService} from "../../../common/services/state.service";
 
 @Component({
   selector: 'slate-container',
@@ -35,7 +37,6 @@ import {ExpertRecords} from "../../data-access/expert-records.model";
 export class SlateContainerComponent implements OnInit {
   @Input() slates!: Slates;
   @Input() dailySchedule!: Game[];
-  @Input() boxScoreSchedule!: TeamSchedule[];
   @Input() teams!: Teams;
 
   private expertsSubject: BehaviorSubject<Experts> = new BehaviorSubject<Experts>([] as Experts);
@@ -46,18 +47,17 @@ export class SlateContainerComponent implements OnInit {
 
   expertRecords: ExpertRecords = {} as ExpertRecords;
   expertName: string = '';
-  expertsList: string[] = [];
   selectedDate: string = '';
   showTeamCity: boolean = false;
   dates: string[] = [];
 
   constructor(private datePipe: DatePipe,
+              private logger: LoggerService,
+              private stateService: StateService,
               private backendApiService: BackendApiService) {
   }
 
   ngOnInit(): void {
-    this.expertsList = this.allHistoricalSlateExperts;
-
     this.selectedDate = this.setDatesAndGetMostRecent();
     this.chooseDate(this.selectedDate);
     this.expertRecords = new ExpertRecords(this.slates, this.teams);
@@ -66,17 +66,12 @@ export class SlateContainerComponent implements OnInit {
   setDatesAndGetMostRecent(): string {
     this.dates = this.slates.map(({date}: Slate) => date);
 
-    const today: string = this.today!;
+    const today: string = this.today;
     if (!this.dates.includes(today)) {
       this.dates.push(today);
     }
 
-    // const tomorrow: string = this.tomorrow!;
-    // if (!this.dates.includes(tomorrow)) {
-    //   this.dates.push(tomorrow);
-    // }
-
-    return this.dates.slice(0, -1).pop()!
+    return this.dates[this.dates.length - 1];
   }
 
   protected addExpertToSlate() {
@@ -92,16 +87,15 @@ export class SlateContainerComponent implements OnInit {
   }
 
   protected chooseDate(yyyyMMdd: string) {
+    this.logger.info(`Chosen Date: ${yyyyMMdd}`);
     this.selectedDate = yyyyMMdd;
     if (this.selectedDate === this.tomorrow) {
       // Replace this and Tomorrow with requesting a new daily schedule from tank01
-      // console.log('schedules In game interface: ', this.allSchedules);
-      // const gamesForDate: Game[] = Games.getGamesFromDate(this.allSchedules, this.selectedDate);
-      // this.gamesSubject.next(new Games(gamesForDate).sortedGames);
     } else if (this.selectedDate === this.today) {
       this.gamesSubject.next(this.gamesToday);
     } else {
-      const gamesForDate: Game[] = Games.getGamesWithBoxScoresForDate(this.boxScoreSchedule, this.selectedDate);
+      const gamesForDate: Game[] = Games.getGamesWithBoxScoresForDate(
+        this.stateService.getScheduleAsArray, this.selectedDate);
       this.gamesSubject.next(gamesForDate);
     }
 
@@ -124,8 +118,8 @@ export class SlateContainerComponent implements OnInit {
     return new Games(this.dailySchedule.slice()).sortedGames;
   }
 
-  private get today() {
-    return this.datePipe.transform(new Date(), 'yyyyMMdd');
+  private get today(): string {
+    return this.datePipe.transform(new Date(), 'yyyyMMdd')!;
   }
 
   private get tomorrow() {
@@ -144,11 +138,6 @@ export class SlateContainerComponent implements OnInit {
 
   private getSlateFor(yyyyMMdd: string): Slate | undefined {
     return this.slates.find(({date}: Slate) => date === yyyyMMdd);
-  }
-
-  private get allHistoricalSlateExperts(): string[] {
-    return this.slates.map(value => value.experts.map(value1 => value1.name)).flat().filter((expert, index: number, array: string[]) => index === array
-      .findIndex((o) => o === expert));
   }
 
   protected updateSlate({experts}: { experts: Experts }) {

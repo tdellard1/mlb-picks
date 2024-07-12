@@ -33,7 +33,6 @@
   <slate-form [teams]="teams"
               [games]="(games$ | async)!"
               [expertsData]="(experts$ | async)!"
-              [expertsList]="expertsList"
               (updateSlate)="updateSlateFromSelection($event)"
               (saveExpertPredictions)="updateSlate($event)"></slate-form>
 </div>

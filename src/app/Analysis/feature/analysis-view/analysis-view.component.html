@@ -1,7 +1,7 @@
-<ng-container *ngIf="(gameSelected$ | async)?.game?.gameID">
+<ng-container *ngIf="(game$ | async)?.gameID">
   @for (chart of charts; track chart) {
     <line-chart [chartData]="chart"></line-chart>
   }
 
-  <nrfi-panel [away]="(away$ | async)!" [home]="(home$ | async)!"></nrfi-panel>
+<!--  <nrfi-panel [away]="(away$ | async)!" [home]="(home$ | async)!"></nrfi-panel>-->
 </ng-container>

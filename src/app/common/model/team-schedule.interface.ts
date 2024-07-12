@@ -3,6 +3,7 @@ import {Team} from "./team.interface";
 import {BoxScore} from "./box-score.interface";
 import {TeamAnalyticsUtils} from "../utils/team-analytics.utils";
 import {roundToDecimalPlace} from "../utils/general.utils";
+import {getGamesBeforeToday} from "../utils/schedule.utils";
 
 export interface TeamSchedule {
   team: string,
@@ -18,7 +19,7 @@ export class TeamAnalytics {
     this.team = team;
 
     for (let i = 1; i < schedule.length + 1; i++) {
-      const boxScores: BoxScore[] = schedule.filter(gameHasBoxScore).map(gameToBoxScore);
+      const boxScores: BoxScore[] = getGamesBeforeToday(schedule).map(gameToBoxScore);
 
       this.analytics?.push(new Analytics(team, boxScores.slice(0, i), i));
     }

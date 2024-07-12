@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {Game} from "../../../common/model/game.interface";
 import {Team, Teams} from "../../../common/model/team.interface";
@@ -26,6 +26,8 @@ import {filter, first, Observable} from "rxjs";
 import {NrfiPanelComponent} from "../../ui/nrfi-panel/nrfi-panel.component";
 import {MLBGame} from "../../data-access/mlb-game.model";
 import {GameSelectorService, GameSelectorState} from "../../data-access/services/game-selector.service";
+import {StateService} from "../../../common/services/state.service";
+import {BaseGameSelectorComponent} from "../../../common/components/base-game-selector/base-game-selector.component";
 
 @Component({
   selector: 'analysis-component-view',
@@ -46,46 +48,49 @@ import {GameSelectorService, GameSelectorState} from "../../data-access/services
   styleUrl: './analysis-view.component.css',
   encapsulation: ViewEncapsulation.None
 })
-export class AnalysisViewComponent {
-  gameSelected$: Observable<GameSelectorState> = this.gameSelectorService.selectedGameInfo.pipe(
-    tap(({game, home, away}: GameSelectorState) => {
-      this.gameSelected(game, away, home);
-    })
-  );
-
+export class AnalysisViewComponent extends BaseGameSelectorComponent implements OnInit {
   private teamScheduleMap: Map<string, MLBTeamSchedule> = new Map();
-
-  protected home$: Observable<MLBTeamSchedule> = this.gameSelectorService.home.pipe(
-    filter(({teamAbv}: Team) => !!teamAbv),
-    map(({teamAbv}: Team) => this.teamScheduleMap.get(teamAbv)!));
-
-  protected away$: Observable<MLBTeamSchedule> = this.gameSelectorService.away.pipe(
-    filter(({teamAbv}: Team) => !!teamAbv),
-    map(({teamAbv}: Team) => this.teamScheduleMap.get(teamAbv)!));
+  private teamMap: Map<string, Team> = new Map();
 
   charts: ChartData[] = [];
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private gameSelectorService: GameSelectorService) {
-    this.activatedRoute.data.pipe(first(),
-      map((data: Data) => data['mlbSchedules'] as MLBTeamSchedule[]))
-      .subscribe((schedules: MLBTeamSchedule[]) => {
-        schedules.forEach(schedule => {
-          this.teamScheduleMap.set(schedule.team, schedule);
-        });
-      });
+  constructor(private stateService: StateService,
+              gameSelectorService: GameSelectorService,
+              changeDetectionRef: ChangeDetectorRef) {
+    super(gameSelectorService, changeDetectionRef);
   }
 
-  gameSelected(game: Game, away: Team, home: Team) {
-    if (game.gameID) {
+  ngOnInit(): void {
+    this.teamMap = this.stateService.allTeams;
+    this.teamScheduleMap = this.stateService.allMLBSchedules;
+
+    this.subscriptions.push(
+      this.game$.subscribe((game: Game) => {
+        const home: Team = this.teamMap.get(game.home)!;
+        const away: Team = this.teamMap.get(game.away)!;
+        this.gameSelected(game, away, home);
+      })
+    )
+  }
+
+  gameSelected({gameID}: Game, away: Team, home: Team) {
+    const hasBothTeams: boolean = !!away && !!home;
+
+    if (gameID && hasBothTeams) {
       this.charts = [];
       this.makeEverythingWork(away, home);
     }
   }
 
   makeEverythingWork(away: Team, home: Team) {
-    const homeAnalytics: TeamAnalytics = new TeamAnalytics(away.teamAbv, this.teamScheduleMap.get(away.teamAbv)!?.analysisSchedule);
-    const awayAnalytics: TeamAnalytics = new TeamAnalytics(home.teamAbv, this.teamScheduleMap.get(home.teamAbv)!?.analysisSchedule);
+    const homeTeamSchedule = this.stateService.getSchedule(home.teamAbv);
+    const awayTeamSchedule = this.stateService.getSchedule(away.teamAbv);
+
+    const homeTeamMLBSchedule: MLBTeamSchedule = new MLBTeamSchedule(homeTeamSchedule);
+    const awayTeamMLBSchedule: MLBTeamSchedule = new MLBTeamSchedule(awayTeamSchedule);
+
+    const homeAnalytics: TeamAnalytics = new TeamAnalytics(home.teamAbv, homeTeamMLBSchedule.analysisSchedule);
+    const awayAnalytics: TeamAnalytics = new TeamAnalytics(away.teamAbv, awayTeamMLBSchedule.analysisSchedule);
     const homeTeam: string = home.teamName;
     const awayTeam: string = away.teamName;
 
