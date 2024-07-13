@@ -7,7 +7,7 @@ const apiRouter = require("./routes");
 const cors = require('cors');
 const pathToClientApp = '../dist/mlb-picks/browser';
 const { initializeApp } = require("firebase/app");
-const firebaseConfig2 = {
+const firebaseConfig = {
   apiKey: "AIzaSyAJbrUUSPEwfhxAax7qOYq9-QV_eg61o1U",
   authDomain: "mlb-picks-2162b.firebaseapp.com",
   projectId: "mlb-picks-2162b",
@@ -17,7 +17,7 @@ const firebaseConfig2 = {
   measurementId: "G-3123M9SGD1"
 };
 
-initializeApp(firebaseConfig2);
+initializeApp(firebaseConfig);
 
 app.use(json({limit: '250mb'}));
 app.use(urlencoded({limit: '250mb', extended: true}));

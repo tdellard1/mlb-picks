@@ -28,6 +28,7 @@
     "express": "^4.19.2",
     "firebase": "^10.12.3",
     "ng-apexcharts": "^1.11.0",
+    "node-cache": "^5.1.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
