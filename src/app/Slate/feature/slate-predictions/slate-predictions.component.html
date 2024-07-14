@@ -1,6 +1,6 @@
 <form [formGroup]="form" [ngStyle]="getStyles()">
   <ng-container formArrayName="predictions">
-    <div class="flex-row">
+    <div class="flex-row" *ngIf="!isMobile">
       <span>{{ name }}</span>
       <mat-icon
         class="visibility"

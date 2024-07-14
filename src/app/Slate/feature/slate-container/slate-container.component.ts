@@ -1,5 +1,5 @@
 import {
-  AfterViewChecked,
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
@@ -47,7 +47,7 @@ import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
   styleUrl: './slate-container.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SlateContainerComponent extends SubscriptionHolder implements OnInit, AfterViewChecked {
+export class SlateContainerComponent extends SubscriptionHolder implements OnInit, AfterViewInit {
   @ViewChild('dateSelector') private dateSelectorContainer: ElementRef;
 
   teams: Teams;
@@ -197,11 +197,13 @@ export class SlateContainerComponent extends SubscriptionHolder implements OnIni
     this.chooseDate(this.selectedDate);
   }
 
-  scrollToDate() {
-    this.dateSelectorContainer.nativeElement.scrollLeft = this.dateSelectorContainer.nativeElement.scrollWidth;
+  scrollToDate(fromAfterViewInit: boolean = false) {
+    if (fromAfterViewInit) {
+      this.dateSelectorContainer.nativeElement.scrollLeft = this.dateSelectorContainer.nativeElement.scrollWidth;
+    }
   }
 
-  ngAfterViewChecked(): void {
-    this.scrollToDate();
+  ngAfterViewInit(): void {
+    this.scrollToDate(true);
   }
 }

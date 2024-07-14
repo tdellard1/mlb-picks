@@ -5,56 +5,56 @@
   height: 100%;
 }
 
- .date-selector {
-   display: flex;
-   align-items: center;
-   margin: 5px;
-   padding: 5px;
- }
+.date-selector {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  padding: 5px;
+}
 
- .divider {
-   margin: auto 10px;
- }
+.divider {
+  margin: auto 10px;
+}
 
- .spacer {
-   flex-grow: 1;
- }
+.spacer {
+  flex-grow: 1;
+}
 
- :host {
-   display: block;
- }
+:host {
+  display: block;
+}
 
- .date-selector-container {
-   display: flex;
-   flex-direction: row;
-   margin: 5px;
-   padding: 10px;
-   overflow-x: auto;
- }
+.date-selector-container {
+  overflow-x: auto;
+  margin: 0 15px;
+  padding-bottom: 10px;
+}
 
- .dates {
-   margin: 0 5px
- }
+.dates {
+  margin: 0 5px
+}
 
- .team-name {
-   font-size: xx-small;
- }
+.team-name {
+  font-size: xx-small;
+}
 
- .game-details-container {
-   width: min-content;
-   margin-top: 50px;
- }
+.game-details-container {
+  width: min-content;
+  overflow-y: auto;
+  min-width: fit-content;
+  height: 756px
+}
 
- .game-details:nth-child(odd) {
-   width: max-content;
- }
+.game-details:nth-child(odd) {
+  width: max-content;
+}
 
- .divider-mobile {
-   margin: 0.663px 0;
-   visibility: hidden;
- }
+.divider-mobile {
+  margin: 0.663px 0;
+  visibility: hidden;
+}
 
-.select-expert{
-   width: 75%;
+.select-expert {
+  width: 75%;
   margin: 10px auto;
- }
+}
