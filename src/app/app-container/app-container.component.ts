@@ -40,6 +40,8 @@ export class AppContainerComponent implements OnInit {
   beforeunloadHandler(): void {
     const {dailySchedule}: any = this.activatedRoute.snapshot.data;
 
+    console.log('load things up');
+
     if (dailySchedule) {
       localStorage.setItem('daily-schedule', JSON.stringify(dailySchedule));
     }

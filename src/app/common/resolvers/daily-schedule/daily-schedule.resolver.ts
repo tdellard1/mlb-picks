@@ -16,7 +16,7 @@ export const dailyScheduleResolver: ResolveFn<Game[]> = async (): Promise<Game[]
   const updateStateService: UpdateStateService = inject(UpdateStateService);
 
   const latestDailySchedule: Game[] = await firstValueFrom(tank01ApiService.getDailySchedule());
-  const olderDailySchedule: Game[] = JSON.parse(localStorage.getItem('daily-schedule') || '') as Game[];
+  const olderDailySchedule: Game[] = JSON.parse(localStorage.getItem('daily-schedule') || '[]') as Game[];
 
   const scheduleChanged: boolean = compareTwoSchedules(latestDailySchedule, olderDailySchedule);
 
