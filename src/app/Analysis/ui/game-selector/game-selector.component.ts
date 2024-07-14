@@ -6,7 +6,7 @@ import {Team} from "../../../common/model/team.interface";
 import {MatDivider} from "@angular/material/divider";
 import {map, tap} from "rxjs/operators";
 import {GameSelectorService} from "../../data-access/services/game-selector.service";
-import {ActivatedRoute, Data} from "@angular/router";
+import {ActivatedRoute, Data, Router, RouterLink} from "@angular/router";
 import {SubscriptionHolder} from "../../../common/components/subscription-holder.component";
 import {StateService} from "../../../common/services/state.service";
 
@@ -18,7 +18,8 @@ import {StateService} from "../../../common/services/state.service";
     NgOptimizedImage,
     MatDivider,
     AsyncPipe,
-    NgIf
+    NgIf,
+    RouterLink
   ],
   templateUrl: './game-selector.component.html',
   styleUrl: './game-selector.component.css',
@@ -28,9 +29,10 @@ export class GameSelectorComponent extends SubscriptionHolder implements OnDestr
   selectedGame!: Game;
   teams: Map<string, Team> = new Map();
 
-  constructor(private gameSelectorService: GameSelectorService,
+  constructor(private router: Router,
               private stateService: StateService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private gameSelectorService: GameSelectorService) {
     super();
   }
 
@@ -38,7 +40,7 @@ export class GameSelectorComponent extends SubscriptionHolder implements OnDestr
     this.teams = this.stateService.allTeams;
 
     this.subscriptions.push(
-      this.activatedRoute.data.pipe(
+      this.activatedRoute.parent!.parent!.data.pipe(
         map((data: Data) => data['dailySchedule'] as Game[]),
         map((games: Game[]) => games.sort(this.dailyScheduleSorter)),
         tap((games: Game[]) => this.onGameSelected(games[0]))

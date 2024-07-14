@@ -13,10 +13,48 @@
  }
 
  .divider {
-   height: 35px;
    margin: auto 10px;
  }
 
  .spacer {
    flex-grow: 1;
+ }
+
+ :host {
+   display: block;
+ }
+
+ .date-selector-container {
+   display: flex;
+   flex-direction: row;
+   margin: 5px;
+   padding: 10px;
+   overflow-x: auto;
+ }
+
+ .dates {
+   margin: 0 5px
+ }
+
+ .team-name {
+   font-size: xx-small;
+ }
+
+ .game-details-container {
+   width: min-content;
+   margin-top: 51px;
+ }
+
+ .game-details:nth-child(odd) {
+   /*background-color: firebrick;*/
+ }
+
+ .divider-mobile {
+   margin: 0.663px 0;
+   /*visibility: hidden;*/
+ }
+
+.select-expert{
+   width: 75%;
+  margin: 10px auto;
  }

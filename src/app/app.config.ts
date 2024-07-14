@@ -1,6 +1,6 @@
 import {BrowserAnimationsModule, provideAnimations} from "@angular/platform-browser/animations";
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import {provideRouter, withRouterConfig} from '@angular/router';
 import { routes } from './app.routes';
 import {provideHttpClient} from "@angular/common/http";
 import {DatePipe} from "@angular/common";
@@ -12,7 +12,9 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideAnimationsAsync(),
-    provideRouter(routes),
+    provideRouter(routes, withRouterConfig({
+      paramsInheritanceStrategy: "always"
+    })),
     provideHttpClient(),
     DatePipe,
     BrowserAnimationsModule,

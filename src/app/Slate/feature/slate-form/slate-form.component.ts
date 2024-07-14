@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, OnDestroy, Output} from '@angular/core';
 import {Game} from "../../../common/model/game.interface";
 import {Teams} from "../../../common/model/team.interface";
-import {FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {NgForOf} from "@angular/common";
+import {AbstractControl, FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {NgForOf, NgIf} from "@angular/common";
 import {SlatePredictionsComponent} from "../slate-predictions/slate-predictions.component";
 import {Expert, Experts} from "../../data-access/expert.interface";
 
@@ -13,12 +13,16 @@ import {Expert, Experts} from "../../data-access/expert.interface";
     FormsModule,
     NgForOf,
     ReactiveFormsModule,
-    SlatePredictionsComponent
+    SlatePredictionsComponent,
+    NgIf
   ],
   templateUrl: './slate-form.component.html',
   styleUrl: './slate-form.component.css'
 })
 export class SlateFormComponent implements OnChanges, OnDestroy {
+  @Input() mobile: boolean;
+  @Input() mobileExpertSelected!: string;
+
   @Input() teams!: Teams;
   @Input() expertsData!: Experts;
   @Input() games!: Game[];
@@ -74,5 +78,9 @@ export class SlateFormComponent implements OnChanges, OnDestroy {
 
   updateSlateAfterSelection() {
     this.updateSlate.emit(this.form.value);
+  }
+
+  isSelectedExpert(expert: AbstractControl<any>): boolean {
+    return expert.value.name !== this.mobileExpertSelected;
   }
 }

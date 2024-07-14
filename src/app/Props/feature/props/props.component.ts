@@ -59,27 +59,25 @@ export class PropsComponent extends SubscriptionHolder implements OnDestroy, OnI
   teams: Map<string, Team> = new Map<string, Team>();
   dataSource: NoRunsFirstInningElements[] = [];
 
-  constructor(activatedRoute: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
               private stateService: StateService) {
     super();
+    this.subscriptions.push(this.route.parent!.parent!.data.subscribe((data: Data) => this.dailySchedule = data['dailySchedule']));
+  }
+
+  ngOnInit(): void {
     this.players = this.stateService.allPlayers;
     this.teams = this.stateService.allTeams;
 
-    this.subscriptions.push(
-      activatedRoute.data.pipe(
-        map((data: Data) => data['dailySchedule'] as Game[])
-      ).subscribe((games: Game[]) => {
-        this.dailySchedule = new Games(games).sortedGames;
-        this.dailySchedule.forEach(({away, home, probableStartingPitchers}: Game) => {
-          if (probableStartingPitchers.away || probableStartingPitchers.home) {
-            const awayRow: NoRunsFirstInningElements = this.getNoRunsFirstInningLineData(probableStartingPitchers.away, away, home);
-            const homeRow: NoRunsFirstInningElements = this.getNoRunsFirstInningLineData(probableStartingPitchers.home, home, away);
+    new Games(this.dailySchedule).sortedGames.forEach(({away, home, probableStartingPitchers}: Game) => {
+      if (probableStartingPitchers.away || probableStartingPitchers.home) {
+        const awayRow: NoRunsFirstInningElements = this.getNoRunsFirstInningLineData(probableStartingPitchers.away, away, home);
+        const homeRow: NoRunsFirstInningElements = this.getNoRunsFirstInningLineData(probableStartingPitchers.home, home, away);
 
-            this.dataSource.push(awayRow);
-            this.dataSource.push(homeRow);
-          }
-        })
-      }));
+        this.dataSource.push(awayRow);
+        this.dataSource.push(homeRow);
+      }
+    })
   }
 
   private getNoRunsFirstInningLineData(pitcherID: string, primaryTeam: string, secondaryTeam: string) {
@@ -105,10 +103,6 @@ export class PropsComponent extends SubscriptionHolder implements OnDestroy, OnI
 
   ngOnDestroy(): void {
     this.unsubscribe();
-  }
-
-  ngOnInit(): void {
-    console.log(this.dataSource);
   }
 
   get24NRFI(rosterPlayer: RosterPlayer): string {

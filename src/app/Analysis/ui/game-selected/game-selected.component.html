@@ -3,17 +3,17 @@
     <img alt="none" [ngSrc]="away.espnLogo1" fill>
   </div>
 
-  <div class="flex-column flex-grow">
+  <div class="flex-column-center flex-grow">
     <span>{{away.wins}} - {{away.loss}}</span>
     <span>{{away.teamAbv}}</span>
   </div>
 
-  <div class="flex-column">
+  <div class="flex-column-center">
     <span>{{ getDate(game) | date: 'shortTime' }}</span>
     <span>&#64;</span>
   </div>
 
-  <div class="flex-column  flex-grow">
+  <div class="flex-column-center  flex-grow">
     <span>{{home.wins}} - {{home.loss}}</span>
     <span>{{home.teamAbv}}</span>
   </div>

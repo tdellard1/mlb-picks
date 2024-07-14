@@ -1,10 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {
+  AfterViewChecked,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import {Game, Games} from "../../../common/model/game.interface";
-import {TeamSchedule, TeamAnalytics} from "../../../common/model/team-schedule.interface";
 import {Teams} from "../../../common/model/team.interface";
 import {Slate, Slates} from "../../data-access/slate.model";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
-import {AsyncPipe, DatePipe} from "@angular/common";
+import {AsyncPipe, DatePipe, NgIf} from "@angular/common";
 import {BehaviorSubject, Observable} from "rxjs";
 import {SlateDetailsComponent} from "../slate-details/slate-details.component";
 import {SlateFormComponent} from "../slate-form/slate-form.component";
@@ -20,6 +26,11 @@ import {Expert, Experts} from "../../data-access/expert.interface";
 import {ExpertRecords} from "../../data-access/expert-records.model";
 import {LoggerService} from "../../../common/services/logger.service";
 import {StateService} from "../../../common/services/state.service";
+import {ActivatedRoute, Data} from "@angular/router";
+import {SubscriptionHolder} from "../../../common/components/subscription-holder.component";
+import {BreakpointObserver, Breakpoints, BreakpointState} from "@angular/cdk/layout";
+import {map} from "rxjs/operators";
+import {NgSelectModule} from "@ng-select/ng-select";
 
 @Component({
   selector: 'slate-container',
@@ -29,15 +40,18 @@ import {StateService} from "../../../common/services/state.service";
     MatButtonToggle, MatButtonToggleGroup,
     DatePipe, AsyncPipe,
     SlateDetailsComponent, SlateFormComponent,
-    MatChipListbox, MatChipOption, MatButton, MatFormField, MatInput, MatLabel, MatDivider, MatSlideToggle
+    MatChipListbox, MatChipOption, MatButton, MatFormField, MatInput, MatLabel, MatDivider, MatSlideToggle, NgIf, NgSelectModule
   ],
   templateUrl: './slate-container.component.html',
-  styleUrl: './slate-container.component.css'
+  styleUrl: './slate-container.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SlateContainerComponent implements OnInit {
-  @Input() slates!: Slates;
-  @Input() dailySchedule!: Game[];
-  @Input() teams!: Teams;
+export class SlateContainerComponent extends SubscriptionHolder implements OnInit, AfterViewChecked {
+  @ViewChild('dateSelector') private dateSelectorContainer: ElementRef;
+
+  teams: Teams;
+  slates: Slates;
+  dailySchedule: Game[];
 
   private expertsSubject: BehaviorSubject<Experts> = new BehaviorSubject<Experts>([] as Experts);
   private gamesSubject: BehaviorSubject<Game[]> = new BehaviorSubject<Game[]>([]);
@@ -50,15 +64,29 @@ export class SlateContainerComponent implements OnInit {
   selectedDate: string = '';
   showTeamCity: boolean = false;
   dates: string[] = [];
+  mobileSelectedExpert: string;
+  handsetPortrait$: Observable<boolean>;
 
   constructor(private datePipe: DatePipe,
+              private route: ActivatedRoute,
               private logger: LoggerService,
               private stateService: StateService,
+              private breakpoint: BreakpointObserver,
               private backendApiService: BackendApiService) {
+    super();
   }
 
   ngOnInit(): void {
-    console.log('slate: ', this.slates);
+    this.handsetPortrait$ = this.breakpoint.observe(Breakpoints.HandsetPortrait)
+      .pipe(map((bpState: BreakpointState) => bpState.matches))
+
+
+    this.subscriptions.push(this.route.data.subscribe((data: Data) => {
+      this.teams = data['teams'];
+      this.slates = data['slates'];
+      this.dailySchedule = data['dailySchedule'];
+    }));
+
     this.selectedDate = this.setDatesAndGetMostRecent();
     this.chooseDate(this.selectedDate);
     this.expertRecords = new ExpertRecords(this.slates, this.teams);
@@ -124,14 +152,15 @@ export class SlateContainerComponent implements OnInit {
   }
 
   private get tomorrow() {
-    const today =  new Date();
-    const tomorrow =  new Date(today.setDate(today.getDate() + 1));
+    const today = new Date();
+    const tomorrow = new Date(today.setDate(today.getDate() + 1));
 
     return this.datePipe.transform(tomorrow, 'yyyyMMdd');
   }
 
   /* --------------------------------------------- */
   /* ------------- SLATE METHODS ----------------- */
+
   /* --------------------------------------------- */
   private get currentSlateIndex() {
     return this.slates.findIndex(({date}: Slate) => date === this.selectedDate);
@@ -163,5 +192,13 @@ export class SlateContainerComponent implements OnInit {
     }
 
     this.chooseDate(this.selectedDate);
+  }
+
+  scrollToDate() {
+    this.dateSelectorContainer.nativeElement.scrollLeft = this.dateSelectorContainer.nativeElement.scrollWidth;
+  }
+
+  ngAfterViewChecked(): void {
+    this.scrollToDate()
   }
 }

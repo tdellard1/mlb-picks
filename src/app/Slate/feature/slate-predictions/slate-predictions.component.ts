@@ -31,6 +31,7 @@ export class SlatePredictionsComponent implements OnInit {
   @Output() newSelectionMade: EventEmitter<any> = new EventEmitter();
 
   showPredictions: boolean = true;
+  @Input() isMobile!: boolean;
 
   constructor(private fb: FormBuilder) {}
 

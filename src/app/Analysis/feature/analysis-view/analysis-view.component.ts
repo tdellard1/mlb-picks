@@ -20,12 +20,9 @@ import {
   MatExpansionPanelTitle
 } from "@angular/material/expansion";
 import {MLBTeamSchedule} from "../../data-access/mlb-team-schedule.model";
-import {ActivatedRoute, Data} from "@angular/router";
-import {map, tap} from "rxjs/operators";
-import {filter, first, Observable} from "rxjs";
 import {NrfiPanelComponent} from "../../ui/nrfi-panel/nrfi-panel.component";
 import {MLBGame} from "../../data-access/mlb-game.model";
-import {GameSelectorService, GameSelectorState} from "../../data-access/services/game-selector.service";
+import {GameSelectorService} from "../../data-access/services/game-selector.service";
 import {StateService} from "../../../common/services/state.service";
 import {BaseGameSelectorComponent} from "../../../common/components/base-game-selector/base-game-selector.component";
 
@@ -96,6 +93,7 @@ export class AnalysisViewComponent extends BaseGameSelectorComponent implements 
 
     const battingAveragesHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.battingAverageForGame!)!;
     const battingAveragesAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.battingAverageForGame!)!;
+    console.log(battingAveragesHome, battingAveragesAway);
     this.charts.push(this.createChart('Batting Average',
       `${homeTeam} - Batting Averages`,
       battingAveragesHome,

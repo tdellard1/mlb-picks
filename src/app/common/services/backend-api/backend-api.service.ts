@@ -61,4 +61,8 @@ export class BackendApiService {
   updateSlates(slates: Slates) {
     return this.apiService.post(this.serverUrl + 'api/slates', slates).pipe(first());
   }
+
+  getGameAnalysis(gameId: string) {
+    return this.apiService.get(this.serverUrl + `api/game/${gameId}`);
+  }
 }

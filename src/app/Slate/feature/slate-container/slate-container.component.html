@@ -1,38 +1,80 @@
-<div class="date-selector">
-  <mat-chip-listbox>
+<ng-container *ngIf="!(handsetPortrait$ | async); else mobileSlate">
+  <div class="date-selector">
+    <mat-chip-listbox>
+      @for (date of dates; track date) {
+        <mat-chip-option [value]="date"
+                         [selected]="date === selectedDate"
+                         (selectionChange)="chooseDate(date)">{{ getDate(date) | date }}
+        </mat-chip-option>
+      }
+    </mat-chip-listbox>
+    <mat-divider vertical class="divider"></mat-divider>
+    <mat-slide-toggle [(ngModel)]="showTeamCity">{{ showTeamCity ? 'Team City' : 'Team Name' }}</mat-slide-toggle>
+    <mat-divider vertical class="divider"></mat-divider>
+    <span>{{ expertName }}</span>
+    <div class="spacer"></div>
+
+    <mat-form-field>
+      <mat-label>Analyst</mat-label>
+      <input matInput placeholder="Analyst Name" [(ngModel)]="expertName" [ngModelOptions]="{standalone: true}">
+    </mat-form-field>
+
+    <button mat-raised-button (click)="addExpertToSlate()">
+      Add Analyst
+    </button>
+
+
+  </div>
+  <div class="container-grid">
+    <slate-details
+      [games]="(games$ | async)!"
+      [getTeamName]="showTeamCity"
+      [teams]="teams"></slate-details>
+    <slate-form [teams]="teams"
+                [games]="(games$ | async)!"
+                [expertsData]="(experts$ | async)!"
+                (updateSlate)="updateSlateFromSelection($event)"
+                (saveExpertPredictions)="updateSlate($event)"></slate-form>
+  </div>
+</ng-container>
+
+<ng-template #mobileSlate>
+  <div class="date-selector-container" #dateSelector>
     @for (date of dates; track date) {
       <mat-chip-option [value]="date"
+                       class="dates"
                        [selected]="date === selectedDate"
-                       (selectionChange)="chooseDate(date)">{{ getDate(date) | date }}</mat-chip-option>
+                       (selectionChange)="chooseDate(date)">{{ getDate(date) | date }}
+      </mat-chip-option>
     }
-  </mat-chip-listbox>
-  <mat-divider vertical class="divider"></mat-divider>
-  <mat-slide-toggle [(ngModel)]="showTeamCity">{{showTeamCity ? 'Team City' : 'Team Name'}}</mat-slide-toggle>
-  <mat-divider vertical class="divider"></mat-divider>
-  <span>{{expertName}}</span>
-  <div class="spacer"></div>
-
-  <mat-form-field>
-    <mat-label>Analyst</mat-label>
-    <input matInput placeholder="Analyst Name" [(ngModel)]="expertName" [ngModelOptions]="{standalone: true}">
-  </mat-form-field>
-
-  <button mat-raised-button (click)="addExpertToSlate()">
-    Add Analyst
-  </button>
-
-
-
-
-</div>
-<div class="container-grid">
-  <slate-details
-    [games]="(games$ | async)!"
-    [getTeamName]="showTeamCity"
-    [teams]="teams"></slate-details>
-  <slate-form [teams]="teams"
-              [games]="(games$ | async)!"
-              [expertsData]="(experts$ | async)!"
-              (updateSlate)="updateSlateFromSelection($event)"
-              (saveExpertPredictions)="updateSlate($event)"></slate-form>
-</div>
+  </div>
+  <ng-select class="select-expert"
+             appearance="outline"
+             [(ngModel)]="mobileSelectedExpert"
+             [ngModelOptions]="{standalone: true}"
+             [clearable]="false">
+    @for (expert of (experts$ | async)!; track $index) {
+      <ng-option class="select-option" [value]="expert.name">
+        {{ expert.name }}
+      </ng-option>
+    }
+  </ng-select>
+  <div class="flex-row">
+    <div *ngIf="(games$ | async) as games" class="flex-column padding-left-10 game-details-container">
+      @for (game of games; track game) {
+        <div class="flex-column game-details">
+          <span class="fs-smaller fw-200">{{ game.away }}&nbsp;{{ teams.getAwayTeamName(game) }}</span>
+          <span class="fs-smaller fw-200">{{ game.home }}&nbsp;{{ teams.getHomeTeamName(game) }}</span>
+        </div>
+        <mat-divider class="divider-mobile"></mat-divider>
+      }
+    </div>
+    <slate-form [mobile]="true"
+                [mobileExpertSelected]="mobileSelectedExpert"
+                [teams]="teams"
+                [games]="(games$ | async)!"
+                [expertsData]="(experts$ | async)!"
+                (updateSlate)="updateSlateFromSelection($event)"
+                (saveExpertPredictions)="updateSlate($event)"></slate-form>
+  </div>
+</ng-template>

@@ -10,3 +10,7 @@ div {
 slate-predictions {
   /*flex-grow: 1;*/
 }
+
+.hide {
+  display: none;
+}

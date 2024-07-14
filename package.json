@@ -4,9 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "node server/server.js",
-    "build": "ng build",
+    "build": "ng build --configuration development --delete-output-path true",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "client": "ng serve --hmr",
     "heroku-postbuild": "ng build --configuration production"
   },
   "private": true,

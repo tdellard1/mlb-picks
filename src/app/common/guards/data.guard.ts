@@ -16,7 +16,7 @@ export const dataGuard: CanActivateFn = async (): Promise<boolean> => {
   const backendApiService: BackendApiService = inject(BackendApiService);
   const lastUpdatedService: LastUpdatedService = inject(LastUpdatedService);
   const stateService: StateService = inject(StateService);
-    const logger: LoggerService = inject(LoggerService);
+  const logger: LoggerService = inject(LoggerService);
 
   const teams: Team[] = await firstValueFrom(backendApiService.getTeamsArray());
   const allPlayers: RosterPlayer[] = await firstValueFrom(backendApiService.getPlayers());

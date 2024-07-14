@@ -19,6 +19,7 @@
         [formGroupName]="$index"
         [ngStyle]="{'display': showPredictions ? '' : 'none'}">
         <ng-select appearance="outline"
+                   [class.mobile]="isMobile"
                    [class.right]="getRightClass(_)"
                    [class.wrong]="getWrongClass(_)"
                    [formControlName]="'prediction'"

@@ -6,19 +6,29 @@ const path = require('path');
 const apiRouter = require("./routes");
 const cors = require('cors');
 const pathToClientApp = '../dist/mlb-picks/browser';
-const { initializeApp } = require("firebase/app");
-const firebaseConfig = {
-  apiKey: "AIzaSyAJbrUUSPEwfhxAax7qOYq9-QV_eg61o1U",
-  authDomain: "mlb-picks-2162b.firebaseapp.com",
-  projectId: "mlb-picks-2162b",
-  storageBucket: "mlb-picks-2162b.appspot.com",
-  messagingSenderId: "1062344277302",
-  appId: "1:1062344277302:web:dece8657a6165b351d0797",
-  measurementId: "G-3123M9SGD1"
-};
+const { loadDataToCache } = require('./firebase.init');
+const firebaseFileKeys = ['boxScores', 'rosters', 'teams', 'slates', 'schedules', 'players'];
+function startServer() {
+  console.log(`Start server called!`);
+  app.listen(process.env.PORT || port, () => {
+    console.log(`Server listening at http://localhost:${port}`);
+  });
+}
 
-initializeApp(firebaseConfig);
+function write(array) {
+  const promises = [];
+  for(let key of array) {
+    console.log(key, firebaseFileKeys);
+    promises.push(loadDataToCache(key));
+  }
+  return Promise.all(promises);
+}
 
+write(firebaseFileKeys).then(() => {
+  startServer();
+});
+
+console.log('App configuration started.');
 app.use(json({limit: '250mb'}));
 app.use(urlencoded({limit: '250mb', extended: true}));
 app.use(cors());
@@ -28,9 +38,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, pathToClientApp + '/index.html'));
 });
 
-
 app.use('/api', apiRouter);
+console.log('App configuration finished.');
 
-app.listen(process.env.PORT || port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
-});
+

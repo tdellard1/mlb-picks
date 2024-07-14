@@ -10,16 +10,6 @@ h3 {
   text-align: center;
 }
 
-.flex-grow {
-  flex-grow: 1;
-}
-
-.flex-column {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
 
 span {
     width: max-content;

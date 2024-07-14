@@ -1,22 +1,27 @@
 const router = require('express').Router();
-const playersURL = './server/assets/teams.json';
+const playersURL = './server/assets/players.json';
 const players = require("../../assets/players.json");
 const {default: axios} = require("axios");
+const cache = require("../../cache/memoryCache");
+const {getStorage, ref, getDownloadURL} = require("firebase/storage");
+const key = 'players';
+const playersFileName = 'players.json';
 
 router.get('/', async (req, res) => {
-  try {
-    const response = await axios.get(`https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBPlayerList`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'X-RapidAPI-Host': 'tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com',
-          'X-RapidAPI-Key': 'e22845af99mshf6b3ec01f4d7666p1c7ce7jsne4ce7518ae06',
-        }
-      }
-    );
-    res.send(response.data.body);
-  } catch (error) {
-    console.error(error);
+  if (cache.has(key)) {
+    console.log('Cache has players!');
+    res.json(cache.get(key))
+  } else {
+    console.log('Cache does NOT have players!');
+    const storage = getStorage();
+    const storageRef = ref(storage, playersFileName);
+    const file = await getDownloadURL(storageRef);
+
+    fetch(file).then(playersFile => playersFile.json()).then((data) => {
+      cache.set(key, data);
+      console.log('players Cache set: ', cache.has(key));
+      res.json(data);
+    });
   }
 });
 
