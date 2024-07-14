@@ -42,16 +42,16 @@
 
  .game-details-container {
    width: min-content;
-   margin-top: 51px;
+   margin-top: 50px;
  }
 
  .game-details:nth-child(odd) {
-   /*background-color: firebrick;*/
+   width: max-content;
  }
 
  .divider-mobile {
    margin: 0.663px 0;
-   /*visibility: hidden;*/
+   visibility: hidden;
  }
 
 .select-expert{

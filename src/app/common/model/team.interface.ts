@@ -23,9 +23,30 @@ export class Teams {
     return teamName;
   }
 
-  getTeamLogo(teamAbv: string) {
-    const {espnLogo1}: Team = this.getTeam(teamAbv);
-    return espnLogo1;
+  getTeamWins(teamAbv: string) {
+    const {wins}: Team = this.getTeam(teamAbv);
+    return wins;
+  }
+
+  getTeamLoss(teamAbv: string) {
+    const {loss}: Team = this.getTeam(teamAbv);
+    return loss;
+  }
+
+  getHomeTeamLoss({home}: Game) {
+    return this.getTeamLoss(home);
+  }
+
+  getAwayTeamLoss({away}: Game) {
+    return this.getTeamLoss(away);
+  }
+
+  getHomeTeamWins({home}: Game) {
+    return this.getTeamWins(home);
+  }
+
+  getAwayTeamWins({away}: Game) {
+    return this.getTeamWins(away);
   }
 
   getHomeTeamName({home}: Game) {

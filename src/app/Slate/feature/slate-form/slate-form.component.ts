@@ -30,7 +30,7 @@ export class SlateFormComponent implements OnChanges, OnDestroy {
   @Output() saveExpertPredictions: EventEmitter<{experts: Experts}> = new EventEmitter();
   @Output() updateSlate: EventEmitter<{experts: Experts}> = new EventEmitter();
 
-  defaultExperts: string[] = ['TeamRankings', 'Ron Romanelli', 'SportsLine', 'CBS Sports Expert', 'Odds Trader'];
+  defaultExperts: string[] = ['Ron Romanelli', 'SportsLine', 'CBS Sports Expert', 'Odds Trader'];
   form: FormGroup = new FormGroup({
     experts: new FormArray([])
   });

@@ -31,6 +31,7 @@ import {SubscriptionHolder} from "../../../common/components/subscription-holder
 import {BreakpointObserver, Breakpoints, BreakpointState} from "@angular/cdk/layout";
 import {map} from "rxjs/operators";
 import {NgSelectModule} from "@ng-select/ng-select";
+import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 
 @Component({
   selector: 'slate-container',
@@ -40,7 +41,7 @@ import {NgSelectModule} from "@ng-select/ng-select";
     MatButtonToggle, MatButtonToggleGroup,
     DatePipe, AsyncPipe,
     SlateDetailsComponent, SlateFormComponent,
-    MatChipListbox, MatChipOption, MatButton, MatFormField, MatInput, MatLabel, MatDivider, MatSlideToggle, NgIf, NgSelectModule
+    MatChipListbox, MatChipOption, MatButton, MatFormField, MatInput, MatLabel, MatDivider, MatSlideToggle, NgIf, NgSelectModule, MatRadioButton, MatRadioGroup
   ],
   templateUrl: './slate-container.component.html',
   styleUrl: './slate-container.component.css',
@@ -87,6 +88,7 @@ export class SlateContainerComponent extends SubscriptionHolder implements OnIni
       this.dailySchedule = data['dailySchedule'];
     }));
 
+
     this.selectedDate = this.setDatesAndGetMostRecent();
     this.chooseDate(this.selectedDate);
     this.expertRecords = new ExpertRecords(this.slates, this.teams);
@@ -131,6 +133,7 @@ export class SlateContainerComponent extends SubscriptionHolder implements OnIni
     const slate: Slate | undefined = this.getSlateFor(this.selectedDate);
 
     if (slate) {
+      this.mobileSelectedExpert = slate.experts[0].name;
       this.expertsSubject.next(slate.experts);
     } else {
       this.expertsSubject.next([] as Experts);
@@ -199,6 +202,6 @@ export class SlateContainerComponent extends SubscriptionHolder implements OnIni
   }
 
   ngAfterViewChecked(): void {
-    this.scrollToDate()
+    this.scrollToDate();
   }
 }
