@@ -24,17 +24,18 @@ export const dataGuard: CanActivateFn = async (): Promise<boolean> => {
   const schedules: TeamSchedule[] = await firstValueFrom(backendApiService.getSchedules());
   const boxScores: BoxScore[] = await firstValueFrom(backendApiService.getBoxScores());
 
-  if (lastUpdatedService.refresh) {
-    logger.info('Retrieving boxScores for Day Before...');
-    updateStateService.getYesterdaysBoxScores(boxScores)
-      .subscribe((newBoxScores: BoxScore[]) => {
-      boxScores.push(...newBoxScores);
-      backendApiService.updateBoxScores(boxScores).subscribe(console.log);
-      stateService.loadStateSlices(teams, allPlayers, rosterPlayers, schedules, boxScores);
-    });
-  } else {
-    stateService.loadStateSlices(teams, allPlayers, rosterPlayers, schedules, boxScores);
-  }
+  stateService.loadStateSlices(teams, allPlayers, rosterPlayers, schedules, boxScores);
+
+  // if (lastUpdatedService.refresh) {
+  //   logger.info('Retrieving boxScores for Day Before...');
+  //   updateStateService.getYesterdaysBoxScores(boxScores)
+  //     .subscribe((newBoxScores: BoxScore[]) => {
+  //     boxScores.push(...newBoxScores);
+  //     backendApiService.updateBoxScores(boxScores).subscribe(console.log);
+  //     stateService.loadStateSlices(teams, allPlayers, rosterPlayers, schedules, boxScores);
+  //   });
+  // } else {
+  // }
 
   return true;
 };
