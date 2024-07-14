@@ -66,10 +66,10 @@
         @for (game of games; track game) {
           <div class="flex-column game-details">
             <span
-              class="fs-smaller fw-200">{{ game.away }}&nbsp;{{ teams.getAwayTeamName(game) }}&nbsp;({{ teams.getAwayTeamWins(game) }}
+              class="fw-200">{{ game.away }}&nbsp;{{ teams.getAwayTeamName(game) }}&nbsp;({{ teams.getAwayTeamWins(game) }}
               - {{ teams.getAwayTeamLoss(game) }})</span>
             <span
-              class="fs-smaller fw-200">{{ game.home }}&nbsp;{{ teams.getHomeTeamName(game) }}&nbsp;({{ teams.getHomeTeamWins(game) }}
+              class="fw-200">{{ game.home }}&nbsp;{{ teams.getHomeTeamName(game) }}&nbsp;({{ teams.getHomeTeamWins(game) }}
               - {{ teams.getHomeTeamLoss(game) }})</span>
           </div>
           <mat-divider class="divider-mobile"></mat-divider>
