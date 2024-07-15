@@ -1,0 +1,23 @@
+version: 1
+backend:
+  phases:
+    build:
+      commands:
+        - node server/server.js
+frontend:
+  phases:
+    build:
+      commands:
+        - nvm install 18.19
+        - nvm use 18.19
+        - npm install -g @angular/cli
+        - ng version
+        - ng build --configuration=production
+  artifacts:
+    baseDirectory: dist/amplify-angular-template/browser
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - .npm/**/*
+      - node_modules/**/*
