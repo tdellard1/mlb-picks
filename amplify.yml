@@ -6,6 +6,9 @@ backend:
         - nvm install 18.19
         - nvm use 18.19
         - npm install
+    postBuild:
+      commands:
+        - node server/server.js
 frontend:
   phases:
     build:
@@ -23,3 +26,5 @@ frontend:
     paths:
       - .npm/**/*
       - node_modules/**/*
+
+
