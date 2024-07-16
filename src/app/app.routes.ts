@@ -6,7 +6,7 @@ import {dataGuard} from "./common/guards/data.guard";
 export const routes: Routes = [
   {
     path: '',
-    // canActivate: [dataGuard],
+    canActivate: [dataGuard],
     component: AppContainerComponent,
     // resolve: { dailySchedule: dailyScheduleResolver },
     // children: [
