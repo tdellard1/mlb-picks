@@ -11,8 +11,6 @@ module.exports = async () => {
       console.log('Adding data to Redis Client');
 
       await redis.set(fileKey, data);
-    } else {
-      console.log('Redis Has Data, No Need To Retrieve');
     }
   }
 }

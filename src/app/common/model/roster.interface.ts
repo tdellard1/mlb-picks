@@ -13,7 +13,7 @@ export interface Roster {
   roster: RosterPlayer[];
 }
 
-export interface RosterPlayer extends Player{
+export interface RosterPlayer extends Player {
   fantasyProsLink: string;
   jerseyNum: string;
   yahooLink: string;

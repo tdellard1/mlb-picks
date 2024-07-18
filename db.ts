@@ -1,24 +1,24 @@
 // db.ts
 import Dexie, { Table } from 'dexie';
-
-export interface TodoList {
-  id?: number;
-  title: string;
-}
-export interface TodoItem {
-  id?: number;
-  todoListId: number;
-  title: string;
-  done?: boolean;
-}
+import {RosterPlayer} from "./src/app/common/model/roster.interface";
+import {Team} from "./src/app/common/model/team.interface";
+import {TeamSchedule} from "./src/app/common/model/team-schedule.interface";
 
 export class AppDB extends Dexie {
   boxScores: Table<IBoxScore, string>;
+  rosterPlayers: Table<RosterPlayer, string>;
+  allPlayers: Table<RosterPlayer, string>;
+  teams: Table<Team, string>;
+  schedules: Table<TeamSchedule, string>;
 
   constructor() {
     super('mlb-picks');
-    this.version(2).stores({
+    this.version(3).stores({
       boxScores: 'gameID, home, away, gameStatus',
+      rosterPlayers: 'playerID, team, teamID',
+      allPlayers: 'playerID, team, teamID',
+      teams: 'teamAbv, teamName, teamCity',
+      schedules: 'team',
     });
   }
 }
