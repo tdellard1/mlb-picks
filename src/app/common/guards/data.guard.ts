@@ -23,25 +23,25 @@ export const dataGuard: CanActivateFn = async (): Promise<boolean> => {
   const boxScoresInDB: string | null = localStorage.getItem('boxScoreSize');
   const updateBoxScoresInIndexedDB = boxScoresInDB !== null && Number(boxScoresInDB) !== listOfBoxScores.length;
 
-  if (updateBoxScoresInIndexedDB) {
+  // if (updateBoxScoresInIndexedDB) {
   //   const updateStateService: UpdateStateService = inject(UpdateStateService);
   //   const lastUpdatedService: LastUpdatedService = inject(LastUpdatedService);
   //   const logger: LoggerService = inject(LoggerService);
   //
-  //   const teams: Team[] = await firstValueFrom(backendApiService.getTeamsArray());
-  //   const allPlayers: RosterPlayer[] = await firstValueFrom(backendApiService.getPlayers());
-  //   const rosterPlayers: RosterPlayer[] = await firstValueFrom(backendApiService.getRosters());
-  //   const schedules: TeamSchedule[] = await firstValueFrom(backendApiService.getSchedules());
+    const teams: Team[] = await firstValueFrom(backendApiService.getTeamsArray());
+    const allPlayers: RosterPlayer[] = await firstValueFrom(backendApiService.getPlayers());
+    const rosterPlayers: RosterPlayer[] = await firstValueFrom(backendApiService.getRosters());
+    const schedules: TeamSchedule[] = await firstValueFrom(backendApiService.getSchedules());
   // } else {
 
     // db.boxScores.bulkAdd(boxScores);
     // localStorage.setItem('boxScoreSize', JSON.stringify(boxScores.length));
-  }
+  // }
   const value = await navigator.storage.estimate();
   console.log('testing: ', listOfBoxScores.length, new Set(listOfBoxScores.map(value1 => value1.gameID)).size);
 
 
-  // stateService.loadStateSlices(teams, allPlayers, rosterPlayers, schedules, boxScores);
+  stateService.loadStateSlices(teams, allPlayers, rosterPlayers, schedules, boxScores);
 
   // if (lastUpdatedService.refresh) {
   //   logger.info('Retrieving boxScores for Day Before...');

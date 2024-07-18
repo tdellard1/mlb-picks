@@ -28,7 +28,8 @@ export class SlateDetailsComponent {
     };
   }
 
-  getDate({gameTime_epoch}: Game): Date {
-    return new Date(Number(gameTime_epoch) * 1000);
+  getDate(game: Game): Date {
+    console.log('gameTime_epoch: ', game);
+    return new Date(Number(game.gameTime_epoch) * 1000);
   }
 }

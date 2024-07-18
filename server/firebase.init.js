@@ -1,6 +1,5 @@
-const {getStorage, ref, getDownloadURL} = require("firebase/storage");
+const {getStorage} = require("firebase/storage");
 const {initializeApp} = require("firebase/app");
-const cache = require("./cache/memoryCache");
 
 const firebaseConfig = {
   apiKey: "AIzaSyAJbrUUSPEwfhxAax7qOYq9-QV_eg61o1U",
@@ -15,22 +14,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 
-function loadDataToCache(keyFile) {
-  return new Promise((resolve, reject) => {
-    console.log(`Load ${keyFile} called!`);
-    const storageRef = ref(storage, `${keyFile}.json`);
-    getDownloadURL(storageRef).then((url) => {
-      fetch(url)
-        .then(file => file.json())
-        .then((data) => {
-          cache.set(keyFile, data);
-          console.log(`${keyFile} Cache set: `, cache.has(keyFile));
-          resolve();
-        });
-    });
-  });
-}
-
 module.exports = {
-  loadDataToCache: loadDataToCache
+  storage
 };
+
