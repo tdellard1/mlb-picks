@@ -62,7 +62,7 @@
     </mat-radio-group>
 
 
-    <div class="flex-row">
+    <div class="flex-row margin-bottom-10">
       <div *ngIf="(games$ | async) as games" class="flex-column padding-left-10 game-details-container">
         @for (game of games; track game) {
           <div class="flex-column game-details">

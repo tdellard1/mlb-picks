@@ -6,11 +6,10 @@ import {
   MatExpansionPanelTitle
 } from "@angular/material/expansion";
 import {BreakpointObserver, Breakpoints, BreakpointState} from "@angular/cdk/layout";
-import {MLBTeamSchedule} from "../../data-access/mlb-team-schedule.model";
 import {NgIf} from "@angular/common";
-import {TeamSchedule} from "../../../common/model/team-schedule.interface";
+import {TeamAnalytics} from "../../../common/model/team-schedule.interface";
 import {StateService} from "../../../common/services/state.service";
-import {Team} from "../../../common/model/team.interface";
+import {Game} from "../../../common/model/game.interface";
 
 @Component({
   selector: 'nrfi-panel',
@@ -26,13 +25,11 @@ import {Team} from "../../../common/model/team.interface";
   styleUrl: './nrfi-panel.component.css',
   encapsulation: ViewEncapsulation.None
 })
-export class NrfiPanelComponent implements OnChanges, OnInit {
-  @Input() away!: MLBTeamSchedule;
-  @Input() home!: MLBTeamSchedule;
+export class NrfiPanelComponent implements OnChanges {
+  @Input() game!: Game;
 
-  awaySchedule: MLBTeamSchedule = {} as MLBTeamSchedule;
-  homeSchedule: MLBTeamSchedule = {} as MLBTeamSchedule;
-  scheduleMap: Map<string, TeamSchedule> = new Map();
+  homeAnalytics: TeamAnalytics;
+  awayAnalytics: TeamAnalytics;
 
   handsetPortrait: boolean = false;
 
@@ -44,16 +41,10 @@ export class NrfiPanelComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['home'].currentValue && changes['away'].currentValue) {
-      const home: string = (changes['home'].currentValue as MLBTeamSchedule).team;
-      const away: string = (changes['away'].currentValue as MLBTeamSchedule).team;
-
-      this.awaySchedule = new MLBTeamSchedule(this.scheduleMap.get(away)!);
-      this.homeSchedule = new MLBTeamSchedule(this.scheduleMap.get(home)!);
+    const game: Game = changes['game'].currentValue as Game;
+    if (game) {
+      this.homeAnalytics = this.stateService.getTeamAnalytics(game.home);
+      this.awayAnalytics = this.stateService.getTeamAnalytics(game.away);
     }
-  }
-
-  ngOnInit(): void {
-    this.scheduleMap = this.stateService.allSchedules;
   }
 }

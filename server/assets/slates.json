@@ -9270,7 +9270,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_CHW@CLE",
@@ -9291,7 +9292,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_STL@PIT",
@@ -9312,7 +9314,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_NYM@WAS",
@@ -9333,7 +9336,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_CIN@NYY",
@@ -9354,7 +9358,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_HOU@TOR",
@@ -9375,7 +9380,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_SF@ATL",
@@ -9396,7 +9402,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_DET@MIN",
@@ -9417,7 +9424,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_PHI@CHC",
@@ -9438,7 +9446,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_SD@TEX",
@@ -9459,7 +9468,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_TB@KC",
@@ -9480,7 +9490,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_MIL@COL",
@@ -9501,7 +9512,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_BAL@SEA",
@@ -9522,7 +9534,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_LAA@OAK",
@@ -9543,7 +9556,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_ARI@LAD",
@@ -9564,7 +9578,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           }
         ]
       },
@@ -9611,7 +9626,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_STL@PIT",
@@ -9632,7 +9648,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_NYM@WAS",
@@ -9653,7 +9670,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_CIN@NYY",
@@ -9674,7 +9692,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_HOU@TOR",
@@ -9695,7 +9714,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_SF@ATL",
@@ -9716,7 +9736,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_DET@MIN",
@@ -9758,7 +9779,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_SD@TEX",
@@ -9800,7 +9822,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_MIL@COL",
@@ -9821,7 +9844,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_BAL@SEA",
@@ -9842,7 +9866,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_LAA@OAK",
@@ -9863,7 +9888,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_ARI@LAD",
@@ -9884,7 +9910,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           }
         ]
       },
@@ -9910,7 +9937,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_CHW@CLE",
@@ -9931,7 +9959,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_STL@PIT",
@@ -9952,7 +9981,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_NYM@WAS",
@@ -9973,7 +10003,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_CIN@NYY",
@@ -9994,7 +10025,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_HOU@TOR",
@@ -10015,7 +10047,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_SF@ATL",
@@ -10036,7 +10069,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_DET@MIN",
@@ -10057,7 +10091,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_PHI@CHC",
@@ -10078,7 +10113,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_SD@TEX",
@@ -10099,7 +10135,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_TB@KC",
@@ -10120,7 +10157,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_MIL@COL",
@@ -10141,7 +10179,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_BAL@SEA",
@@ -10162,7 +10201,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_LAA@OAK",
@@ -10183,7 +10223,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_ARI@LAD",
@@ -10204,7 +10245,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           }
         ]
       },
@@ -10230,7 +10272,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_CHW@CLE",
@@ -10251,7 +10294,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_STL@PIT",
@@ -10272,7 +10316,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_NYM@WAS",
@@ -10293,7 +10338,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_CIN@NYY",
@@ -10314,7 +10360,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_HOU@TOR",
@@ -10335,7 +10382,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_SF@ATL",
@@ -10356,7 +10404,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_DET@MIN",
@@ -10377,7 +10426,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_PHI@CHC",
@@ -10398,7 +10448,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_SD@TEX",
@@ -10419,7 +10470,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_TB@KC",
@@ -10440,7 +10492,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_MIL@COL",
@@ -10461,7 +10514,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_BAL@SEA",
@@ -10482,7 +10536,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_LAA@OAK",
@@ -10503,7 +10558,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_ARI@LAD",
@@ -10524,7 +10580,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           }
         ]
       },
@@ -10550,7 +10607,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_CHW@CLE",
@@ -10571,7 +10629,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_STL@PIT",
@@ -10592,7 +10651,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_NYM@WAS",
@@ -10613,7 +10673,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_CIN@NYY",
@@ -10634,7 +10695,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_HOU@TOR",
@@ -10655,7 +10717,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_SF@ATL",
@@ -10676,7 +10739,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_DET@MIN",
@@ -10697,7 +10761,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_PHI@CHC",
@@ -10718,7 +10783,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_SD@TEX",
@@ -10739,7 +10805,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_TB@KC",
@@ -10760,7 +10827,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_MIL@COL",
@@ -10781,7 +10849,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_BAL@SEA",
@@ -10802,7 +10871,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_LAA@OAK",
@@ -10823,7 +10893,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_ARI@LAD",
@@ -10870,7 +10941,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_CHW@CLE",
@@ -10891,7 +10963,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_STL@PIT",
@@ -10912,7 +10985,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_NYM@WAS",
@@ -10933,7 +11007,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_CIN@NYY",
@@ -10954,7 +11029,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_HOU@TOR",
@@ -10975,7 +11051,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_SF@ATL",
@@ -10996,7 +11073,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_DET@MIN",
@@ -11017,7 +11095,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_PHI@CHC",
@@ -11038,7 +11117,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_SD@TEX",
@@ -11059,7 +11139,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_TB@KC",
@@ -11080,7 +11161,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_MIL@COL",
@@ -11101,7 +11183,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_BAL@SEA",
@@ -11122,7 +11205,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": true
           },
           {
             "gameID": "20240702_LAA@OAK",
@@ -11143,7 +11227,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           },
           {
             "gameID": "20240702_ARI@LAD",
@@ -11164,7 +11249,8 @@
               {
                 "option": "Total: Under"
               }
-            ]
+            ],
+            "correct": false
           }
         ]
       }

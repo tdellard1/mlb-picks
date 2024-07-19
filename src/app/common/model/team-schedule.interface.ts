@@ -4,6 +4,7 @@ import {BoxScore} from "./box-score.interface";
 import {TeamAnalyticsUtils} from "../utils/team-analytics.utils";
 import {roundToDecimalPlace} from "../utils/general.utils";
 import {getGamesBeforeToday} from "../utils/schedule.utils";
+import {RunsFirstInning} from "../../Analysis/data-access/runs-first-inning.model";
 
 export interface TeamSchedule {
   team: string,
@@ -14,14 +15,50 @@ export interface TeamSchedule {
 export class TeamAnalytics {
   team: string;
   analytics?: Analytics[] = [];
+  runsFirstInning: RunsFirstInning = new RunsFirstInning();
 
   constructor(team: string, schedule: Game[]) {
     this.team = team;
 
-    for (let i = 1; i < schedule.length + 1; i++) {
-      const boxScores: BoxScore[] = getGamesBeforeToday(schedule).map(gameToBoxScore);
+    const scheduleBeforeToday: Game[] = getGamesBeforeToday(schedule);
+    const last15GamesBeforeToday: Game[] = scheduleBeforeToday.slice(scheduleBeforeToday.length - 15, scheduleBeforeToday.length);
+
+
+    for (let i = 1; i < last15GamesBeforeToday.length + 1; i++) {
+      const boxScores: BoxScore[] = last15GamesBeforeToday.map(gameToBoxScore);
 
       this.analytics?.push(new Analytics(team, boxScores.slice(0, i), i));
+    }
+
+    schedule.forEach((game: Game) => {
+      this.processRunsFirstInning(game, team);
+    });
+  }
+
+  processRunsFirstInning(game: Game, team: string) {
+    let lineScore = game.lineScore || game.boxScore?.lineScore;
+    if (lineScore) {
+      const isHome: boolean = lineScore.home.team === team;
+
+      if (isHome) {
+        const isNRFI: boolean = Number(lineScore.home.scoresByInning[1]) === 0;
+
+        if (isNRFI) {
+          this.runsFirstInning.addHomeNRFI();
+        } else {
+          this.runsFirstInning.addHomeYRFI();
+        }
+      } else {
+        const isNRFI: boolean = Number(lineScore.away.scoresByInning[1]) === 0;
+
+        if (isNRFI) {
+          this.runsFirstInning.addAwayNRFI();
+        } else {
+          this.runsFirstInning.addAwayYRFI();
+        }
+      }
+    } else {
+      return;
     }
   }
 }
@@ -38,6 +75,8 @@ export class Analytics {
   averagePerGameOnBasePlusSlugging?: number;
   onBasePlusSlugging?: number;
   averagePerGameWeightedOnBaseAverage?: number;
+  weightedOnBaseAverage?: number;
+  hittingStrikeouts?: number;
   weightedRunsAboveAverage?: number;
 
 
@@ -61,6 +100,9 @@ export class Analytics {
     this.onBasePlusSlugging = roundToDecimalPlace((this.onBasePercentage + this.sluggingPercentage), 3);
 
     this.averagePerGameWeightedOnBaseAverage = TeamAnalyticsUtils.getWeightedOnBaseAverages(team, boxScores);
+    this.weightedOnBaseAverage = Number(TeamAnalyticsUtils.getWeightedOnBaseAverage(team, boxScore).toFixed(3));
+
+    this.hittingStrikeouts = TeamAnalyticsUtils.getHittingStrikeouts(team, boxScore);
   }
 }
 

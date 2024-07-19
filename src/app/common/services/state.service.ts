@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {convertArrayToMap, convertMapToArray} from "../utils/general.utils";
-import {TeamSchedule} from "../model/team-schedule.interface";
+import {TeamAnalytics, TeamSchedule} from "../model/team-schedule.interface";
 import {Team} from "../model/team.interface";
 import {RosterPlayer} from "../model/roster.interface";
 import {BoxScore, convertBoxScoresToListOfPlayerStats} from "../model/box-score.interface";
@@ -10,7 +10,8 @@ import {
   addPlayersToTeamRoster, addTeamsAndBoxScoresToSchedule,
   createRosterPlayerMap, removePostponedGames
 } from "../utils/state-builder.utils";
-import {MLBTeamSchedule} from "../../Analysis/data-access/mlb-team-schedule.model";
+import {Game} from "../model/game.interface";
+import {getGamesBeforeToday} from "../utils/schedule.utils";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class StateService {
   private _rosterPlayers: Map<string, RosterPlayer> = new Map();
   private _teams: Map<string, Team> = new Map();
   private _schedules: Map<string, TeamSchedule> = new Map();
+  private _analytics: Map<string, TeamAnalytics> = new Map();
 
   loadStateSlices(teams: Team[], players: RosterPlayer[], rosters: RosterPlayer[], schedules: TeamSchedule[], boxScores: BoxScore[]) {
     const usableBoxScores: BoxScore[] = removePostponedGames(boxScores);
@@ -40,6 +42,11 @@ export class StateService {
 
     const updatedSchedules: TeamSchedule[] = addTeamsAndBoxScoresToSchedule(schedules, this._teams, this._boxScores);
     this._schedules = new Map(updatedSchedules.map((schedule) => ([schedule.team, schedule])));
+
+    this._schedules.forEach(({team, schedule}: TeamSchedule) => {
+      const teamAnalytics: TeamAnalytics = new TeamAnalytics(team, schedule);
+      this._analytics.set(team, teamAnalytics)
+    });
   }
 
   get allPlayers(): Map<string, RosterPlayer> {
@@ -52,11 +59,6 @@ export class StateService {
 
   get allSchedules(): Map<string, TeamSchedule> {
     return this._schedules;
-  }
-
-  get allMLBSchedules(): Map<string, MLBTeamSchedule> {
-    const mlbTeamSchedules = convertMapToArray<TeamSchedule>(this._schedules).map((teamSchedule: TeamSchedule )=> new MLBTeamSchedule(teamSchedule));
-    return convertArrayToMap<MLBTeamSchedule>(mlbTeamSchedules, 'team');
   }
 
   getPitcherNRFIRecord(rosterPlayer: RosterPlayer) {
@@ -102,6 +104,10 @@ export class StateService {
 
   getSchedule(team: string): TeamSchedule {
     return this._schedules.get(team)!;
+  }
+
+  getTeamAnalytics(teamName: string): TeamAnalytics {
+    return this._analytics.get(teamName)!;
   }
 }
 

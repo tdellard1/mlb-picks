@@ -33,3 +33,8 @@ mat-card {
 .selected {
   background-color: gray;
 }
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

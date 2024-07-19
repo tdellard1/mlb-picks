@@ -1,7 +1,7 @@
-import {ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {Game} from "../../../common/model/game.interface";
-import {Team, Teams} from "../../../common/model/team.interface";
+import {Team} from "../../../common/model/team.interface";
 import {Analytics, TeamAnalytics} from "../../../common/model/team-schedule.interface";
 import {MatIcon} from "@angular/material/icon";
 import {MatFabButton} from "@angular/material/button";
@@ -19,9 +19,7 @@ import {
   MatExpansionPanelHeader,
   MatExpansionPanelTitle
 } from "@angular/material/expansion";
-import {MLBTeamSchedule} from "../../data-access/mlb-team-schedule.model";
 import {NrfiPanelComponent} from "../../ui/nrfi-panel/nrfi-panel.component";
-import {MLBGame} from "../../data-access/mlb-game.model";
 import {GameSelectorService} from "../../data-access/services/game-selector.service";
 import {StateService} from "../../../common/services/state.service";
 import {BaseGameSelectorComponent} from "../../../common/components/base-game-selector/base-game-selector.component";
@@ -46,7 +44,6 @@ import {BaseGameSelectorComponent} from "../../../common/components/base-game-se
   encapsulation: ViewEncapsulation.None
 })
 export class AnalysisViewComponent extends BaseGameSelectorComponent implements OnInit {
-  private teamScheduleMap: Map<string, MLBTeamSchedule> = new Map();
   private teamMap: Map<string, Team> = new Map();
 
   charts: ChartData[] = [];
@@ -59,7 +56,6 @@ export class AnalysisViewComponent extends BaseGameSelectorComponent implements 
 
   ngOnInit(): void {
     this.teamMap = this.stateService.allTeams;
-    this.teamScheduleMap = this.stateService.allMLBSchedules;
 
     this.subscriptions.push(
       this.game$.subscribe((game: Game) => {
@@ -80,20 +76,13 @@ export class AnalysisViewComponent extends BaseGameSelectorComponent implements 
   }
 
   makeEverythingWork(away: Team, home: Team) {
-    const homeTeamSchedule = this.stateService.getSchedule(home.teamAbv);
-    const awayTeamSchedule = this.stateService.getSchedule(away.teamAbv);
-
-    const homeTeamMLBSchedule: MLBTeamSchedule = new MLBTeamSchedule(homeTeamSchedule);
-    const awayTeamMLBSchedule: MLBTeamSchedule = new MLBTeamSchedule(awayTeamSchedule);
-
-    const homeAnalytics: TeamAnalytics = new TeamAnalytics(home.teamAbv, homeTeamMLBSchedule.analysisSchedule);
-    const awayAnalytics: TeamAnalytics = new TeamAnalytics(away.teamAbv, awayTeamMLBSchedule.analysisSchedule);
+    const homeAnalytics: TeamAnalytics = this.stateService.getTeamAnalytics(home.teamAbv);
+    const awayAnalytics: TeamAnalytics = this.stateService.getTeamAnalytics(away.teamAbv);
     const homeTeam: string = home.teamName;
     const awayTeam: string = away.teamName;
 
     const battingAveragesHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.battingAverageForGame!)!;
     const battingAveragesAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.battingAverageForGame!)!;
-    console.log(battingAveragesHome, battingAveragesAway);
     this.charts.push(this.createChart('Batting Average',
       `${homeTeam} - Batting Averages`,
       battingAveragesHome,
@@ -136,8 +125,8 @@ export class AnalysisViewComponent extends BaseGameSelectorComponent implements 
       onBasePlusSluggingAway));
 
 
-    const hittingStrikeOutHome: number[] = this.teamScheduleMap.get(homeAnalytics.team)?.analysisSchedule.map((game: MLBGame) => game.saberMetrics.hittingStrikeouts!)!;
-    const hittingStrikeOutAway: number[] = this.teamScheduleMap.get(awayAnalytics.team)?.analysisSchedule.map((game: MLBGame) => game.saberMetrics.hittingStrikeouts!)!;
+    const hittingStrikeOutHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.hittingStrikeouts!)!;
+    const hittingStrikeOutAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.hittingStrikeouts!)!;
     this.charts.push(this.createChart(
       'Hitting Strikeouts',
       `${homeTeam} - Hitting Strikeouts`,
@@ -146,6 +135,8 @@ export class AnalysisViewComponent extends BaseGameSelectorComponent implements 
       hittingStrikeOutAway));
   }
 
+
+  /** TODO: Iterate through all Keys of analytics and create chart for all */
   private createChart(nameOfChart: string, homeTeamLabel: string, homeTeamData: any[], awayTeamLabel: string, awayTeamData: any[]) {
     return {
       nameOfChart,

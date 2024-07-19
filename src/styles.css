@@ -40,5 +40,9 @@
   padding-left: 10px;
 }
 
+.margin-bottom-10 {
+  margin-bottom: 10px;
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Tangerine", sans-serif; font-weight: 300 }
