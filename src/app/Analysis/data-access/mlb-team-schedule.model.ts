@@ -62,7 +62,7 @@ export class MLBTeamSchedule {
     }
 
     if (limit) {
-      games = games.slice(0, limit);
+      games = games.sort((a, b) => Number(b.gameTime_epoch) - Number(a.gameTime_epoch)).slice(0, limit).reverse();
     }
 
     return games;

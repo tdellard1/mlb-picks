@@ -81,6 +81,6 @@ export class SlateFormComponent implements OnChanges, OnDestroy {
   }
 
   isSelectedExpert(expert: AbstractControl<any>): boolean {
-    return expert.value.name !== this.mobileExpertSelected;
+    return this.mobile && expert.value.name !== this.mobileExpertSelected;
   }
 }

@@ -24,7 +24,7 @@ export const dailyScheduleResolver: ResolveFn<Game[]> = async (): Promise<Game[]
     logger.info('Schedules don\'t match, retrieving starting pitchers!');
     const startingPitchers: string[] = getStartingPitchers(latestDailySchedule);
 
-    if (stateService.containsPlayers(startingPitchers)) {
+    if (!stateService.containsEveryPlayers(startingPitchers)) {
       const requestPlayers: string[] = stateService.filterNewPlayers(startingPitchers);
       logger.info(`Retrieving the following players: ${requestPlayers}`);
       const playerInfos$: Observable<RosterPlayer[]> = of(requestPlayers).pipe(
@@ -32,9 +32,9 @@ export const dailyScheduleResolver: ResolveFn<Game[]> = async (): Promise<Game[]
         mergeMap((playerID: string) => tank01ApiService.getPlayerInfo(playerID)),
         toArray());
 
-    const playersToAdd: RosterPlayer[] = await lastValueFrom(playerInfos$);
+      const playersToAdd: RosterPlayer[] = await lastValueFrom(playerInfos$);
 
-    await updateStateService.addPlayerToRosters(playersToAdd);
+      await updateStateService.addPlayerToRosters(playersToAdd);
     }
   }
 

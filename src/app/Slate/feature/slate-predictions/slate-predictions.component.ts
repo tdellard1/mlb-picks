@@ -142,7 +142,7 @@ export class SlatePredictionsComponent implements OnInit {
   protected getStyles() {
     return {
       display: 'grid',
-      'grid-template-columns': '200px',
+      // 'grid-template-columns': '200px',
       'grid-template-rows': `repeat(${this.games.length + 1}, 40px)`,
       'grid-auto-flow': `column`,
       'grid-gap': '10px',

@@ -76,7 +76,7 @@ export class StateService {
     }
   }
 
-  containsPlayers(players: string[]) {
+  containsEveryPlayers(players: string[]) {
     const allPlayers: RosterPlayer[] = convertMapToArray<RosterPlayer>(this._rosterPlayers);
 
     return players.every((playerID: string): boolean =>

@@ -30,7 +30,8 @@
       [games]="(games$ | async)!"
       [getTeamName]="showTeamCity"
       [teams]="teams"></slate-details>
-    <slate-form [teams]="teams"
+    <slate-form [mobile]="false"
+                [teams]="teams"
                 [games]="(games$ | async)!"
                 [expertsData]="(experts$ | async)!"
                 (updateSlate)="updateSlateFromSelection($event)"

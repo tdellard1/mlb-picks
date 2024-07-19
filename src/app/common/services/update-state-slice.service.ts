@@ -22,11 +22,15 @@ export class UpdateStateService {
     this.backendApiService.updateRosters(allRosters).subscribe(console.log)
   }
 
-  getYesterdaysBoxScores(previousBoxScores: BoxScore[]): Observable<BoxScore[]> {
+  getYesterdaysBoxScores(): Observable<BoxScore[]> {
     const today = new Date();
     const yesterday = new Date();
     yesterday.setDate(today.getDate() - 1)
     const yyyyMMdd = this.datePipe.transform(yesterday, 'yyyyMMdd')!
+    return this.getBoxScoresForDate(yyyyMMdd);
+  }
+
+  getBoxScoresForDate(yyyyMMdd: string): Observable<BoxScore[]> {
     return this.tank01ApiService.getDailySchedule(yyyyMMdd)
       .pipe(
         map((games: Game[]) => games.map(({gameID}: Game) => gameID)),

@@ -46,3 +46,8 @@ module.exports.length = async (key) => {
   const client = await redisClient;
   return client.lLen(key);
 }
+
+module.exports.delete = async (key) => {
+  const client = await redisClient;
+  return client.del(key);
+}

@@ -32,6 +32,7 @@ import {BreakpointObserver, Breakpoints, BreakpointState} from "@angular/cdk/lay
 import {map} from "rxjs/operators";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
+import {TeamSchedule} from "../../../common/model/team-schedule.interface";
 
 @Component({
   selector: 'slate-container',
@@ -120,13 +121,16 @@ export class SlateContainerComponent extends SubscriptionHolder implements OnIni
   protected chooseDate(yyyyMMdd: string) {
     this.logger.info(`Chosen Date: ${yyyyMMdd}`);
     this.selectedDate = yyyyMMdd;
-    if (this.selectedDate === this.tomorrow) {
-      // Replace this and Tomorrow with requesting a new daily schedule from tank01
-    } else if (this.selectedDate === this.today) {
+    if (this.selectedDate === this.today) {
       this.gamesSubject.next(this.gamesToday);
     } else {
       const gamesForDate: Game[] = Games.getGamesWithBoxScoresForDate(
         this.stateService.getScheduleAsArray, this.selectedDate);
+      console.log('gamesForDate: ',gamesForDate);
+      console.log('getScheduleAsArray: ',this.stateService.getScheduleAsArray.slice()
+        .map(({schedule}: TeamSchedule) => schedule)
+        .flat()
+        .filter(({gameDate}: Game) => gameDate === yyyyMMdd));
       this.gamesSubject.next(gamesForDate);
     }
 
@@ -199,7 +203,7 @@ export class SlateContainerComponent extends SubscriptionHolder implements OnIni
 
   scrollToDate(fromAfterViewInit: boolean = false) {
     if (fromAfterViewInit) {
-      this.dateSelectorContainer.nativeElement.scrollLeft = this.dateSelectorContainer.nativeElement.scrollWidth;
+      // this.dateSelectorContainer.nativeElement.scrollLeft = this.dateSelectorContainer.nativeElement.scrollWidth;
     }
   }
 

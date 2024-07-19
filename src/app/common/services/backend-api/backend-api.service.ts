@@ -66,7 +66,27 @@ export class BackendApiService {
     return this.apiService.get(this.serverUrl + `api/game/${gameId}`);
   }
 
+  // ---------------------------------------------------------------
+  // --------------------------- Counts ----------------------------
+  // ---------------------------------------------------------------
+
   getBoxScoresCount(): Observable<{ count: number }> {
     return this.apiService.get<{ count: number }>(this.serverUrl + 'api/boxScores/count');
+  }
+
+  getTeamsCount(): Observable<{ count: number }> {
+    return this.apiService.get<{ count: number }>(this.serverUrl + 'api/teams/count');
+  }
+
+  getPlayerCount(): Observable<{ count: number }> {
+    return this.apiService.get<{ count: number }>(this.serverUrl + 'api/players/count');
+  }
+
+  getRosterPlayersCount(): Observable<{ count: number }> {
+    return this.apiService.get<{ count: number }>(this.serverUrl + 'api/rosters/count');
+  }
+
+  getSchedulesCount(): Observable<{ count: number }> {
+    return this.apiService.get<{ count: number }>(this.serverUrl + 'api/schedules/count');
   }
 }
