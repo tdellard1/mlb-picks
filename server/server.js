@@ -1,5 +1,5 @@
 const apiRouter = require("./routes");
-const pathToClientApp = '../dist/mlb-picks/browser';
+const pathToClientApp = '../../dist/mlb-picks/browser';
 
 
 (async () => {
