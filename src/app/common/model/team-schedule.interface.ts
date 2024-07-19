@@ -27,7 +27,6 @@ export class TeamAnalytics {
     for (let i = 1; i < last15GamesBeforeToday.length + 1; i++) {
       const boxScores: BoxScore[] = last15GamesBeforeToday.map(gameToBoxScore);
 
-      console.log(boxScores);
       this.analytics?.push(new Analytics(team, boxScores.slice(0, i), i));
     }
 
