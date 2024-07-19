@@ -4,13 +4,14 @@ const redis = require('./redis');
 
 module.exports = async () => {
   for (const fileKey of firebaseFileKeys) {
-    const redisData = await redis.get(fileKey);
+    const redisData = await redis.has(fileKey);
 
     if (!redisData) {
       const data = await loadData(fileKey);
-      console.log('Adding data to Redis Client');
+      console.log(`Adding ${fileKey} to Redis...`);
 
-      await redis.set(fileKey, data);
+      const count = await redis.listAddAll(fileKey, data);
+      console.log(`Set ${count} ${fileKey}`);
     }
   }
 }
@@ -23,7 +24,7 @@ function loadData(keyFile) {
       fetch(url)
         .then(file => file.json())
         .then((data) => {
-          resolve(JSON.stringify(data));
+          resolve(data.map(d => JSON.stringify(d)));
         });
     });
   });

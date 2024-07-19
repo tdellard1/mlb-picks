@@ -14,6 +14,9 @@ export const dataGuard: CanActivateFn = async (): Promise<boolean> => {
   const stateService: StateService = inject(StateService);
   const backendApiService: BackendApiService = inject(BackendApiService);
 
+  const boxScoreCount: { count: number } = await firstValueFrom(backendApiService.getBoxScoresCount());
+
+
   const boxScores$: any = liveQuery<IBoxScore[]>(() => db.boxScores.toArray());
   const rosterPlayers$: any = liveQuery<RosterPlayer[]>(() => db.rosterPlayers.toArray());
   const teams$: any = liveQuery<Team[]>(() => db.teams.toArray());
@@ -68,6 +71,7 @@ export const dataGuard: CanActivateFn = async (): Promise<boolean> => {
     db.allPlayers.bulkAdd(players);
   }
 
+  console.log('count: ', boxScoreCount.count, boxScores.length);
   stateService.loadStateSlices(teamList || teams.teams, players, rosterPlayers, schedules, boxScores);
 
   return true;

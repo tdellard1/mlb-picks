@@ -1,25 +1,37 @@
 const router = require('express').Router();
 const {getStorage, ref, uploadBytes, getDownloadURL} = require("firebase/storage");
 const cache = require('../../cache/memoryCache');
+const redis = require("../../singletons/redis");
 const key = 'rosters';
 const rosterFileName = 'rosters.json';
 
 router.get('/', async (req, res) => {
-  if (cache.has(key)) {
-    console.log('Cache has rosters!');
-    res.json(cache.get(key))
-  } else {
-    console.log('Cache does NOT have rosters!');
-    const storage = getStorage();
-    const storageRef = ref(storage, rosterFileName);
-    const file = await getDownloadURL(storageRef);
+  let results;
 
-    fetch(file).then(rostersFile => rostersFile.json()).then((data) => {
-      cache.set(key, data);
-      console.log('rosters Cache set: ', cache.has(key));
-      res.json(data);
-    });
+  try {
+    const cacheResults = await redis.getList(key);
+    if (cacheResults) {
+      results = cacheResults.map(result => JSON.parse(result));
+      res.send(results);
+    } else {
+      const storage = getStorage();
+      const storageRef = ref(storage, `${key}.json`);
+      const file = await getDownloadURL(storageRef);
+
+      fetch(file).then(file => file.json()).then((data) => {
+        redis.listAddAll(data.map(d => JSON.stringify(d)));
+        res.json(data);
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(404);
   }
+});
+
+router.get('/count', async (req, res) => {
+  const count = await redis.length(key);
+  res.send({ count });
 });
 
 router.post('/', (req, res) => {

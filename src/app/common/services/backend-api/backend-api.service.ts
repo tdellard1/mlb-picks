@@ -65,4 +65,8 @@ export class BackendApiService {
   getGameAnalysis(gameId: string) {
     return this.apiService.get(this.serverUrl + `api/game/${gameId}`);
   }
+
+  getBoxScoresCount(): Observable<{ count: number }> {
+    return this.apiService.get<{ count: number }>(this.serverUrl + 'api/boxScores/count');
+  }
 }

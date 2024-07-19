@@ -1,35 +1,48 @@
+// -------------------------------------------------------------------
+// BOX SCORES
+// -------------------------------------------------------------------
+
 const router = require('express').Router();
 const {getDownloadURL, getStorage, ref, uploadBytes} = require("firebase/storage");
-const cache = require('../../cache/memoryCache');
 const key = 'boxScores';
-const boxScoresFileName = 'boxScores.json';
+const redis = require('../../singletons/redis');
 
 router.get('/', async (req, res) => {
-  if (cache.has(key)) {
-    console.log('Cache has boxScores!');
-    res.json(cache.get(key))
-  } else {
-    console.log('Cache does NOT have boxScores!');
-    const storage = getStorage();
-    const storageRef = ref(storage, boxScoresFileName);
-    const file = await getDownloadURL(storageRef);
+  let results;
 
-    fetch(file).then(boxScoresFile => boxScoresFile.json()).then((data) => {
-      cache.set(key, data);
-      console.log('boxScores Cache set: ', cache.has(key));
-      res.json(data);
-    });
+  try {
+    const cacheResults = await redis.getList(key);
+    if (cacheResults) {
+      results = cacheResults.map(result => JSON.parse(result));
+      res.send(results);
+    } else {
+      const storage = getStorage();
+      const storageRef = ref(storage, `${key}.json`);
+      const file = await getDownloadURL(storageRef);
+
+      fetch(file).then(file => file.json()).then((data) => {
+        redis.listAddAll(data.map(d => JSON.stringify(d)));
+        res.json(data);
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(404);
   }
 });
 
+router.get('/count', async (req, res) => {
+  const count = await redis.length(key);
+  res.send({ count });
+});
+
 router.post('/', (req, res) => {
-  cache.set(key, req.body);
   const storage = getStorage();
-  const storageRef = ref(storage, boxScoresFileName);
+  const storageRef = ref(storage, `${key}.json`);
 
   const jsn = JSON.stringify(req.body, null, 2);
   const blob = new Blob([jsn], {type: 'application/json'});
-  const file = new File([blob], boxScoresFileName);
+  const file = new File([blob], `${key}.json`);
 
   uploadBytes(storageRef, file).then(() => {
     console.log('Uploaded Box Scores To Firebase!');

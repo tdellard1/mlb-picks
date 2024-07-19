@@ -1,28 +1,39 @@
+// -------------------------------------------------------------------
+// PLAYERS
+// -------------------------------------------------------------------
+
 const router = require('express').Router();
-const playersURL = './server/assets/players.json';
-const players = require("../../assets/players.json");
-const {default: axios} = require("axios");
-const cache = require("../../cache/memoryCache");
 const {getStorage, ref, getDownloadURL} = require("firebase/storage");
+const redis = require("../../singletons/redis");
 const key = 'players';
-const playersFileName = 'players.json';
 
 router.get('/', async (req, res) => {
-  if (cache.has(key)) {
-    console.log('Cache has players!');
-    res.json(cache.get(key))
-  } else {
-    console.log('Cache does NOT have players!');
-    const storage = getStorage();
-    const storageRef = ref(storage, playersFileName);
-    const file = await getDownloadURL(storageRef);
+  let results;
 
-    fetch(file).then(playersFile => playersFile.json()).then((data) => {
-      cache.set(key, data);
-      console.log('players Cache set: ', cache.has(key));
-      res.json(data);
-    });
+  try {
+    const cacheResults = await redis.getList(key);
+    if (cacheResults) {
+      results = cacheResults.map(result => JSON.parse(result));
+      res.send(results);
+    } else {
+      const storage = getStorage();
+      const storageRef = ref(storage, `${key}.json`);
+      const file = await getDownloadURL(storageRef);
+
+      fetch(file).then(file => file.json()).then((data) => {
+        redis.listAddAll(data.map(d => JSON.stringify(d)));
+        res.json(data);
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(404);
   }
+});
+
+router.get('/count', async (req, res) => {
+  const count = await redis.length(key);
+  res.send({ count });
 });
 
 module.exports = router;
