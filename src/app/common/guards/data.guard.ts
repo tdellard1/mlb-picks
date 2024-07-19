@@ -19,8 +19,6 @@ export const dataGuard: CanActivateFn = async (): Promise<boolean> => {
   const updateStateService: UpdateStateService = inject(UpdateStateService);
 
 
-
-
   const boxScoreCountFromRedis: { count: number } = await firstValueFrom(backendApiService.getBoxScoresCount());
   const teamsCountFromRedis: { count: number } = await firstValueFrom(backendApiService.getTeamsCount());
   const rosterPlayersCountFromRedis: { count: number } = await firstValueFrom(backendApiService.getRosterPlayersCount());
@@ -94,21 +92,21 @@ export const dataGuard: CanActivateFn = async (): Promise<boolean> => {
 
     const today = new Date().setHours(0, 0, 0, 0);
 
-    if (lastUpdated < today) {
-      updateStateService.getBoxScoresForDate('20240714').pipe(
-        map((boxScores: BoxScore[]) => {
-          boxScores.push(...previousBoxScores);
-          return boxScores;
-        }),
-        switchMap((boxScores: BoxScore[]) => {
-          console.log(boxScores.length, previousBoxScores.length);
-          return backendApiService.updateBoxScores(boxScores);
-        })
-      )
-        .subscribe((value) => {
-          console.log('updated boxScores', value);
-        });
-    }
+    // if (lastUpdated < today) {
+    //   updateStateService.getBoxScoresForDate('20240714').pipe(
+    //     map((boxScores: BoxScore[]) => {
+    //       boxScores.push(...previousBoxScores);
+    //       return boxScores;
+    //     }),
+    //     switchMap((boxScores: BoxScore[]) => {
+    //       console.log(boxScores.length, previousBoxScores.length);
+    //       return backendApiService.updateBoxScores(boxScores);
+    //     })
+    //   )
+    //     .subscribe((value) => {
+    //       console.log('updated boxScores', value);
+    //     });
+    // }
   }
 };
 
