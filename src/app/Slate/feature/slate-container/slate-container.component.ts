@@ -33,6 +33,7 @@ import {map} from "rxjs/operators";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 import {TeamSchedule} from "../../../common/model/team-schedule.interface";
+import {Tank01Date} from "../../../common/utils/date.utils";
 
 @Component({
   selector: 'slate-container',
@@ -96,7 +97,13 @@ export class SlateContainerComponent extends SubscriptionHolder implements OnIni
   }
 
   setDatesAndGetMostRecent(): string {
-    this.dates = this.slates.map(({date}: Slate) => date);
+    this.dates = this.slates.map(({date}: Slate) => date)
+      .sort((a: string, b: string) => {
+        const aDate = new Tank01Date(a);
+        const bDate = new Tank01Date(b);
+
+        return aDate._date.getTime() - bDate._date.getTime();
+      });
 
     const today: string = this.today;
     if (!this.dates.includes(today)) {
