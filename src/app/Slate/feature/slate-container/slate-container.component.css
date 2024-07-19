@@ -42,7 +42,6 @@
   width: min-content;
   overflow-y: auto;
   min-width: fit-content;
-  height: 756px
 }
 
 .game-details:nth-child(odd) {
