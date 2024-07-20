@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "test-change": "npm run clean && tsc && node dist/out-tsc/server.js",
     "start": "node src/server/server.js",
+    "clean": "rimraf dist",
     "build": "ng build --configuration development --delete-output-path true",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
@@ -53,5 +55,6 @@
   "engines": {
     "node": "20.13.1",
     "npm": "10.5.2"
-  }
+  },
+  "type": "module"
 }

@@ -1,7 +1,6 @@
 const apiRouter = require("./routes");
 const pathToClientApp = '../../../dist/mlb-picks/browser';
 
-
 (async () => {
   const client = await require('./singletons/redis').client();
   await require('./singletons/loadData')();
