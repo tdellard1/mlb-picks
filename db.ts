@@ -1,8 +1,8 @@
 // db.ts
 import Dexie, { Table } from 'dexie';
-import {RosterPlayer} from "./src/app/common/model/roster.interface";
-import {Team} from "./src/app/common/model/team.interface";
-import {TeamSchedule} from "./src/app/common/model/team-schedule.interface";
+import {RosterPlayer} from "./src/client/common/model/roster.interface";
+import {Team} from "./src/client/common/model/team.interface";
+import {TeamSchedule} from "./src/client/common/model/team-schedule.interface";
 
 export class AppDB extends Dexie {
   boxScores: Table<IBoxScore, string>;
