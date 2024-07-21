@@ -3,14 +3,15 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "test-change": "npm run clean && tsc && node dist/out-tsc/server.js",
-    "start": "node src/server/server.js",
+    "tsc": "tsc",
+    "test-change": "npm run clean && ng build --configuration development && tsc && node dist/out-tsc/server.js",
+    "start": "node dist/out-tsc/server.js",
     "clean": "rimraf dist",
     "build": "ng build --configuration development --delete-output-path true",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "client": "ng serve --hmr",
-    "heroku-postbuild": "ng build --configuration production"
+    "heroku-postbuild": "ng build --configuration production && npm run tsc"
   },
   "private": true,
   "dependencies": {
