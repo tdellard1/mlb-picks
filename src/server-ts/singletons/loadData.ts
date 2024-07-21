@@ -18,7 +18,7 @@ const loadData = async () => {
   }
 }
 
-function load(keyFile: string): Promise<any> {
+export function load(keyFile: string): Promise<any> {
   return new Promise((resolve) => {
     const storageRef = ref(storage, `${keyFile}.json`);
     getDownloadURL(storageRef).then((url) => {

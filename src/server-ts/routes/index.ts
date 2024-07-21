@@ -1,20 +1,55 @@
-import express  from "express";
-import teams from "./teams/index.js";
-import slates from "./slates/index.js";
-import players from "./players/index.js";
-import boxScores from "./boxScores/index.js";
-import rosters from "./rosters/index.js";
-import schedules from "./schedules/index.js";
-import game from "./game/index.js";
+import express, {Router} from "express";
+import {Request, Response} from "express-serve-static-core";
+import {getList, length, listAddAll, remove} from "../singletons/redis.js";
+import {getDownloadURL, getStorage, ref} from "firebase/storage";
+import {uploadFile} from "../singletons/firebase.js";
 
-const router = express.Router();
+const router: Router = express.Router();
 
-router.use("/teams", teams);
-router.use("/slates", slates);
-router.use("/players", players);
-router.use("/boxScores", boxScores);
-router.use("/rosters", rosters);
-router.use("/schedules", schedules);
-router.use("/game", game);
+router.use("/domain", async (request: Request, response: Response): Promise<any> => {
+  let results;
+  const key: string = request.query['type'] as string;
+
+  try {
+    const cacheResults: any = await getList(key);
+    if (cacheResults) {
+      results = cacheResults.map((result: string) => JSON.parse(result));
+      response.send(results);
+    } else {
+      const storage = getStorage();
+      const storageRef = ref(storage, `${key}.json`);
+      const file = await getDownloadURL(storageRef);
+
+      fetch(file).then(file => file.json()).then((data) => {
+        listAddAll(key, data.map((d: any) => JSON.stringify(d)));
+        response.json(data);
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    response.status(404);
+  }
+});
+
+router.get('/domain/count', async (request: Request, response: Response): Promise<void> => {
+  const key: string = request.query['type'] as string;
+  const count: number = await length(key);
+  response.send({ count });
+});
+
+router.post('/domain', async (request: Request, response: Response) => {
+  const key: string = request.query['type'] as string;
+  const data: any[] = request.body;
+
+  const {uploaded, reason}: { uploaded: boolean, reason: string } = await uploadFile(key, data);
+
+  if (uploaded) {
+    await remove(key);
+    const added: number = await listAddAll(key, data.map((d: any[]) => JSON.stringify(d)));
+    response.json({message: "Uploaded file successfully", added});
+  } else {
+    response.json({message: "Uploaded failed to upload!", reason});
+  }
+});
 
 export default router;

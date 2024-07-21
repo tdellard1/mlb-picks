@@ -7,6 +7,8 @@ import {Slates} from "../../../Slate/data-access/slate.model";
 import {Team, Teams} from "../../model/team.interface";
 import {BoxScore} from "../../model/box-score.interface";
 import {RosterPlayer} from "../../model/roster.interface";
+import {HttpParams} from "@angular/common/http";
+import {HttpOptions} from "../../model/http-options.model";
 
 @Injectable({
   providedIn: 'root'
@@ -15,55 +17,69 @@ export class BackendApiService {
   serverUrl: string = isDevMode() ? 'http://localhost:3000/' : 'https://mlb-picks-9d2945b4c1f1.herokuapp.com/';
   constructor(private apiService: ApiService) {}
 
-  getSchedules(): Observable<TeamSchedule[]> {
-    return this.apiService.get<TeamSchedule[]>(this.serverUrl + 'api/schedules');
-  }
-
-  getRosters(): Observable<RosterPlayer[]> {
-    return this.apiService.get<RosterPlayer[]>(this.serverUrl + 'api/rosters');
-  }
-
-  getBoxScores(): Observable<BoxScore[]> {
-    return this.apiService.get<BoxScore[]>(this.serverUrl + 'api/boxScores');
-  }
-
-  getPlayers(): Observable<RosterPlayer[]> {
-    return this.apiService.get<RosterPlayer[]>(this.serverUrl + 'api/players');
-  }
-
-  getTeamsArray(): Observable<Team[]> {
-    return this.apiService.get<Team[]>(this.serverUrl + 'api/teams');
-  }
-
-  getTeams(): Observable<Teams> {
-    return this.apiService.get<Team[]>(this.serverUrl + 'api/teams')
-      .pipe(map((teams: Team[]) => new Teams(teams)));
-  }
-
-  getSlates(): Observable<Slates> {
-    return this.apiService.get<Slates>(this.serverUrl + 'api/slates');
-  }
-
   addSchedules(schedules: TeamSchedule[]): Observable<any> {
     return this.apiService
       .post(this.serverUrl + 'api/schedules', schedules)
       .pipe(first());
   }
 
-  updateRosters(rosters: any []) {
-    return this.apiService.post(this.serverUrl + 'api/rosters', rosters);
+  getGameAnalysis(gameId: string) {
+    const options: HttpOptions = { params: {type: 'teams'}};
+    return this.apiService.get(this.serverUrl + `api/game/${gameId}`);
+  }
+
+  // ---------------------------------------------------------------
+  // --------------------- Post/Update Domain ----------------------
+  // ---------------------------------------------------------------
+
+  updateRosters(rosters: RosterPlayer[]) {
+    const options: HttpOptions = { params: {type: 'rosters'}};
+    return this.apiService.post<RosterPlayer[]>(this.serverUrl + 'api/domain', rosters, options);
   }
 
   updateBoxScores(boxScore: BoxScore[]) {
-    return this.apiService.post<BoxScore[]>(this.serverUrl + 'api/boxScores', boxScore);
+    const options: HttpOptions = { params: {type: 'boxScores'}};
+    return this.apiService.post<BoxScore[]>(this.serverUrl + 'api/domain', boxScore, options);
   }
 
   updateSlates(slates: Slates) {
-    return this.apiService.post(this.serverUrl + 'api/slates', slates).pipe(first());
+    const options: HttpOptions = { params: {type: 'slates'}};
+    return this.apiService.post<Slates>(this.serverUrl + 'api/domain', slates, options).pipe(first());
   }
 
-  getGameAnalysis(gameId: string) {
-    return this.apiService.get(this.serverUrl + `api/game/${gameId}`);
+  // ---------------------------------------------------------------
+  // ------------------------- Get Domain --------------------------
+  // ---------------------------------------------------------------
+
+  getTeams(): Observable<Teams> {
+    const options: HttpOptions = { params: {type: 'teams'}};
+    return this.apiService.get<Team[]>(this.serverUrl + 'api/domain', options)
+      .pipe(map((teams: Team[]) => new Teams(teams)));
+  }
+
+  getSlates(): Observable<Slates> {
+    const options: HttpOptions = { params: {type: 'slates'}};
+    return this.apiService.get<Slates>(this.serverUrl + 'api/domain', options);
+  }
+
+  getPlayers(): Observable<RosterPlayer[]> {
+    const options: HttpOptions = { params: {type: 'players'}};
+    return this.apiService.get<RosterPlayer[]>(this.serverUrl + 'api/domain', options);
+  }
+
+  getSchedules(): Observable<TeamSchedule[]> {
+    const options: HttpOptions = { params: {type: 'schedules'}};
+    return this.apiService.get<TeamSchedule[]>(this.serverUrl + 'api/domain', options);
+  }
+
+  getRosters(): Observable<RosterPlayer[]> {
+    const options: HttpOptions = { params: {type: 'rosters'}};
+    return this.apiService.get<RosterPlayer[]>(this.serverUrl + 'api/domain', options);
+  }
+
+  getBoxScores(): Observable<BoxScore[]> {
+    const options: HttpOptions = { params: {type: 'boxScores'}};
+    return this.apiService.get<BoxScore[]>(this.serverUrl + 'api/domain', options);
   }
 
   // ---------------------------------------------------------------
@@ -71,22 +87,27 @@ export class BackendApiService {
   // ---------------------------------------------------------------
 
   getBoxScoresCount(): Observable<{ count: number }> {
-    return this.apiService.get<{ count: number }>(this.serverUrl + 'api/boxScores/count');
+    const options: HttpOptions = { params: {type: 'boxScores'}};
+    return this.apiService.get<{ count: number }>(this.serverUrl + 'api/domain/count', options);
   }
 
   getTeamsCount(): Observable<{ count: number }> {
-    return this.apiService.get<{ count: number }>(this.serverUrl + 'api/teams/count');
+    const options: HttpOptions = { params: {type: 'teams'}};
+    return this.apiService.get<{ count: number }>(this.serverUrl + 'api/domain/count', options);
   }
 
   getPlayerCount(): Observable<{ count: number }> {
-    return this.apiService.get<{ count: number }>(this.serverUrl + 'api/players/count');
+    const options: HttpOptions = { params: {type: 'players'}};
+    return this.apiService.get<{ count: number }>(this.serverUrl + 'api/domain/count', options);
   }
 
   getRosterPlayersCount(): Observable<{ count: number }> {
-    return this.apiService.get<{ count: number }>(this.serverUrl + 'api/rosters/count');
+    const options: HttpOptions = { params: {type: 'rosters'}};
+    return this.apiService.get<{ count: number }>(this.serverUrl + 'api/domain/count', options);
   }
 
   getSchedulesCount(): Observable<{ count: number }> {
-    return this.apiService.get<{ count: number }>(this.serverUrl + 'api/schedules/count');
+    const options: HttpOptions = { params: {type: 'schedules'}};
+    return this.apiService.get<{ count: number }>(this.serverUrl + 'api/domain/count', options);
   }
 }

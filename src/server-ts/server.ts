@@ -1,13 +1,19 @@
 import apiRouter from './routes/index.js';
-const pathToClientApp: string = '../../../dist/mlb-picks/browser';
+const pathToClientApp: string = '../../../../dist/mlb-picks/browser';
 import {client} from './singletons/redis.js'
 import {app} from './singletons/express-app.js';
 import loadData from './singletons/loadData.js';
+import schedule, {Job} from 'node-schedule';
+import { dailyUpdate } from './functions/dailyUpdate.js';
 
 (async () => {
   const redisClient = await client();
   await loadData();
   await app(pathToClientApp, apiRouter);
+
+  const job: Job = schedule.scheduleJob('0 0 * * *', async () => {
+    await dailyUpdate();
+  });
   process.on('SIGINT', async () => {
     if (redisClient.isOpen) {
       await redisClient.quit();

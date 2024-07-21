@@ -10,8 +10,6 @@ import {
   addPlayersToTeamRoster, addTeamsAndBoxScoresToSchedule,
   createRosterPlayerMap, removePostponedGames
 } from "../utils/state-builder.utils";
-import {Game} from "../model/game.interface";
-import {getGamesBeforeToday} from "../utils/schedule.utils";
 
 @Injectable({
   providedIn: 'root'

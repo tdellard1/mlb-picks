@@ -21,7 +21,7 @@ export declare type  Client = RedisClientType<RedisDefaultModules & RedisModules
 
 export const client = async (): Promise<Client> => redisClient;
 
-export const getList = async (key: string): Promise<ConvertArgumentType<any, number>> => {
+export const getList = async (key: string): Promise<ConvertArgumentType<any, any[]>> => {
   const client: Client = await redisClient;
   return client.lRange(key, 0, -1);
 }
