@@ -46,7 +46,7 @@ export class AppContainerComponent implements OnInit {
       localStorage.setItem('daily-schedule', JSON.stringify(dailySchedule));
     }
 
-    localStorage.setItem('lastUpdated', JSON.stringify(new Date().setHours(0, 0, 0, 0)));
+    // localStorage.setItem('lastUpdated', JSON.stringify(new Date().setHours(0, 0, 0, 0)));
   }
 
   ngOnInit() {

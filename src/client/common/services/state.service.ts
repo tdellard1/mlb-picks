@@ -13,17 +13,16 @@ import {
 import {db, IBoxScore} from "../../../../db";
 import {combineLatest, from, Observable} from "rxjs";
 import {liveQuery} from "dexie";
-import {Player} from "../model/players.interface";
 
 @Injectable({
   providedIn: 'root'
 })
 export class StateService {
-  boxScoresSource$: Observable<IBoxScore[]> = from(liveQuery<IBoxScore[]>(() => db.boxScores.toArray()));
   teamsSource$: Observable<Team[]> = from(liveQuery<Team[]>(() => db.teams.toArray()));
+  boxScoresSource$: Observable<IBoxScore[]> = from(liveQuery<IBoxScore[]>(() => db.boxScores.toArray()));
   schedulesSource$: Observable<TeamSchedule[]> = from(liveQuery<TeamSchedule[]>(() => db.schedules.toArray()));
-  rosterPlayersSource$: Observable<RosterPlayer[]> = from(liveQuery<RosterPlayer[]>(() => db.rosterPlayers.toArray()));
   allPlayersSource$: Observable<RosterPlayer[]> = from(liveQuery<RosterPlayer[]>(() => db.allPlayers.toArray()));
+  rosterPlayersSource$: Observable<RosterPlayer[]> = from(liveQuery<RosterPlayer[]>(() => db.rosterPlayers.toArray()));
 
   private readonly GAME_ID: string = 'gameID';
   private readonly PLAYER_ID: string = 'playerID';
@@ -31,9 +30,8 @@ export class StateService {
   constructor() {
     combineLatest([this.boxScoresSource$, this.teamsSource$, this.schedulesSource$, this.rosterPlayersSource$, this.allPlayersSource$])
       .subscribe(([boxScores, teams, schedules, rosterPlayers, allPlayers]:
-                    [BoxScore[], Team[], TeamSchedule[], RosterPlayer[], RosterPlayer[]]) => {
-        this.loadStateSlices(teams, allPlayers, rosterPlayers, schedules, boxScores);
-      });
+                    [BoxScore[], Team[], TeamSchedule[], RosterPlayer[], RosterPlayer[]]) =>
+        this.loadStateSlices(teams, allPlayers, rosterPlayers, schedules, boxScores));
   }
 
   private _boxScores: Map<string, BoxScore> = new Map();
@@ -84,10 +82,6 @@ export class StateService {
     return this._teams;
   }
 
-  get allSchedules(): Map<string, TeamSchedule> {
-    return this._schedules;
-  }
-
   getPitcherNRFIRecord(rosterPlayer: RosterPlayer) {
     return StateUtils.getNoRunsFirstInningRecord(this._boxScores, rosterPlayer);
   }
@@ -127,10 +121,6 @@ export class StateService {
 
   get getScheduleAsArray(): TeamSchedule[] {
     return convertMapToArray(this._schedules);
-  }
-
-  getSchedule(team: string): TeamSchedule {
-    return this._schedules.get(team)!;
   }
 
   getTeamAnalytics(teamName: string): TeamAnalytics {

@@ -1,7 +1,4 @@
 import axios, {AxiosInstance, AxiosResponse} from "axios";
-import {Team} from "../../client/common/model/team.interface";
-import {TeamSchedule} from "../../client/common/model/team-schedule.interface";
-import {BoxScore} from "../../client/common/model/box-score.interface";
 
 const request: AxiosInstance   = axios.create({
   baseURL: 'https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com',
@@ -18,14 +15,14 @@ export function getDailySchedule<T>(gameDate: string): Promise<AxiosResponse<T>>
   return request.get<T>('/getMLBGamesForDate', {params: {gameDate}});
 }
 
-export function getTeams(teamStats: boolean = true, topPerformers: boolean = true): Promise<AxiosResponse<Team[]>> {
-  return request.get<Team[]>('/getMLBTeams', {params: {teamStats, topPerformers}});
+export function getTeams<T>(teamStats: boolean = true, topPerformers: boolean = true): Promise<AxiosResponse<T>> {
+  return request.get<T>('/getMLBTeams', {params: {teamStats, topPerformers}});
 }
 
-export function getTeamSchedule(teamAbv: string, season: string = '2024'): Promise<AxiosResponse<TeamSchedule>> {
-  return request.get<TeamSchedule>('/getMLBTeamSchedule', {params: {teamAbv, season}});
+export function getTeamSchedule<T>(teamAbv: string, season: string = '2024'): Promise<AxiosResponse<T>> {
+  return request.get<T>('/getMLBTeamSchedule', {params: {teamAbv, season}});
 }
 
-export function getBoxScore(gameID: string, startingLineups: boolean = true): Promise<AxiosResponse<BoxScore>> {
-  return request.get<BoxScore>('/getMLBBoxScore', {params: {gameID, startingLineups}});
+export function getBoxScore<T>(gameID: string, startingLineups: boolean = true): Promise<AxiosResponse<T>> {
+  return request.get<T>('/getMLBBoxScore', {params: {gameID, startingLineups}});
 }

@@ -1,6 +1,7 @@
 import {createClient, RedisDefaultModules, RedisFunctions, RedisModules, RedisScripts} from 'redis';
 import {ConvertArgumentType} from "@redis/client/dist/lib/commands";
 import { RedisClientType } from '@redis/client/dist/lib/client';
+import {firebaseFileKeys} from "./loadData.js";
 
 const redisClient = createClient({
   password: 'f1DYQKVzeL9dVvFw9ULp1Sro5w59g4NK',
@@ -16,6 +17,24 @@ const redisClient = createClient({
     console.log('##########################################################\n');
   })
   .connect();
+
+const dataAboutKeys: { [key: string]: MetaData } = {};
+
+firebaseFileKeys.forEach((key: string) => {
+  console.log('iterating through firebase Keys');
+  dataAboutKeys[key] = {
+    lastUpdated: new Date().setHours(0, 0, 0, 0)
+  } as MetaData;
+});
+
+export function setLastUpdated(key: string, count: number) {
+  dataAboutKeys[key] = {
+    lastUpdated: Date.now(),
+    count
+  } as MetaData;
+}
+
+export const metaData = dataAboutKeys;
 
 export declare type  Client = RedisClientType<RedisDefaultModules & RedisModules, RedisFunctions, RedisScripts>;
 
@@ -44,4 +63,9 @@ export const length = async (key: string): Promise<ConvertArgumentType<string, n
 export const remove = async (key: string): Promise<ConvertArgumentType<string, number>> => {
   const client: Client = await redisClient;
   return client.del(key);
+}
+
+export interface MetaData {
+  lastUpdated: number;
+  count: number;
 }

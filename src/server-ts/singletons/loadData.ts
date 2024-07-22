@@ -1,8 +1,8 @@
 import {ref, getDownloadURL} from "firebase/storage";
-import {has, listAddAll} from './redis.js';
+import {has, length, listAddAll, setLastUpdated} from './redis.js';
 import { storage } from "./firebase.js"
 
-const firebaseFileKeys: string[] = ['boxScores', 'rosters', 'teams', 'slates', 'schedules', 'players'];
+export const firebaseFileKeys: string[] = ['boxScores', 'rosters', 'teams', 'slates', 'schedules', 'players'];
 
 const loadData = async () => {
   for (const fileKey of firebaseFileKeys) {
@@ -13,7 +13,11 @@ const loadData = async () => {
       console.log(`Adding ${fileKey} to Redis...`);
 
       const count: number = await listAddAll(fileKey, data);
+      setLastUpdated(fileKey, count);
       console.log(`Set ${count} ${fileKey}`);
+    } else {
+      const count: number = await length(fileKey);
+      setLastUpdated(fileKey, count);
     }
   }
 }

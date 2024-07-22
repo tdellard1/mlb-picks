@@ -1,6 +1,6 @@
 import express, {Router} from "express";
 import {Request, Response} from "express-serve-static-core";
-import {getList, length, listAddAll, remove} from "../singletons/redis.js";
+import {getList, length, listAddAll, remove, metaData} from "../singletons/redis.js";
 import {getDownloadURL, getStorage, ref} from "firebase/storage";
 import {uploadFile} from "../singletons/firebase.js";
 
@@ -31,10 +31,8 @@ router.use("/domain", async (request: Request, response: Response): Promise<any>
   }
 });
 
-router.get('/domain/count', async (request: Request, response: Response): Promise<void> => {
-  const key: string = request.query['type'] as string;
-  const count: number = await length(key);
-  response.send({ count });
+router.get('/metaData', async (request: Request, response: Response): Promise<void> => {
+  response.send({metaData});
 });
 
 router.post('/domain', async (request: Request, response: Response) => {

@@ -10,6 +10,7 @@ import {RosterPlayer} from "../../model/roster.interface";
 import {HttpParams} from "@angular/common/http";
 import {HttpOptions} from "../../model/http-options.model";
 import {Count} from "../../guards/data.guard";
+import {MetaData} from "../../../../server-ts/singletons/redis";
 
 @Injectable({
   providedIn: 'root'
@@ -89,31 +90,11 @@ export class BackendApiService {
   }
 
   // ---------------------------------------------------------------
-  // --------------------------- Counts ----------------------------
+  // -------------------------- Meta Data --------------------------
   // ---------------------------------------------------------------
 
-  getBoxScoresCount(): Observable<Count> {
-    const options: HttpOptions = { params: {type: 'boxScores'}};
-    return this.apiService.get<Count>(this.serverUrl + 'api/domain/count', options);
-  }
-
-  getTeamsCount(): Observable<Count> {
-    const options: HttpOptions = { params: {type: 'teams'}};
-    return this.apiService.get<Count>(this.serverUrl + 'api/domain/count', options);
-  }
-
-  getPlayerCount(): Observable<Count> {
-    const options: HttpOptions = { params: {type: 'players'}};
-    return this.apiService.get<Count>(this.serverUrl + 'api/domain/count', options);
-  }
-
-  getRosterPlayersCount(): Observable<Count> {
-    const options: HttpOptions = { params: {type: 'rosters'}};
-    return this.apiService.get<Count>(this.serverUrl + 'api/domain/count', options);
-  }
-
-  getSchedulesCount(): Observable<Count> {
-    const options: HttpOptions = { params: {type: 'schedules'}};
-    return this.apiService.get<Count>(this.serverUrl + 'api/domain/count', options);
+  getMetaData(): Observable<{ [key: string]: MetaData }> {
+    return this.apiService.get<{ metaData: { [key: string]: MetaData } }>(this.serverUrl + 'api/metaData')
+      .pipe(map(({metaData}: { metaData: { [key: string]: MetaData } }) => metaData));
   }
 }

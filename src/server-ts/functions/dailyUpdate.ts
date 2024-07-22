@@ -2,7 +2,7 @@ import {getBoxScore, getDailySchedule, getTeams, getTeamSchedule} from '../singl
 import {AxiosResponse} from "axios";
 import {uploadFile} from "../singletons/firebase.js";
 import {Team} from "../../client/common/model/team.interface";
-import {listAddAll, remove, getList} from "../singletons/redis.js";
+import {listAddAll, remove, getList, setLastUpdated} from "../singletons/redis.js";
 import {TeamSchedule} from "../../client/common/model/team-schedule.interface";
 import {UploadStatus} from "../models/upload-status.js";
 import {Game} from "../../client/common/model/game.interface";
@@ -17,6 +17,9 @@ export const dailyUpdate = async () => {
   if (uploaded) {
     await remove(teamsKey);
     const added: number = await listAddAll(teamsKey, teams.map((team: Team) => JSON.stringify(team)));
+    if (added) {
+      setLastUpdated(teamsKey, added);
+    }
   }
 
   await updateSchedules(teams);

@@ -20,23 +20,23 @@ export const dailyScheduleResolver: ResolveFn<Game[]> = async (): Promise<Game[]
 
   const scheduleChanged: boolean = compareTwoSchedules(latestDailySchedule, olderDailySchedule);
 
-  if (!scheduleChanged) {
-    logger.info('Schedules don\'t match, retrieving starting pitchers!');
-    const startingPitchers: string[] = getStartingPitchers(latestDailySchedule);
-
-    if (!stateService.containsEveryPlayers(startingPitchers)) {
-      const requestPlayers: string[] = stateService.filterNewPlayers(startingPitchers);
-      logger.info(`Retrieving the following players: ${requestPlayers}`);
-      const playerInfos$: Observable<RosterPlayer[]> = of(requestPlayers).pipe(
-        mergeAll(),
-        mergeMap((playerID: string) => tank01ApiService.getPlayerInfo(playerID)),
-        toArray());
-
-      const playersToAdd: RosterPlayer[] = await lastValueFrom(playerInfos$);
-
-      await updateStateService.addPlayerToRosters(playersToAdd);
-    }
-  }
+  // if (!scheduleChanged) {
+  //   logger.info('Schedules don\'t match, retrieving starting pitchers!');
+  //   const startingPitchers: string[] = getStartingPitchers(latestDailySchedule);
+  //
+  //   if (!stateService.containsEveryPlayers(startingPitchers)) {
+  //     const requestPlayers: string[] = stateService.filterNewPlayers(startingPitchers);
+  //     logger.info(`Retrieving the following players: ${requestPlayers}`);
+  //     const playerInfos$: Observable<RosterPlayer[]> = of(requestPlayers).pipe(
+  //       mergeAll(),
+  //       mergeMap((playerID: string) => tank01ApiService.getPlayerInfo(playerID)),
+  //       toArray());
+  //
+  //     const playersToAdd: RosterPlayer[] = await lastValueFrom(playerInfos$);
+  //
+  //     await updateStateService.addPlayerToRosters(playersToAdd);
+  //   }
+  // }
 
   return latestDailySchedule;
 };
