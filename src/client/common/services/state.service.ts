@@ -10,13 +10,31 @@ import {
   addPlayersToTeamRoster, addTeamsAndBoxScoresToSchedule,
   createRosterPlayerMap, removePostponedGames
 } from "../utils/state-builder.utils";
+import {db, IBoxScore} from "../../../../db";
+import {combineLatest, from, Observable} from "rxjs";
+import {liveQuery} from "dexie";
+import {Player} from "../model/players.interface";
 
 @Injectable({
   providedIn: 'root'
 })
 export class StateService {
+  boxScoresSource$: Observable<IBoxScore[]> = from(liveQuery<IBoxScore[]>(() => db.boxScores.toArray()));
+  teamsSource$: Observable<Team[]> = from(liveQuery<Team[]>(() => db.teams.toArray()));
+  schedulesSource$: Observable<TeamSchedule[]> = from(liveQuery<TeamSchedule[]>(() => db.schedules.toArray()));
+  rosterPlayersSource$: Observable<RosterPlayer[]> = from(liveQuery<RosterPlayer[]>(() => db.rosterPlayers.toArray()));
+  allPlayersSource$: Observable<RosterPlayer[]> = from(liveQuery<RosterPlayer[]>(() => db.allPlayers.toArray()));
+
   private readonly GAME_ID: string = 'gameID';
   private readonly PLAYER_ID: string = 'playerID';
+
+  constructor() {
+    combineLatest([this.boxScoresSource$, this.teamsSource$, this.schedulesSource$, this.rosterPlayersSource$, this.allPlayersSource$])
+      .subscribe(([boxScores, teams, schedules, rosterPlayers, allPlayers]:
+                    [BoxScore[], Team[], TeamSchedule[], RosterPlayer[], RosterPlayer[]]) => {
+        this.loadStateSlices(teams, allPlayers, rosterPlayers, schedules, boxScores);
+      });
+  }
 
   private _boxScores: Map<string, BoxScore> = new Map();
   private _playerStats: Map<string, PlayerStats> = new Map();
@@ -26,25 +44,36 @@ export class StateService {
   private _analytics: Map<string, TeamAnalytics> = new Map();
 
   loadStateSlices(teams: Team[], players: RosterPlayer[], rosters: RosterPlayer[], schedules: TeamSchedule[], boxScores: BoxScore[]) {
-    const usableBoxScores: BoxScore[] = removePostponedGames(boxScores);
-    this._boxScores = convertArrayToMap(usableBoxScores, this.GAME_ID);
+    const noParameterIsEmpty: boolean =
+      teams.length !== 0
+      && players.length !== 0
+      && rosters.length !== 0
+      && schedules.length !== 0
+      && boxScores.length !== 0;
 
-    const playerStats: PlayerStats[] = convertBoxScoresToListOfPlayerStats(usableBoxScores);
-    this._playerStats = new Map(playerStats.map((playerStats) => ([`${playerStats.playerID}:${playerStats.gameID}`, playerStats])));
+    if (noParameterIsEmpty) {
+      const usableBoxScores: BoxScore[] = removePostponedGames(boxScores);
+      this._boxScores = convertArrayToMap(usableBoxScores, this.GAME_ID);
 
-    const tempRosterMap: Map<string, RosterPlayer> = convertArrayToMap(rosters, this.PLAYER_ID);
-    this._rosterPlayers = createRosterPlayerMap(players, playerStats, tempRosterMap);
+      const playerStats: PlayerStats[] = convertBoxScoresToListOfPlayerStats(usableBoxScores);
+      this._playerStats = new Map(playerStats.map((playerStats) => ([`${playerStats.playerID}:${playerStats.gameID}`, playerStats])));
 
-    const updatedTeams: Team[] = addPlayersToTeamRoster(teams, this._rosterPlayers);
-    this._teams = new Map(updatedTeams.map((team) => ([team.teamAbv, team])));
+      const tempRosterMap: Map<string, RosterPlayer> = convertArrayToMap(rosters, this.PLAYER_ID);
+      this._rosterPlayers = createRosterPlayerMap(players, playerStats, tempRosterMap);
 
-    const updatedSchedules: TeamSchedule[] = addTeamsAndBoxScoresToSchedule(schedules, this._teams, this._boxScores);
-    this._schedules = new Map(updatedSchedules.map((schedule) => ([schedule.team, schedule])));
+      const updatedTeams: Team[] = addPlayersToTeamRoster(teams, this._rosterPlayers);
+      this._teams = new Map(updatedTeams.map((team) => ([team.teamAbv, team])));
 
-    this._schedules.forEach(({team, schedule}: TeamSchedule) => {
-      const teamAnalytics: TeamAnalytics = new TeamAnalytics(team, schedule);
-      this._analytics.set(team, teamAnalytics)
-    });
+      const updatedSchedules: TeamSchedule[] = addTeamsAndBoxScoresToSchedule(schedules, this._teams, this._boxScores);
+      this._schedules = new Map(updatedSchedules.map((schedule) => ([schedule.team, schedule])));
+
+      this._schedules.forEach(({team, schedule}: TeamSchedule) => {
+        const teamAnalytics: TeamAnalytics = new TeamAnalytics(team, schedule);
+        this._analytics.set(team, teamAnalytics)
+      });
+    }
+
+
   }
 
   get allPlayers(): Map<string, RosterPlayer> {

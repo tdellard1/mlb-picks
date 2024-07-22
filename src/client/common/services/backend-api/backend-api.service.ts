@@ -9,6 +9,7 @@ import {BoxScore} from "../../model/box-score.interface";
 import {RosterPlayer} from "../../model/roster.interface";
 import {HttpParams} from "@angular/common/http";
 import {HttpOptions} from "../../model/http-options.model";
+import {Count} from "../../guards/data.guard";
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +58,11 @@ export class BackendApiService {
       .pipe(map((teams: Team[]) => new Teams(teams)));
   }
 
+  getTeamsArray(): Observable<Team[]> {
+    const options: HttpOptions = { params: {type: 'teams'}};
+    return this.apiService.get<Team[]>(this.serverUrl + 'api/domain', options);
+  }
+
   getSlates(): Observable<Slates> {
     const options: HttpOptions = { params: {type: 'slates'}};
     return this.apiService.get<Slates>(this.serverUrl + 'api/domain', options);
@@ -86,28 +92,28 @@ export class BackendApiService {
   // --------------------------- Counts ----------------------------
   // ---------------------------------------------------------------
 
-  getBoxScoresCount(): Observable<{ count: number }> {
+  getBoxScoresCount(): Observable<Count> {
     const options: HttpOptions = { params: {type: 'boxScores'}};
-    return this.apiService.get<{ count: number }>(this.serverUrl + 'api/domain/count', options);
+    return this.apiService.get<Count>(this.serverUrl + 'api/domain/count', options);
   }
 
-  getTeamsCount(): Observable<{ count: number }> {
+  getTeamsCount(): Observable<Count> {
     const options: HttpOptions = { params: {type: 'teams'}};
-    return this.apiService.get<{ count: number }>(this.serverUrl + 'api/domain/count', options);
+    return this.apiService.get<Count>(this.serverUrl + 'api/domain/count', options);
   }
 
-  getPlayerCount(): Observable<{ count: number }> {
+  getPlayerCount(): Observable<Count> {
     const options: HttpOptions = { params: {type: 'players'}};
-    return this.apiService.get<{ count: number }>(this.serverUrl + 'api/domain/count', options);
+    return this.apiService.get<Count>(this.serverUrl + 'api/domain/count', options);
   }
 
-  getRosterPlayersCount(): Observable<{ count: number }> {
+  getRosterPlayersCount(): Observable<Count> {
     const options: HttpOptions = { params: {type: 'rosters'}};
-    return this.apiService.get<{ count: number }>(this.serverUrl + 'api/domain/count', options);
+    return this.apiService.get<Count>(this.serverUrl + 'api/domain/count', options);
   }
 
-  getSchedulesCount(): Observable<{ count: number }> {
+  getSchedulesCount(): Observable<Count> {
     const options: HttpOptions = { params: {type: 'schedules'}};
-    return this.apiService.get<{ count: number }>(this.serverUrl + 'api/domain/count', options);
+    return this.apiService.get<Count>(this.serverUrl + 'api/domain/count', options);
   }
 }

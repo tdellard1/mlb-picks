@@ -27,5 +27,8 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
 
 ## Run Heroku Logs when app doesn't work
-heroku logs --tail -a mlb-picks
+$ heroku logs --tail -a mlb-picks
 
+## Run Redis CLI from cmd w/ Unix
+$ wsl
+$ redis-cli -u redis://default:f1DYQKVzeL9dVvFw9ULp1Sro5w59g4NK@redis-12887.c239.us-east-1-2.ec2.redns.redis-cloud.com:12887
