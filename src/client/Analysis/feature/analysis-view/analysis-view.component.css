@@ -1,0 +1,6 @@
+.analysis-container {
+  display: block;
+  height: 72%;
+  overflow-y: auto;
+  padding-bottom: 5px;
+}

@@ -74,6 +74,10 @@ export class StateService {
 
   }
 
+  getPlayer(playerID: string): RosterPlayer {
+    return this._rosterPlayers.get(playerID)!;
+  }
+
   get allPlayers(): Map<string, RosterPlayer> {
     return this._rosterPlayers;
   }

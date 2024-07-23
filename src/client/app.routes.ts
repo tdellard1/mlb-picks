@@ -21,6 +21,10 @@ export const routes: Routes = [
       {
         path: 'analysis',
         loadChildren: () => import('./Analysis/analysis.module').then(m => m.AnalysisModule),
+      },
+      {
+        path: 'pitchers',
+        loadChildren: () => import('./Pitchers/pitchers.module').then(m => m.PitchersModule),
       }
     ]
   }

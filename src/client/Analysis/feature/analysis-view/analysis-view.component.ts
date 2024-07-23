@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {Game} from "../../../common/model/game.interface";
 import {Team} from "../../../common/model/team.interface";
-import {Analytics, TeamAnalytics} from "../../../common/model/team-schedule.interface";
+import {Analytic, Analytics, TeamAnalytics} from "../../../common/model/team-schedule.interface";
 import {MatIcon} from "@angular/material/icon";
 import {MatFabButton} from "@angular/material/button";
 import {MatCard} from "@angular/material/card";
@@ -81,58 +81,69 @@ export class AnalysisViewComponent extends BaseGameSelectorComponent implements 
     const homeTeam: string = home.teamName;
     const awayTeam: string = away.teamName;
 
-    const battingAveragesHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.battingAverageForGame!)!;
-    const battingAveragesAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.battingAverageForGame!)!;
-    this.charts.push(this.createChart('Batting Average',
-      `${homeTeam} - Batting Averages`,
-      battingAveragesHome,
-      `${awayTeam} - Batting Averages`,
-      battingAveragesAway));
-
-    const runsForGameHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.runsForGame!)!;
-    const runsForGameAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.runsForGame!)!;
-    this.charts.push(this.createChart('Runs For Games',
-      `${homeTeam} - Runs`,
-      runsForGameHome,
-      `${awayTeam} - Runs`,
-      runsForGameAway));
-
-    const sluggingPercentageHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.sluggingPercentage!)!;
-    const sluggingPercentageAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.sluggingPercentage!)!;
-    this.charts.push(this.createChart('Slugging Percentage',
-      `${homeTeam} - Slugging Percentage`,
-      sluggingPercentageHome,
-      `${awayTeam} - Slugging Percentage`,
-      sluggingPercentageAway));
+    Object.keys(Analytic).forEach((key: string) => {
+      const homeStats: number[] = homeAnalytics.analytics?.slice().map((analytics: any) => analytics[key]!)!;
+      const awayStats: number[] = awayAnalytics.analytics?.slice().map((analytics: any) => analytics[key]!)!;
+      this.charts.push(this.createChart((Analytic as any)[key],
+        `${homeTeam} - ${(Analytic as any)[key]}`,
+        homeStats,
+        `${awayTeam} - ${(Analytic as any)[key]}`,
+        awayStats));
+    });
 
 
-    const onBasePercentageHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.onBasePercentage!)!;
-    const onBasePercentageAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.onBasePercentage!)!;
-    this.charts.push(this.createChart('On Base Percentage',
-      `${homeTeam} - On Base Percentage`,
-      onBasePercentageHome,
-      `${awayTeam} - On Base Percentage`,
-      onBasePercentageAway));
-
-
-    const onBasePlusSluggingHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.onBasePlusSlugging!)!;
-    const onBasePlusSluggingAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.onBasePlusSlugging!)!;
-    this.charts.push(this.createChart(
-      'On Base Plus Slugging',
-      `${homeTeam} - On Base Plus Slugging`,
-      onBasePlusSluggingHome,
-      `${awayTeam} - On Base Plus Slugging`,
-      onBasePlusSluggingAway));
-
-
-    const hittingStrikeOutHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.hittingStrikeouts!)!;
-    const hittingStrikeOutAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.hittingStrikeouts!)!;
-    this.charts.push(this.createChart(
-      'Hitting Strikeouts',
-      `${homeTeam} - Hitting Strikeouts`,
-      hittingStrikeOutHome,
-      `${awayTeam} - Hitting Strikeouts`,
-      hittingStrikeOutAway));
+    // const battingAveragesHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.battingAverageForGame!)!;
+    // const battingAveragesAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.battingAverageForGame!)!;
+    // this.charts.push(this.createChart('Batting Average',
+    //   `${homeTeam} - Batting Averages`,
+    //   battingAveragesHome,
+    //   `${awayTeam} - Batting Averages`,
+    //   battingAveragesAway));
+    //
+    // const runsForGameHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.runsForGame!)!;
+    // const runsForGameAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.runsForGame!)!;
+    // this.charts.push(this.createChart('Runs For Games',
+    //   `${homeTeam} - Runs`,
+    //   runsForGameHome,
+    //   `${awayTeam} - Runs`,
+    //   runsForGameAway));
+    //
+    // const sluggingPercentageHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.sluggingPercentage!)!;
+    // const sluggingPercentageAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.sluggingPercentage!)!;
+    // this.charts.push(this.createChart('Slugging Percentage',
+    //   `${homeTeam} - Slugging Percentage`,
+    //   sluggingPercentageHome,
+    //   `${awayTeam} - Slugging Percentage`,
+    //   sluggingPercentageAway));
+    //
+    //
+    // const onBasePercentageHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.onBasePercentage!)!;
+    // const onBasePercentageAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.onBasePercentage!)!;
+    // this.charts.push(this.createChart('On Base Percentage',
+    //   `${homeTeam} - On Base Percentage`,
+    //   onBasePercentageHome,
+    //   `${awayTeam} - On Base Percentage`,
+    //   onBasePercentageAway));
+    //
+    //
+    // const onBasePlusSluggingHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.onBasePlusSlugging!)!;
+    // const onBasePlusSluggingAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.onBasePlusSlugging!)!;
+    // this.charts.push(this.createChart(
+    //   'On Base Plus Slugging',
+    //   `${homeTeam} - On Base Plus Slugging`,
+    //   onBasePlusSluggingHome,
+    //   `${awayTeam} - On Base Plus Slugging`,
+    //   onBasePlusSluggingAway));
+    //
+    //
+    // const hittingStrikeOutHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.hittingStrikeouts!)!;
+    // const hittingStrikeOutAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.hittingStrikeouts!)!;
+    // this.charts.push(this.createChart(
+    //   'Hitting Strikeouts',
+    //   `${homeTeam} - Hitting Strikeouts`,
+    //   hittingStrikeOutHome,
+    //   `${awayTeam} - Hitting Strikeouts`,
+    //   hittingStrikeOutAway));
   }
 
 

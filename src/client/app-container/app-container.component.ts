@@ -45,8 +45,6 @@ export class AppContainerComponent implements OnInit {
     if (dailySchedule) {
       localStorage.setItem('daily-schedule', JSON.stringify(dailySchedule));
     }
-
-    // localStorage.setItem('lastUpdated', JSON.stringify(new Date().setHours(0, 0, 0, 0)));
   }
 
   ngOnInit() {
@@ -79,6 +77,9 @@ export class AppContainerComponent implements OnInit {
         case RouterPages.SLATE:
           void this.router.navigate(['slate']);
           break;
+        case RouterPages.PITCHERS:
+          void this.router.navigate(['pitchers']);
+          break;
       }
     });
   }
@@ -89,6 +90,7 @@ export class AppContainerComponent implements OnInit {
 export const RouterPages = {
   NO_RUNS_FIRST_INNING: 'No Runs First Inning',
   ANALYSIS: 'Game Analysis',
-  SLATE: 'Expert Picks'
+  SLATE: 'Expert Picks',
+  PITCHERS: 'Pitcher Stats'
 }
 

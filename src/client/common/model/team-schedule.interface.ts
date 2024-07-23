@@ -3,7 +3,7 @@ import {Team} from "./team.interface";
 import {BoxScore} from "./box-score.interface";
 import {TeamAnalyticsUtils} from "../utils/team-analytics.utils";
 import {roundToDecimalPlace} from "../utils/general.utils";
-import {getGamesBeforeToday} from "../utils/schedule.utils";
+import {getGamesBeforeToday, nonPostponedGames, nonSuspendedGames} from "../utils/schedule.utils";
 import {RunsFirstInning} from "../../Analysis/data-access/runs-first-inning.model";
 
 export interface TeamSchedule {
@@ -20,7 +20,7 @@ export class TeamAnalytics {
   constructor(team: string, schedule: Game[]) {
     this.team = team;
 
-    const scheduleBeforeToday: Game[] = getGamesBeforeToday(schedule.filter(value => !!value.boxScore));
+    const scheduleBeforeToday: Game[] = getGamesBeforeToday(schedule).filter(nonPostponedGames).filter(nonSuspendedGames);
     const last15GamesBeforeToday: Game[] = scheduleBeforeToday.slice(scheduleBeforeToday.length - 15, scheduleBeforeToday.length);
 
 
@@ -104,6 +104,22 @@ export class Analytics {
 
     this.hittingStrikeouts = TeamAnalyticsUtils.getHittingStrikeouts(team, boxScore);
   }
+}
+
+export enum Analytic {
+  battingAverageForGame = 'Batting Average Per Game',
+  battingAveragePerGame = 'Batting Average Mean',
+  runsForGame = 'Runs In Each Game',
+  runsPerGame = 'Runs Per Game Mean',
+  sluggingPercentage = 'Slugging Percentage',
+  averagePerGameSluggingPercentage = 'Slugging Percentage Mean',
+  onBasePercentage = 'On Base Percentage',
+  averagePerGameOnBasePercentage = 'On Base Percentage Mean',
+  onBasePlusSlugging = 'On Base Plus Slugging',
+  averagePerGameOnBasePlusSlugging = 'On Base Plus Slugging Mean',
+  weightedOnBaseAverage = 'Weighted On Base Average',
+  averagePerGameWeightedOnBaseAverage = 'Weighted On Base Average Mean',
+  hittingStrikeouts = 'Hitting Strikeouts',
 }
 
 

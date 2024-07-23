@@ -1,0 +1,9 @@
+.mdc-data-table__cell, .mdc-data-table__header-cell {
+  padding: 0 5px;
+  border-right: 1px solid currentColor;
+  text-align: center;
+}
+
+h3 {
+  text-align: center;
+}

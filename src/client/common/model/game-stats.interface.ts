@@ -26,6 +26,8 @@ export interface Pitching {
   SO: string;
   Pitches: string;
   WHIP: string;
+  Win: string;
+  Loss: string;
 }
 
 export interface Fielding {

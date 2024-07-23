@@ -7,6 +7,7 @@ import {
 } from "./team-stats.interface";
 import {PlayerStats} from "./player-stats.interface";
 import {Player} from "./players.interface";
+import {Pitching} from "./game-stats.interface";
 
 export interface Roster {
   team: string;
@@ -50,7 +51,7 @@ export interface RosterPlayer extends Player {
 }
 
 export interface RosterTeamStats {
-  Pitching: TeamPitchingStats;
+  Pitching: Pitching;
   BaseRunning: TeamBaseRunningStats;
   Fielding: TeamFieldingStats;
   Hitting: TeamHittingStats;
