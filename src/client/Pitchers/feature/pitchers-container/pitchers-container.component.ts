@@ -18,6 +18,8 @@ import {
   MatHeaderRowDef,
   MatRow, MatRowDef, MatTable
 } from "@angular/material/table";
+import {StateUtils} from "../../../common/utils/state.utils";
+import {sortByGameDate} from "../../../common/utils/state-builder.utils";
 
 @Component({
   selector: 'pitchers-container',
@@ -61,7 +63,7 @@ export class PitchersContainerComponent extends SubscriptionHolder {
 
   selectPitcher() {
     this.dataSource = [];
-    this.selectedPitcher.games?.reverse().forEach((playerStats: PlayerStats) => {
+    this.selectedPitcher.games?.sort(sortByGameDate()).reverse().forEach((playerStats: PlayerStats) => {
       const {InningsPitched, H, R, ER, HR, BB, SO}: PlayerPitchingStats = playerStats.Pitching;
       this.dataSource.push({
         Date: this.getGameDate(playerStats),

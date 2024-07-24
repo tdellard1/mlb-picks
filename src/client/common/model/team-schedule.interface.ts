@@ -22,7 +22,7 @@ export class TeamAnalytics {
 
     /** Checking that out of all the games before today, none are postponed, none are suspended, and all of them have boxScores */
     const scheduleBeforeToday: Game[] = getGamesBeforeToday(schedule).filter(nonPostponedGames).filter(nonSuspendedGames).filter(({boxScore}: Game) => !!boxScore);
-    const last15GamesBeforeToday: Game[] = scheduleBeforeToday.slice(scheduleBeforeToday.length - 15, scheduleBeforeToday.length);
+    const last15GamesBeforeToday: Game[] = scheduleBeforeToday.slice(-15);
 
 
     for (let i = 1; i < last15GamesBeforeToday.length + 1; i++) {
