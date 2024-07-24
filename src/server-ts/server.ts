@@ -11,8 +11,7 @@ import { dailyUpdate } from './functions/dailyUpdate.js';
   await loadData();
   await app(pathToClientApp, apiRouter);
 
-  const job: Job = schedule.scheduleJob('0 0 * * *', async () => dailyUpdate());
-  // await dailyUpdate();
+  const job: Job = schedule.scheduleJob('0 0 * * *', async () => await dailyUpdate());
   process.on('SIGINT', async () => {
     if (redisClient.isOpen) {
       await redisClient.quit();

@@ -18,9 +18,9 @@ export const dataGuard: CanActivateFn = async (): Promise<boolean> => {
   const metaData: { [key: string]: MetaData } = await firstValueFrom(backendApiService.getMetaData());
 
   updateRosterPlayers(metaData['rosters'], backendApiService);
-  updateBoxScores(metaData['rosters'], backendApiService);
-  updateSchedules(metaData['rosters'], backendApiService);
-  updateTeams(metaData['rosters'], backendApiService);
+  updateBoxScores(metaData['boxScores'], backendApiService);
+  updateSchedules(metaData['schedules'], backendApiService);
+  updateTeams(metaData['teams'], backendApiService);
 
   const teamsSource$: Observable<Team[]> = from(liveQuery<Team[]>(() => db.teams.toArray()));
   const boxScoresSource$: Observable<IBoxScore[]> = from(liveQuery<IBoxScore[]>(() => db.boxScores.toArray()));
@@ -37,19 +37,20 @@ export const dataGuard: CanActivateFn = async (): Promise<boolean> => {
 
 function updateSchedules({count, lastUpdated}: MetaData, backendApiService: BackendApiService) {
   db.schedules.count().then(async (dexieCount: number) => {
-    const localStorageKey: string = 'schedulesLastUpdated';
-    const clientLastUpdated: number = Number(localStorage.getItem(localStorageKey) || 0);
+    const key: string = 'schedulesLastUpdated';
+    const clientLastUpdated: number = Number(localStorage.getItem(key) || 0);
 
     const needToUpdate: boolean =
       clientLastUpdated < lastUpdated
       && count !== dexieCount
-      && dexieCount === 0;
+      && dexieCount !== 0;
 
+    console.log('count', count !== dexieCount, lastUpdated, clientLastUpdated < lastUpdated);
     if (needToUpdate) {
       const schedules: TeamSchedule[] = await firstValueFrom(backendApiService.getSchedules());
       db.schedules.clear().then(async () => {
-        await db.schedules.bulkAdd(schedules);
-        localStorage.setItem(localStorageKey, JSON.stringify(Date.now()));
+        const result = await db.schedules.bulkAdd(schedules);
+        localStorage.setItem(key, JSON.stringify(Date.now()));
       });
     }
   });
@@ -58,19 +59,19 @@ function updateSchedules({count, lastUpdated}: MetaData, backendApiService: Back
 
 function updateTeams({count, lastUpdated}: MetaData, backendApiService: BackendApiService) {
   db.teams.count().then(async (dexieCount: number) => {
-    const localStorageKey: string = 'teamsLastUpdated';
-    const clientLastUpdated: number = Number(localStorage.getItem(localStorageKey) || 0);
+    const key: string = 'teamsLastUpdated';
+    const clientLastUpdated: number = Number(localStorage.getItem(key) || 0);
 
     const needToUpdate: boolean =
       clientLastUpdated < lastUpdated
       && count !== dexieCount
-      && dexieCount === 0;
+      && dexieCount !== 0;
 
     if (needToUpdate) {
       const teams: Team[] = await firstValueFrom(backendApiService.getTeamsArray());
       db.teams.clear().then(async () => {
-        await db.teams.bulkAdd(teams);
-        localStorage.setItem(localStorageKey, JSON.stringify(Date.now()));
+        const result = await db.teams.bulkAdd(teams);
+        localStorage.setItem(key, JSON.stringify(Date.now()));
       });
     }
   });
@@ -78,19 +79,19 @@ function updateTeams({count, lastUpdated}: MetaData, backendApiService: BackendA
 
 
 function updateRosterPlayers({count, lastUpdated}: MetaData, backendApiService: BackendApiService) {
-  db.rosterPlayers.count().then(async (dexieCount: number) => {const localStorageKey: string = 'rosterPlayersLastUpdated';
-    const clientLastUpdated: number = Number(localStorage.getItem(localStorageKey) || 0);
+  db.rosterPlayers.count().then(async (dexieCount: number) => {const key: string = 'rosterPlayersLastUpdated';
+    const clientLastUpdated: number = Number(localStorage.getItem(key) || 0);
 
     const needToUpdate: boolean =
       clientLastUpdated < lastUpdated
       && count !== dexieCount
-      && dexieCount === 0;
+      && dexieCount !== 0;
 
     if (needToUpdate) {
       const rosterPlayers: RosterPlayer[] = await firstValueFrom(backendApiService.getRosters());
       db.rosterPlayers.clear().then(async () => {
-        await db.rosterPlayers.bulkAdd(rosterPlayers);
-        localStorage.setItem(localStorageKey, JSON.stringify(Date.now()));
+        const result = await db.rosterPlayers.bulkAdd(rosterPlayers);
+        localStorage.setItem(key, JSON.stringify(Date.now()));
       });
     }
   });
@@ -98,13 +99,13 @@ function updateRosterPlayers({count, lastUpdated}: MetaData, backendApiService: 
 
 function updateBoxScores({count, lastUpdated}: MetaData, backendApiService: BackendApiService) {
   db.boxScores.count().then(async (dexieCount: number) => {
-    const localStorageKey: string = 'boxScoresLastUpdated';
-    const clientLastUpdated: number = Number(localStorage.getItem(localStorageKey) || 0);
+    const key: string = 'boxScoresLastUpdated';
+    const clientLastUpdated: number = Number(localStorage.getItem(key) || 0);
 
     const needToUpdate: boolean =
       clientLastUpdated < lastUpdated
       && count !== dexieCount
-      && dexieCount === 0;
+      && dexieCount !== 0;
 
     if (needToUpdate) {
       const boxScores: BoxScore[] = await firstValueFrom(backendApiService.getBoxScores());
@@ -123,8 +124,8 @@ function updateBoxScores({count, lastUpdated}: MetaData, backendApiService: Back
       });
 
       db.boxScores.clear().then(async () => {
-        await db.boxScores.bulkAdd(useBoxScores);
-        localStorage.setItem(localStorageKey, JSON.stringify(Date.now()));
+        const result = await db.boxScores.bulkAdd(useBoxScores);
+        localStorage.setItem(key, JSON.stringify(Date.now()));
       });
     }
   });
