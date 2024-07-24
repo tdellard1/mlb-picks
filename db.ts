@@ -7,7 +7,6 @@ import {TeamSchedule} from "./src/client/common/model/team-schedule.interface";
 export class AppDB extends Dexie {
   boxScores: Table<IBoxScore, string>;
   rosterPlayers: Table<RosterPlayer, string>;
-  allPlayers: Table<RosterPlayer, string>;
   teams: Table<Team, string>;
   schedules: Table<TeamSchedule, string>;
 

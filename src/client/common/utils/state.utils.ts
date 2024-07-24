@@ -62,7 +62,7 @@ export class StateUtils {
     let NRFI = 0;
     let YRFI = 0;
 
-    boxScoresOfGames.forEach(({playerStats, lineScore}: BoxScore) => {
+    boxScoresOfGames.filter(value => !!value).forEach(({playerStats, lineScore}: BoxScore) => {
       const {started, team}: PlayerStats = playerStats[playerID];
 
       if (started === 'True' && lineScore) {
@@ -107,6 +107,8 @@ export class StateUtils {
     const gameIDs: string[] = games?.map(({gameID}: PlayerStats) => gameID)!;
     const boxScoresOfGames: BoxScore[] = gameIDs
       .map((gameID: string) => boxScoreMap.get(gameID)!)
+      /** TODO: I need to make this undefined check because it breaks app, figure out why and how to prevent it at a higher level*/
+      .filter((boxScore: BoxScore) => !!boxScore)
       .sort((a: BoxScore, b: BoxScore) => {
         const aDateObject: Tank01Date = new Tank01Date(a.gameID.slice(0, 8));
         const bDateObject: Tank01Date = new Tank01Date(b.gameID.slice(0, 8));

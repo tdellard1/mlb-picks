@@ -1,3 +1,6 @@
+import {PlayerStats} from "../model/player-stats.interface";
+import {TeamAnalytics, TeamSchedule} from "../model/team-schedule.interface";
+
 export function countKeys(t: any): any {
   switch (t?.constructor) {
     case Object:
@@ -30,6 +33,40 @@ export function convertMapToArray<T>(map: Map<any, any>): T[] {
   return returnArray;
 }
 
-export function convertArrayToMap<T>(array: any[], prop: string): Map<any, any> {
-  return new Map<any, T>(array.map((item: any) => ([item[prop], item])));
+export function convertArrayToMapFaster<T>(array: any[], prop: string): Map<any, any> {
+  const returnMap: Map<string, T> = new Map();
+  const arrayLength: number = array.length;
+
+  for (let i: number = 0; i < arrayLength; i++) {
+    returnMap.set(array[i][prop], array[i]);
+  }
+
+  return returnMap;
 }
+
+export function convertPlayerStatsArrayToMap(playerStats: PlayerStats[]): Map<any, any> {
+  const returnMap: Map<string, PlayerStats> = new Map();
+  const playerStatsLength: number = playerStats.length;
+
+  for (let i: number = 0; i < playerStatsLength; i++) {
+    const playerStat: PlayerStats = playerStats[i];
+
+    returnMap.set(`${playerStat.playerID}:${playerStat.gameID}`, playerStat);
+  }
+
+  return returnMap;
+}
+
+export function createAnalyticsFromSchedule(teamSchedules: Map<string, TeamSchedule>): Map<any, TeamAnalytics> {
+  const returnMap: Map<string, TeamAnalytics> = new Map();
+
+  for (const [team, {schedule}] of teamSchedules) {
+    const teamAnalytics: TeamAnalytics = new TeamAnalytics(team, schedule);
+
+    returnMap.set(team, teamAnalytics);
+  }
+
+  return returnMap;
+}
+
+

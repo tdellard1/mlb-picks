@@ -6,7 +6,7 @@
     "tsc": "tsc",
     "test-change": "npm run clean && ng build --configuration development && tsc && node dist/out-tsc/server-ts/server.js",
     "start": "node dist/out-tsc/server-ts/server.js",
-    "start:server": " tsc && node dist/out-tsc/server-ts/server.js",
+    "start:server": "tsc && node dist/out-tsc/server-ts/server.js",
     "clean": "rimraf dist",
     "build": "ng build --configuration development --delete-output-path true",
     "watch": "ng build --watch --configuration development",

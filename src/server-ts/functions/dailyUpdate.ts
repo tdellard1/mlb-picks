@@ -1,77 +1,142 @@
-import {getBoxScore, getDailySchedule, getTeams, getTeamSchedule} from '../singletons/tank01Service.js'
+import {
+  getBoxScore,
+  getDailySchedule,
+  getPlayers,
+  getRoster,
+  getTeams,
+  getTeamSchedule
+} from '../singletons/tank01Service.js'
 import {AxiosResponse} from "axios";
 import {uploadFile} from "../singletons/firebase.js";
-import {Team} from "../../client/common/model/team.interface";
+import {Team} from "../../client/common/model/team.interface.js";
 import {listAddAll, remove, getList, setLastUpdated} from "../singletons/redis.js";
-import {TeamSchedule} from "../../client/common/model/team-schedule.interface";
+import {TeamSchedule} from "../../client/common/model/team-schedule.interface.js";
 import {UploadStatus} from "../models/upload-status.js";
-import {Game} from "../../client/common/model/game.interface";
-import {BoxScore} from "../../client/common/model/box-score.interface";
+import {Game} from "../../client/common/model/game.interface.js";
+import {BoxScore} from "../../client/common/model/box-score.interface.js";
+import {Roster, RosterPlayer} from "../../client/common/model/roster.interface.js";
+import {PlayerStats} from "../../client/common/model/player-stats.interface.js";
+import {Tank01Date} from "../../client/common/utils/date.utils.js";
 
 
 export const dailyUpdate = async () => {
-  const teamsKey: string = 'teams'
-  const teamsResponse: AxiosResponse<Team[]> = await getTeams();
-  const teams: Team[] = teamsResponse.data;
-  const {uploaded ,reason}: UploadStatus = await uploadFile(teamsKey, teams);
-  if (uploaded) {
+  console.log('starting Daily Update');
+  const yyyyMMdd: string = getYesterdayAsYYYYMMDD();
+  const dailyScheduleResponse: AxiosResponse<Game[]> = await getDailySchedule<Game[]>(yyyyMMdd);
+  const games: Game[] = dailyScheduleResponse.data;
+  const gameIDs: string[] = games.map(({gameID}) => gameID);
+
+  /** ----------------------------------------------------*/
+  /** --------------------- Box Scores ------------------*/
+  /** --------------------------------------------------*/
+  const boxScoresKey: string = 'boxScores';
+  const boxScoresPromises: Promise<AxiosResponse<BoxScore>>[] = gameIDs.map((gameID: string) => getBoxScore(gameID));
+  const boxScoresResolvers: AxiosResponse<BoxScore>[] = await Promise.all(boxScoresPromises);
+  const newBoxScores: BoxScore[] = boxScoresResolvers.map((response: AxiosResponse<BoxScore>) => response.data);
+
+  const previousBoxScoresListOfStrings: string[] = await getList(boxScoresKey);
+  const previousBoxScores: BoxScore[] = previousBoxScoresListOfStrings.map((boxScoreString: string) => JSON.parse(boxScoreString));
+
+  const allBoxScores: BoxScore[] = [...previousBoxScores, ...newBoxScores];
+
+  const boxScoresUploadStatus: UploadStatus = await uploadFile(boxScoresKey, allBoxScores);
+  console.log('boxScoresUploadStatus', boxScoresUploadStatus);
+  if (boxScoresUploadStatus.uploaded) {
+    await remove(boxScoresKey);
+    const added: number = await listAddAll(boxScoresKey, allBoxScores.map((schedule: BoxScore) => JSON.stringify(schedule)));
+    console.log(`${boxScoresKey} added to Redis: ${added}`);
+    if (added) {
+      setLastUpdated(boxScoresKey, added);
+    }
+  }
+
+  /** ------------------------------------------------*/
+  /** --------------------- Teams -------------------*/
+  /** ----------------------------------------------*/
+  const teams: Team[] = (await getTeams()).data;
+
+  const teamsKey: string = 'teams';
+
+  const teamsUploadStatus: UploadStatus = await uploadFile(teamsKey, teams);
+  console.log('teamsUploadStatus', teamsUploadStatus);
+  if (teamsUploadStatus.uploaded) {
     await remove(teamsKey);
     const added: number = await listAddAll(teamsKey, teams.map((team: Team) => JSON.stringify(team)));
+    console.log(`${teamsKey} added to Redis: ${added}`);
     if (added) {
       setLastUpdated(teamsKey, added);
     }
   }
 
-  await updateSchedules(teams);
+  /** --------------------------------------------------*/
+  /** --------------------- Rosters -------------------*/
+  /** ------------------------------------------------*/
+  const players: RosterPlayer[] = (await getPlayers()).data;
+  const rosterPromises: Promise<AxiosResponse<Roster>>[] = teams.map(({teamAbv}: Team) => getRoster(teamAbv));
+  const rosterResolvers: AxiosResponse<Roster>[] = await Promise.all(rosterPromises);
+  const rosters: Roster[] = rosterResolvers.map((response: AxiosResponse<Roster>) => response.data);
 
-  const yyyyMMdd: string = getYesterdayAsYYYYMMDD();
-  await updateBoxScores(yyyyMMdd);
-}
+  const allPlayerStats: PlayerStats[] = previousBoxScores.map(({playerStats}) => {
+    if (playerStats) {
+      return Object.values(playerStats);
+    } else {
+      return [];
+    }
+  }).flat();
+  const allRosterPlayers: RosterPlayer[] = rosters.map(({roster}) => roster).flat();
+  const newRosters: RosterPlayer[] = players.map((player: RosterPlayer) => {
+     const playerStats: PlayerStats[] = allPlayerStats
+       .filter(({playerID}) => playerID === player.playerID)
+       .sort((a: PlayerStats, b: PlayerStats) => {
+         const aDateObject: Tank01Date = new Tank01Date(a.gameID.slice(0, 8));
+         const bDateObject: Tank01Date = new Tank01Date(b.gameID.slice(0, 8));
 
-async function updateBoxScores(yyyyMMdd: string): Promise<UploadStatus> {
-  const dailyScheduleResponse: AxiosResponse<Game[]> = await getDailySchedule<Game[]>(yyyyMMdd);
-  const games: Game[] = dailyScheduleResponse.data;
-  const gameIDs: string[] = games.map(({gameID}) => gameID);
-  console.log('gameIDs', gameIDs, gameIDs.length);
+         return aDateObject.timeStamp - bDateObject.timeStamp;
+       });
 
-  const boxScoresKey: string = 'boxScores';
-  const promises: Promise<AxiosResponse<BoxScore>>[] = gameIDs.map((gameID: string) => getBoxScore(gameID));
-  const resolved: AxiosResponse<BoxScore>[] = await Promise.all(promises);
-  const boxScores: BoxScore[] = resolved.map((response: AxiosResponse<BoxScore>) => response.data);
+     const playerIndex: number = allRosterPlayers.findIndex(({playerID}) => player.playerID === playerID);
 
-  const previousBoxScoresListOfStrings: string[] = await getList(boxScoresKey);
-  const previousBoxScores: BoxScore[] = previousBoxScoresListOfStrings.map((boxScoreString: string) => JSON.parse(boxScoreString));
+     if (playerIndex !== -1) {
+       const newPlayer: RosterPlayer = allRosterPlayers[playerIndex];
+       newPlayer.games = playerStats;
+       return newPlayer;
+     } else {
+       player.games = playerStats;
+       return player;
+     }
+  });
 
-  previousBoxScores.push(...boxScores);
+  const rostersKey: string = 'rosters';
 
-  console.log(previousBoxScores.length);
-
-  const {uploaded, reason}: UploadStatus = await uploadFile(boxScoresKey, previousBoxScores);
-  console.log(`${boxScoresKey} UploadStatus: `, {uploaded, reason});
-  if (uploaded) {
-    await remove(boxScoresKey);
-    const added: number = await listAddAll(boxScoresKey, previousBoxScores.map((schedule: BoxScore) => JSON.stringify(schedule)));
-    console.log('added: ', added);
+  const rosterPlayersUploadStatus: UploadStatus = await uploadFile(rostersKey, newRosters);
+  console.log('rosterPlayersUploadStatus: ', rosterPlayersUploadStatus);
+  if (rosterPlayersUploadStatus.uploaded) {
+    await remove(rostersKey);
+    const added: number = await listAddAll(rostersKey, newRosters.map((player: RosterPlayer) => JSON.stringify(player)));
+    console.log(`${rostersKey} added to Redis: ${added}`);
+    if (added) {
+      setLastUpdated(rostersKey, added);
+    }
   }
-  return {uploaded, reason} as UploadStatus
-}
 
-async function updateSchedules(teams: Team[]): Promise<UploadStatus> {
+    /** --------------------------------------------------*/
+   /** -------------------- Schedules -------------------*/
+  /** --------------------------------------------------*/
   const schedulesKey: string = 'schedules'
 
-  const promises: Promise<AxiosResponse<TeamSchedule>>[] = teams.map(({teamAbv}: Team) => getTeamSchedule(teamAbv));
-  const resolved: AxiosResponse<TeamSchedule>[] = await Promise.all(promises);
-  const teamSchedules: TeamSchedule[] = resolved.map((response: AxiosResponse<TeamSchedule>) => response.data);
+  const schedulesPromises: Promise<AxiosResponse<TeamSchedule>>[] = teams.map(({teamAbv}: Team) => getTeamSchedule(teamAbv));
+  const schedulesResolvers: AxiosResponse<TeamSchedule>[] = await Promise.all(schedulesPromises);
+  const teamSchedules: TeamSchedule[] = schedulesResolvers.map((response: AxiosResponse<TeamSchedule>) => response.data);
 
-  const {uploaded, reason}: UploadStatus = await uploadFile(schedulesKey, teamSchedules);
-  console.log(`${schedulesKey} UploadStatus: `, {uploaded, reason});
-  if (uploaded) {
+  const schedulesUploadStatus: UploadStatus = await uploadFile(schedulesKey, teamSchedules);
+  console.log('schedulesUploadStatus', schedulesUploadStatus);
+  if (schedulesUploadStatus.uploaded) {
     await remove(schedulesKey);
     const added: number = await listAddAll(schedulesKey, teamSchedules.map((schedule: TeamSchedule) => JSON.stringify(schedule)));
-    return {uploaded, reason} as UploadStatus;
-  } else {
-    //  Handle Error
-    return {uploaded, reason} as UploadStatus;
+    console.log(`${schedulesKey} added to Redis: ${added}`);
+    if (added) {
+      setLastUpdated(schedulesKey, added);
+    }
   }
 }
 

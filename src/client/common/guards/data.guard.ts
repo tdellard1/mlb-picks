@@ -1,91 +1,134 @@
 import {CanActivateFn} from '@angular/router';
 import {inject} from "@angular/core";
-import {firstValueFrom, from, take} from "rxjs";
+import {combineLatest, firstValueFrom, from, Observable} from "rxjs";
 import {BackendApiService} from "../services/backend-api/backend-api.service";
 import {StateService} from "../services/state.service";
-import {Team} from "../model/team.interface";
 import {TeamSchedule} from "../model/team-schedule.interface";
-import {db} from "../../../../db";
+import {db, IBoxScore} from "../../../../db";
 import {BoxScore} from "../model/box-score.interface";
 import {MetaData} from "../../../server-ts/singletons/redis";
 import {RosterPlayer} from "../model/roster.interface";
+import {Team} from "../model/team.interface";
+import {liveQuery} from "dexie";
 
 export const dataGuard: CanActivateFn = async (): Promise<boolean> => {
   const stateService: StateService = inject(StateService);
   const backendApiService: BackendApiService = inject(BackendApiService);
 
-  const lastUpdatedString: string | null = localStorage.getItem("lastUpdated");
-
-  let lastUpdated: number = lastUpdatedString !== null ? Number(lastUpdatedString) : 0;
-
   const metaData: { [key: string]: MetaData } = await firstValueFrom(backendApiService.getMetaData());
 
-  console.log('lastUpdated', lastUpdated);
-  console.log('metaData', metaData);
+  updateRosterPlayers(metaData['rosters'], backendApiService);
+  updateBoxScores(metaData['rosters'], backendApiService);
+  updateSchedules(metaData['rosters'], backendApiService);
+  updateTeams(metaData['rosters'], backendApiService);
 
-  const playersLastUpdated: number = metaData['players'].lastUpdated;
-  const playersDexieCount: Number = await db.allPlayers.count();
-  if (playersLastUpdated > lastUpdated || playersDexieCount === 0) {
-    const players: RosterPlayer[] = await firstValueFrom(backendApiService.getPlayers());
-    db.allPlayers.clear().then(async () => {
-      await db.allPlayers.bulkAdd(players);
-      if (playersLastUpdated > lastUpdated) {
-        lastUpdated = playersLastUpdated;
-      }
-    });
-  }
+  const teamsSource$: Observable<Team[]> = from(liveQuery<Team[]>(() => db.teams.toArray()));
+  const boxScoresSource$: Observable<IBoxScore[]> = from(liveQuery<IBoxScore[]>(() => db.boxScores.toArray()));
+  const schedulesSource$: Observable<TeamSchedule[]> = from(liveQuery<TeamSchedule[]>(() => db.schedules.toArray()));
+  const rosterPlayersSource$: Observable<RosterPlayer[]> = from(liveQuery<RosterPlayer[]>(() => db.rosterPlayers.toArray()));
 
-  const rosterPlayersLastUpdated: number = metaData['rosters'].lastUpdated;
-  const rosterPlayersDexieCount: number = await db.rosterPlayers.count();
-  if (rosterPlayersLastUpdated > lastUpdated || rosterPlayersDexieCount === 0) {
-    const rosterPlayers: RosterPlayer[] = await firstValueFrom(backendApiService.getRosters());
-    db.rosterPlayers.clear().then(async () => {
-      await db.rosterPlayers.bulkAdd(rosterPlayers);
-      if (rosterPlayersLastUpdated > lastUpdated) {
-        lastUpdated = rosterPlayersLastUpdated;
-      }
-    });
-  }
+  const [boxScores, teams, schedules, rosterPlayers]: [BoxScore[], Team[], TeamSchedule[], RosterPlayer[]] = await firstValueFrom(combineLatest([boxScoresSource$, teamsSource$, schedulesSource$, rosterPlayersSource$]))
 
-  const boxScoresLastUpdated: number = metaData['boxScores'].lastUpdated;
-  const boxScoresDexieCount: number = await db.boxScores.count();
-  if (boxScoresLastUpdated > lastUpdated || boxScoresDexieCount === 0) {
-    const boxScores: BoxScore[] = await firstValueFrom(backendApiService.getBoxScores());
-    db.boxScores.clear().then(async () => {
-      await db.boxScores.bulkAdd(boxScores);
-      if (boxScoresLastUpdated > lastUpdated) {
-        lastUpdated = boxScoresLastUpdated;
-      }
-    });
-  }
+  stateService.loadStateSlices(teams, rosterPlayers, schedules, boxScores);
 
-  const teamsLastUpdated: number = metaData['teams'].lastUpdated;
-  const teamsDexieCount: number = await db.teams.count();
-  if (teamsLastUpdated > lastUpdated || teamsDexieCount === 0) {
-    const teams: Team[] = await firstValueFrom<Team[]>(backendApiService.getTeamsArray());
-    db.teams.clear().then(async () => {
-      await db.teams.bulkAdd(teams);
-      if (teamsLastUpdated > lastUpdated) {
-        lastUpdated = teamsLastUpdated;
-      }
-    });
-  }
-
-  const schedulesLastUpdated: number = metaData['schedules'].lastUpdated;
-  const schedulesDexieCount: number = await db.schedules.count();
-  if (schedulesLastUpdated > lastUpdated || schedulesDexieCount === 0) {
-    const teamSchedules: TeamSchedule[] = await firstValueFrom<TeamSchedule[]>(backendApiService.getSchedules());
-    db.schedules.clear().then(async () => {
-      await db.schedules.bulkAdd(teamSchedules);
-      if (schedulesLastUpdated > lastUpdated) {
-        lastUpdated = schedulesLastUpdated;
-      }
-    });
-  }
-
-  localStorage.setItem("lastUpdated", JSON.stringify(lastUpdated));
   return true;
 };
+
+
+function updateSchedules({count, lastUpdated}: MetaData, backendApiService: BackendApiService) {
+  db.schedules.count().then(async (dexieCount: number) => {
+    const localStorageKey: string = 'schedulesLastUpdated';
+    const clientLastUpdated: number = Number(localStorage.getItem(localStorageKey) || 0);
+
+    const needToUpdate: boolean =
+      clientLastUpdated < lastUpdated
+      && count !== dexieCount
+      && dexieCount === 0;
+
+    if (needToUpdate) {
+      const schedules: TeamSchedule[] = await firstValueFrom(backendApiService.getSchedules());
+      db.schedules.clear().then(async () => {
+        await db.schedules.bulkAdd(schedules);
+        localStorage.setItem(localStorageKey, JSON.stringify(Date.now()));
+      });
+    }
+  });
+}
+
+
+function updateTeams({count, lastUpdated}: MetaData, backendApiService: BackendApiService) {
+  db.teams.count().then(async (dexieCount: number) => {
+    const localStorageKey: string = 'teamsLastUpdated';
+    const clientLastUpdated: number = Number(localStorage.getItem(localStorageKey) || 0);
+
+    const needToUpdate: boolean =
+      clientLastUpdated < lastUpdated
+      && count !== dexieCount
+      && dexieCount === 0;
+
+    if (needToUpdate) {
+      const teams: Team[] = await firstValueFrom(backendApiService.getTeamsArray());
+      db.teams.clear().then(async () => {
+        await db.teams.bulkAdd(teams);
+        localStorage.setItem(localStorageKey, JSON.stringify(Date.now()));
+      });
+    }
+  });
+}
+
+
+function updateRosterPlayers({count, lastUpdated}: MetaData, backendApiService: BackendApiService) {
+  db.rosterPlayers.count().then(async (dexieCount: number) => {const localStorageKey: string = 'rosterPlayersLastUpdated';
+    const clientLastUpdated: number = Number(localStorage.getItem(localStorageKey) || 0);
+
+    const needToUpdate: boolean =
+      clientLastUpdated < lastUpdated
+      && count !== dexieCount
+      && dexieCount === 0;
+
+    if (needToUpdate) {
+      const rosterPlayers: RosterPlayer[] = await firstValueFrom(backendApiService.getRosters());
+      db.rosterPlayers.clear().then(async () => {
+        await db.rosterPlayers.bulkAdd(rosterPlayers);
+        localStorage.setItem(localStorageKey, JSON.stringify(Date.now()));
+      });
+    }
+  });
+}
+
+function updateBoxScores({count, lastUpdated}: MetaData, backendApiService: BackendApiService) {
+  db.boxScores.count().then(async (dexieCount: number) => {
+    const localStorageKey: string = 'boxScoresLastUpdated';
+    const clientLastUpdated: number = Number(localStorage.getItem(localStorageKey) || 0);
+
+    const needToUpdate: boolean =
+      clientLastUpdated < lastUpdated
+      && count !== dexieCount
+      && dexieCount === 0;
+
+    if (needToUpdate) {
+      const boxScores: BoxScore[] = await firstValueFrom(backendApiService.getBoxScores());
+
+      /** TODO: This eliminates undefined and duplicates, move this logic to the backend */
+      const fixedBoxScores: BoxScore[] = boxScores.filter(({gameID}) => !!gameID);
+      const dups: BoxScore[] = [];
+      const useBoxScores: BoxScore[] = [];
+      const uniq: string[] = [];
+
+      fixedBoxScores.forEach((boxScore: BoxScore) => {
+        if (!uniq.includes(boxScore.gameID)) {
+          uniq.push(boxScore.gameID);
+          useBoxScores.push(boxScore);
+        }
+      });
+
+      db.boxScores.clear().then(async () => {
+        await db.boxScores.bulkAdd(useBoxScores);
+        localStorage.setItem(localStorageKey, JSON.stringify(Date.now()));
+      });
+    }
+  });
+}
 
 export interface Count {
   count: number

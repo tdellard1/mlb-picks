@@ -43,7 +43,22 @@ export interface Decision {
 
 
 export function convertBoxScoresToListOfPlayerStats(boxScores: BoxScore[]): PlayerStats[] {
-  return boxScores.map((boxScore: BoxScore) => convertPlayerStatsToArray(boxScore)).flat();
+  const playerStats: PlayerStats[] = [];
+  const arrayLength: number = boxScores.length;
+
+  for (let i: number = 0; i < arrayLength; i++) {
+    const playerStatsFromBoxScores = boxScores[i].playerStats;
+    if (playerStatsFromBoxScores) {
+      const playerStatsList: PlayerStats[] = Object.values(playerStatsFromBoxScores);
+      const playerStatsLength: number = playerStatsList.length;
+
+      for (let i: number = 0; i < playerStatsLength; i++) {
+        playerStats.push(playerStatsList[i]);
+      }
+    }
+  }
+
+  return playerStats;
 }
 
 export function convertPlayerStatsToArray({playerStats}: BoxScore): PlayerStats[] {

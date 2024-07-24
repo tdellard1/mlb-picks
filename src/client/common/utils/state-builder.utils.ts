@@ -9,9 +9,16 @@ import {Tank01Date} from "./date.utils";
 
 /** Postponed games are the only ones that don't have stats */
 export function removePostponedGames(boxScores: BoxScore[]): BoxScore[] {
-  return boxScores.filter((boxScore: BoxScore) => {
-    return boxScore.gameStatus !== 'Postponed'
-  }).filter(Boolean);
+  const returnArray: BoxScore[] = [];
+  const arrayLength: number = boxScores.length;
+
+  for (let i: number = 0; i < arrayLength; i++) {
+    if (boxScores[i].gameStatus !== 'Postponed' && boxScores[i].gameStatus !== 'Suspended') {
+      returnArray.push(boxScores[i]);
+    }
+  }
+
+  return returnArray
 }
 
 export function createRosterPlayerAndAddToMap(
