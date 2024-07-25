@@ -27,6 +27,10 @@ export const dataGuard: CanActivateFn = async (): Promise<boolean> => {
   const schedulesSource$: Observable<TeamSchedule[]> = from(liveQuery<TeamSchedule[]>(() => db.schedules.toArray()));
   const rosterPlayersSource$: Observable<RosterPlayer[]> = from(liveQuery<RosterPlayer[]>(() => db.rosterPlayers.toArray()));
 
+  /** This gets only one value from Dexie and adds it to the state services, change this code so that we continuously retrieve all values from dexie, 
+  and pass them through to the service loadStateSlices method. Probably will mena putting this in the constructor of the state object, adding an initialized method
+  to the service, and doing a while loop, for while the service isn't initialized, or make the condition based on when we have enough data to load the app.
+  */
   const [boxScores, teams, schedules, rosterPlayers]: [BoxScore[], Team[], TeamSchedule[], RosterPlayer[]] = await firstValueFrom(combineLatest([boxScoresSource$, teamsSource$, schedulesSource$, rosterPlayersSource$]))
 
   stateService.loadStateSlices(teams, rosterPlayers, schedules, boxScores);
