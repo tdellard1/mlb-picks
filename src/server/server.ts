@@ -1,5 +1,5 @@
 import apiRouter from './routes/index.js';
-const pathToClientApp: string = '../../../../dist/mlb-picks/browser';
+const pathToClientApp: string = '../../../dist/mlb-picks/browser';
 import {client} from './singletons/redis.js'
 import {app} from './singletons/express-app.js';
 import loadData, {load} from './singletons/loadData.js';

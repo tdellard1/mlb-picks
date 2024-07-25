@@ -7,3 +7,7 @@
 h3 {
   text-align: center;
 }
+
+.mat-mdc-row {
+  height: auto;
+}

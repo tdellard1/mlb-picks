@@ -3,7 +3,7 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "outDir": "./dist/out-tsc",
+    "outDir": "./dist",
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -36,5 +36,7 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-  "include": ["src/server-ts/*"]
+  "include": [
+    "src/client/main.ts"
+  ]
 }

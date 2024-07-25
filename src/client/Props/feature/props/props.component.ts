@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Data} from "@angular/router";
-import {map} from "rxjs/operators";
 import {Game, Games} from "../../../common/model/game.interface";
 import {AsyncPipe, JsonPipe, NgIf, NgOptimizedImage} from "@angular/common";
 import {SubscriptionHolder} from "../../../common/components/subscription-holder.component";

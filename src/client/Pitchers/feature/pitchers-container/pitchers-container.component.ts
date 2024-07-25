@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Data} from "@angular/router";
 import {map} from "rxjs/operators";
-import {Game} from "../../../common/model/game.interface";
+import {Game, Games} from "../../../common/model/game.interface";
 import {SubscriptionHolder} from "../../../common/components/subscription-holder.component";
 import {StateService} from "../../../common/services/state.service";
 import {RosterPlayer} from "../../../common/model/roster.interface";
@@ -18,7 +18,6 @@ import {
   MatHeaderRowDef,
   MatRow, MatRowDef, MatTable
 } from "@angular/material/table";
-import {StateUtils} from "../../../common/utils/state.utils";
 import {sortByGameDate} from "../../../common/utils/state-builder.utils";
 
 @Component({
@@ -46,7 +45,7 @@ export class PitchersContainerComponent extends SubscriptionHolder {
       this.route.data.pipe(map(({dailySchedule}: Data) => dailySchedule as Game[]))
         .subscribe((games: Game[]) => {
           if (games.length > 1) {
-            this.pitchersArray = games
+            this.pitchersArray = new Games(games).sortedGames
               .map(({probableStartingPitchers}: Game) => [probableStartingPitchers.away, probableStartingPitchers.home])
               .flat()
               .filter(Boolean)
@@ -62,6 +61,7 @@ export class PitchersContainerComponent extends SubscriptionHolder {
 
 
   selectPitcher() {
+    console.log('selectedPitcher: ', this.selectedPitcher);
     this.dataSource = [];
     this.selectedPitcher.games?.sort(sortByGameDate()).reverse().forEach((playerStats: PlayerStats) => {
       const {InningsPitched, H, R, ER, HR, BB, SO}: PlayerPitchingStats = playerStats.Pitching;
@@ -72,7 +72,6 @@ export class PitchersContainerComponent extends SubscriptionHolder {
       } as PitcherStatsElements);
     });
 
-    console.log(this.pitchersArray);
   }
 
   getGameDate({gameID}: PlayerStats): string {

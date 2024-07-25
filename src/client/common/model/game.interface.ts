@@ -45,8 +45,8 @@ export class Games {
   }
 
   get sortedGames(): Game[] {
-    return this.games.slice().sort((a, b) => {
-      const chronologicalOrder: number = this.getTimeAsDate(a) - this.getTimeAsDate(b);
+    return this.games.slice().sort((a: Game, b: Game) => {
+      const chronologicalOrder: number = Number(a.gameTime_epoch) - Number(b.gameTime_epoch);
       const alphabeticalOrder: number = a.away > b.away ? 1 : -1;
 
       return chronologicalOrder || alphabeticalOrder;

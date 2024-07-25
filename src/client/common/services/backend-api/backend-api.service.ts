@@ -1,16 +1,14 @@
 import {Injectable, isDevMode} from '@angular/core';
 import {ApiService} from "../api-services/api.service";
 import {TeamSchedule} from "../../model/team-schedule.interface";
-import {map, tap} from "rxjs/operators";
+import {map} from "rxjs/operators";
 import {first, Observable} from "rxjs";
 import {Slates} from "../../../Slate/data-access/slate.model";
 import {Team, Teams} from "../../model/team.interface";
 import {BoxScore} from "../../model/box-score.interface";
 import {RosterPlayer} from "../../model/roster.interface";
-import {HttpParams} from "@angular/common/http";
 import {HttpOptions} from "../../model/http-options.model";
-import {Count} from "../../guards/data.guard";
-import {MetaData} from "../../../../server-ts/singletons/redis";
+import {MetaData} from "../../../../server/singletons/redis";
 
 @Injectable({
   providedIn: 'root'

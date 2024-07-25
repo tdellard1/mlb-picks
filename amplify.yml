@@ -8,7 +8,7 @@ backend:
         - npm install
     postBuild:
       commands:
-        - node server/server.js
+        - npm run start:server
 frontend:
   phases:
     build:

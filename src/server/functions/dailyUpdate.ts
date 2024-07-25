@@ -32,18 +32,20 @@ export const dailyUpdate = async () => {
   const boxScoresKey: string = 'boxScores';
   const boxScoresPromises: Promise<AxiosResponse<BoxScore>>[] = gameIDs.map((gameID: string) => getBoxScore(gameID));
   const boxScoresResolvers: AxiosResponse<BoxScore>[] = await Promise.all(boxScoresPromises);
-  const newBoxScores: BoxScore[] = boxScoresResolvers.map((response: AxiosResponse<BoxScore>) => response.data);
+  const newBoxScores: BoxScore[] = boxScoresResolvers.map(({data}: AxiosResponse<BoxScore>) => data);
 
   const previousBoxScoresListOfStrings: string[] = await getList(boxScoresKey);
   const previousBoxScores: BoxScore[] = previousBoxScoresListOfStrings.map((boxScoreString: string) => JSON.parse(boxScoreString));
 
   const allBoxScores: BoxScore[] = [...previousBoxScores, ...newBoxScores];
 
+  const boxScores: BoxScore[] = removeInvalidBoxScores(allBoxScores);
+
   const boxScoresUploadStatus: UploadStatus = await uploadFile(boxScoresKey, allBoxScores);
   console.log('boxScoresUploadStatus', boxScoresUploadStatus);
   if (boxScoresUploadStatus.uploaded) {
     await remove(boxScoresKey);
-    const added: number = await listAddAll(boxScoresKey, allBoxScores.map((schedule: BoxScore) => JSON.stringify(schedule)));
+    const added: number = await listAddAll(boxScoresKey, boxScores.map((schedule: BoxScore): string => JSON.stringify(schedule)));
     console.log(`${boxScoresKey} added to Redis: ${added}`);
     if (added) {
       setLastUpdated(boxScoresKey, added);
@@ -76,6 +78,7 @@ export const dailyUpdate = async () => {
   const rosterResolvers: AxiosResponse<Roster>[] = await Promise.all(rosterPromises);
   const rosters: Roster[] = rosterResolvers.map((response: AxiosResponse<Roster>) => response.data);
 
+  const allRosterPlayers: RosterPlayer[] = rosters.map(({roster}) => roster).flat();
   const allPlayerStats: PlayerStats[] = previousBoxScores.map(({playerStats}) => {
     if (playerStats) {
       return Object.values(playerStats);
@@ -83,7 +86,7 @@ export const dailyUpdate = async () => {
       return [];
     }
   }).flat();
-  const allRosterPlayers: RosterPlayer[] = rosters.map(({roster}) => roster).flat();
+
   const newRosters: RosterPlayer[] = players.map((player: RosterPlayer) => {
      const playerStats: PlayerStats[] = allPlayerStats
        .filter(({playerID}) => playerID === player.playerID)
@@ -145,4 +148,19 @@ function getYesterdayAsYYYYMMDD(): string {
   const yesterday: Date = new Date(today);
   yesterday.setDate(yesterday.getDate() - 1);
   return yesterday.toISOString().split('T')[0].split('-').join('');
+}
+
+function removeInvalidBoxScores(boxScores: BoxScore[]) {
+  const returnArray: BoxScore[] = [];
+  const listOfBoxScoreGameIDs: string[] = [];
+  const boxScoreLength: number = boxScores.length;
+
+  for (let i: number = 0; i < boxScoreLength; i++) {
+    if (!listOfBoxScoreGameIDs.includes(boxScores[i].gameID)) {
+      returnArray.push(boxScores[i]);
+      listOfBoxScoreGameIDs.push(boxScores[i].gameID);
+    }
+  }
+
+  return returnArray;
 }

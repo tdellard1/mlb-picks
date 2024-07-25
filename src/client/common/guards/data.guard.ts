@@ -6,7 +6,7 @@ import {StateService} from "../services/state.service";
 import {TeamSchedule} from "../model/team-schedule.interface";
 import {db, IBoxScore} from "../../../../db";
 import {BoxScore} from "../model/box-score.interface";
-import {MetaData} from "../../../server-ts/singletons/redis";
+import {MetaData} from "../../../server/singletons/redis";
 import {RosterPlayer} from "../model/roster.interface";
 import {Team} from "../model/team.interface";
 import {liveQuery} from "dexie";
