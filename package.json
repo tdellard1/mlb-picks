@@ -7,7 +7,9 @@
     "start": "cd src/server && npm run start",
     "restart": "npm run clean && npm run build && npm run start",
     "build:client": "cd src/client && npm run build",
-    "build:server": "cd src/server && npm run build"
+    "build:server": "cd src/server && npm run build",
+    "heroku-prepare": "npm install",
+    "heroku-postbuild": "npm run heroku-prepare && npm run build"
   },
   "repository": {
     "type": "git",
