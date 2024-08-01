@@ -2,7 +2,6 @@
   "name": "mlb-picks-server",
   "version": "1.0.0",
   "scripts": {
-    "install": "npm install",
     "start": "node ./dist/server/bin/www.js",
     "build:start": "tsc && node ./dist/bin/www.js",
     "build": "tsc"
