@@ -21,6 +21,7 @@ src/server/dist
 *.launch
 .settings/
 *.sublime-workspace
+**/.angular/
 
 # Visual Studio Code
 .vscode/*

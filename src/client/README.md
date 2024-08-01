@@ -26,6 +26,12 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
 
+# Shutdown Heroku Servers
+$ heroku ps:scale web=0 -a mlb-picks
+
+# Start Heroku Servers
+$ heroku ps:scale web=1 -a mlb-picks
+
 ## Run Heroku Logs when app doesn't work
 $ heroku logs --tail -a mlb-picks
 

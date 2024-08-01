@@ -27,25 +27,23 @@ export async function halfDailyUpdate(): Promise<void> {
     const boxScoresToRequest: string[] = [];
     let needToUpdate: boolean = false;
 
-    await writeThroughBoxScores(boxScoresToRequest);
+    const boxScores: BoxScore[] = await getFromCache('boxScores', BoxScore, 'set');
+    const uncompletedBoxScores: string[] = boxScores
+        .filter(({gameStatus}) => !!gameStatus)
+        .filter(({gameStatus}) => gameStatus !== 'Completed')
+        .map(({gameID}) => gameID);
 
-    // const boxScores: BoxScore[] = await getFromCache('boxScores', BoxScore, 'set');
-    // const uncompletedBoxScores: string[] = boxScores
-    //     .filter(({gameStatus}) => !!gameStatus)
-    //     .filter(({gameStatus}) => gameStatus !== 'Completed')
-    //     .map(({gameID}) => gameID);
-    //
-    // await gamesFromYesterday(needToUpdate, boxScoresToRequest, boxScores, getDailySchedule);
-    // await scheduleGamesWithoutBoxScores(needToUpdate, boxScoresToRequest, boxScores, gameIDsWithoutBoxScores);
-    //
-    // if (uncompletedBoxScores.length > 0) {
-    //     needToUpdate = true;
-    //     boxScoresToRequest.push(...uncompletedBoxScores);
-    // }
-    //
-    // if (needToUpdate && boxScoresToRequest.length > 0) {
-    //     await writeThroughBoxScores(boxScoresToRequest);
-    // }
+    await gamesFromYesterday(needToUpdate, boxScoresToRequest, boxScores, getDailySchedule);
+    await scheduleGamesWithoutBoxScores(needToUpdate, boxScoresToRequest, boxScores, gameIDsWithoutBoxScores);
+
+    if (uncompletedBoxScores.length > 0) {
+        needToUpdate = true;
+        boxScoresToRequest.push(...uncompletedBoxScores);
+    }
+
+    if (needToUpdate && boxScoresToRequest.length > 0) {
+        await writeThroughBoxScores(boxScoresToRequest);
+    }
 }
 
 function getYesterday(): string {

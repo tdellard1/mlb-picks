@@ -7,8 +7,8 @@
     "restart": "npm run clean && npm run build && npm run start:dev",
     "clean": "rimraf dist",
     "build": "ng build --configuration development",
-    "watch": "ng build --watch --configuration development",
-    "heroku-postbuild": "ng build --configuration production && npm run tsc"
+    "build:prod": "ng build --configuration production",
+    "watch": "ng build --watch --configuration development"
   },
   "private": true,
   "dependencies": {

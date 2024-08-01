@@ -4,6 +4,7 @@ import {downloadFileWithType, uploadFile} from "../../services/firebase.service.
 import {AxiosResponse} from "axios";
 import {getBoxScore} from "../../services/tank-01.service.js";
 import {Team} from "../../models/teams/teams.model.js";
+import {Roster} from "../../models/players/rosters.model.js";
 const key: string = 'boxScores';
 
 export async function haveBoxScores(): Promise<boolean> {
@@ -14,7 +15,6 @@ export async function haveBoxScores(): Promise<boolean> {
 export function removeDuplicates(boxScores: BoxScore[]): BoxScore[] {
     const uniqueBoxScores: BoxScore[] = [];
     const boxScoreLength: number = boxScores.length;
-    console.log('boxScores', boxScores.filter(({gameID}) => gameID === '20240727_MIA@MIL').length);
 
     for (let i: number = 0; i < boxScoreLength; i++) {
         const boxScoreInQuestion: BoxScore = boxScores[i];
@@ -26,8 +26,6 @@ export function removeDuplicates(boxScores: BoxScore[]): BoxScore[] {
             uniqueBoxScores[boxScoreInQuestionIndex] = boxScoreInQuestion;
         }
     }
-
-    console.log(uniqueBoxScores.filter(({gameID}) => gameID === '20240727_MIA@MIL').length);
 
     return uniqueBoxScores;
 }
@@ -41,7 +39,7 @@ export async function writeThroughBoxScores(gameIDs: string[]) {
         newBoxScores = boxScoreResolvers.map(({data}) => data);
     }
 
-    const oldBoxScores: BoxScore[] = await getCachedBoxScores();
+    const oldBoxScores: BoxScore[] = await retrieveBoxScoresFromDatabase();
     const allBoxScores: BoxScore[] = [...newBoxScores, ...oldBoxScores];
     const uniqueBoxScores: BoxScore[] = removeDuplicates(allBoxScores);
 
@@ -80,11 +78,13 @@ export async function retrieveBoxScoresFromTank01(gameIDs: string[]): Promise<Bo
     return rostersResolvers.map(({data}: AxiosResponse<BoxScore>) => data);
 }
 
-/*                      ETC                     */
+export async function retrieveBoxScoresFromDatabase(): Promise<BoxScore[]> {
+    return downloadFileWithType(key, BoxScore);
+}
+
 export async function boxScoresIncludeDate(boxScores: BoxScore[], yyyyMMdd: string): Promise<boolean> {
     const dates: string[] = boxScores.map(({gameDate}) => gameDate);
     const uniqueDatesInBoxScores: Set<string> = new Set(dates);
 
     return uniqueDatesInBoxScores.has(yyyyMMdd);
-
 }

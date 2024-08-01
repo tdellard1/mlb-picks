@@ -4,14 +4,15 @@
   "scripts": {
     "clean": "rimraf src/server/dist",
     "build": "npm run build:client && npm run build:server",
+    "build:prod": "npm run client:build-prod && npm run build:server",
     "start": "cd src/server && npm run start",
     "restart": "npm run clean && npm run build && npm run start",
-    "build:client": "cd src/client && npm run build",
+    "client:build-prod": "cd src/client && npm run build:prod",
     "build:server": "cd src/server && npm run build",
     "setup": "npm run setup:client && npm run setup:server",
     "setup:server": "cd src/client && npm install",
     "setup:client": "cd src/server && npm install",
-    "heroku-postbuild": "npm run setup && npm run build"
+    "heroku-postbuild": "npm run setup && npm run build:prod"
   },
   "repository": {
     "type": "git",

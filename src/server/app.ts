@@ -25,9 +25,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'client/browser')));
 
-// const job: Job = schedule.scheduleJob('0 */6 * * *', async () => await quarterDailyUpdate());
-// const job2: Job = schedule.scheduleJob('30 */12 * * *', async () => await halfDailyUpdate());
-await halfDailyUpdate();
+const job: Job = schedule.scheduleJob('0 */6 * * *', async () => await quarterDailyUpdate());
+const job2: Job = schedule.scheduleJob('30 */12 * * *', async () => await halfDailyUpdate());
 
 const api: Router = Router()
   .use(boxScoresController)
