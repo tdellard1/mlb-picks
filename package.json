@@ -11,7 +11,7 @@
     "install": "npm run install:client && npm run install:server",
     "install:server": "cd src/client && npm run install",
     "install:client": "cd src/server && npm run install",
-    "heroku-postbuild": "npm run install && npm run build"
+    "heroku-postbuild": "npm install -g && npm run install && npm run build"
   },
   "repository": {
     "type": "git",
