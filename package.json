@@ -8,10 +8,10 @@
     "restart": "npm run clean && npm run build && npm run start",
     "build:client": "cd src/client && npm run build",
     "build:server": "cd src/server && npm run build",
-    "prebuild": "npm run prebuild:client && npm run prebuild:server",
-    "prebuild:server": "cd src/client && npm install",
-    "prebuild:client": "cd src/server && npm install",
-    "heroku-postbuild": "npm install -g && npm run install && npm run build"
+    "setup": "npm run setup:client && npm run setup:server",
+    "setup:server": "cd src/client && npm install",
+    "setup:client": "cd src/server && npm install",
+    "heroku-postbuild": "npm run setup && npm run build"
   },
   "repository": {
     "type": "git",
