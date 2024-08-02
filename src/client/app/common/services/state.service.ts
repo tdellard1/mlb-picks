@@ -12,11 +12,20 @@ import {
   addPlayersToTeamRoster, addTeamsAndBoxScoresToSchedule, removePostponedGames
 } from "../utils/state-builder.utils";
 import {PlayerStats} from "../model/player-stats.interface.js";
+import {PromiseExtended} from "dexie";
+import {db, IBoxScore} from "../../db.js";
 
 @Injectable({
   providedIn: 'root'
 })
 export class StateService {
+  teamsSource$: PromiseExtended<Team[]> = db.teams.toArray();
+  boxScoresSource$: PromiseExtended<IBoxScore[]> = db.boxScores.toArray();
+  schedulesSource$: PromiseExtended<TeamSchedule[]> = db.schedules.toArray();
+  playersSource$: PromiseExtended<RosterPlayer[]> = db.players.toArray();
+  rostersSource$: PromiseExtended<Roster[]> = db.rosters.toArray();
+
+
   private readonly GAME_ID: string = 'gameID';
 
   private _boxScores: Map<string, BoxScore> = new Map();
@@ -24,6 +33,73 @@ export class StateService {
   private _teams: Map<string, Team> = new Map();
   private _schedules: Map<string, TeamSchedule> = new Map();
   private _analytics: Map<string, TeamAnalytics> = new Map();
+
+  async init(): Promise<void> {
+    const teams: Team[] = await this.teamsSource$;
+    const boxScores: IBoxScore[] = await this.boxScoresSource$;
+    const schedules: TeamSchedule[] = await this.schedulesSource$;
+    const players: RosterPlayer[] = await this.playersSource$;
+    const rosters: Roster[] = await this.rostersSource$;
+
+    this.loadStateSlices(teams, players, rosters, schedules, boxScores);
+  }
+
+  async update(t: Team[], b: BoxScore[], s: TeamSchedule[], p: RosterPlayer[], r: Roster[]) {
+    let teams: Team[];
+    let boxScores: IBoxScore[];
+    let schedules: TeamSchedule[];
+    let players: RosterPlayer[];
+    let rosters: Roster[];
+
+    if (t.length === 30) {
+      await db.teams.clear();
+      await db.teams.bulkAdd(t);
+      teams = t;
+      console.log('updated teams');
+    } else {
+      teams = await this.teamsSource$;
+    }
+
+    if (b.length === 30) {
+      await db.boxScores.clear();
+      await db.boxScores.bulkAdd(b);
+      boxScores = b;
+      console.log('updated boxScores');
+    } else {
+      boxScores = await this.boxScoresSource$;
+    }
+
+    if (s.length === 30) {
+      await db.schedules.clear();
+      await db.schedules.bulkAdd(s);
+      schedules = s;
+      console.log('updated schedules');
+    } else {
+      schedules = await this.schedulesSource$;
+    }
+
+    if (p.length === 30) {
+      await db.players.clear();
+      await db.players.bulkAdd(p);
+      players = p;
+      console.log('updated players');
+    } else {
+      players = await this.playersSource$;
+    }
+
+    if (r.length === 30) {
+      await db.rosters.clear();
+      await db.rosters.bulkAdd(r);
+      rosters = r;
+      console.log('updated rosters');
+    } else {
+      rosters = await this.rostersSource$;
+    }
+
+
+
+    this.loadStateSlices(teams, players, rosters, schedules, boxScores);
+  }
 
   loadStateSlices(teams: Team[], players: RosterPlayer[], rosters: Roster[], schedules: TeamSchedule[], boxScores: BoxScore[]) {
     const usableBoxScores: BoxScore[] = removePostponedGames(boxScores);
@@ -40,6 +116,7 @@ export class StateService {
 
     this._analytics = createAnalyticsFromSchedule(this._schedules);
   }
+
 
   getPlayer(playerID: string): RosterPlayer {
     return this._rosterPlayers.get(playerID)!;

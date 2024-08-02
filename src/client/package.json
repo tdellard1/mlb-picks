@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "npm run start:server",
+    "start": "ng serve",
     "restart": "npm run clean && npm run build && npm run start:dev",
     "clean": "rimraf dist",
     "build": "ng build --configuration development",

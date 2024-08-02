@@ -9,6 +9,7 @@
     "restart": "npm run clean && npm run build && npm run start",
     "client:build-prod": "cd src/client && npm run build:prod",
     "build:server": "cd src/server && npm run build",
+    "build:client": "cd src/client && npm run build",
     "setup": "npm run setup:client && npm run setup:server",
     "setup:server": "cd src/client && npm install",
     "setup:client": "cd src/server && npm install",
