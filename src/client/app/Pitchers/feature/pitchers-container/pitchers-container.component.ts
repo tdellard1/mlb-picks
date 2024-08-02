@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ActivatedRoute, Data} from "@angular/router";
 import {map} from "rxjs/operators";
 import {Game, Games} from "../../../common/model/game.interface";
@@ -7,7 +7,7 @@ import {StateService} from "../../../common/services/state.service";
 import {RosterPlayer} from "../../../common/model/roster.interface";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
-import {NgIf, NgOptimizedImage} from "@angular/common";
+import {NgIf} from "@angular/common";
 import {PlayerPitchingStats, PlayerStats} from "../../../common/model/player-stats.interface";
 import {
   MatCell,

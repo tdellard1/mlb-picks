@@ -46,14 +46,6 @@ export async function halfDailyUpdate(): Promise<void> {
     }
 }
 
-function getYesterday(): string {
-    const today: number = new Date().setHours(0, 0, 0, 0);
-    const yesterday: Date = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
-
-    return yesterday.toISOString().split('T')[0].split('-').join('');
-}
-
 async function gamesFromYesterday(needToUpdate: boolean, boxScoresToGet: string[], boxScores: BoxScore[], getDailySchedule: (gameDate: string) => Promise<AxiosResponse<Game[]>>) {
     const today: number = new Date().setHours(0, 0, 0, 0);
     const dateToConvert: Date = new Date(today);

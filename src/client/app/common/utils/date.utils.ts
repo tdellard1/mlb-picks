@@ -1,4 +1,4 @@
-export function getDateObject<T>(dateGiven: string): Date {
+export function getDateObject(dateGiven: string): Date {
   const YEAR_START_INDEX = 0;
   const YEAR_END_INDEX = 4;
 

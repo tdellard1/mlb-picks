@@ -23,7 +23,6 @@ export class BackendApiService {
   }
 
   getGameAnalysis(gameId: string) {
-    const options: HttpOptions = { params: {type: 'teams'}};
     return this.apiService.get(this.serverUrl + `api/game/${gameId}`);
   }
 

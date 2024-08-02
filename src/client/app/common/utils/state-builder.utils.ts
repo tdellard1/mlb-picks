@@ -2,7 +2,6 @@ import {BoxScore} from "../model/box-score.interface";
 import {RosterPlayer} from "../model/roster.interface";
 import {PlayerStats} from "../model/player-stats.interface";
 import {Team} from "../model/team.interface";
-import {StateUtils} from "./state.utils";
 import {TeamSchedule} from "../model/team-schedule.interface";
 import {Game} from "../model/game.interface";
 import {Tank01Date} from "./date.utils";

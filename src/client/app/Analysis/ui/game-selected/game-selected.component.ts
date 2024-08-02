@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {Game} from "../../../common/model/game.interface";
 import {Team} from "../../../common/model/team.interface";
 import {AsyncPipe, DatePipe, NgIf, NgOptimizedImage} from "@angular/common";

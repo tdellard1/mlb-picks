@@ -1,4 +1,3 @@
-import {PlayerStats} from "../../common/model/player-stats.interface";
 import {GameStats} from "../../common/model/game-stats.interface";
 /*
 export class PlayerInfo {

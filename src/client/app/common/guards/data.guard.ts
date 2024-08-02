@@ -1,10 +1,10 @@
 import {CanActivateFn} from '@angular/router';
 import {inject} from "@angular/core";
-import {combineLatest, EMPTY, firstValueFrom, from, Observable, take} from "rxjs";
+import {combineLatest, from, Observable, take} from "rxjs";
 import {BackendApiService} from "../services/backend-api/backend-api.service";
 import {StateService} from "../services/state.service";
 import {TeamSchedule} from "../model/team-schedule.interface";
-import {db, IBoxScore} from "../../db.js";
+import {db} from "../../db.js";
 import {BoxScore} from "../model/box-score.interface";
 import {Roster, RosterPlayer} from "../model/roster.interface";
 import {Team} from "../model/team.interface";
@@ -91,7 +91,7 @@ const isDeepEqual = (object1: any, object2: any) => {
 
   if (objKeys1.length !== objKeys2.length) return false;
 
-  for (let key of objKeys1) {
+  for (const key of objKeys1) {
     const value1 = object1[key];
     const value2 = object2[key];
 

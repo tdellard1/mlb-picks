@@ -27,13 +27,13 @@ export function deepCopy<T>(value: any): any {
   return JSON.parse(JSON.stringify(value)) as T;
 }
 
-export function convertMapToArray<T>(map: Map<any, any>): T[] {
+export function convertMapToArray<T>(map: Map<string, T>): T[] {
   const returnArray: Array<T> = [];
   map.forEach((item) => returnArray.push(item));
   return returnArray;
 }
 
-export function convertArrayToMapFaster<T>(array: any[], prop: string): Map<any, any> {
+export function convertArrayToMapFaster<T>(array: any[], prop: string): Map<string, T> {
   const returnMap: Map<string, T> = new Map();
   const arrayLength: number = array.length;
 
@@ -44,7 +44,7 @@ export function convertArrayToMapFaster<T>(array: any[], prop: string): Map<any,
   return returnMap;
 }
 
-export function convertPlayerStatsArrayToMap(playerStats: PlayerStats[]): Map<any, any> {
+export function convertPlayerStatsArrayToMap(playerStats: PlayerStats[]): Map<string, PlayerStats> {
   const returnMap: Map<string, PlayerStats> = new Map();
   const playerStatsLength: number = playerStats.length;
 
@@ -57,7 +57,7 @@ export function convertPlayerStatsArrayToMap(playerStats: PlayerStats[]): Map<an
   return returnMap;
 }
 
-export function createAnalyticsFromSchedule(teamSchedules: Map<string, TeamSchedule>): Map<any, TeamAnalytics> {
+export function createAnalyticsFromSchedule(teamSchedules: Map<string, TeamSchedule>): Map<string, TeamAnalytics> {
   const returnMap: Map<string, TeamAnalytics> = new Map();
 
   for (const [team, {schedule}] of teamSchedules) {

@@ -28,7 +28,7 @@ export class SlatePredictionsComponent implements OnInit {
   @Input() expert!: Expert;
   @Input() games!: Game[];
   @Input() teams!: Teams;
-  @Output() newSelectionMade: EventEmitter<any> = new EventEmitter();
+  @Output() newSelectionMade: EventEmitter<void> = new EventEmitter();
 
   showPredictions: boolean = true;
   @Input() isMobile!: boolean;

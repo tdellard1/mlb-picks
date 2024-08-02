@@ -60,7 +60,7 @@ export class StateService {
       teams = await this.teamsSource$;
     }
 
-    if (b.length === 30) {
+    if (b.length > 0) {
       await db.boxScores.clear();
       await db.boxScores.bulkAdd(b);
       boxScores = b;
@@ -78,7 +78,7 @@ export class StateService {
       schedules = await this.schedulesSource$;
     }
 
-    if (p.length === 30) {
+    if (p.length > 0) {
       await db.players.clear();
       await db.players.bulkAdd(p);
       players = p;
@@ -141,7 +141,7 @@ export class StateService {
   getTeamNRFI(team: string) {
     const teamSchedule: TeamSchedule | undefined = this._schedules.get(team);
     if (teamSchedule) {
-      return StateUtils.getTeamNRFI(team, teamSchedule, this._boxScores);
+      return StateUtils.getTeamNRFI(team, teamSchedule);
     } else {
       return 'No NRFI Data';
     }

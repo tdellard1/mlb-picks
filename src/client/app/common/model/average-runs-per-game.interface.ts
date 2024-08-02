@@ -13,7 +13,7 @@ export interface BattingAveragePerGame {
 export interface LeagueRanking {
   rank: string;
   team: string;
-  value?: any;
+  value?: string | number;
 }
 
 export interface LeagueRankingRPG {

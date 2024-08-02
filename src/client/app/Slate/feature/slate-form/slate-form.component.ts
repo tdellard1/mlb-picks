@@ -62,7 +62,7 @@ export class SlateFormComponent implements OnChanges, OnDestroy {
   }
 
   getExpertData(expertIndex: number): Expert {
-    return this.expertsData?.at(expertIndex)!;
+    return this.expertsData.at(expertIndex)!;
   }
 
   private createExpert(expert: string = ''): FormGroup {
@@ -80,7 +80,7 @@ export class SlateFormComponent implements OnChanges, OnDestroy {
     this.updateSlate.emit(this.form.value);
   }
 
-  isSelectedExpert(expert: AbstractControl<any>): boolean {
+  isSelectedExpert(expert: AbstractControl): boolean {
     return this.mobile && expert.value.name !== this.mobileExpertSelected;
   }
 }

@@ -3,7 +3,6 @@ import type {Job} from "node-schedule";
 import express, {Router} from "express";
 import schedule from "node-schedule";
 import logger from 'morgan';
-import compression from "compression";
 import cors from "cors";
 import path, {dirname} from 'path';
 import {fileURLToPath} from 'url';

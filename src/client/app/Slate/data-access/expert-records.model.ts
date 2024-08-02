@@ -39,8 +39,8 @@ export class ExpertRecord  {
 
   private loadData(predictions: GamePick[]) {
     const correctArray: boolean[] = predictions.map((gamePick: GamePick) => gamePick.correct);
-    const correctCount: number = correctArray.filter((bool: Boolean) => bool !== null && bool !== undefined && bool === true).length;
-    const incorrectCount: number = correctArray.filter((bool: Boolean) => bool !== null && bool !== undefined && bool === false).length;
+    const correctCount: number = correctArray.filter((bool: boolean) => bool !== null && bool !== undefined && bool === true).length;
+    const incorrectCount: number = correctArray.filter((bool: boolean) => bool !== null && bool !== undefined && bool === false).length;
 
 
     this.correct = this.correct + correctCount;

@@ -24,7 +24,7 @@ export class LoggerService {
   error(msg: any, ...data: any ): void {
     this.logWith(this.logLevel.Error, msg + data);
   }
-  private logWith(level: any, msg: any): void {
+  private logWith(level: number, msg: string): void {
     if (level <= this.logLevel.Error) {
       switch (level) {
         case this.logLevel.None:

@@ -75,7 +75,7 @@ export class TeamAnalyticsUtils {
     return roundToDecimalPlace(runsPerGameAverageTotal, 3);
   }
 
-  static getTeamSluggingAverage(teamAbbreviation: string, {away, home, teamStats, playerStats}: BoxScore) {
+  static getTeamSluggingAverage(teamAbbreviation: string, {playerStats}: BoxScore) {
     const players: PlayerStats[] = Array.from(Object.values(playerStats));
     const playersOnTeam: PlayerStats[] = players.filter((player: PlayerStats) => player.team === teamAbbreviation);
 
@@ -101,7 +101,7 @@ export class TeamAnalyticsUtils {
     return roundToDecimalPlace(runsPerGameAverageTotal, 3);
   }
 
-  static getTeamOnBasePercentage(teamAbbreviation: string, {away, home, teamStats, playerStats}: BoxScore) {
+  static getTeamOnBasePercentage(teamAbbreviation: string, {playerStats}: BoxScore) {
     const players: PlayerStats[] = Array.from(Object.values(playerStats));
     const playersOnTeam: PlayerStats[] = players.filter((player: PlayerStats) => player.team === teamAbbreviation);
 

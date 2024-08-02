@@ -6,12 +6,14 @@
     "start": "ng serve",
     "restart": "npm run clean && npm run build && npm run start:dev",
     "clean": "rimraf dist",
+    "lint": "npx eslint",
     "build": "ng build --configuration development",
     "build:prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development"
   },
   "private": true,
   "dependencies": {
+    "@angular-devkit/build-angular": "^18.0.4",
     "@angular/animations": "^18.0.0",
     "@angular/cdk": "^18.0.3",
     "@angular/cli": "^18.0.4",
@@ -19,7 +21,6 @@
     "@angular/compiler": "^18.0.0",
     "@angular/compiler-cli": "^18.0.0",
     "@angular/core": "^18.0.0",
-    "@angular-devkit/build-angular": "^18.0.4",
     "@angular/forms": "^18.0.0",
     "@angular/material": "^18.0.3",
     "@angular/platform-browser": "^18.0.0",
@@ -41,17 +42,21 @@
     "zone.js": "~0.14.3"
   },
   "devDependencies": {
+    "@eslint/js": "^9.8.0",
     "@types/dompurify": "3.0.5",
     "@types/express": "^4.17.21",
     "@types/jasmine": "~5.1.0",
     "@types/node-schedule": "^2.1.7",
+    "eslint": "^9.8.0",
+    "globals": "^15.9.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.4.2"
+    "typescript": "~5.4.2",
+    "typescript-eslint": "^8.0.0"
   },
   "engines": {
     "node": "20.13.1",

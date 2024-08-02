@@ -24,7 +24,7 @@ export function getStrikeoutsForGame(game: Game, desiredTeam: string) {
   const playerStats: any = game?.boxScore?.playerStats;
   const playersOnTeam: PlayerStats[] = [];
 
-  for (let playerStatsKey in playerStats) {
+  for (const playerStatsKey in playerStats) {
     if ((playerStats[playerStatsKey] as PlayerStats).team === desiredTeam) {
       playersOnTeam.push(playerStats[playerStatsKey]);
     }

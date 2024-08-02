@@ -8,7 +8,7 @@ import {
   ApexXAxis, ApexYAxis,
   NgApexchartsModule
 } from "ng-apexcharts";
-import {ChartData, ChartOptions, ChartSeriesData} from "../../data-access/chart-options";
+import {ChartData, ChartOptions} from "../../data-access/chart-options";
 import {BreakpointObserver, Breakpoints, BreakpointState} from "@angular/cdk/layout";
 import {
   MatAccordion,

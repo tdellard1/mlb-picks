@@ -5,6 +5,7 @@ import {Game} from "./game.interface";
 import {PlayerStats} from "./player-stats.interface";
 import {BattingAveragePerGame} from "./league-rankings/batting-average-per-game.model";
 import {StrikeOutsPerGame} from "./league-rankings/strikeout-average-per-game.model";
+import {PlayersStats} from "./box-score.interface.js";
 
 export class AnalysisData {
   averageRunsPerGameModel: AverageRunsPerGame;
@@ -37,9 +38,9 @@ export class BattingAverageModel {
 
     games.forEach(game => {
       if (game?.gameID === '20240623_SF@STL') {
-        const playerStats: any = game?.boxScore?.playerStats;
+        const playerStats: PlayersStats | undefined = game?.boxScore?.playerStats;
         const playersOnHomeTeam: PlayerStats[] = [];
-        for (let playerStatsKey in playerStats) {
+        for (const playerStatsKey in playerStats) {
           if ((playerStats[playerStatsKey] as PlayerStats).team === "STL") {
             playersOnHomeTeam.push(playerStats[playerStatsKey]);
           }

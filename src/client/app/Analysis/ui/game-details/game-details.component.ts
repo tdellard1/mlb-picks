@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {AsyncPipe, NgIf} from "@angular/common";
 import {GameSelectorService} from "../../data-access/services/game-selector.service";
 import {StateService} from "../../../common/services/state.service";

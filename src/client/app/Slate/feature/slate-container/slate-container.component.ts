@@ -32,7 +32,6 @@ import {BreakpointObserver, Breakpoints, BreakpointState} from "@angular/cdk/lay
 import {map} from "rxjs/operators";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
-import {TeamSchedule} from "../../../common/model/team-schedule.interface";
 import {Tank01Date} from "../../../common/utils/date.utils";
 
 @Component({

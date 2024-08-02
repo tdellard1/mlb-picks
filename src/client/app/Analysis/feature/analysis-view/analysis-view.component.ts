@@ -82,73 +82,19 @@ export class AnalysisViewComponent extends BaseGameSelectorComponent implements 
     const awayTeam: string = away.teamName;
 
     Object.keys(Analytic).forEach((key: string) => {
-      const homeStats: number[] = homeAnalytics.analytics?.slice().map((analytics: any) => analytics[key]!)!;
-      const awayStats: number[] = awayAnalytics.analytics?.slice().map((analytics: any) => analytics[key]!)!;
-      this.charts.push(this.createChart((Analytic as any)[key],
-        `${homeTeam} - ${(Analytic as any)[key]}`,
+      const homeStats: number[] = homeAnalytics.analytics!.slice().map((analytics: Analytics) => analytics[key]!)!;
+      const awayStats: number[] = awayAnalytics.analytics!.slice().map((analytics: Analytics) => analytics[key]!)!;
+      this.charts.push(this.createChart(Analytic.get(key)!,
+        `${homeTeam} - ${Analytic.get(key)}`,
         homeStats,
-        `${awayTeam} - ${(Analytic as any)[key]}`,
+        `${awayTeam} - ${Analytic.get(key)}`,
         awayStats));
     });
-
-
-    // const battingAveragesHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.battingAverageForGame!)!;
-    // const battingAveragesAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.battingAverageForGame!)!;
-    // this.charts.push(this.createChart('Batting Average',
-    //   `${homeTeam} - Batting Averages`,
-    //   battingAveragesHome,
-    //   `${awayTeam} - Batting Averages`,
-    //   battingAveragesAway));
-    //
-    // const runsForGameHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.runsForGame!)!;
-    // const runsForGameAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.runsForGame!)!;
-    // this.charts.push(this.createChart('Runs For Games',
-    //   `${homeTeam} - Runs`,
-    //   runsForGameHome,
-    //   `${awayTeam} - Runs`,
-    //   runsForGameAway));
-    //
-    // const sluggingPercentageHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.sluggingPercentage!)!;
-    // const sluggingPercentageAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.sluggingPercentage!)!;
-    // this.charts.push(this.createChart('Slugging Percentage',
-    //   `${homeTeam} - Slugging Percentage`,
-    //   sluggingPercentageHome,
-    //   `${awayTeam} - Slugging Percentage`,
-    //   sluggingPercentageAway));
-    //
-    //
-    // const onBasePercentageHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.onBasePercentage!)!;
-    // const onBasePercentageAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.onBasePercentage!)!;
-    // this.charts.push(this.createChart('On Base Percentage',
-    //   `${homeTeam} - On Base Percentage`,
-    //   onBasePercentageHome,
-    //   `${awayTeam} - On Base Percentage`,
-    //   onBasePercentageAway));
-    //
-    //
-    // const onBasePlusSluggingHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.onBasePlusSlugging!)!;
-    // const onBasePlusSluggingAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.onBasePlusSlugging!)!;
-    // this.charts.push(this.createChart(
-    //   'On Base Plus Slugging',
-    //   `${homeTeam} - On Base Plus Slugging`,
-    //   onBasePlusSluggingHome,
-    //   `${awayTeam} - On Base Plus Slugging`,
-    //   onBasePlusSluggingAway));
-    //
-    //
-    // const hittingStrikeOutHome: number[] = homeAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.hittingStrikeouts!)!;
-    // const hittingStrikeOutAway: number[] = awayAnalytics.analytics?.slice().map((analytics: Analytics) => analytics.hittingStrikeouts!)!;
-    // this.charts.push(this.createChart(
-    //   'Hitting Strikeouts',
-    //   `${homeTeam} - Hitting Strikeouts`,
-    //   hittingStrikeOutHome,
-    //   `${awayTeam} - Hitting Strikeouts`,
-    //   hittingStrikeOutAway));
   }
 
 
   /** TODO: Iterate through all Keys of analytics and create chart for all */
-  private createChart(nameOfChart: string, homeTeamLabel: string, homeTeamData: any[], awayTeamLabel: string, awayTeamData: any[]) {
+  private createChart(nameOfChart: string, homeTeamLabel: string, homeTeamData: number[], awayTeamLabel: string, awayTeamData: number[]) {
     return {
       nameOfChart,
       series: [

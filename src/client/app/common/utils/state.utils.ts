@@ -1,14 +1,14 @@
-import {Roster, RosterPlayer} from "../model/roster.interface";
+import {RosterPlayer} from "../model/roster.interface";
 import {TeamSchedule} from "../model/team-schedule.interface";
 import {deepCopy} from "./general.utils";
 import {PlayerStats} from "../model/player-stats.interface";
 import {Tank01Date} from "./date.utils";
-import {Game, LineScore} from "../model/game.interface";
+import {Game} from "../model/game.interface";
 import {BoxScore} from "../model/box-score.interface";
 
 export class StateUtils {
   static batterStreaks(schedules: TeamSchedule[]) {
-    const players: RosterPlayer[] = schedules.map((teamSchedule: TeamSchedule) => teamSchedule.teamDetails?.roster!).flat();
+    const players: RosterPlayer[] = schedules.map((teamSchedule: TeamSchedule) => teamSchedule.teamDetails!.roster!).flat();
     const nonPitchingPlayers: RosterPlayer[] = players.filter(({pos}: RosterPlayer) => pos.toUpperCase() !== 'P');
     const playersAndHitStreak = nonPitchingPlayers.map(({team, longName, games, gamesMap}: RosterPlayer) => {
 
@@ -33,7 +33,7 @@ export class StateUtils {
     const hitters: any[] = [];
     rosterPlayers.forEach((rosterPlayer: RosterPlayer) => {
       let hitStreak = 0;
-      const {team, longName, games, gamesMap}: RosterPlayer = rosterPlayer;
+      const {team, longName, games}: RosterPlayer = rosterPlayer;
 
       if (games) {
         const gamesCopy = deepCopy(games);
@@ -87,7 +87,7 @@ export class StateUtils {
   }
 
   static getNoRunsFirstInningStreak(boxScoreMap: Map<string, BoxScore>, {games, playerID, longName}: RosterPlayer) {
-    function pitcherThrewNoRunnerFirstInning({playerStats, lineScore}: BoxScore, playerIdentifier: string) {
+    function pitcherThrewNoRunnerFirstInning({playerStats, lineScore}: BoxScore) {
       const {team}: PlayerStats = playerStats[playerID];
 
       if (lineScore.away.team === team) {
@@ -104,7 +104,7 @@ export class StateUtils {
       return '0';
     }
 
-    const gameIDs: string[] = games?.map(({gameID}: PlayerStats) => gameID)!;
+    const gameIDs: string[] = games!.map(({gameID}: PlayerStats) => gameID)!;
     const boxScoresOfGames: BoxScore[] = gameIDs
       .map((gameID: string) => boxScoreMap.get(gameID)!)
       /** TODO: I need to make this undefined check because it breaks app, figure out why and how to prevent it at a higher level*/
@@ -122,8 +122,8 @@ export class StateUtils {
     let boxScore: BoxScore | undefined = boxScoresOfGames.pop();
 
     if (boxScore) {
-      const firstResult: boolean = pitcherThrewNoRunnerFirstInning(boxScore, playerID);
-      while (boxScore && firstResult === pitcherThrewNoRunnerFirstInning(boxScore, playerID)) {
+      const firstResult: boolean = pitcherThrewNoRunnerFirstInning(boxScore);
+      while (boxScore && firstResult === pitcherThrewNoRunnerFirstInning(boxScore)) {
         if (firstResult) {
           NRFI++;
         } else {
@@ -136,7 +136,7 @@ export class StateUtils {
     return `${NRFI}`;
   }
 
-  static getTeamNRFI(team: string, {schedule}: TeamSchedule, boxScoresMap: any): string {
+  static getTeamNRFI(team: string, {schedule}: TeamSchedule): string {
     const games: Game[] = schedule.filter(({boxScore}: Game) => boxScore !== undefined);
 
     const totalGames = games.length;
