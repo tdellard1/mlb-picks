@@ -1,19 +1,15 @@
 <ng-container *ngIf="game">
   <div class="game-details-container" *ngIf="hasDataToDisplayPitchers && away && home">
-<!--    <span class="justify-center">{{playersMap.get(game.probableStartingPitchers.away)?.longName}}</span>-->
-<!--    <span></span>-->
-<!--    <span class="justify-center">{{playersMap.get(game.probableStartingPitchers.home)?.longName}}</span>-->
     <span class="justify-center fs-smaller">{{away.conference.split(' ')[0]}} - {{away.division}}</span>
     <span></span>
     <span class="justify-center fs-smaller">{{home.conference.split(' ')[0]}} - {{home.division}}</span>
-    <span class="justify-center fs-smaller">Avg: {{away.teamStats.Hitting.avg}}</span>
+    <a class="justify-center fs-smaller" [routerLink]="'/pitchers/' + game.probableStartingPitchers.away">
+      <span>{{playersMap.get(game.probableStartingPitchers.away)?.longName}}</span>
+    </a>
     <span></span>
-    <span class="justify-center fs-smaller">Avg: {{home.teamStats.Hitting.avg}}</span>
-
-
-<!--    <span class="justify-center">{{home.teamStats.Pitching.WHIP}}</span>-->
-<!--    <span>WHIP</span>-->
-<!--    <span class="justify-center">{{away.teamStats.Pitching.WHIP}}</span>-->
+    <a class="justify-center fs-smaller" [routerLink]="'/pitchers/' + game.probableStartingPitchers.home">
+      <span>{{playersMap.get(game.probableStartingPitchers.home)?.longName}}</span>
+    </a>
   </div>
 </ng-container>
 

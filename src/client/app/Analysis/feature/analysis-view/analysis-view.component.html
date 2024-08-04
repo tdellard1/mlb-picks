@@ -1,7 +1,13 @@
-<div class="analysis-container" *ngIf="(game$ | async)?.gameID">
-  @for (chart of charts; track chart) {
-    <line-chart [chartData]="chart"></line-chart>
-  }
+<ng-container *ngIf="!(spinner$ | async); else spinner">
+  <div class="analysis-container" *ngIf="home && away">
+    @for (chart of charts; track chart) {
+      <line-chart [chartData]="chart"></line-chart>
+    }
+  </div>
+</ng-container>
 
-  <nrfi-panel [game]="(game$ | async)!"></nrfi-panel>
-</div>
+<ng-template #spinner>
+  <div class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

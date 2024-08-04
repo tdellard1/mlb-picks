@@ -56,7 +56,7 @@ export class GameSelectorComponent extends SubscriptionHolder implements OnDestr
     const away: Team = this.teams.get(game.away)!;
     const home: Team = this.teams.get(game.home)!;
     this.gameSelectorService.gameSelected(game, home, away);
-    this.router.navigate([`analysis/${game.gameID}`]);
+    this.router.navigate([`analysis/${game.gameID}`], {onSameUrlNavigation: "reload"});
   }
 
   private dailyScheduleSorter = (a: Game, b: Game) => {

@@ -1,14 +1,11 @@
 import {Component} from '@angular/core';
-import {ActivatedRoute, Data} from "@angular/router";
-import {map} from "rxjs/operators";
+import {ActivatedRoute, Data, Router, RouterOutlet} from "@angular/router";
 import {Game, Games} from "../../../common/model/game.interface";
 import {SubscriptionHolder} from "../../../common/components/subscription-holder.component";
-import {StateService} from "../../../common/services/state.service";
 import {RosterPlayer} from "../../../common/model/roster.interface";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
 import {NgIf} from "@angular/common";
-import {PlayerPitchingStats, PlayerStats} from "../../../common/model/player-stats.interface";
 import {
   MatCell,
   MatCellDef,
@@ -18,7 +15,6 @@ import {
   MatHeaderRowDef,
   MatRow, MatRowDef, MatTable
 } from "@angular/material/table";
-import {sortByGameDate} from "../../../common/utils/state-builder.utils";
 
 @Component({
   selector: 'pitchers-container',
@@ -27,69 +23,42 @@ import {sortByGameDate} from "../../../common/utils/state-builder.utils";
     NgSelectModule,
     FormsModule,
     NgIf,
-    MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable, MatHeaderCellDef
+    MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable, MatHeaderCellDef, RouterOutlet
   ],
   templateUrl: './pitchers-container.component.html',
   styleUrl: './pitchers-container.component.css'
 })
 export class PitchersContainerComponent extends SubscriptionHolder {
-  selectedPitcher: RosterPlayer;
-  dataSource: PitcherStatsElements[] = [];
   pitchersArray: RosterPlayer[] = [];
-  displayedColumns: string[] = ['Date', 'IP', 'H', 'R', 'ER', 'HR', 'BB', 'SO', 'Start'];
+  selectedPitcher: RosterPlayer;
+
+
 
   constructor(private route: ActivatedRoute,
-              private stateService: StateService) {
+              private router: Router) {
     super();
+
     this.subscriptions.push(
-      this.route.data.pipe(map(({dailySchedule}: Data) => dailySchedule as Game[]))
-        .subscribe((games: Game[]) => {
+      this.route.data
+        .subscribe((data: Data) => {
+          const players: RosterPlayer[] = data['players'] as RosterPlayer[];
+          const games: Game[] = data['dailySchedule'] as Game[];
+
           if (games.length > 1) {
             this.pitchersArray = new Games(games).sortedGames
               .map(({probableStartingPitchers}: Game) => [probableStartingPitchers.away, probableStartingPitchers.home])
               .flat()
               .filter(Boolean)
-              .map((pitcherID) => this.stateService.getPlayer(pitcherID))
-              .filter(Boolean);
+              .map((pitcherID) => players.find((player: RosterPlayer) => player.playerID === pitcherID)!);
 
             this.selectedPitcher = this.pitchersArray[0];
-            this.selectPitcher();
+            this.changePitcher();
           }
         })
     )
   }
 
-
-  selectPitcher() {
-    console.log('selectedPitcher: ', this.selectedPitcher);
-    this.dataSource = [];
-    this.selectedPitcher.games?.sort(sortByGameDate()).reverse().forEach((playerStats: PlayerStats) => {
-      const {InningsPitched, H, R, ER, HR, BB, SO}: PlayerPitchingStats = playerStats.Pitching;
-      this.dataSource.push({
-        Date: this.getGameDate(playerStats),
-        IP: InningsPitched,
-        H, R, ER, HR, BB, SO, Start: playerStats.started
-      } as PitcherStatsElements);
-    });
-
+  changePitcher() {
+    this.router.navigate([`pitchers/${this.selectedPitcher.playerID}`], {onSameUrlNavigation: "reload"});
   }
-
-  getGameDate({gameID}: PlayerStats): string {
-    const yyyyMMdd = gameID.split('_')[0];
-    const formattedDate = yyyyMMdd.replace(/(\d{4})(\d{2})(\d{2})/g, '$1/$2/$3');
-    const date: Date = new Date(formattedDate);
-
-    return `${date.getMonth() + 1}/${date.getDate()}`;
-  }
-}
-
-export interface PitcherStatsElements {
-  IP: string;
-  H: string;
-  R: string;
-  ER: string;
-  HR: string;
-  BB: string;
-  SO: string;
-  Start: string;
 }

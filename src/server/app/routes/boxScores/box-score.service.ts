@@ -30,6 +30,27 @@ export function removeDuplicates(boxScores: BoxScore[]): BoxScore[] {
     return uniqueBoxScores;
 }
 
+export async function addBoxScoresToUniqueSets(gameIDs: string[]) {
+    console.log(gameIDs.length);
+    let newBoxScores: BoxScore[] = [];
+
+    if (gameIDs.length > 0) {
+        const boxScorePromises: Promise<AxiosResponse<BoxScore>>[] = gameIDs.map((gameID: string) => getBoxScore(gameID));
+        const boxScoreResolvers: AxiosResponse<BoxScore>[] = await Promise.all(boxScorePromises);
+        newBoxScores = boxScoreResolvers.map(({data}) => data);
+    }
+
+    const cacheRequests: Promise<number>[] = newBoxScores.map((boxScore: BoxScore) => {
+        const key: string = `boxScore:${boxScore.gameID}`;
+        const data: string = JSON.stringify(boxScore);
+        return addToCache(key, data);
+    });
+
+    const responses: number[] = await Promise.all(cacheRequests);
+    return responses.every(value => value === 1) && responses.length === gameIDs.length;
+
+}
+
 export async function writeThroughBoxScores(gameIDs: string[]) {
     let newBoxScores: BoxScore[] = [];
 

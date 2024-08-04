@@ -35,6 +35,16 @@ export async function addSchedulesToCache(schedules: Schedule[]): Promise<number
 }
 
 
+export async function addSchedulePerSetInCache(schedules: Schedule[]): Promise<number[]> {
+    const redisSetRequests: Promise<number>[] = schedules.map((schedule: Schedule) => {
+        const key: string = `schedule:${schedule.team}`;
+        const data: string = JSON.stringify(schedule);
+        return addToCache(key, data);
+    });
+
+    return await Promise.all(redisSetRequests);
+}
+
 export async function replaceSchedulesInCache(schedules: Schedule[]): Promise<number> {
     const stringifySchedules: string[] = schedules.map((roster: Schedule) => JSON.stringify(roster, null, 0));
     return await replaceInCache(key, stringifySchedules, 'set');

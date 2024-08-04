@@ -1,7 +1,5 @@
 import {ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
-import {Game} from "../../../common/model/game.interface";
-import {Team} from "../../../common/model/team.interface";
 import {Analytic, Analytics, TeamAnalytics} from "../../../common/model/team-schedule.interface";
 import {MatIcon} from "@angular/material/icon";
 import {MatFabButton} from "@angular/material/button";
@@ -19,10 +17,10 @@ import {
   MatExpansionPanelHeader,
   MatExpansionPanelTitle
 } from "@angular/material/expansion";
-import {NrfiPanelComponent} from "../../ui/nrfi-panel/nrfi-panel.component";
-import {GameSelectorService} from "../../data-access/services/game-selector.service";
-import {StateService} from "../../../common/services/state.service";
-import {BaseGameSelectorComponent} from "../../../common/components/base-game-selector/base-game-selector.component";
+import {ActivatedRoute, Data, Event, NavigationEnd, NavigationStart, Router} from "@angular/router";
+import {SubscriptionHolder} from "../../../common/components/subscription-holder.component.js";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import {BehaviorSubject, Observable} from "rxjs";
 
 @Component({
   selector: 'analysis-component-view',
@@ -36,64 +34,64 @@ import {BaseGameSelectorComponent} from "../../../common/components/base-game-se
     NgForOf,
     NgIf,
     LineChartComponent,
-    NrfiPanelComponent,
-    AsyncPipe
+    AsyncPipe, MatProgressSpinner
   ],
   templateUrl: './analysis-view.component.html',
   styleUrl: './analysis-view.component.css',
   encapsulation: ViewEncapsulation.None
 })
-export class AnalysisViewComponent extends BaseGameSelectorComponent implements OnInit {
-  private teamMap: Map<string, Team> = new Map();
+export class AnalysisViewComponent extends SubscriptionHolder implements OnInit {
+  homeAnalytics: TeamAnalytics;
+  home: string;
+
+  awayAnalytics: TeamAnalytics;
+  away: string;
 
   charts: ChartData[] = [];
+  _spinner: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private stateService: StateService,
-              gameSelectorService: GameSelectorService,
-              changeDetectionRef: ChangeDetectorRef) {
-    super(gameSelectorService, changeDetectionRef);
+  get spinner$(): Observable<boolean> {
+    return this._spinner.asObservable();
+  }
+
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) {
+    super();
   }
 
   ngOnInit(): void {
-    this.teamMap = this.stateService.allTeams;
-
     this.subscriptions.push(
-      this.game$.subscribe((game: Game) => {
-        const home: Team = this.teamMap.get(game.home)!;
-        const away: Team = this.teamMap.get(game.away)!;
-        this.gameSelected(game, away, home);
+      this.activatedRoute.data.subscribe(({game}: Data) => {
+        this.home = game.home.team;
+        this.away = game.away.team;
+        this.homeAnalytics = new TeamAnalytics(this.home, game.home.schedule);
+        this.awayAnalytics = new TeamAnalytics(this.away, game.away.schedule);
+        this.charts = [];
+        this.populateCharts();
+      }),
+      this.router.events.subscribe((event: Event) => {
+        if (event instanceof NavigationStart) {
+          this._spinner.next(true);
+        }
+
+        if (event instanceof NavigationEnd) {
+          this._spinner.next(false);
+        }
       })
     )
   }
 
-  gameSelected({gameID}: Game, away: Team, home: Team) {
-    const hasBothTeams: boolean = !!away && !!home;
-
-    if (gameID && hasBothTeams) {
-      this.charts = [];
-      this.makeEverythingWork(away, home);
-    }
-  }
-
-  makeEverythingWork(away: Team, home: Team) {
-    const homeAnalytics: TeamAnalytics = this.stateService.getTeamAnalytics(home.teamAbv);
-    const awayAnalytics: TeamAnalytics = this.stateService.getTeamAnalytics(away.teamAbv);
-    const homeTeam: string = home.teamName;
-    const awayTeam: string = away.teamName;
-
-    Object.keys(Analytic).forEach((key: string) => {
-      const homeStats: number[] = homeAnalytics.analytics!.slice().map((analytics: Analytics) => analytics[key]!)!;
-      const awayStats: number[] = awayAnalytics.analytics!.slice().map((analytics: Analytics) => analytics[key]!)!;
+  populateCharts() {
+    [...Analytic.keys()].forEach((key: string) => {
+      const homeStats: number[] = this.homeAnalytics.analytics!.slice().map((analytics: Analytics) => analytics[key]!)!;
+      const awayStats: number[] = this.awayAnalytics.analytics!.slice().map((analytics: Analytics) => analytics[key]!)!;
       this.charts.push(this.createChart(Analytic.get(key)!,
-        `${homeTeam} - ${Analytic.get(key)}`,
+        `${this.home} - ${Analytic.get(key)}`,
         homeStats,
-        `${awayTeam} - ${Analytic.get(key)}`,
+        `${this.away} - ${Analytic.get(key)}`,
         awayStats));
     });
   }
 
-
-  /** TODO: Iterate through all Keys of analytics and create chart for all */
   private createChart(nameOfChart: string, homeTeamLabel: string, homeTeamData: number[], awayTeamLabel: string, awayTeamData: number[]) {
     return {
       nameOfChart,

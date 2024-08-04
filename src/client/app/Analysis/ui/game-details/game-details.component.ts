@@ -6,13 +6,15 @@ import {RosterPlayer} from "../../../common/model/roster.interface";
 import {BaseGameSelectorComponent} from "../../../common/components/base-game-selector/base-game-selector.component";
 import {Game} from "../../../common/model/game.interface";
 import {Team} from "../../../common/model/team.interface";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'game-details',
   standalone: true,
   imports: [
     AsyncPipe,
-    NgIf
+    NgIf,
+    RouterLink
   ],
   templateUrl: './game-details.component.html',
   styleUrl: './game-details.component.css',

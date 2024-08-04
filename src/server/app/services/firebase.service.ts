@@ -96,3 +96,17 @@ export const loadData = async (fileKeys: string[]): Promise<void> => {
         }
     }
 }
+
+export declare type FirebaseClient = {
+    downloadFile: (keyFile: string) => Promise<any[]>;
+    uploadFile: <T>(fileName: string, fileData: T) => Promise<any>;
+    downloadFileWithType: <T>(keyFile: string, type: { new(parse: any): T }) => Promise<T[]>
+};
+
+export default function firebaseClient(): FirebaseClient {
+    return {
+        uploadFile,
+        downloadFile,
+        downloadFileWithType
+    }
+}

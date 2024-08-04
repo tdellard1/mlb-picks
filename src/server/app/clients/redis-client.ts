@@ -21,14 +21,14 @@ const redisClient: RedisClient =
             port: 12887
         }
     })
-        .on('error', err => console.log('Redis Client Error', err))
+        .on('ready', () => console.log('Redis Client is Ready'))
         .on('end', () => console.log('Redis Client Ending'))
+        .on('reconnecting', () => console.log('Redis Client Reconnecting...'))
         .on('connect', () => {
             console.log('##########################################################');
             console.log('#####            REDIS STORE CONNECTED               #####');
             console.log('##########################################################\n');
-        })
-        .connect();
+        }).connect();
 
 export function getClient(): RedisClient {
     return redisClient;

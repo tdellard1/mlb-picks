@@ -1,6 +1,13 @@
 .analysis-container {
   display: block;
-  height: 72%;
+  height: 74%;
   overflow-y: auto;
   padding-bottom: 5px;
+}
+
+.spinner-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

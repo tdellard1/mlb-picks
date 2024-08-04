@@ -1,7 +1,7 @@
 import {Injectable, isDevMode} from '@angular/core';
 import {ApiService} from "../api-services/api.service";
 import {TeamSchedule} from "../../model/team-schedule.interface";
-import {map} from "rxjs/operators";
+import {map, mergeAll, toArray} from "rxjs/operators";
 import {first, Observable} from "rxjs";
 import {Slates} from "../../../Slate/data-access/slate.model";
 import {Team, Teams} from "../../model/team.interface";
@@ -22,8 +22,8 @@ export class BackendApiService {
       .pipe(first());
   }
 
-  getGameAnalysis(gameId: string) {
-    return this.apiService.get(this.serverUrl + `api/game/${gameId}`);
+  getGameAnalysisData(gameId: string): Observable<any> {
+    return this.apiService.get(this.serverUrl + `api/analysis/${gameId}`);
   }
 
   // ---------------------------------------------------------------
@@ -79,6 +79,11 @@ export class BackendApiService {
   }
 
   getTeamsArray(): Observable<Team[]> {
-    return this.apiService.get<Team[]>(this.serverUrl + 'api/teams');
+    return this.apiService.get<Team[]>(this.serverUrl + 'api/teams')
+      .pipe(
+        mergeAll(),
+        map((value) => new Team(value)),
+        toArray()
+      );
   }
 }

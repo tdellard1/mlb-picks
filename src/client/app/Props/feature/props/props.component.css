@@ -1,5 +1,8 @@
 :host {
   padding-right: 5px;
+  display: block;
+  height: 94%;
+  overflow: auto;
 }
 
 .image-container {

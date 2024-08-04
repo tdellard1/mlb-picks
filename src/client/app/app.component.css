@@ -44,8 +44,8 @@ mat-sidenav {
 }
 
 mat-sidenav-content {
-  padding-top: 3.5rem;
-  height: 94%;
+  padding-top: 1.75rem;
+  height: 100%;
 
   @media screen and (min-width: 600px) {
     padding-top: 4rem;

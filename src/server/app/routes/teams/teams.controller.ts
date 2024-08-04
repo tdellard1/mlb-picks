@@ -14,6 +14,7 @@ router.get(`/${key}`,
                 const result: Team[] = await retrieveTeamsFromCache();
 
                 if (result.length > 0) {
+                    console.log(key, result);
                     res.json(result);
                 } else {
                     next();

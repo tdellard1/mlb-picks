@@ -1,5 +1,5 @@
 import {BoxScore} from "../model/box-score.interface";
-import {RosterPlayer} from "../model/roster.interface";
+import {Roster, RosterPlayer} from "../model/roster.interface";
 import {PlayerStats} from "../model/player-stats.interface";
 import {Team} from "../model/team.interface";
 import {TeamSchedule} from "../model/team-schedule.interface";
@@ -80,7 +80,10 @@ export function addPlayersToTeamRoster(teams: Team[], rosterPlayers: Map<string,
       }
     });
 
-    team.roster = players;
+    team.roster = {
+      team: team.teamAbv,
+      roster: players
+    } as Roster;
 
     return team;
   });
