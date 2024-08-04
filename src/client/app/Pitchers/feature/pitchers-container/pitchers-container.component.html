@@ -5,7 +5,7 @@
            [clearable]="false">
   @for (pitcher of pitchersArray; track pitcher) {
     <ng-option [value]="pitcher">
-      {{ pitcher.longName }}
+      {{ pitcher.longName }} - {{ pitcher.team }}
     </ng-option>
   }
 </ng-select>

@@ -11,3 +11,8 @@ h3, h6 {
 .mat-mdc-row {
   height: auto;
 }
+
+ng-select {
+  position: sticky;
+  top: 0;
+}
