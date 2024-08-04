@@ -30,7 +30,7 @@ export async function addRostersToCache(rosters: Roster[]): Promise<number> {
 
 export async function replaceRostersInCache(rosters: Roster[]): Promise<number> {
     const stringifyRosters: string[] = rosters.map((roster: Roster) => JSON.stringify(roster, null, 0));
-    return await replaceInCache(key, stringifyRosters, 'set');
+    return await replaceInCache(key, stringifyRosters);
 }
 
 export async function hasCachedRosters(): Promise<boolean> {

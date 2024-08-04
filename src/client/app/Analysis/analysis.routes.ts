@@ -13,7 +13,7 @@ export const routes: Routes = [
         path: ':gameId',
         component: AnalysisViewComponent,
         resolve: {
-          game: gameResolver
+          matchUp: gameResolver
         }
       }
     ]

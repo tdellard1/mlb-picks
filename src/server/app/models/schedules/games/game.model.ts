@@ -22,7 +22,7 @@
 import {LineScore, LineUp, Teams} from "./starting-lineups.model.js";
 import {BoxScore} from "../../boxScores/box-scores.model.js";
 
-export interface Game {
+export class Game {
     gameID: string;
     gameType: string;
     away: string;
@@ -40,4 +40,24 @@ export interface Game {
     lineScore: Teams<LineScore>;
     gameStatusCode: string;
     boxScore: BoxScore;
+
+    constructor(data: any) {
+        this.gameID = data.gameID;
+        this.gameType = data.gameType;
+        this.away = data.away;
+        this.teamIDHome = data.teamIDHome;
+        this.gameDate = data.gameDate;
+        this.gameStatus = data.gameStatus;
+        this.teamIDAway = data.teamIDAway;
+        this.home = data.home;
+        this.awayResult = data.awayResult;
+        this.gameTime = data.gameTime;
+        this.gameTime_epoch = data.gameTime_epoch;
+        this.homeResult = data.homeResult;
+        this.probableStartingLineups = data.probableStartingLineups;
+        this.probableStartingPitchers = data.probableStartingPitchers;
+        this.lineScore = data.lineScore;
+        this.gameStatusCode = data.gameStatusCode;
+        this.boxScore = data.boxScore;
+    }
 }

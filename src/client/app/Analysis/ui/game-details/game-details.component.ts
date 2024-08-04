@@ -1,12 +1,11 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {AsyncPipe, NgIf} from "@angular/common";
-import {GameSelectorService} from "../../data-access/services/game-selector.service";
 import {StateService} from "../../../common/services/state.service";
 import {RosterPlayer} from "../../../common/model/roster.interface";
-import {BaseGameSelectorComponent} from "../../../common/components/base-game-selector/base-game-selector.component";
 import {Game} from "../../../common/model/game.interface";
 import {Team} from "../../../common/model/team.interface";
-import {RouterLink} from "@angular/router";
+import {ActivatedRoute, Data, RouterLink} from "@angular/router";
+import {SubscriptionHolder} from "../../../common/components/subscription-holder.component.js";
 
 @Component({
   selector: 'game-details',
@@ -20,31 +19,41 @@ import {RouterLink} from "@angular/router";
   styleUrl: './game-details.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GameDetailsComponent extends BaseGameSelectorComponent implements OnInit {
+export class GameDetailsComponent extends SubscriptionHolder implements OnInit, OnDestroy {
   playersMap: Map<string, RosterPlayer> = new Map();
+  game: Game;
   away: Team;
   home: Team;
 
   constructor(private stateService: StateService,
-              gameSelectorService: GameSelectorService,
-              changeDetectionRef: ChangeDetectorRef) {
-    super(gameSelectorService,
-      changeDetectionRef);
+              private activatedRoute: ActivatedRoute) {
+    super();
   }
 
   ngOnInit(): void {
+    this.playersMap = this.stateService.allPlayers;
+
     this.subscriptions.push(
-      this.game$.subscribe((game: Game) => {
-        if (game && game.home && game.away) {
-          this.away = this.stateService.allTeams.get(game.away)!;
-          this.home = this.stateService.allTeams.get(game.home)!;
-        }
+      this.activatedRoute.data.subscribe((data: Data) => {
+        const gameID: string = this.activatedRoute.snapshot.params['gameId'];
+        const games: Game[] = data['dailySchedule'];
+        const {away, home} = data['matchUp'];
+
+        console.log(this.playersMap, this.stateService.allPlayers);
+        console.log(games.find(game => game.gameID === gameID)!.probableStartingPitchers);
+
+        this.game = games.find(game => game.gameID === gameID)!;
+        this.home = home.team;
+        this.away = away.team;
       })
     )
-    this.playersMap = this.stateService.allPlayers;
   }
 
   get hasDataToDisplayPitchers() {
     return this.game.gameID && (this.game.probableStartingPitchers.away || this.game.probableStartingPitchers.home);
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe();
   }
 }

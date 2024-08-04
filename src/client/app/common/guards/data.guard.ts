@@ -72,13 +72,13 @@ export const dataGuard: CanActivateFn = async (): Promise<boolean> => {
       }
     }));
 
-  // combineLatest([team$, boxScore$, schedule$, player$, roster$])
-  //   .subscribe(([teams, boxScores, schedules, players, rosters]: [Team[], BoxScore[], TeamSchedule[], RosterPlayer[], Roster[]])  => {
-  //     if (boxScores.some(({gameStatus}) => gameStatus === 'Live - In Progress')) {
-  //       throw new Error('BoxScore is from game in progress. All games should be complete.')
-  //     }
-  //
-  //     stateService.update(teams, boxScores, schedules, players, rosters);
-  //   });
+  combineLatest([team$, boxScore$, schedule$, player$, roster$])
+    .subscribe(([teams, boxScores, schedules, players, rosters]: [Team[], BoxScore[], TeamSchedule[], RosterPlayer[], Roster[]])  => {
+      if (boxScores.some(({gameStatus}) => gameStatus === 'Live - In Progress')) {
+        throw new Error('BoxScore is from game in progress. All games should be complete.')
+      }
+
+      stateService.update(teams, boxScores, schedules, players, rosters);
+    });
   return true;
 };

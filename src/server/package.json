@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "node ./dist/server/bin/www.js",
-    "build:start": "tsc && node ./dist/bin/www.js",
+    "build:start": "tsc && node ./dist/server/bin/www.js",
     "build": "tsc"
   },
   "dependencies": {

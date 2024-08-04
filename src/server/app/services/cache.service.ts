@@ -1,6 +1,6 @@
 import {getClient, RedisClient} from "../clients/redis-client.js";
 
-export async function getFromCache<T>(key: string, type: { new(parse: any): T; }, dataType: string) {
+export async function getFromCache<T>(key: string, type: { new(parse: any): T; }, dataType: string): Promise<T[]> {
     const client: RedisClient = getClient();
 
     try {
@@ -36,7 +36,7 @@ export async function addToCache(key: string, data: any): Promise<number> {
     }
 }
 
-export async function replaceInCache(key: string, data: string[], dataType: string): Promise<number> {
+export async function replaceInCache(key: string, data: any): Promise<number> {
     const client: RedisClient = getClient();
     let result: number;
 
@@ -46,16 +46,7 @@ export async function replaceInCache(key: string, data: string[], dataType: stri
             await client.del(key);
         }
         try {
-            switch (dataType) {
-                case 'set':
-                    result = await client.sAdd(key, data);
-                    break;
-                case 'list':
-                    result = await client.lPush(key, data);
-                    break;
-                default:
-                    result = 0;
-            }
+            result = await client.sAdd(key, data);
         } catch (err) {
             console.log('err: ', err);
             result = 0;

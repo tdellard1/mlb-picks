@@ -1,4 +1,7 @@
 <ng-container *ngIf="!(spinner$ | async); else spinner">
+  <game-selected></game-selected>
+  <game-details></game-details>
+
   <div class="analysis-container" *ngIf="home && away">
     @for (chart of charts; track chart) {
       <line-chart [chartData]="chart"></line-chart>

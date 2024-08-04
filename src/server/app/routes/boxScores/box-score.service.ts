@@ -3,14 +3,8 @@ import {BoxScore} from "../../models/boxScores/box-scores.model.js";
 import {downloadFileWithType, uploadFile} from "../../services/firebase.service.js";
 import {AxiosResponse} from "axios";
 import {getBoxScore} from "../../services/tank-01.service.js";
-import {Team} from "../../models/teams/teams.model.js";
-import {Roster} from "../../models/players/rosters.model.js";
-const key: string = 'boxScores';
 
-export async function haveBoxScores(): Promise<boolean> {
-    const length: number = await exists(key);
-    return length > 0;
-}
+const key: string = 'boxScores';
 
 export function removeDuplicates(boxScores: BoxScore[]): BoxScore[] {
     const uniqueBoxScores: BoxScore[] = [];
@@ -30,27 +24,6 @@ export function removeDuplicates(boxScores: BoxScore[]): BoxScore[] {
     return uniqueBoxScores;
 }
 
-export async function addBoxScoresToUniqueSets(gameIDs: string[]) {
-    console.log(gameIDs.length);
-    let newBoxScores: BoxScore[] = [];
-
-    if (gameIDs.length > 0) {
-        const boxScorePromises: Promise<AxiosResponse<BoxScore>>[] = gameIDs.map((gameID: string) => getBoxScore(gameID));
-        const boxScoreResolvers: AxiosResponse<BoxScore>[] = await Promise.all(boxScorePromises);
-        newBoxScores = boxScoreResolvers.map(({data}) => data);
-    }
-
-    const cacheRequests: Promise<number>[] = newBoxScores.map((boxScore: BoxScore) => {
-        const key: string = `boxScore:${boxScore.gameID}`;
-        const data: string = JSON.stringify(boxScore);
-        return addToCache(key, data);
-    });
-
-    const responses: number[] = await Promise.all(cacheRequests);
-    return responses.every(value => value === 1) && responses.length === gameIDs.length;
-
-}
-
 export async function writeThroughBoxScores(gameIDs: string[]) {
     let newBoxScores: BoxScore[] = [];
 
@@ -65,31 +38,26 @@ export async function writeThroughBoxScores(gameIDs: string[]) {
     const uniqueBoxScores: BoxScore[] = removeDuplicates(allBoxScores);
 
     const length: number = await replaceBoxScoresInCache(uniqueBoxScores);
-    if (length > 0) {
+    const lengthTwo: number[] = await addBoxScoresToMultipleSets(uniqueBoxScores);
+
+    if (length > 0 && lengthTwo.every(value => value === 1)) {
+        console.log('length: ', length);
+        console.log('lengthTwo: ', new Set(lengthTwo));
         await addBoxScoresToDatabase(uniqueBoxScores);
     }
 }
 
 export async function replaceBoxScoresInCache(boxScores: BoxScore[]): Promise<number> {
     const stringifyBoxScores: string[] = boxScores.map((boxScore: BoxScore) => JSON.stringify(boxScore, null, 0));
-    return await replaceInCache(key, stringifyBoxScores, 'set');
+    return await replaceInCache(key, stringifyBoxScores);
 }
 
 export async function addBoxScoresToDatabase(boxScores: BoxScore[]): Promise<void> {
-    await uploadFile(key, boxScores); 
-}
-
-export async function getCachedBoxScores(): Promise<BoxScore[]> {
-    return await getFromCache(key, BoxScore, 'set');
+    await uploadFile(key, boxScores);
 }
 
 export async function getBoxScores(): Promise<BoxScore[]> {
     return await downloadFileWithType(key, BoxScore);
-}
-
-export async function addBoxScoresToCache(boxScores: BoxScore[]): Promise<number> {
-    const stringifyBoxScores: string[] = boxScores.map((boxScore: BoxScore) => JSON.stringify(boxScore, null, 0));
-    return await addToCache(key, stringifyBoxScores);
 }
 
 export async function retrieveBoxScoresFromTank01(gameIDs: string[]): Promise<BoxScore[]> {
@@ -108,4 +76,11 @@ export async function boxScoresIncludeDate(boxScores: BoxScore[], yyyyMMdd: stri
     const uniqueDatesInBoxScores: Set<string> = new Set(dates);
 
     return uniqueDatesInBoxScores.has(yyyyMMdd);
+}
+
+async function addBoxScoresToMultipleSets(boxScores: BoxScore[]): Promise<number[]> {
+    const redisUpdateRequests: Promise<number>[] = boxScores.map(async (boxScore: BoxScore) =>
+        replaceInCache(`boxScore:${boxScore.gameID}`, JSON.stringify(boxScore)));
+
+    return await Promise.all(redisUpdateRequests);
 }

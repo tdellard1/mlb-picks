@@ -3,103 +3,74 @@ import {RedisClient} from "../../clients/redis-client.js";
 import {Schedule} from "../../models/schedules/schedule.model.js";
 import {Game} from "../../models/schedules/games/game.model.js";
 import {BoxScore} from "../../models/boxScores/box-scores.model.js";
-
-declare type ParsedTeams = {home: string, away: string};
+import {Team} from "../../models/teams/teams.model.js";
 
 export default function analysisController(redis: RedisClient) {
     const cache: RedisClient = redis;
 
-    function parseTeamsFromGameID(gameID: string): ParsedTeams {
-        const bothTeams: string[] = gameID.split('_')[1].split('@');
-        const home: string = bothTeams[0];
-        const away: string = bothTeams[1];
-
-        return {home, away}
+    async function getSchedule(team: string): Promise<Schedule> {
+        const scheduleStringSet: string[] = await cache.sMembers(`schedule:${team}`);
+        const scheduleString: string = scheduleStringSet[0];
+        const scheduleData: any = JSON.parse(scheduleString);
+        return new Schedule(scheduleData);
     }
 
-    function getRecentGameIDsFromSchedule({schedule}: Schedule): string[] {
-        const topOfToday: number = new Date().setHours(0, 0, 0, 0);
-
-        return schedule
-            .filter(({gameTime_epoch}) => Number(gameTime_epoch) * 1000 < topOfToday)
-            .filter(({gameStatus}) => gameStatus === 'Completed')
-            .sort((aGame: Game, bGame: Game) => {
-                const aGameStart: number = Number(aGame.gameTime_epoch);
-                const bGameStart: number = Number(bGame.gameTime_epoch);
-                return aGameStart - bGameStart;
-            })
-            .slice(-15)
-            .map(({gameID}) => gameID)
-            .flat();
-    }
-
-    function scheduleToMostRecentGames(schedule: Schedule) {
-        const topOfToday: number = new Date().setHours(0, 0, 0, 0);
-
-        schedule.schedule = schedule.schedule
-            .filter(({gameTime_epoch}) => Number(gameTime_epoch) * 1000 < topOfToday)
-            .filter(({gameStatus}) => gameStatus === 'Completed')
-            .sort((aGame: Game, bGame: Game) => {
-                const aGameStart: number = Number(aGame.gameTime_epoch);
-                const bGameStart: number = Number(bGame.gameTime_epoch);
-                return aGameStart - bGameStart;
-            })
-            .slice(-15);
-
-        return schedule;
-    }
-
-    async function getBoxScoresFromGameIDs(gameIDs: string[], cacheClient: RedisClient): Promise<BoxScore[]> {
-        const boxScoreKeys: string[] = gameIDs.map(gameID => `boxScore:${gameID}`);
-        const boxScorePromises: Promise<string[]>[] = boxScoreKeys.map((key: string) => cacheClient.sMembers(key));
+    async function getBoxScoresFromGameIDs(gameIDs: Set<string>): Promise<BoxScore[]> {
+        const boxScoreKeys: string[] = [...gameIDs].map(gameID => `boxScore:${gameID}`);
+        const boxScorePromises: Promise<string[]>[] = boxScoreKeys.map((key: string) => cache.sMembers(key));
         const boxScoreResolvers: string[][] = await Promise.all(boxScorePromises);
         return boxScoreResolvers.flat().map((boxScoreString: string) => new BoxScore(JSON.parse(boxScoreString)));
     }
 
-    function addBoxScoresToSchedule(boxScores: BoxScore[], schedule: Schedule): Schedule {
-        const mBoxScores: Map<string, BoxScore> = new Map<string, BoxScore>();
+    async function getAnalysisSchedule({team, schedule}: Schedule, boxScores: BoxScore[]) {
+        const analysisSchedule: Schedule = { team } as Schedule;
 
-        boxScores.forEach((boxScore: BoxScore) =>
-            mBoxScores.set(boxScore.gameID, boxScore));
+        analysisSchedule.schedule = schedule.slice().map((game: Game) => {
+            const boxScore: BoxScore | undefined = boxScores.find(({gameID}) => gameID === game.gameID);
 
-        schedule.schedule = schedule.schedule.map((game: Game) => {
-            if (!mBoxScores.has(game.gameID)) {
-                throw new Error('BoxScore unavailable for scheduled game');
-            } else {
-                game.boxScore = mBoxScores.get(game.gameID)!;
-                return game;
-            }
+            if (!boxScore) throw new Error('BoxScore unavailable for scheduled game');
+
+            game.boxScore = boxScore;
+            return game
         });
 
-        return schedule;
+        return analysisSchedule;
     }
 
     async function getAnalysisForGame<T>(request: Request, response: Response) {
         const gameID: string = request.params.gameID;
+        const teams: string[] = gameID.split('_')[1].split('@');
 
-        const {home, away}: ParsedTeams = parseTeamsFromGameID(gameID);
+        const teamStringSet: string[] = await cache.sMembers('teams');
+        const teamArray: Team[] = teamStringSet.map((scheduleString: string) => new Team(JSON.parse(scheduleString)));
+        const awayTeam: Team | undefined = teamArray.find(({teamAbv}) => teamAbv === teams[0]);
+        const homeTeam: Team | undefined = teamArray.find(({teamAbv}) => teamAbv === teams[1]);
 
-        const homeScheduleStrings: string[] = await cache.sMembers(`schedule:${home}`);
-        const awayScheduleStrings: string[] = await cache.sMembers(`schedule:${away}`);
+        const awaySchedule: Schedule = await getSchedule(teams[0]);
+        const homeSchedule: Schedule = await getSchedule(teams[1]);
 
-        const homeSchedule: Schedule = new Schedule(JSON.parse(homeScheduleStrings[0]));
-        const awaySchedule: Schedule = new Schedule(JSON.parse(awayScheduleStrings[0]));
+        awaySchedule.schedule = Schedule.get15MostRecentGames(awaySchedule);
+        homeSchedule.schedule = Schedule.get15MostRecentGames(homeSchedule);
 
-        const recentHomeSchedule: Schedule = scheduleToMostRecentGames(homeSchedule);
-        const recentAwaySchedule: Schedule = scheduleToMostRecentGames(awaySchedule);
+        const gameIDs: Set<string> = new Set<string>([
+            ...awaySchedule.schedule.map(({gameID}) => gameID),
+            ...homeSchedule.schedule.map(({gameID}) => gameID)
+        ]);
 
-        const homeGameIdentifiers: string[] = getRecentGameIDsFromSchedule(homeSchedule);
-        const awayGameIdentifiers: string[] = getRecentGameIDsFromSchedule(awaySchedule);
+        const boxScores: BoxScore[] = await getBoxScoresFromGameIDs(gameIDs);
 
-        const homeBoxScores: BoxScore[] = await getBoxScoresFromGameIDs(homeGameIdentifiers, cache);
-        const awayBoxScores: BoxScore[] = await getBoxScoresFromGameIDs(awayGameIdentifiers, cache);
-
-         addBoxScoresToSchedule(homeBoxScores, recentHomeSchedule);
-         addBoxScoresToSchedule(awayBoxScores, recentAwaySchedule);
+        const away: Schedule = await getAnalysisSchedule(awaySchedule, boxScores);
+        const home: Schedule = await getAnalysisSchedule(homeSchedule, boxScores);
 
         response.json({
-            home: recentHomeSchedule,
-            away: recentAwaySchedule
+            home: {
+                team: homeTeam,
+                schedule: home.schedule
+            },
+            away: {
+                team: awayTeam,
+                schedule: away.schedule
+            },
         });
     }
 

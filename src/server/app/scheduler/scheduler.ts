@@ -6,15 +6,11 @@ import {updatePlayers} from "../routes/players/players.service.js";
 import {BoxScore} from "../models/boxScores/box-scores.model.js";
 import {getFromCache} from "../services/cache.service.js";
 import {Game} from "../models/schedules/games/game.model.js";
-import {getDailySchedule, getSchedule} from "../services/tank-01.service.js";
+import {getDailySchedule} from "../services/tank-01.service.js";
 import {AxiosResponse} from "axios";
 import {
-    boxScoresIncludeDate,
-    getBoxScores,
-    removeDuplicates,
     writeThroughBoxScores
 } from "../routes/boxScores/box-score.service.js";
-import {Schedule} from "../models/schedules/schedule.model.js";
 
 export async function quarterDailyUpdate(): Promise<void> {
     const teams: Team[] = await getAndUpdateTeams();
@@ -28,25 +24,26 @@ export async function halfDailyUpdate(): Promise<void> {
     let needToUpdate: boolean = false;
 
     const boxScores: BoxScore[] = await getFromCache('boxScores', BoxScore, 'set');
-    const uncompletedBoxScores: string[] = boxScores
-        .filter(({gameStatus}) => !!gameStatus)
-        .filter(({gameStatus}) => gameStatus !== 'Completed')
-        .map(({gameID}) => gameID);
 
-    await gamesFromYesterday(needToUpdate, boxScoresToRequest, boxScores, getDailySchedule);
-    await scheduleGamesWithoutBoxScores(needToUpdate, boxScoresToRequest, boxScores, gameIDsWithoutBoxScores);
+    // TODO: convert this to do only games with live - in progress status
+    // const uncompletedBoxScores: string[] = boxScores
+    //     .filter(({gameStatus}) => !!gameStatus)
+    //     .filter(({gameStatus}) => gameStatus !== 'Completed')
+    //     .map(({gameStatus}) => gameStatus!);
 
-    if (uncompletedBoxScores.length > 0) {
-        needToUpdate = true;
-        boxScoresToRequest.push(...uncompletedBoxScores);
-    }
+    const updateNeeded: boolean = await gamesFromYesterday(boxScoresToRequest, boxScores, getDailySchedule);
+
+    if (updateNeeded) needToUpdate = true;
+
+    const updateNeededAgain: boolean = await scheduleGamesWithoutBoxScores(boxScoresToRequest, boxScores, gameIDsWithoutBoxScores);
+    if (updateNeededAgain) needToUpdate = true;
 
     if (needToUpdate && boxScoresToRequest.length > 0) {
         await writeThroughBoxScores(boxScoresToRequest);
     }
 }
 
-async function gamesFromYesterday(needToUpdate: boolean, boxScoresToGet: string[], boxScores: BoxScore[], getDailySchedule: (gameDate: string) => Promise<AxiosResponse<Game[]>>) {
+async function gamesFromYesterday(boxScoresToGet: string[], boxScores: BoxScore[], getDailySchedule: (gameDate: string) => Promise<AxiosResponse<Game[]>>) {
     const today: number = new Date().setHours(0, 0, 0, 0);
     const dateToConvert: Date = new Date(today);
     dateToConvert.setDate(dateToConvert.getDate() - 1);
@@ -55,20 +52,24 @@ async function gamesFromYesterday(needToUpdate: boolean, boxScoresToGet: string[
 
     const hasBoxScoreFromYesterday: boolean = boxScores.some(({gameDate}) => gameDate === yesterday);
 
-    if (hasBoxScoreFromYesterday) {
+    if (!hasBoxScoreFromYesterday) {
         const {data}: AxiosResponse<Game[]> = await getDailySchedule(yesterday);
         boxScoresToGet.push(...data.map(({gameID}) => gameID));
-        needToUpdate = true;
+        return true;
     }
+
+    return false;
 }
 
-async function scheduleGamesWithoutBoxScores(needToUpdate: boolean, boxScoresToRequest: string[], boxScores: BoxScore[], gameIDsWithoutBoxScores: (boxScores: BoxScore[]) => Promise<string[]>) {
+async function scheduleGamesWithoutBoxScores(boxScoresToRequest: string[], boxScores: BoxScore[], gameIDsWithoutBoxScores: (boxScores: BoxScore[]) => Promise<string[]>) {
     const gamesMissingBoxScores: string[] = await gameIDsWithoutBoxScores(boxScores);
 
     if (gamesMissingBoxScores.length > 0) {
         boxScoresToRequest.push(...gamesMissingBoxScores);
-        needToUpdate = true;
+        return true;
     }
+
+    return false;
 }
 
 export function yyyyMMdd(date: Date) {

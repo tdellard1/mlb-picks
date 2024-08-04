@@ -5,7 +5,6 @@ import {Game} from "../../../common/model/game.interface";
 import {Team} from "../../../common/model/team.interface";
 import {MatDivider} from "@angular/material/divider";
 import {map, tap} from "rxjs/operators";
-import {GameSelectorService} from "../../data-access/services/game-selector.service";
 import {ActivatedRoute, Data, Router, RouterLink} from "@angular/router";
 import {SubscriptionHolder} from "../../../common/components/subscription-holder.component";
 import {StateService} from "../../../common/services/state.service";
@@ -31,8 +30,7 @@ export class GameSelectorComponent extends SubscriptionHolder implements OnDestr
 
   constructor(private router: Router,
               private stateService: StateService,
-              private activatedRoute: ActivatedRoute,
-              private gameSelectorService: GameSelectorService) {
+              private activatedRoute: ActivatedRoute) {
     super();
   }
 
@@ -40,12 +38,15 @@ export class GameSelectorComponent extends SubscriptionHolder implements OnDestr
     this.teams = this.stateService.allTeams;
 
     this.subscriptions.push(
-      this.activatedRoute.parent!.parent!.data.pipe(
+      this.activatedRoute.data.pipe(
         map((data: Data) => data['dailySchedule'] as Game[]),
-        map((games: Game[]) => games.sort(this.dailyScheduleSorter)),
-        tap((games: Game[]) => this.onGameSelected(games[0]))
+        map((games: Game[]) => games.sort(this.dailyScheduleSorter))
       ).subscribe((games: Game[]) => {
-        this.dailySchedule = games;
+        if (this.dailySchedule.length < 1) {
+          this.dailySchedule = games;
+        }
+
+        this.onGameSelected(this.dailySchedule[0]);
       }));
 
   }
@@ -55,8 +56,7 @@ export class GameSelectorComponent extends SubscriptionHolder implements OnDestr
     this.selectedGame = game;
     const away: Team = this.teams.get(game.away)!;
     const home: Team = this.teams.get(game.home)!;
-    this.gameSelectorService.gameSelected(game, home, away);
-    this.router.navigate([`analysis/${game.gameID}`], {onSameUrlNavigation: "reload"});
+    this.router.navigate([`analysis/${game.gameID}`], {onSameUrlNavigation: "ignore"});
   }
 
   private dailyScheduleSorter = (a: Game, b: Game) => {

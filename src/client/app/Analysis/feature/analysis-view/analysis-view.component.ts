@@ -21,6 +21,10 @@ import {ActivatedRoute, Data, Event, NavigationEnd, NavigationStart, Router} fro
 import {SubscriptionHolder} from "../../../common/components/subscription-holder.component.js";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {BehaviorSubject, Observable} from "rxjs";
+import {Team} from "../../../common/model/team.interface.js";
+import {GameSelectedComponent} from "../../ui/game-selected/game-selected.component.js";
+import {GameDetailsComponent} from "../../ui/game-details/game-details.component.js";
+import {MatDivider} from "@angular/material/divider";
 
 @Component({
   selector: 'analysis-component-view',
@@ -34,7 +38,7 @@ import {BehaviorSubject, Observable} from "rxjs";
     NgForOf,
     NgIf,
     LineChartComponent,
-    AsyncPipe, MatProgressSpinner
+    AsyncPipe, MatProgressSpinner, GameSelectedComponent, GameDetailsComponent, MatDivider
   ],
   templateUrl: './analysis-view.component.html',
   styleUrl: './analysis-view.component.css',
@@ -42,10 +46,10 @@ import {BehaviorSubject, Observable} from "rxjs";
 })
 export class AnalysisViewComponent extends SubscriptionHolder implements OnInit {
   homeAnalytics: TeamAnalytics;
-  home: string;
+  home: Team;
 
   awayAnalytics: TeamAnalytics;
-  away: string;
+  away: Team;
 
   charts: ChartData[] = [];
   _spinner: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -60,11 +64,12 @@ export class AnalysisViewComponent extends SubscriptionHolder implements OnInit 
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.activatedRoute.data.subscribe(({game}: Data) => {
-        this.home = game.home.team;
-        this.away = game.away.team;
-        this.homeAnalytics = new TeamAnalytics(this.home, game.home.schedule);
-        this.awayAnalytics = new TeamAnalytics(this.away, game.away.schedule);
+      this.activatedRoute.data.subscribe(({matchUp}: Data) => {
+        const {home, away}: any = matchUp;
+        this.home = home.team;
+        this.away = away.team;
+        this.homeAnalytics = new TeamAnalytics(this.home.teamAbv, home.schedule);
+        this.awayAnalytics = new TeamAnalytics(this.away.teamAbv, away.schedule);
         this.charts = [];
         this.populateCharts();
       }),

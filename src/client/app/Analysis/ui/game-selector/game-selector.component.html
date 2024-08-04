@@ -1,6 +1,5 @@
 <div class="container" *ngIf="dailySchedule as games">
   @for (game of games; track game.gameID) {
-    <a routerLink="{{game.gameID}}">
       <mat-card
         appearance="outlined"
         [class.selected]="game.gameID === selectedGame.gameID"
@@ -13,6 +12,5 @@
           <img alt="none" [ngSrc]="teams.get(game.home)!.espnLogo1" fill>
         </div>
       </mat-card>
-    </a>
   }
 </div>

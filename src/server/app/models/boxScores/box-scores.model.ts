@@ -3,7 +3,7 @@ import {PlayerStats} from "./player-stats.model.js";
 
 export class BoxScore {
     GameLength?: string;
-    // Umpires?: string;
+    Umpires?: string;
     gameStatus?: string;
     Attendance?: string;
     gameDate!: string;
@@ -32,10 +32,10 @@ export class BoxScore {
     teamStats?: any;
     startingLineups?: any;
 
-    constructor(data: any) {
+    constructor(data?: any) {
         if (data) {
             this.GameLength = data.GameLength;
-            // this.Umpires = data.Umpires;
+            this.Umpires = data.Umpires;
             this.gameStatus = data.gameStatus;
             this.Attendance = data.Attendance;
             this.gameDate = data.gameDate;

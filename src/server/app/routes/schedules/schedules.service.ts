@@ -7,6 +7,7 @@ import {Schedule} from "../../models/schedules/schedule.model.js";
 import {Roster} from "../../models/players/rosters.model.js";
 import {BoxScore} from "../../models/boxScores/box-scores.model.js";
 import {Game} from "../../models/schedules/games/game.model.js";
+import schedule from "node-schedule";
 
 const key: string = 'schedules';
 
@@ -15,9 +16,13 @@ export async function updateSchedules(teams: Team[]): Promise<Schedule[]> {
     const teamAbbreviations: string[] = teams.map(({teamAbv}) => teamAbv);
     const schedules: Schedule[] = await retrieveSchedulesFromTank01(teamAbbreviations);
     if (schedules) {
-        const lengthInCache: number = await replaceSchedulesInCache(schedules);
 
-        if (lengthInCache > 0) {
+
+        const lengthInCache: number = await replaceSchedulesInCache(schedules);
+        const redisUpdateRequests: Promise<number>[] = schedules.map((schedule: Schedule) => replaceInCache(`schedule:${schedule.team}`, JSON.stringify(schedule)));
+        const lengthOfAllCacheKeys: number[] = await Promise.all(redisUpdateRequests);
+
+        if (lengthInCache > 0 && new Set(lengthOfAllCacheKeys).size === 1) {
             await addSchedulesToDatabase(schedules);
         }
     }
@@ -47,7 +52,7 @@ export async function addSchedulePerSetInCache(schedules: Schedule[]): Promise<n
 
 export async function replaceSchedulesInCache(schedules: Schedule[]): Promise<number> {
     const stringifySchedules: string[] = schedules.map((roster: Schedule) => JSON.stringify(roster, null, 0));
-    return await replaceInCache(key, stringifySchedules, 'set');
+    return await replaceInCache(key, stringifySchedules);
 }
 
 export async function haveSchedules(): Promise<boolean> {

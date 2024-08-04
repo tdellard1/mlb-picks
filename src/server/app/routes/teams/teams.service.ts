@@ -27,15 +27,9 @@ export async function addTeamsToDatabase(teams: Team[]) {
     return await uploadFile(key, teams);
 }
 
-
-export async function addTeamsToCache(teams: Team[]): Promise<number> {
-    return await addToCache(key, teams);
-}
-
-
 export async function replaceTeamsInCache(teams: Team[]): Promise<number> {
     const stringifyTeams: string[] = teams.map((roster: Team) => JSON.stringify(roster, null, 0));
-    return await replaceInCache(key, stringifyTeams, 'set');
+    return await replaceInCache(key, stringifyTeams);
 }
 
 
