@@ -51,11 +51,10 @@ export class StateService {
     let rosters: Roster[];
 
     if (t.length === 30) {
-      console.log('team: ', t);
       await db.teams.clear();
       await db.teams.bulkAdd(t);
       teams = t;
-      console.log('updated teams');
+      // console.log('updated teams');
     } else {
       teams = await this.teamsSource$;
     }
@@ -64,7 +63,7 @@ export class StateService {
       await db.boxScores.clear();
       await db.boxScores.bulkAdd(b);
       boxScores = b;
-      console.log('updated boxScores');
+      // console.log('updated boxScores');
     } else {
       boxScores = await this.boxScoresSource$;
     }
@@ -73,7 +72,7 @@ export class StateService {
       await db.schedules.clear();
       await db.schedules.bulkAdd(s);
       schedules = s;
-      console.log('updated schedules');
+      // console.log('updated schedules');
     } else {
       schedules = await this.schedulesSource$;
     }
@@ -82,7 +81,7 @@ export class StateService {
       await db.players.clear();
       await db.players.bulkAdd(p);
       players = p;
-      console.log('updated players');
+      // console.log('updated players');
     } else {
       players = await this.playersSource$;
     }
@@ -91,7 +90,7 @@ export class StateService {
       await db.rosters.clear();
       await db.rosters.bulkAdd(r);
       rosters = r;
-      console.log('updated rosters');
+      // console.log('updated rosters');
     } else {
       rosters = await this.rostersSource$;
     }

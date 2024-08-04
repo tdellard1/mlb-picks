@@ -141,8 +141,6 @@ export function areArraysEqual(a1: any[], a2: any[], uniqueIdentifier: string): 
     return true;
   }
 
-  console.log('is this hit? ', a1.length, a2.length);
-
   if (a1.length !== a2.length) return false;
 
   for (const e1 of a1) {
@@ -152,8 +150,6 @@ export function areArraysEqual(a1: any[], a2: any[], uniqueIdentifier: string): 
     const e2: Team = a2.find((e2: any) => e2[uniqueIdentifier] === e1[uniqueIdentifier])!;
 
     const areTeamsEqual: boolean = areObjectsEqual(e1, e2);
-
-    console.log(areTeamsEqual);
 
     if (!areTeamsEqual) return areTeamsEqual;
   }

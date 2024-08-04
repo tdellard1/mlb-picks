@@ -39,9 +39,6 @@ export class GameDetailsComponent extends SubscriptionHolder implements OnInit, 
         const games: Game[] = data['dailySchedule'];
         const {away, home} = data['matchUp'];
 
-        console.log(this.playersMap, this.stateService.allPlayers);
-        console.log(games.find(game => game.gameID === gameID)!.probableStartingPitchers);
-
         this.game = games.find(game => game.gameID === gameID)!;
         this.home = home.team;
         this.away = away.team;
