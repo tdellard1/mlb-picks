@@ -90,9 +90,9 @@ export class AnalysisViewComponent extends SubscriptionHolder implements OnInit 
       const homeStats: number[] = this.homeAnalytics.analytics!.slice().map((analytics: Analytics) => analytics[key]!)!;
       const awayStats: number[] = this.awayAnalytics.analytics!.slice().map((analytics: Analytics) => analytics[key]!)!;
       this.charts.push(this.createChart(Analytic.get(key)!,
-        `${this.home} - ${Analytic.get(key)}`,
+        `${this.home.teamAbv} - ${Analytic.get(key)}`,
         homeStats,
-        `${this.away} - ${Analytic.get(key)}`,
+        `${this.away.teamAbv} - ${Analytic.get(key)}`,
         awayStats));
     });
   }
