@@ -8,11 +8,13 @@ import path, {dirname} from 'path';
 import {fileURLToPath} from 'url';
 import {quarterDailyUpdate, halfDailyUpdate} from "./app/scheduler/scheduler.js";
 import rostersController from "./app/routes/rosters/rosters.controller.js";
-import playersController from "./app/routes/players/players.controller.js";
-import teamsController from "./app/routes/teams/teams.controller.js";
+import playersRouter from "./app/routes/players/players.router.js";
 import schedulesController from "./app/routes/schedules/schedules.controller.js";
 import boxScoreRouter from "./app/routes/boxScores/box-scores.router.js";
 import analysisRouter from "./app/routes/analysis/analysis.router.js";
+import teamsRouter from "./app/routes/teams/teams.router.js";
+import slatesRouter from "./app/routes/slates/slates.router.js";
+import {limit} from "@firebase/firestore";
 
 const app: Express = express();
 
@@ -21,7 +23,7 @@ const __dirname: string = dirname(__filename);
 
 app.use(cors());
 app.use(logger('dev'));
-app.use(express.json());
+app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'client/browser')));
 
@@ -31,9 +33,10 @@ const job2: Job = schedule.scheduleJob('30 */12 * * *', async () => await halfDa
 const api: Router = Router()
   .use('/boxScores', boxScoreRouter())
   .use('/analysis', analysisRouter())
-  .use(playersController)
+  .use('/players', playersRouter())
+  .use('/slates', slatesRouter())
   .use(schedulesController)
-  .use(teamsController)
+  .use('/teams', teamsRouter())
   .use(rostersController);
 
 app.use('/api', api);

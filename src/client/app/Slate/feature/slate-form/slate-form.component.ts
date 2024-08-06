@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, OnDestroy, Output} from '@angular/core';
 import {Game} from "../../../common/model/game.interface";
-import {Teams} from "../../../common/model/team.interface";
 import {AbstractControl, FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {SlatePredictionsComponent} from "../slate-predictions/slate-predictions.component";
@@ -23,7 +22,7 @@ export class SlateFormComponent implements OnChanges, OnDestroy {
   @Input() mobile: boolean;
   @Input() mobileExpertSelected!: string;
 
-  @Input() teams!: Teams;
+  @Input() teams!: any;
   @Input() expertsData!: Experts;
   @Input() games!: Game[];
 

@@ -3,10 +3,7 @@ import {ActivatedRoute, Data} from "@angular/router";
 import {Game, Games} from "../../../common/model/game.interface";
 import {AsyncPipe, JsonPipe, NgIf, NgOptimizedImage} from "@angular/common";
 import {SubscriptionHolder} from "../../../common/components/subscription-holder.component";
-import {StateService} from "../../../common/services/state.service";
-import {RosterPlayer} from "../../../common/model/roster.interface";
 import {MatDivider} from "@angular/material/divider";
-import {Team} from "../../../common/model/team.interface";
 import {
   MatCell, MatCellDef,
   MatColumnDef,
@@ -16,11 +13,13 @@ import {
   MatRow, MatRowDef,
   MatTable
 } from "@angular/material/table";
+import {TeamsNRFIPercentage} from "../../../common/services/backend-api/backend-api.service.js";
+import {Team} from "../../../common/model/team.interface.js";
 
 export interface NoRunsFirstInningElements {
   teamAbv: string;
   pitcher: string;
-  record24: string;
+  record: string;
   streak: string;
   oppTeamAbv: string;
   oppNRFIpct: string;
@@ -52,22 +51,27 @@ export interface NoRunsFirstInningElements {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PropsComponent extends SubscriptionHolder implements OnDestroy, OnInit {
-  displayedColumns: string[] = ['teamAbv', 'pitcher', 'record24', 'streak', 'oppTeamAbv', 'oppNRFIpct', 'oppStreak'];
+  displayedColumns: string[] = ['teamAbv', 'pitcher', 'record', 'streak', 'oppTeamAbv', 'oppNRFIpct', 'oppStreak'];
+  pitcherData: { [playerId: string]: NoRunsFirstInningElements };
+  teamNRFIData: {[team: string]: string};
   dailySchedule: Game[] = [];
-  players: Map<string, RosterPlayer> = new Map<string, RosterPlayer>();
-  teams: Map<string, Team> = new Map<string, Team>();
+  teams: Team[];
   dataSource: NoRunsFirstInningElements[] = [];
 
-  constructor(private route: ActivatedRoute,
-              private stateService: StateService) {
+  constructor(private route: ActivatedRoute) {
     super();
-    this.subscriptions.push(this.route.parent!.parent!.data.subscribe((data: Data) => this.dailySchedule = data['dailySchedule']));
+
+    this.subscriptions.push(
+      this.route.data.subscribe((data: Data) => {
+        this.teams = data['teams'] as Team[];
+        this.dailySchedule = data['dailySchedule'] as Game[];
+        this.pitcherData = data['pitchers'] as { [playerId: string]: NoRunsFirstInningElements };
+        this.teamNRFIData = data['teamsNoRunsFirstInning'] as TeamsNRFIPercentage;
+      }),
+    );
   }
 
   ngOnInit(): void {
-    this.players = this.stateService.allPlayers;
-    this.teams = this.stateService.allTeams;
-
     new Games(this.dailySchedule).sortedGames.forEach(({away, home, probableStartingPitchers}: Game) => {
       if (probableStartingPitchers.away || probableStartingPitchers.home) {
         const awayRow: NoRunsFirstInningElements = this.getNoRunsFirstInningLineData(probableStartingPitchers.away, away, home);
@@ -81,21 +85,21 @@ export class PropsComponent extends SubscriptionHolder implements OnDestroy, OnI
 
   private getNoRunsFirstInningLineData(pitcherID: string, primaryTeam: string, secondaryTeam: string) {
     const retVal: NoRunsFirstInningElements = {} as NoRunsFirstInningElements;
-    const pitcher: RosterPlayer | undefined = this.players.get(pitcherID);
+    const pitcherData: NoRunsFirstInningElements = this.pitcherData[pitcherID];
     retVal.teamAbv = primaryTeam;
 
-    if (pitcher) {
-      retVal.pitcher = pitcher.longName;
-      retVal.record24 = this.get24NRFI(pitcher);
-      retVal.streak = this.getNRFIStreak(pitcher);
+    if (pitcherData) {
+      retVal.pitcher = pitcherData.pitcher;
+      retVal.record = pitcherData.record;
+      retVal.streak = pitcherData.streak;
     } else {
-      retVal.pitcher = '';
-      retVal.record24 = '0 - 0';
+      retVal.pitcher = '-';
+      retVal.record = '0 - 0';
       retVal.streak = '0';
     }
 
     retVal.oppTeamAbv = secondaryTeam;
-    retVal.oppNRFIpct = this.getTeamNRFI(secondaryTeam);
+    retVal.oppNRFIpct = this.teamNRFIData[secondaryTeam];
     retVal.oppStreak = '0';
     return retVal;
   }
@@ -104,20 +108,8 @@ export class PropsComponent extends SubscriptionHolder implements OnDestroy, OnI
     this.unsubscribe();
   }
 
-  get24NRFI(rosterPlayer: RosterPlayer): string {
-    return this.stateService.getPitcherNRFIRecord(rosterPlayer);
-  }
-
-  getNRFIStreak(rosterPlayer: RosterPlayer): string {
-    return this.stateService.getNRFIStreak(rosterPlayer);
-  }
-
-  getTeamNRFI(team: string) {
-    return this.stateService.getTeamNRFI(team);
-  }
-
   getTeamLogo(teamName: string) {
-    const team: Team = this.teams.get(teamName)!;
+    const team: Team = this.teams.find(({teamAbv}) => teamAbv === teamName)!;
     return team.espnLogo1;
   }
 }

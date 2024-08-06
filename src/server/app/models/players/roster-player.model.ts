@@ -42,6 +42,7 @@
 
 import {Injury} from "./injury.model.js";
 import {RosterPlayerStats} from "./stats/roster-player-stats.model.js";
+import {PlayerStats} from "../boxScores/player-stats.model.js";
 
 export interface Player {
     longName: string;
@@ -62,6 +63,7 @@ export class RosterPlayer {
     fantasyProsLink!: string;
     fantasyProsPlayerID!: string;
     firstSeen!: string;
+    games?: PlayerStats[];
     height!: string;
     injury!: Injury;
     jerseyNum!: string;
@@ -124,6 +126,7 @@ export class RosterPlayer {
             this.yahooPlayerID = data.yahooPlayerID;
             this.stats = data.stats;
             this.throw = data.throw;
+            this.games = data.games;
         }
     }
 }

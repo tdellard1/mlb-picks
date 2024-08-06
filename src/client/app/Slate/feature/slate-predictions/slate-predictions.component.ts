@@ -2,11 +2,11 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {Game} from "../../../common/model/game.interface";
-import {Teams} from "../../../common/model/team.interface";
 import {BoxScore} from "../../../common/model/box-score.interface";
 import {NgIf, NgStyle} from "@angular/common";
 import {Expert, GamePick} from "../../data-access/expert.interface";
 import {MatIcon} from "@angular/material/icon";
+import {Team} from "../../../common/model/team.interface.js";
 
 @Component({
   selector: 'slate-predictions',
@@ -27,7 +27,7 @@ export class SlatePredictionsComponent implements OnInit {
   @Input() index!: number;
   @Input() expert!: Expert;
   @Input() games!: Game[];
-  @Input() teams!: Teams;
+  @Input() teams!: Team[];
   @Output() newSelectionMade: EventEmitter<void> = new EventEmitter();
 
   showPredictions: boolean = true;
@@ -60,8 +60,8 @@ export class SlatePredictionsComponent implements OnInit {
 
         const options: FormGroup[] = [
           this.createOptions(' '),
-          this.createOptions(this.teams.getTeamName(away)),
-          this.createOptions(this.teams.getTeamName(home)),
+          this.createOptions(this.teams.find(value => value.teamAbv === away)!.teamName),
+          this.createOptions(this.teams.find(value => value.teamAbv === home)!.teamName),
           this.createOptions('Total: Over'),
           this.createOptions('Total: Under'),
         ];
@@ -131,9 +131,9 @@ export class SlatePredictionsComponent implements OnInit {
     }
 
     if (awayResult === 'W') {
-      return this.teams.getTeamName(away);
+      return this.teams.find(value => value.teamAbv === away)!.teamName;
     } else if (homeResult === 'W') {
-      return this.teams.getTeamName(home);
+      return this.teams.find(value => value.teamAbv === home)!.teamName;
     } else {
       return undefined;
     }

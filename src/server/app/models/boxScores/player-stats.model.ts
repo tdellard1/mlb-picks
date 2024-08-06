@@ -12,3 +12,7 @@ export interface PlayerStats {
     playerID: string;
     note: string;
 }
+
+export interface PlayersStats {
+    [playerId: string]: PlayerStats
+}

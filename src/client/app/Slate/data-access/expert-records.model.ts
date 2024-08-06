@@ -1,11 +1,11 @@
 import {Slates} from "./slate.model";
 import {Expert, GamePick} from "./expert.interface";
-import {Team, Teams} from "../../common/model/team.interface";
+import {Team} from "../../common/model/team.interface";
 
 export class ExpertRecords {
   experts: ExpertRecord[] = [];
 
-  constructor(slates: Slates, teams: Teams) {
+  constructor(slates: Slates, teams: Team[]) {
     for (const slate of slates) {
       for (const expert of slate.experts) {
         const exportRecord: ExpertRecord | undefined = this.getExpertRecord(expert.name);
@@ -30,7 +30,7 @@ export class ExpertRecord  {
   incorrect: number = 0;
   teams: WinLoss[];
 
-  constructor({predictions, name}: Expert, {teams}: Teams) {
+  constructor({predictions, name}: Expert, teams: Team[]) {
     this.name = name;
     this.teams = teams.map(({teamName}: Team) => new WinLoss(teamName));
 

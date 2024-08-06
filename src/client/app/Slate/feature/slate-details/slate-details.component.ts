@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core';
 import {Game} from "../../../common/model/game.interface";
-import {Teams} from "../../../common/model/team.interface";
 import {DatePipe, NgForOf, NgStyle} from "@angular/common";
 
 @Component({
@@ -17,7 +16,7 @@ import {DatePipe, NgForOf, NgStyle} from "@angular/common";
 export class SlateDetailsComponent {
   @Input() getTeamName!: boolean;
   @Input() games!: Game[];
-  @Input() teams!: Teams;
+  @Input() teams!: any;
 
   public getStyles() {
     return {

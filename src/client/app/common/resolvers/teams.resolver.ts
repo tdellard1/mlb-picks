@@ -1,13 +1,11 @@
 import {ResolveFn} from '@angular/router';
-import {Team, Teams} from "../model/team.interface";
-import {firstValueFrom} from "rxjs";
-import {liveQuery} from "dexie";
-import {db} from "../../db.js";
+import {Team} from "../model/team.interface";
+import {BackendApiService} from "../services/backend-api/backend-api.service.js";
+import {inject} from "@angular/core";
 
-export const teamsResolver: ResolveFn<Teams> = async (): Promise<Teams> => {
-  const teams$: any = liveQuery<Team[]>(() => db.teams.toArray());
-  const teamList: Team[] = await firstValueFrom(teams$);
+export const teamsResolver: ResolveFn<Team[]> = () => {
+  const backendApiService: BackendApiService = inject(BackendApiService);
 
-  return new Teams(teamList);
+  return backendApiService.getTeamsArray();
 };
 

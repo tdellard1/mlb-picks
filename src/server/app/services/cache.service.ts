@@ -58,6 +58,11 @@ export async function replaceInCache(key: string, data: any): Promise<number> {
     }
 }
 
+export async function removeFromCache(key: string): Promise<number> {
+    const client: RedisClient = getClient();
+    return await client.del(key);
+}
+
 export async function exists(key: string): Promise<number> {
     const client: RedisClient = getClient();
     return await client.exists(key);

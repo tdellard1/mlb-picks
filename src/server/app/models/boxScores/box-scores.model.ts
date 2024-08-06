@@ -1,5 +1,5 @@
 import {LineScore, Teams} from "../schedules/games/starting-lineups.model.js";
-import {PlayerStats} from "./player-stats.model.js";
+import {PlayersStats, PlayerStats} from "./player-stats.model.js";
 
 export class BoxScore {
     GameLength?: string;
@@ -26,7 +26,7 @@ export class BoxScore {
     gameID!: string;
     gameStatusCode?: string;
     lineScore?: Teams<LineScore>;
-    playerStats?: PlayerStats;
+    playerStats?: PlayersStats;
     decisions?: any;
     bases?: any;
     teamStats?: any;

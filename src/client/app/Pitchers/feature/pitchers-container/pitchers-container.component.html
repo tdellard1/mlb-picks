@@ -4,10 +4,16 @@
            [(ngModel)]="selectedPitcher"
            [clearable]="false">
   @for (pitcher of pitchersArray; track pitcher) {
-    <ng-option [value]="pitcher">
+    <ng-option [value]="pitcher" *ngIf="pitcher; else noPitcher">
       {{ pitcher.longName }} - {{ pitcher.team }}
     </ng-option>
   }
 </ng-select>
 
 <router-outlet></router-outlet>
+
+<ng-template #noPitcher>
+  <ng-option [disabled]="true">
+    Unavailable
+  </ng-option>
+</ng-template>

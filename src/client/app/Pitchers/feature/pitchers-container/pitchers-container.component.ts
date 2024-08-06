@@ -49,9 +49,8 @@ export class PitchersContainerComponent extends SubscriptionHolder {
               .map(({probableStartingPitchers}: Game) => [probableStartingPitchers.away, probableStartingPitchers.home])
               .flat()
               .filter(Boolean)
-              .map((pitcherID) => players.find((player: RosterPlayer) => player.playerID === pitcherID)!);
-
-
+              .map((pitcherID) => players.find((player: RosterPlayer) => player.playerID === pitcherID)!)
+              .filter(Boolean);
 
             const playerID: string = this.route.snapshot.children[0] && this.route.snapshot.children[0].params['playerID'];
             const selectedPlayer: RosterPlayer | undefined = this.pitchersArray.find((pitcher: RosterPlayer) => pitcher.playerID === playerID);

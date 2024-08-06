@@ -1,12 +1,10 @@
 import { Routes } from '@angular/router';
 import {dailyScheduleResolver} from "./common/resolvers/daily-schedule/daily-schedule.resolver";
-import {dataGuard} from "./common/guards/data.guard";
 import {AppComponent} from "./app.component.js";
 
 export const routes: Routes = [
   {
     path: '',
-    canActivate: [dataGuard],
     component: AppComponent,
     resolve: { dailySchedule: dailyScheduleResolver },
     children: [

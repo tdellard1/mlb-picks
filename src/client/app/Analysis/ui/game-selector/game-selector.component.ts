@@ -7,7 +7,6 @@ import {MatDivider} from "@angular/material/divider";
 import {map, tap} from "rxjs/operators";
 import {ActivatedRoute, Data, Router, RouterLink} from "@angular/router";
 import {SubscriptionHolder} from "../../../common/components/subscription-holder.component";
-import {StateService} from "../../../common/services/state.service";
 
 @Component({
   selector: 'game-selector',
@@ -29,13 +28,13 @@ export class GameSelectorComponent extends SubscriptionHolder implements OnDestr
   teams: Map<string, Team> = new Map();
 
   constructor(private router: Router,
-              private stateService: StateService,
+              private route: ActivatedRoute,
               private activatedRoute: ActivatedRoute) {
     super();
   }
-
   ngOnInit(): void {
-    this.teams = this.stateService.allTeams;
+    const teams: Team[] = this.route.snapshot.data['teams'] as Team[];
+    teams.forEach((team: Team) => this.teams.set(team.teamAbv, team));
 
     this.subscriptions.push(
       this.activatedRoute.data.pipe(
@@ -46,16 +45,28 @@ export class GameSelectorComponent extends SubscriptionHolder implements OnDestr
           this.dailySchedule = games;
         }
 
-        this.onGameSelected(this.dailySchedule[0]);
-      }));
+        const childRoute: ActivatedRoute | undefined = this.activatedRoute.children[0];
+        if (childRoute) {
+          const selectedGameID: string = this.activatedRoute.children[0].snapshot.params['gameId'];
+          const selectedGame: Game | undefined = this.dailySchedule.find(({gameID}) => gameID === selectedGameID);
+          if (selectedGame) {
+            this.selectedGame = selectedGame;
+          } else {
+            this.selectedGame = this.dailySchedule[0];
+          }
+        } else {
+          this.selectedGame = this.dailySchedule[0];
+        }
+
+        this.onGameSelected(this.selectedGame);
+      }),
+    );
 
   }
 
 
   onGameSelected(game: Game): void {
     this.selectedGame = game;
-    const away: Team = this.teams.get(game.away)!;
-    const home: Team = this.teams.get(game.home)!;
     this.router.navigate([`analysis/${game.gameID}`], {onSameUrlNavigation: "ignore"});
   }
 

@@ -7,7 +7,6 @@ import {
   ViewChild
 } from '@angular/core';
 import {Game, Games} from "../../../common/model/game.interface";
-import {Teams} from "../../../common/model/team.interface";
 import {Slate, Slates} from "../../data-access/slate.model";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import {AsyncPipe, DatePipe, NgIf} from "@angular/common";
@@ -25,7 +24,6 @@ import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {Expert, Experts} from "../../data-access/expert.interface";
 import {ExpertRecords} from "../../data-access/expert-records.model";
 import {LoggerService} from "../../../common/services/logger.service";
-import {StateService} from "../../../common/services/state.service";
 import {ActivatedRoute, Data} from "@angular/router";
 import {SubscriptionHolder} from "../../../common/components/subscription-holder.component";
 import {BreakpointObserver, Breakpoints, BreakpointState} from "@angular/cdk/layout";
@@ -33,6 +31,7 @@ import {map} from "rxjs/operators";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 import {Tank01Date} from "../../../common/utils/date.utils";
+import {Team} from "../../../common/model/team.interface.js";
 
 @Component({
   selector: 'slate-container',
@@ -51,7 +50,7 @@ import {Tank01Date} from "../../../common/utils/date.utils";
 export class SlateContainerComponent extends SubscriptionHolder implements OnInit, AfterViewInit {
   @ViewChild('dateSelector') private dateSelectorContainer: ElementRef;
 
-  teams: Teams;
+  teams: Team[];
   slates: Slates;
   dailySchedule: Game[];
 
@@ -72,7 +71,6 @@ export class SlateContainerComponent extends SubscriptionHolder implements OnIni
   constructor(private datePipe: DatePipe,
               private route: ActivatedRoute,
               private logger: LoggerService,
-              private stateService: StateService,
               private breakpoint: BreakpointObserver,
               private backendApiService: BackendApiService) {
     super();
@@ -87,6 +85,7 @@ export class SlateContainerComponent extends SubscriptionHolder implements OnIni
       this.teams = data['teams'];
       this.slates = data['slates'];
       this.dailySchedule = data['dailySchedule'];
+      console.log('slates: ', this.slates);
     }));
 
 
@@ -130,9 +129,9 @@ export class SlateContainerComponent extends SubscriptionHolder implements OnIni
     if (this.selectedDate === this.today) {
       this.gamesSubject.next(this.gamesToday);
     } else {
-      const gamesForDate: Game[] = Games.getGamesWithBoxScoresForDate(
-        this.stateService.getScheduleAsArray, this.selectedDate);
-      this.gamesSubject.next(gamesForDate);
+      // const gamesForDate: Game[] = Games.getGamesWithBoxScoresForDate(
+      //   this.stateService.getScheduleAsArray, this.selectedDate);
+      // this.gamesSubject.next(gamesForDate);
     }
 
     const slate: Slate | undefined = this.getSlateFor(this.selectedDate);
@@ -200,6 +199,10 @@ export class SlateContainerComponent extends SubscriptionHolder implements OnIni
     }
 
     this.chooseDate(this.selectedDate);
+  }
+
+  getTeam(teamAbbreviation: string): Team {
+    return this.teams.find(({teamAbv}) => teamAbbreviation === teamAbv)!;
   }
 
   scrollToDate(fromAfterViewInit: boolean = false) {

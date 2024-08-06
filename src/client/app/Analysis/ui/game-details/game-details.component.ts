@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {AsyncPipe, NgIf} from "@angular/common";
-import {StateService} from "../../../common/services/state.service";
 import {RosterPlayer} from "../../../common/model/roster.interface";
 import {Game} from "../../../common/model/game.interface";
 import {Team} from "../../../common/model/team.interface";
@@ -25,19 +24,23 @@ export class GameDetailsComponent extends SubscriptionHolder implements OnInit, 
   away: Team;
   home: Team;
 
-  constructor(private stateService: StateService,
-              private activatedRoute: ActivatedRoute) {
+  constructor(private activatedRoute: ActivatedRoute) {
     super();
   }
 
   ngOnInit(): void {
-    this.playersMap = this.stateService.allPlayers;
-
     this.subscriptions.push(
       this.activatedRoute.data.subscribe((data: Data) => {
         const gameID: string = this.activatedRoute.snapshot.params['gameId'];
         const games: Game[] = data['dailySchedule'];
+        const players: RosterPlayer[] = data['players'] as RosterPlayer[];
         const {away, home} = data['matchUp'];
+
+        const timestamp: number = JSON.parse(JSON.stringify(Date.now()));
+        players.forEach((player: RosterPlayer) => {
+          this.playersMap.set(player.playerID, player);
+        });
+
 
         this.game = games.find(game => game.gameID === gameID)!;
         this.home = home.team;

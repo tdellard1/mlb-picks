@@ -10,11 +10,13 @@ import {
 } from "@angular/material/table";
 import {NgIf} from "@angular/common";
 import {RosterPlayer} from "../../../common/model/roster.interface.js";
-import {StateService} from "../../../common/services/state.service.js";
 import {ActivatedRoute, Params} from "@angular/router";
 import {SubscriptionHolder} from "../../../common/components/subscription-holder.component.js";
 import {sortByGameDate} from "../../../common/utils/state-builder.utils.js";
 import {PlayerPitchingStats, PlayerStats} from "../../../common/model/player-stats.interface.js";
+import {BackendApiService} from "../../../common/services/backend-api/backend-api.service.js";
+import {switchMap} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'pitcher-view',
@@ -40,15 +42,18 @@ export class PitcherViewComponent extends SubscriptionHolder implements OnInit {
   dataSource: PitcherStatsElements[] = [];
   selectedPitcher: RosterPlayer;
 
-  constructor(private state: StateService, private route: ActivatedRoute) {
+  constructor(private backendApiService: BackendApiService,
+              private route: ActivatedRoute) {
     super();
   }
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.route.params.subscribe((params: Params) => {
-        const playerID = params['playerID'];
-        this.selectedPitcher = this.state.getPlayer(playerID);
+      this.route.params.pipe(
+        map((params: Params) => params['playerID'] as string),
+        switchMap((playerId: string) => this.backendApiService.getPlayer(playerId))
+      ).subscribe((rosterPlayer: RosterPlayer) => {
+        this.selectedPitcher = rosterPlayer;
         this.selectPitcher();
       })
     );
