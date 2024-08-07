@@ -6,7 +6,7 @@ import logger from 'morgan';
 import cors from "cors";
 import path, {dirname} from 'path';
 import {fileURLToPath} from 'url';
-import {quarterDailyUpdate, halfDailyUpdate} from "./app/scheduler/scheduler.js";
+import {quarterDailyUpdate, halfDailyUpdate, reconcileBoxScores} from "./app/scheduler/scheduler.js";
 import rostersController from "./app/routes/rosters/rosters.controller.js";
 import playersRouter from "./app/routes/players/players.router.js";
 import schedulesController from "./app/routes/schedules/schedules.controller.js";
@@ -14,7 +14,6 @@ import boxScoreRouter from "./app/routes/boxScores/box-scores.router.js";
 import analysisRouter from "./app/routes/analysis/analysis.router.js";
 import teamsRouter from "./app/routes/teams/teams.router.js";
 import slatesRouter from "./app/routes/slates/slates.router.js";
-import {limit} from "@firebase/firestore";
 
 const app: Express = express();
 
@@ -29,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'client/browser')));
 
 const job: Job = schedule.scheduleJob('0 */6 * * *', async () => await quarterDailyUpdate());
 const job2: Job = schedule.scheduleJob('30 */12 * * *', async () => await halfDailyUpdate());
+await reconcileBoxScores();
 
 const api: Router = Router()
   .use('/boxScores', boxScoreRouter())

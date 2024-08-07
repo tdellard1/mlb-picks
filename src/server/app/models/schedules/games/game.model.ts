@@ -33,7 +33,7 @@ export class Game {
     home: string;
     awayResult: string;
     gameTime: string;
-    gameTime_epoch: string;
+    private readonly _gameTime_epoch: string;
     homeResult: string;
     probableStartingLineups: Teams<LineUp>;
     probableStartingPitchers: Teams<string>;
@@ -52,12 +52,16 @@ export class Game {
         this.home = data.home;
         this.awayResult = data.awayResult;
         this.gameTime = data.gameTime;
-        this.gameTime_epoch = data.gameTime_epoch;
+        this._gameTime_epoch = data.gameTime_epoch;
         this.homeResult = data.homeResult;
         this.probableStartingLineups = data.probableStartingLineups;
         this.probableStartingPitchers = data.probableStartingPitchers;
         this.lineScore = data.lineScore;
         this.gameStatusCode = data.gameStatusCode;
         this.boxScore = data.boxScore;
+    }
+
+    get gameTime_epoch(): number {
+        return Number(this._gameTime_epoch) * 1000;
     }
 }

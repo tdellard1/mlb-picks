@@ -1,10 +1,17 @@
 import {LineScore, Teams} from "../schedules/games/starting-lineups.model.js";
 import {PlayersStats, PlayerStats} from "./player-stats.model.js";
 
+export enum GameStatus {
+    Completed = 'Completed',
+    Postponed = 'Postponed',
+    Suspended = 'Suspended',
+    Live = 'Live - In Progress',
+}
+
 export class BoxScore {
     GameLength?: string;
     Umpires?: string;
-    gameStatus?: string;
+    gameStatus!: GameStatus;
     Attendance?: string;
     gameDate!: string;
     Venue?: string;
@@ -64,5 +71,38 @@ export class BoxScore {
             this.startingLineups = data.startingLineups;
             this.lineScore = data.lineScore;
         }
+    }
+
+    public static isFromYesterday({gameDate}: BoxScore) {
+        if (gameDate === undefined) {
+            return false;
+        }
+        const formattedDate: string = gameDate.replace(/(\d{4})(\d{2})(\d{2})/g, '$1/$2/$3');
+        const boxScoreDateTimeStamp: number = new Date(formattedDate).setHours(0, 0, 0, 0);
+        const boxScoreDate: Date = new Date(boxScoreDateTimeStamp);
+
+        const todayTimestamp: number = new Date().setHours(0, 0, 0, 0);
+        const yesterday: Date = new Date(todayTimestamp);
+        yesterday.setDate(yesterday.getDate() - 1);
+
+        return yesterday.getTime() === boxScoreDate.getTime();
+    }
+
+    public static get hasGameDate() {
+        return (boxScore: BoxScore): boolean => {
+            return boxScore.gameDate !== undefined;
+        }
+    }
+
+    public static get GameDate() {
+        return (boxScore: BoxScore) => {
+            return boxScore.gameDate;
+        }
+    }
+}
+
+export function hasGameDate() {
+    return (boxScore: BoxScore): boolean => {
+        return boxScore.gameDate !== undefined;
     }
 }

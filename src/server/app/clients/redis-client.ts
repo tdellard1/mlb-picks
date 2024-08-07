@@ -22,6 +22,7 @@ const redisClient: RedisClient =
         }
     })
         .on('ready', () => console.log('Redis Client is Ready'))
+        .on('error', err => console.log('Redis Client error: ', err))
         .on('end', () => console.log('Redis Client Ending'))
         .on('reconnecting', () => console.log('Redis Client Reconnecting...'))
         .on('connect', () => {

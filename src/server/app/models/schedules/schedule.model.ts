@@ -7,7 +7,12 @@ export class Schedule {
     constructor(data?: any) {
         if (data) {
             this.team = data.team;
-            this.schedule = data.schedule;
+
+            if (Array.isArray(data.schedule)) {
+                this.schedule = data.schedule.map((data: any) => new Game(data));
+            } else {
+                this.schedule = data.schedule;
+            }
         }
     }
 
