@@ -6,7 +6,7 @@ import logger from 'morgan';
 import cors from "cors";
 import path, {dirname} from 'path';
 import {fileURLToPath} from 'url';
-import {quarterDailyUpdate, halfDailyUpdate, reconcileBoxScores} from "./app/scheduler/scheduler.js";
+import {quarterDailyUpdate, reconcileBoxScores} from "./app/scheduler/scheduler.js";
 import rostersController from "./app/routes/rosters/rosters.controller.js";
 import playersRouter from "./app/routes/players/players.router.js";
 import schedulesController from "./app/routes/schedules/schedules.controller.js";
@@ -27,8 +27,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'client/browser')));
 
 const job: Job = schedule.scheduleJob('0 */6 * * *', async () => await quarterDailyUpdate());
-const job2: Job = schedule.scheduleJob('30 */12 * * *', async () => await halfDailyUpdate());
-await reconcileBoxScores();
+const job2: Job = schedule.scheduleJob('30 */12 * * *', async () => await reconcileBoxScores());
+
 
 const api: Router = Router()
   .use('/boxScores', boxScoreRouter())

@@ -43,43 +43,54 @@ export function boxScoreController(firebase: FirebaseClient, redis: RedisClient)
         response.json(boxScores);
     }
 
-    const fetchRecentBoxScoresOfSchedules = async (request: Request, response: Response, next: NextFunction) => {
-        const schedules: Schedule[] = await fetchBAM('schedules', Schedule);
-        const boxScores: BoxScore[] = await fetchBAM('boxScores', BoxScore);
+    const fetchBoxScoresForTeam = async (request: Request, response: Response, next: NextFunction) => {
+        const teams: string[] = request.query['teams'] as string[];
 
-        const topOfToday: number = new Date().setHours(0, 0, 0, 0);
-        let gameIDs: Set<string> = new Set();
+        const awayScheduleStringSet: string[] = await cacheClient.sMembers(`schedule:${teams[0]}`);
+        const awaySchedule: Schedule = new Schedule(JSON.parse(awayScheduleStringSet[0]));
 
-        schedules.forEach(({schedule}: Schedule) => {
-            const allGameIDs: string[] = schedule
-                .filter(({gameTime_epoch}) => Number(gameTime_epoch) * 1000 < topOfToday)
-                .filter(({gameStatus}) => gameStatus === 'Completed')
-                .sort((aGame: Game, bGame: Game) => {
-                    const aGameStart: number = Number(aGame.gameTime_epoch);
-                    const bGameStart: number = Number(bGame.gameTime_epoch);
-                    return aGameStart - bGameStart; })
-                .slice(-15)
-                .map(({gameID}) => gameID);
+        const homeScheduleStringSet: string[] = await cacheClient.sMembers(`schedule:${teams[1]}`);
+        const homeSchedule: Schedule = new Schedule(JSON.parse(homeScheduleStringSet[0]));
 
-            gameIDs = new Set(allGameIDs);
+        const gameIds: Set<string> = new Set();
+
+        const awayGameIds: string[] = awaySchedule.schedule
+            .filter(Game.isBeforeToday)
+            .filter(Game.gameIsCompleted)
+            .map(Game.toGameID);
+
+        const homeGameIds: string[] = homeSchedule.schedule
+            .filter(Game.isBeforeToday)
+            .filter(Game.gameIsCompleted)
+            .map(Game.toGameID);
+
+        awayGameIds.forEach(gameIds.add.bind(gameIds));
+        homeGameIds.forEach(gameIds.add.bind(gameIds));
+
+        const boxScoreKeys: string[] = [];
+
+        gameIds.forEach((gameId: string) => {
+            boxScoreKeys.push(`boxScore:${gameId}`);
         });
 
-        if (gameIDs.size !== 225) {
-            throw new Error('Total games isn\'t right')
-        }
+        const boxScorePromises: Promise<string[]>[] = boxScoreKeys.map((key: string) => cacheClient.sMembers(key));
+        const boxScoreResolvers: string[][] = await Promise.all(boxScorePromises);
+        const boxScores: BoxScore[] = boxScoreResolvers.flat().map((boxScoreString: string) => new BoxScore(JSON.parse(boxScoreString)));
 
-        gameIDs.forEach(gameID => {
+        const home: BoxScore[] = boxScores
+            .filter(BoxScore.includedIn(homeGameIds))
+            .sort(BoxScore.sortChronologically);
 
-        });
+        const away: BoxScore[] = boxScores
+            .filter(BoxScore.includedIn(awayGameIds))
+            .sort(BoxScore.sortChronologically);
 
-
-        if (boxScores.length < 1) response.status(404).end();
-
-        response.json(boxScores);
+        response.json({home, away});
     }
 
     return {
         fetchAllBoxScoresFromCache,
-        fetchAllBoxScoresFromDatabase
+        fetchAllBoxScoresFromDatabase,
+        fetchBoxScoresForTeam
     }
 }

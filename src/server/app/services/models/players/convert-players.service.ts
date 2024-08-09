@@ -1,4 +1,4 @@
-import {getFromCache, removeFromCache, replaceInCache} from "../../cache.service.js";
+import {getFromCache, replaceInCache} from "../../cache.service.js";
 import {RosterPlayer} from "../../../models/players/roster-player.model.js";
 import {Roster} from "../../../models/players/rosters.model.js";
 import {BoxScore} from "../../../models/boxScores/box-scores.model.js";

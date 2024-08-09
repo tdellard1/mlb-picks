@@ -1,0 +1,35 @@
+<mat-radio-group>
+  <mat-radio-button value="1">Home</mat-radio-button>
+  <mat-radio-button value="2">Away</mat-radio-button>
+  <mat-radio-button value="3">Both</mat-radio-button>
+</mat-radio-group>
+
+<ng-select appearance="outline"
+           (change)="selectSplits()"
+           [(ngModel)]="split"
+           [clearable]="false">
+    <ng-option [value]="'rhvrh'">v RHP as RHH</ng-option>
+    <ng-option [value]="'lhvrh'">v LHP as RHH</ng-option>
+    <ng-option [value]="'rhvlh'">v RHP as LHH</ng-option>
+    <ng-option [value]="'lhvlh'">v LHP as LHH</ng-option>
+</ng-select>
+
+<div class="frame">
+  <div class="away" *ngIf="away">
+    <span>{{away.teamName}}</span>
+    <!--  <mat-radio-group class="flex-column">-->
+    <!--    <mat-radio-button value="1">RHB vs RHP</mat-radio-button>-->
+    <!--    <mat-radio-button value="2">RHB vs LHP</mat-radio-button>-->
+    <!--    <mat-radio-button value="2">LHB vs RHP</mat-radio-button>-->
+    <!--    <mat-radio-button value="1">LHB vs LHP</mat-radio-button>-->
+    <!--  </mat-radio-group>-->
+  </div>
+
+  <div class="home" *ngIf="home">
+    <span>{{home.teamName}}</span>
+    <!--  <mat-radio-group>-->
+    <!--    <mat-radio-button value="1">Home</mat-radio-button>-->
+    <!--    <mat-radio-button value="2">Away</mat-radio-button>-->
+    <!--  </mat-radio-group>-->
+  </div>
+</div>

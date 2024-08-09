@@ -3,6 +3,7 @@ import {RosterPlayer} from "../models/players/roster-player.model";
 import {Roster} from "../models/players/rosters.model.js";
 import {Team} from "../models/teams/teams.model.js";
 import {Schedule} from "../models/schedules/schedule.model.js";
+import {Game} from "../models/schedules/games/game.model.js";
 
 const request: AxiosInstance   = axios.create({
     baseURL: 'https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com',
@@ -35,6 +36,7 @@ export function getBoxScore<T>(gameID: string, startingLineups: boolean = true):
     return request.get<T>('/getMLBBoxScore', {params: {gameID, startingLineups}});
 }
 
-export function getDailySchedule<T>(gameDate: string): Promise<AxiosResponse<T>> {
-    return request.get<T>('/getMLBGamesForDate', {params: {gameDate}});
+export async function getDailySchedule(gameDate: string): Promise<Game[]> {
+    const {data} = await request.get<Game[]>('/getMLBGamesForDate', {params: {gameDate}});
+    return data;
 }

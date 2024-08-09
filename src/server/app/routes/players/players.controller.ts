@@ -3,6 +3,10 @@ import {RosterPlayer} from "../../models/players/roster-player.model.js";
 import {RedisClient} from "../../clients/redis-client.js";
 import {Schedule} from "../../models/schedules/schedule.model.js";
 import {PitcherUtils} from "../../utils/pitcher.utils.js";
+import {BoxScore, GameStatus} from "../../models/boxScores/box-scores.model.js";
+import {Game} from "../../models/schedules/games/game.model.js";
+import {AxiosResponse} from "axios";
+import {getBoxScore} from "../../services/tank-01.service.js";
 
 export declare type PlayersController = {
     fetchPlayersFromCache: (request: Request, response: Response, next: NextFunction) => Promise<void>,
@@ -13,7 +17,7 @@ export declare type PlayersController = {
 export function playersController(redis: RedisClient): PlayersController {
     const cacheClient: RedisClient = redis;
 
-    function getPitcherNRFIStats(rosterPlayer: RosterPlayer, schedules: Schedule[]) {
+    function getPitcherNRFIStats(rosterPlayer: RosterPlayer, schedules: Schedule[], boxScores: BoxScore[]) {
         let record: string = '';
         let streak: string = '';
         let pitcher: string = '';
@@ -23,13 +27,16 @@ export function playersController(redis: RedisClient): PlayersController {
         }
 
         if (rosterPlayer && rosterPlayer.games) {
-            const pitcherUtils: PitcherUtils = new PitcherUtils(schedules);
+            const pitcherUtils: PitcherUtils = new PitcherUtils(schedules, boxScores);
 
             pitcher = rosterPlayer.longName;
             record = pitcherUtils.getNoRunsFirstInningRecord(rosterPlayer);
             streak = pitcherUtils.getNoRunsFirstInningStreak(rosterPlayer);
         } else {
-            console.log('Player has no games ', rosterPlayer.games);
+            pitcher = rosterPlayer.longName;
+            record = '0';
+            streak = '0';
+            console.log('Player has no games ', rosterPlayer);
         }
 
         return {
@@ -37,6 +44,15 @@ export function playersController(redis: RedisClient): PlayersController {
             streak,
             pitcher
         }
+    }
+
+    async function getBoxScoresForMissingStats(schedules: Schedule[]): Promise<BoxScore[]> {
+        const games: Game[] = schedules.map(({schedule}) => schedule).flat();
+        const completedLackingLineScore: string[] = games.filter(({gameStatus, lineScore}) => gameStatus === GameStatus.Suspended && lineScore === undefined).map(Game.toGameID);
+
+        const boxScorePromises: Promise<AxiosResponse<BoxScore>>[] = completedLackingLineScore.map((gameID: string) => getBoxScore(gameID));
+        const boxScoreResolvers: AxiosResponse<BoxScore>[] = await Promise.all(boxScorePromises);
+        return boxScoreResolvers.map(({data}) => new BoxScore(data));
     }
 
     /* ------------------------------------------------------------------------ */
@@ -76,10 +92,12 @@ export function playersController(redis: RedisClient): PlayersController {
         const cacheResults: string[] = await cacheClient.sMembers('schedules');
         const schedules: Schedule[] = cacheResults.map((scheduleString: string) => new Schedule(JSON.parse(scheduleString)));
 
+        const boxScores: BoxScore[] = await getBoxScoresForMissingStats(schedules);
+
         const pitcherStats: any = {};
 
         for (const pitcher of allPitchers) {
-            pitcherStats[pitcher.playerID] = getPitcherNRFIStats(pitcher, schedules);
+            pitcherStats[pitcher.playerID] = getPitcherNRFIStats(pitcher, schedules, boxScores);
         }
 
         response.json(pitcherStats);

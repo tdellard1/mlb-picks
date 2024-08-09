@@ -3,17 +3,22 @@ import {PlayerStats} from "../models/boxScores/player-stats.model.js";
 import {Schedule} from "../models/schedules/schedule.model.js";
 import {Game} from "../models/schedules/games/game.model.js";
 import {LineScore, Teams} from "../models/schedules/games/starting-lineups.model.js";
+import {BoxScore} from "../models/boxScores/box-scores.model.js";
 
 export class PitcherUtils {
-    gamesMap: Map<string, Game> = new Map();
+    gamesMap: Map<string, (Game | BoxScore)> = new Map();
 
-    constructor(schedules: Schedule[]) {
+    constructor(schedules: Schedule[], boxScores: BoxScore[]) {
         const allGames: Game[] = schedules.map(({schedule}: Schedule) => schedule).flat();
         const gamesWithLineScores: Game[] = allGames.filter(({lineScore}) => !!lineScore);
         const gamesLength: number = gamesWithLineScores.length;
         for (let i: number = 0; i < gamesLength; i++) {
             const game: Game = gamesWithLineScores[i];
             this.gamesMap.set(game.gameID, game);
+        }
+
+        for (const boxScore of boxScores) {
+            this.gamesMap.set(boxScore.gameID, boxScore);
         }
     }
 
@@ -27,7 +32,7 @@ export class PitcherUtils {
 
         games.forEach(({started, team, gameID}: PlayerStats) => {
             if (this.gamesMap.has(gameID)) {
-                const {lineScore}: Game = this.gamesMap.get(gameID)!;
+                const {lineScore}: (Game | BoxScore) = this.gamesMap.get(gameID)!;
 
                 if (started === 'True' && lineScore) {
                     if (lineScore.away.team === team) {
@@ -59,26 +64,16 @@ export class PitcherUtils {
         }
 
         const playerStatsWithLineScore: [PlayerStats, Teams<LineScore>][] = games
-            .sort((a, b) => {
-                const aGameFormattedDate: string = a.gameID.split('_')[0].replace(/(\d{4})(\d{2})(\d{2})/g, '$1/$2/$3');
-                const aGameDate: Date = new Date(aGameFormattedDate);
+            .sort(PlayerStats.sortChronologically)
+            .filter(PlayerStats.playerStarted)
+            .map(PlayerStats.getStatsWithLineScore(this.gamesMap));
 
-                const bGameFormattedDate: string = b.gameID.split('_')[0].replace(/(\d{4})(\d{2})(\d{2})/g, '$1/$2/$3');
-                const bGameDate: Date = new Date(bGameFormattedDate);
-
-                return aGameDate.getTime() - bGameDate.getTime();
-            })
-            .filter((playerStats: PlayerStats) => playerStats.started === 'True')
-            .map((playerStats: PlayerStats) => {
-                return [playerStats, this.gamesMap.get(playerStats.gameID)!.lineScore];
-            });
-
-        function pitcherThrewNoRunsInFirstInning([playerStats, lineScore]: [PlayerStats, Teams<LineScore>]) {
-            const teamAbbreviation: string = playerStats.team;
-            if (lineScore.away.team === teamAbbreviation) {
-                return lineScore.home.scoresByInning['1'] === '0';
-            } else if (lineScore.home.team === teamAbbreviation) {
-                return lineScore.away.scoresByInning['1'] === '0';
+        function pitcherThrewNoRunsInFirstInning([{team}, {home, away}]: [PlayerStats, Teams<LineScore>]) {
+            const teamAbbreviation: string = team;
+            if (away.team === teamAbbreviation) {
+                return home.scoresByInning['1'] === '0';
+            } else if (home.team === teamAbbreviation) {
+                return away.scoresByInning['1'] === '0';
             } else {
                 throw new Error('Pitcher did not play for home team or away team');
             }

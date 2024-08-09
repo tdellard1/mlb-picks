@@ -126,7 +126,12 @@ export class RosterPlayer {
             this.yahooPlayerID = data.yahooPlayerID;
             this.stats = data.stats;
             this.throw = data.throw;
-            this.games = data.games;
+
+            if (data.games !== undefined && Array.isArray(data.games)) {
+                this.games = data.games.map((game: any) => new PlayerStats(game));
+            } else {
+                this.games = data.games;
+            }
         }
     }
 }

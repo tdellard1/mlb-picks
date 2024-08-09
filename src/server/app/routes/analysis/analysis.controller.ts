@@ -31,14 +31,14 @@ export default function analysisController(redis: RedisClient) {
             if (!boxScore) throw new Error('BoxScore unavailable for scheduled game');
 
             game.boxScore = boxScore;
-            return game
+            return Game.toDTO(game);
         });
 
         return analysisSchedule;
     }
 
-    async function getAnalysisForGame<T>(request: Request, response: Response) {
-        const gameID: string = request.params.gameID;
+    async function getAnalysisForGame<T>({params}: Request, response: Response) {
+        const gameID: string = params['gameID'];
         const teams: string[] = gameID.split('_')[1].split('@');
 
         const teamStringSet: string[] = await cache.sMembers('teams');

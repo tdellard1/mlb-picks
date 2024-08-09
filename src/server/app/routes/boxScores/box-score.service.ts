@@ -1,6 +1,6 @@
-import {addToCache, exists, getFromCache, replaceInCache} from "../../services/cache.service.js";
+import {replaceInCache} from "../../services/cache.service.js";
 import {BoxScore} from "../../models/boxScores/box-scores.model.js";
-import {downloadFileWithType, uploadFile} from "../../services/firebase.service.js";
+import {uploadFile} from "../../services/firebase.service.js";
 import {AxiosResponse} from "axios";
 import {getBoxScore} from "../../services/tank-01.service.js";
 
@@ -24,16 +24,11 @@ export function removeDuplicates(boxScores: BoxScore[]): BoxScore[] {
     return uniqueBoxScores;
 }
 
-export async function writeThroughBoxScores(gameIDs: string[]) {
-    let newBoxScores: BoxScore[] = [];
+export async function writeThroughBoxScores(gameIDs: string[], oldBoxScores: BoxScore[]) {
+    const boxScorePromises: Promise<AxiosResponse<BoxScore>>[] = gameIDs.map((gameID: string) => getBoxScore(gameID));
+    const boxScoreResolvers: AxiosResponse<BoxScore>[] = await Promise.all(boxScorePromises);
+    const newBoxScores: BoxScore[] = boxScoreResolvers.map(({data}) => data);
 
-    if (gameIDs.length > 0) {
-        const boxScorePromises: Promise<AxiosResponse<BoxScore>>[] = gameIDs.map((gameID: string) => getBoxScore(gameID));
-        const boxScoreResolvers: AxiosResponse<BoxScore>[] = await Promise.all(boxScorePromises);
-        newBoxScores = boxScoreResolvers.map(({data}) => data);
-    }
-
-    const oldBoxScores: BoxScore[] = await retrieveBoxScoresFromDatabase();
     const allBoxScores: BoxScore[] = [...newBoxScores, ...oldBoxScores];
     const uniqueBoxScores: BoxScore[] = removeDuplicates(allBoxScores);
 
@@ -56,26 +51,11 @@ export async function addBoxScoresToDatabase(boxScores: BoxScore[]): Promise<voi
     await uploadFile(key, boxScores);
 }
 
-export async function getBoxScores(): Promise<BoxScore[]> {
-    return await downloadFileWithType(key, BoxScore);
-}
-
 export async function retrieveBoxScoresFromTank01(gameIDs: string[]): Promise<BoxScore[]> {
     const rostersPromises: Promise<AxiosResponse<BoxScore>>[] =
         gameIDs.map((teamAbbreviation: string) => getBoxScore<BoxScore>(teamAbbreviation));
     const rostersResolvers: AxiosResponse<BoxScore>[] = await Promise.all(rostersPromises);
     return rostersResolvers.map(({data}: AxiosResponse<BoxScore>) => data);
-}
-
-export async function retrieveBoxScoresFromDatabase(): Promise<BoxScore[]> {
-    return downloadFileWithType(key, BoxScore);
-}
-
-export async function boxScoresIncludeDate(boxScores: BoxScore[], yyyyMMdd: string): Promise<boolean> {
-    const dates: string[] = boxScores.map(({gameDate}) => gameDate);
-    const uniqueDatesInBoxScores: Set<string> = new Set(dates);
-
-    return uniqueDatesInBoxScores.has(yyyyMMdd);
 }
 
 async function addBoxScoresToMultipleSets(boxScores: BoxScore[]): Promise<number[]> {

@@ -20,7 +20,7 @@
 */
 
 import {LineScore, LineUp, Teams} from "./starting-lineups.model.js";
-import {BoxScore} from "../../boxScores/box-scores.model.js";
+import {BoxScore, GameStatus} from "../../boxScores/box-scores.model.js";
 
 export class Game {
     gameID: string;
@@ -61,7 +61,56 @@ export class Game {
         this.boxScore = data.boxScore;
     }
 
+    public static toDTO(game: any) {
+        const gameDTO: any = {};
+
+        Object.getOwnPropertyNames(game).forEach((key: string) => {
+           if (key === '_gameTime_epoch') {
+               gameDTO['gameTime_epoch'] = game['_gameTime_epoch'];
+           } else {
+               gameDTO[key] = game[key];
+           }
+        });
+
+        return gameDTO;
+
+    }
+
     get gameTime_epoch(): number {
         return Number(this._gameTime_epoch) * 1000;
+    }
+
+    public static get gameIsCompleted() {
+        return (game: Game): boolean => {
+            return game.gameStatus === GameStatus.Completed;
+        }
+    }
+
+    public static get toGameID() {
+        return (game: Game): string => {
+            if (!game) {
+                return '';
+            }
+
+            return game.gameID;
+        }
+    }
+
+    public static matchesGameID(possiblyContainsAMatchingGameID: { gameID: string }[]) {
+        return (game: Game): boolean => {
+            return possiblyContainsAMatchingGameID.some(({gameID}) => game.gameID === gameID);
+        }
+    }
+
+    public static get isBeforeToday() {
+        return ({gameTime_epoch}: Game): boolean => {
+            return gameTime_epoch < new Date().setHours(0, 0, 0, 0);
+        }
+    }
+
+    public static get sortChronologically() {
+        return (game1: Game, game2: Game): number => {
+            return game1.gameTime_epoch - game2.gameTime_epoch;
+        }
     }
 }

@@ -1,6 +1,6 @@
 import {BoxScore} from "./box-score.interface";
 import {TeamSchedule} from "./team-schedule.interface";
-import {Expert, GamePick} from "../../Slate/data-access/expert.interface";
+import {Expert, GamePick} from "../../features/Slate/data-access/expert.interface";
 
 export interface Game {
   gameID: string;

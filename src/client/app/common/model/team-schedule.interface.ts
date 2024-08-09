@@ -3,8 +3,7 @@ import {Team} from "./team.interface";
 import {BoxScore} from "./box-score.interface";
 import {TeamAnalyticsUtils} from "../utils/team-analytics.utils";
 import {roundToDecimalPlace} from "../utils/general.utils";
-import {getGamesBeforeToday, nonPostponedGames, nonSuspendedGames} from "../utils/schedule.utils";
-import {RunsFirstInning} from "../../Analysis/data-access/runs-first-inning.model";
+import {RunsFirstInning} from "../../features/Analysis/data-access/runs-first-inning.model";
 
 export interface TeamSchedule {
   team: string,

@@ -1,5 +1,5 @@
-import {Component, HostListener, ViewChild} from '@angular/core';
-import {ActivatedRoute, Data, Router, RouterOutlet} from '@angular/router';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Router, RouterOutlet} from '@angular/router';
 import {MatSidenav, MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatListItem, MatNavList} from "@angular/material/list";
@@ -24,27 +24,15 @@ import {BreakpointObserver} from "@angular/cdk/layout";
   templateUrl: 'app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
 
   isMobile: boolean = true;
   isCollapsed: boolean = true;
   selectedPage: string = '';
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private router: Router,
+  constructor(private router: Router,
               private observer: BreakpointObserver) {
-  }
-
-  @HostListener('window:beforeunload', ['$event'])
-  beforeunloadHandler(): void {
-    const {dailySchedule}: Data = this.activatedRoute.snapshot.data;
-
-    console.log('load things up');
-
-    if (dailySchedule) {
-      localStorage.setItem('daily-schedule', JSON.stringify(dailySchedule));
-    }
   }
 
   ngOnInit() {
@@ -80,6 +68,9 @@ export class AppComponent {
         case RouterPages.PITCHERS:
           void this.router.navigate(['pitchers']);
           break;
+        case RouterPages.SPLITS:
+          void this.router.navigate(['splits']);
+          break;
       }
     });
   }
@@ -91,6 +82,7 @@ export const RouterPages = {
   NO_RUNS_FIRST_INNING: 'No Runs First Inning',
   ANALYSIS: 'Game Analysis',
   SLATE: 'Expert Picks',
-  PITCHERS: 'Pitcher Stats'
+  PITCHERS: 'Pitcher Stats',
+  SPLITS: 'Splits'
 }
 

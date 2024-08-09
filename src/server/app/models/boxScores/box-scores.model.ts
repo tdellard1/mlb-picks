@@ -90,19 +90,49 @@ export class BoxScore {
 
     public static get hasGameDate() {
         return (boxScore: BoxScore): boolean => {
+            if (!boxScore) {
+                return false;
+            }
+
             return boxScore.gameDate !== undefined;
         }
     }
 
-    public static get GameDate() {
-        return (boxScore: BoxScore) => {
-            return boxScore.gameDate;
+    public static get toGameID() {
+        return (boxScore: BoxScore): string => {
+            if (!boxScore) {
+                return '';
+            }
+
+            return boxScore.gameID;
         }
     }
-}
 
-export function hasGameDate() {
-    return (boxScore: BoxScore): boolean => {
-        return boxScore.gameDate !== undefined;
+    public static get isGameInProgress() {
+        return (boxScore: BoxScore): boolean => {
+            if (!boxScore) {
+                return false;
+            }
+
+            return boxScore.gameStatus === GameStatus.Live;
+        }
+    }
+
+    public static get sortChronologically() {
+        return (boxScore: BoxScore, boxScore2: BoxScore) => {
+            const gameDateOne: string = boxScore.gameID.split('_')[0].replace(/(\d{4})(\d{2})(\d{2})/g, '$1/$2/$3');
+            const aGameDate: Date = new Date(gameDateOne);
+
+            const gameDateTwo: string = boxScore2.gameID.split('_')[0].replace(/(\d{4})(\d{2})(\d{2})/g, '$1/$2/$3');
+            const bGameDate: Date = new Date(gameDateTwo);
+
+            return aGameDate.getTime() - bGameDate.getTime();
+        }
+    }
+
+    public static includedIn(gameIds: string[]) {
+        return ({gameID}: BoxScore): boolean => {
+            return gameIds.includes(gameID)
+        };
     }
 }

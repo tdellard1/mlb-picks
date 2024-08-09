@@ -17,15 +17,11 @@ export class Schedule {
     }
 
     public static get15MostRecentGames({schedule}: Schedule) {
-        return schedule.slice().filter(({gameTime_epoch}) =>
-            Number(gameTime_epoch) * 1000 < new Date().setHours(0, 0, 0, 0))
+        return schedule.slice()
+            .filter(Game.isBeforeToday)
             /** FixMe Schedules aren't updated immediately, may need to filter gameStatus on Box Scores that have been added to schedules */
-            .filter(({gameStatus}) => gameStatus === 'Completed')
-            .sort((aGame: Game, bGame: Game) => {
-                const aGameStart: number = Number(aGame.gameTime_epoch);
-                const bGameStart: number = Number(bGame.gameTime_epoch);
-                return aGameStart - bGameStart;
-            })
+            .filter(Game.gameIsCompleted)
+            .sort(Game.sortChronologically)
             .slice(-15);
     }
 }

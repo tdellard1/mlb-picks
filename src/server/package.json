@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "node ./dist/server/bin/www.js",
+    "quick-start": "node --no-warnings=ExperimentalWarning --loader ts-node/esm ./bin/www.ts",
     "build:start": "tsc && node ./dist/server/bin/www.js",
     "build": "tsc"
   },
@@ -17,6 +18,7 @@
     "firebase": "^10.7.0",
     "morgan": "^1.10.0",
     "node-schedule": "^2.1.1",
+    "nodemon": "^3.1.4",
     "redis": "^4.6.15"
   },
   "devDependencies": {
