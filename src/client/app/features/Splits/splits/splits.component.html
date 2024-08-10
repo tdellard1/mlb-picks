@@ -1,35 +1,36 @@
-<mat-radio-group>
-  <mat-radio-button value="1">Home</mat-radio-button>
-  <mat-radio-button value="2">Away</mat-radio-button>
-  <mat-radio-button value="3">Both</mat-radio-button>
+<mat-radio-group class="flex-row"
+                 (change)="selectSplits()"
+                 [(ngModel)]="statsSource">
+  <mat-radio-button [value]="StatsSource.Home">Home</mat-radio-button>
+  <mat-radio-button [value]="StatsSource.Away">Away</mat-radio-button>
+  <mat-radio-button [value]="StatsSource.Both" checked>Both</mat-radio-button>
 </mat-radio-group>
 
-<ng-select appearance="outline"
-           (change)="selectSplits()"
-           [(ngModel)]="split"
-           [clearable]="false">
-    <ng-option [value]="'rhvrh'">v RHP as RHH</ng-option>
-    <ng-option [value]="'lhvrh'">v LHP as RHH</ng-option>
-    <ng-option [value]="'rhvlh'">v RHP as LHH</ng-option>
-    <ng-option [value]="'lhvlh'">v LHP as LHH</ng-option>
-</ng-select>
-
 <div class="frame">
-  <div class="away" *ngIf="away">
+  <div class="flex-column" *ngIf="away">
     <span>{{away.teamName}}</span>
-    <!--  <mat-radio-group class="flex-column">-->
-    <!--    <mat-radio-button value="1">RHB vs RHP</mat-radio-button>-->
-    <!--    <mat-radio-button value="2">RHB vs LHP</mat-radio-button>-->
-    <!--    <mat-radio-button value="2">LHB vs RHP</mat-radio-button>-->
-    <!--    <mat-radio-button value="1">LHB vs LHP</mat-radio-button>-->
-    <!--  </mat-radio-group>-->
+    <span>{{awayOffensiveStats.BattingAverage}}</span>
+    <span>{{awayOffensiveStats.Slugging}}</span>
+    <span>{{awayOffensiveStats.OnBasePercentage}}</span>
+    <span>{{awayOffensiveStats.OnBasePlusSlugging}}</span>
+    <span>{{awayOffensiveStats.weightedOnBaseAverage}}</span>
   </div>
 
-  <div class="home" *ngIf="home">
+  <div class="flex-column">
+    <span>Teams</span>
+    <span>Batting Average</span>
+    <span>Slugging</span>
+    <span>On Base Percentage</span>
+    <span>On Base plus Slug</span>
+    <span>Weighted OBA</span>
+  </div>
+
+  <div class="flex-column" *ngIf="home">
     <span>{{home.teamName}}</span>
-    <!--  <mat-radio-group>-->
-    <!--    <mat-radio-button value="1">Home</mat-radio-button>-->
-    <!--    <mat-radio-button value="2">Away</mat-radio-button>-->
-    <!--  </mat-radio-group>-->
+    <span>{{homeOffensiveStats.BattingAverage}}</span>
+    <span>{{homeOffensiveStats.Slugging}}</span>
+    <span>{{homeOffensiveStats.OnBasePercentage}}</span>
+    <span>{{homeOffensiveStats.OnBasePlusSlugging}}</span>
+    <span>{{homeOffensiveStats.weightedOnBaseAverage}}</span>
   </div>
 </div>

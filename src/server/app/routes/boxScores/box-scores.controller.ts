@@ -4,27 +4,13 @@ import {RedisClient} from "../../clients/redis-client.js";
 import {FirebaseClient} from "../../services/firebase.service.js";
 import {Schedule} from "../../models/schedules/schedule.model.js";
 import {Game} from "../../models/schedules/games/game.model.js";
+import {RosterPlayer} from "../../models/players/roster-player.model.js";
+import {getPlayerInfo} from "../../services/tank-01.service.js";
+import {AxiosResponse} from "axios";
 
 export function boxScoreController(firebase: FirebaseClient, redis: RedisClient) {
     const database: FirebaseClient = firebase;
     const cacheClient: RedisClient = redis;
-
-    async function fetchBAM<T>(key: string, type: { new(parse: any): T; }): Promise<T[]> {
-        const exists: boolean = await cacheClient.exists(key) > 0;
-
-        if (exists) {
-            const cachedResults: string[] = await cacheClient.sMembers(key);
-            return cachedResults.map((result: string) => new type(JSON.parse(result)))
-        }
-
-        const results: T[] = await database.downloadFileWithType<T>(key, type);
-
-        if (results.length > 0) {
-            return results;
-        } else {
-            throw new Error(`Couldn\'t find any ${key}`);
-        }
-    }
 
     const fetchAllBoxScoresFromCache = async (_: Request, response: Response, next: NextFunction) => {
         const exists: boolean = await cacheClient.exists('boxScores') > 0;
@@ -84,6 +70,11 @@ export function boxScoreController(firebase: FirebaseClient, redis: RedisClient)
         const away: BoxScore[] = boxScores
             .filter(BoxScore.includedIn(awayGameIds))
             .sort(BoxScore.sortChronologically);
+
+        const rosterPlayerIDs: Set<string> = new Set();
+
+        [...away, ...home].map(({playerStats}) => Object.keys(playerStats!)).flat().forEach(rosterPlayerIDs.add.bind(rosterPlayerIDs));
+
 
         response.json({home, away});
     }

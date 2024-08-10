@@ -16,6 +16,10 @@ const request: AxiosInstance   = axios.create({
     }
 });
 
+export function getPlayerInfo(playerID: string): Promise<AxiosResponse<RosterPlayer>> {
+    return request.get<RosterPlayer>('/getMLBPlayerInfo', {params: {playerID}});
+}
+
 export function getPlayers(): Promise<AxiosResponse<RosterPlayer[]>> {
     return request.get<RosterPlayer[]>('/getMLBPlayerList');
 }

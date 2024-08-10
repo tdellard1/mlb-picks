@@ -12,16 +12,11 @@ export interface Game {
   gameStatus?: string;
   gameTime_epoch: string;
   teamIDAway: string;
-  probableStartingPitchers: any;
-  probableStartingLineups?: any;
+  probableStartingLineups: Teams<LineUp[]>;
+  probableStartingPitchers: Teams<string>;
   home: string;
-  lineScore?: LineScore;
+  lineScore?: Teams<LineScoreTeam>;
   boxScore?: BoxScore;
-}
-
-export interface LineScore {
-  away: LineScoreTeam;
-  home: LineScoreTeam;
 }
 
 export interface LineScoreTeam {
@@ -34,6 +29,21 @@ export interface LineScoreTeam {
 
 export interface scoreByInning {
   [inning: number]: string;
+}
+
+export interface Teams<T> {
+  away: T;
+  home: T;
+}
+
+export enum Site {
+  Home = 'home',
+  Away = 'away',
+}
+
+export interface LineUp {
+  battingOrder: string;
+  playerID: string;
 }
 
 export class Games {

@@ -7,6 +7,14 @@ div {
   flex-grow: 1;
 }
 
+span {
+  text-align: center;
+}
+
+mat-radio-button {
+  flex: 1 1 0
+}
+
 ng-select {
   margin: 0 15px;
 }

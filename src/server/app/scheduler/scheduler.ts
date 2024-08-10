@@ -23,13 +23,12 @@ export async function reconcileBoxScores() {
     const absent: string[] = schedules
         .map(({schedule}) => schedule).flat()
         .filter(Game.gameIsCompleted)
-        .filter(Game.matchesGameID(preExisting))
+        .filter(Game.notContainedWithin(preExisting))
         .map(Game.toGameID);
 
     const inProgress: string[] = preExisting
         .filter(BoxScore.isGameInProgress)
         .map(BoxScore.toGameID);
-
 
     const hasGamesFromYesterday: boolean = preExisting
         .filter(BoxScore.hasGameDate)
@@ -46,6 +45,10 @@ export async function reconcileBoxScores() {
 
     if (slateYesterday.length > 0 || absent.length > 0 || inProgress.length > 0) {
         const gameIDs: Set<string> = new Set<string>([...slateYesterday, ...absent, ...inProgress]);
+        console.log('preExisting: ', preExisting.length);
+        console.log('slateYesterday: ', slateYesterday.length);
+        console.log('absent: ', absent.length);
+        console.log('inProgress: ', inProgress.length);
         await writeThroughBoxScores([...gameIDs], preExisting);
     }
 }

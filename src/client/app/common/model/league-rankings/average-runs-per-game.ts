@@ -1,6 +1,6 @@
 import {TeamSchedule} from "../team-schedule.interface";
 import {AverageRunsPerGameLeague, AverageRunsPerGameTeam, LeagueRanking} from "../average-runs-per-game.interface";
-import {Game, LineScore} from "../game.interface";
+import {Game, LineScoreTeam, Teams} from "../game.interface";
 import {ensure} from "../../utils/array.utils";
 
 export class AverageRunsPerGame {
@@ -75,7 +75,7 @@ export class AverageRunsPerGame {
   private listOfRunsInLastNumberOfGames(team: string, games: Game[], numberOfGames: number): number[] {
     const lastAmountOfGames: Game[] = this.lastNumberOfGames(games, numberOfGames);
     return lastAmountOfGames.map(({boxScore}: Game) => {
-      const {home, away}: LineScore = ensure(boxScore?.lineScore);
+      const {home, away}: Teams<LineScoreTeam> = ensure(boxScore?.lineScore);
       if (home.team === team) {
         return Number(home.R);
       } else if (away.team === team) {

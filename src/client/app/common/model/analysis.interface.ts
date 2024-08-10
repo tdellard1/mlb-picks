@@ -47,7 +47,7 @@ export class BattingAverageModel {
         }
 
         const playersAtBats: number[] = playersOnHomeTeam.map((playerStats: PlayerStats) => Number(playerStats.Hitting.AB));
-        console.log('atBats: ', playersAtBats, playersAtBats.reduce((a, b) => a + b, 0));
+        console.log('getAtBats: ', playersAtBats, playersAtBats.reduce((a, b) => a + b, 0));
         console.log('batting average: ', (Number(game.boxScore?.teamStats['home'].Hitting.H) / Number(playersAtBats.reduce((a, b) => a + b, 0))).toFixed(3));
       }
     })

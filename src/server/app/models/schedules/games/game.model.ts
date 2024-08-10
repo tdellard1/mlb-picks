@@ -96,9 +96,9 @@ export class Game {
         }
     }
 
-    public static matchesGameID(possiblyContainsAMatchingGameID: { gameID: string }[]) {
+    public static notContainedWithin(possiblyContainsAMatchingGameID: { gameID: string }[]) {
         return (game: Game): boolean => {
-            return possiblyContainsAMatchingGameID.some(({gameID}) => game.gameID === gameID);
+            return !possiblyContainsAMatchingGameID.some(({gameID}) => game.gameID === gameID);
         }
     }
 

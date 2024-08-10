@@ -1,7 +1,7 @@
 import {BoxScore} from "../model/box-score.interface";
 import {PlayerStats} from "../model/player-stats.interface";
 import {roundToDecimalPlace, sum} from "./general.utils";
-import {LineScore} from "../model/game.interface";
+import {LineScoreTeam, Teams} from "../model/game.interface";
 import {ensure} from "./array.utils";
 import {WeightedFactors} from "../weighted-factors.constants";
 
@@ -52,7 +52,7 @@ export class TeamAnalyticsUtils {
   }
 
   static getTeamRunsForGame(teamAbbreviation: string, boxScore: BoxScore) {
-    const {home, away}: LineScore = ensure(boxScore?.lineScore);
+    const {home, away}: Teams<LineScoreTeam> = ensure(boxScore?.lineScore);
     if (home.team === teamAbbreviation) {
       return Number(home.R);
     } else if (away.team === teamAbbreviation) {
@@ -85,7 +85,7 @@ export class TeamAnalyticsUtils {
     const triples: number = sum(playersOnTeam.map(({Hitting}: PlayerStats) => Number(Hitting["3B"])));
     const doubles: number = sum(playersOnTeam.map(({Hitting}: PlayerStats) => Number(Hitting["2B"])));
     const singles: number = hits - doubles - triples - homeRuns;
-    return (singles + (doubles * 2) + (triples * 2) + (homeRuns * 4)) / atBats;
+    return (singles + (doubles * 2) + (triples * 3) + (homeRuns * 4)) / atBats;
   }
 
   /* ------------------------------------------------------------------------------------------- */

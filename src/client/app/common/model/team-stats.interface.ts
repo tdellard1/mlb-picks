@@ -41,6 +41,7 @@ export interface TeamHittingStats {
   TB: string;       // Total Bases
   ['3B']: string;   // Triples
   GIDP: string;     // Ground Into Double Play
+  AB: string;       // At Bats
 }
 
 export interface Injury {

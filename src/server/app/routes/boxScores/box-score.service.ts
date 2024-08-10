@@ -35,9 +35,10 @@ export async function writeThroughBoxScores(gameIDs: string[], oldBoxScores: Box
     const length: number = await replaceBoxScoresInCache(uniqueBoxScores);
     const lengthTwo: number[] = await addBoxScoresToMultipleSets(uniqueBoxScores);
 
+    console.log('singleSetList: ', length);
+    console.log('multipleSets: ', new Set(lengthTwo));
+
     if (length > 0 && lengthTwo.every(value => value === 1)) {
-        console.log('length: ', length);
-        console.log('lengthTwo: ', new Set(lengthTwo));
         await addBoxScoresToDatabase(uniqueBoxScores);
     }
 }
