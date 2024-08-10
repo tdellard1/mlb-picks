@@ -1,4 +1,4 @@
-import {LineScoreTeam, Teams} from "./game.interface";
+import {LineScoreTeam, Site, Teams} from "./game.interface";
 import {TeamStats} from "./team-stats.interface";
 import {PlayerStats} from "./player-stats.interface";
 import {OffensiveStats, StatsSource} from "../../features/Splits/splits/splits.component.js";
@@ -69,11 +69,11 @@ export class BoxScore {
 
 
 
-  public static addOffensiveStats(offensiveStats: OffensiveStats, targetedTeam: string, statsSource: StatsSource) {
+  public static addOffensiveStats(offensiveStats: OffensiveStats, targetedTeam: string, statsSource: StatsSource, site: Site) {
     return (boxScore: BoxScore): any => {
       const newOffensiveStats: OffensiveStats = new OffensiveStats();
 
-      if ((statsSource !== StatsSource.Both && boxScore[statsSource] === targetedTeam) || statsSource === StatsSource.Both) {
+      if (statsSource === StatsSource.Both || boxScore[site] === targetedTeam) {
         newOffensiveStats.Hits = BoxScoreUtils.getHits(targetedTeam, boxScore);
         newOffensiveStats.Doubles = BoxScoreUtils.getDoubles(targetedTeam, boxScore);
         newOffensiveStats.AtBats = BoxScoreUtils.getAtBats(targetedTeam, boxScore);
@@ -88,90 +88,6 @@ export class BoxScore {
       }
 
       offensiveStats.add(newOffensiveStats);
-    }
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-  public static addOffensiveStats(offensiveStats: OffensiveStats, team: string) {
-    return ({playerStatsMap, teamStats, home, away, gameID}: BoxScore): any => {
-      console.log('Game: ', gameID);
-      const newOffensiveStats: OffensiveStats = new OffensiveStats();
-      // Use playerStats to get stats
-      playerStatsMap.forEach((playerStats: PlayerStats) => {
-        if (playerStats.team === team) {
-          newOffensiveStats.AtBats += Number(playerStats.Hitting.AB);
-          newOffensiveStats.Hits += playerStats.hits;
-          newOffensiveStats.Singles += playerStats.singles;
-          newOffensiveStats.Doubles += playerStats.doubles;
-          newOffensiveStats.Triples += playerStats.triples;
-          newOffensiveStats.HomeRuns += playerStats.homeRuns;
-          newOffensiveStats.Walks += playerStats.unintentionalWalk;
-          newOffensiveStats.IntentionalWalks += playerStats.intentionalWalk;
-        } else if (playerStats.allPositionsPlayed === 'P') {
-          newOffensiveStats.PlateAppearance += playerStats.plateAppearance;
-        }
-      });
-
-      if (team === away) {
-        console.log('hits: ', teamStats.away.Hitting.H);
-        // console.log('pitching: ', teamStats.home.Pitching);
-
-        if (Number(teamStats.away.Hitting.H) !== newOffensiveStats.Hits) {
-          console.log('The hits don\'t match: ', teamStats.away.Hitting, newOffensiveStats);
-        }
-      } else if (team === home) {
-        console.log('hits: ', teamStats.home.Hitting.H);
-        // console.log('pitching: ', teamStats.away.Pitching);
-
-        if (Number(teamStats.home.Hitting.H) !== newOffensiveStats.Hits) {
-          console.log('The hits don\'t match: ', teamStats.home.Hitting, newOffensiveStats);
-        }
-      }
-
-      offensiveStats.add(newOffensiveStats);
-    }
-  }
-  */
-
-  public static totalAtBatsFor(team: string, statsSource: StatsSource) {
-    return (boxScore: BoxScore) => {
-      let hits: number = 0;
-
-      if (statsSource !== StatsSource.Both) {
-        if (statsSource === StatsSource.Home && boxScore.home !== team) {
-          return hits;
-        } else if (statsSource === StatsSource.Away && boxScore.away !== team) {
-          return hits;
-        }
-      }
-
-      boxScore.playerStatsMap.forEach((playerStats: PlayerStats) => {
-        if (playerStats.team === team && playerStats.Hitting.AB !== '0') {
-          hits += Number(playerStats.Hitting.AB);
-        }
-      });
-
-      return hits;
     }
   }
 }

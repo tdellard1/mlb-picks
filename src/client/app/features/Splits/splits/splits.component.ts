@@ -7,14 +7,13 @@ import {Team} from "../../../common/model/team.interface.js";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
 import {NgIf} from "@angular/common";
-import {Game, Teams} from "../../../common/model/game.interface.js";
+import {Game, Site, Teams} from "../../../common/model/game.interface.js";
 import {BoxScore} from "../../../common/model/box-score.interface.js";
 import {WeightedFactors} from "../../../common/weighted-factors.constants.js";
 
 export enum StatsSource {
-  Home = 'home',
-  Away = 'away',
-  Both = 'both'
+  Both = 'both',
+  Split = 'split',
 }
 
 export class OffensiveStats {
@@ -71,13 +70,13 @@ export class OffensiveStats {
 
   // (1B + 2Bx2 + 3Bx3 + HRx4)/AB
   get Slugging() {
-    const SLG: number =  (this.Singles + (this.Doubles * 2) + (this.Triples * 3) + (this.HomeRuns * 4)) / this.AtBats;
+    const SLG: number = (this.Singles + (this.Doubles * 2) + (this.Triples * 3) + (this.HomeRuns * 4)) / this.AtBats;
     return SLG.toFixed(3);
   }
 
   get OnBasePlusSlugging() {
     const OBP: number = (this.Hits + this.Walks + this.HitByPitch) / (this.AtBats + this.Walks + this.HitByPitch + this.SacrificeFly);
-    const SLG: number =  (this.Singles + (this.Doubles * 2) + (this.Triples * 3) + (this.HomeRuns * 4)) / this.AtBats;
+    const SLG: number = (this.Singles + (this.Doubles * 2) + (this.Triples * 3) + (this.HomeRuns * 4)) / this.AtBats;
     const OPS: number = OBP + SLG;
     return OPS.toFixed(3);
   }
@@ -136,7 +135,7 @@ export class SplitsComponent extends SubscriptionHolder {
   private selectedGameId: string = '';
   private selectedGame: Game = {} as Game;
 
-  statsSource: StatsSource = StatsSource.Both;
+  statsSource: StatsSource = StatsSource.Split;
 
   homeOffensiveStats: OffensiveStats = new OffensiveStats();
   awayOffensiveStats: OffensiveStats = new OffensiveStats();
@@ -158,21 +157,17 @@ export class SplitsComponent extends SubscriptionHolder {
       this.away = this.teams.find(({teamAbv}) => teamAbv === this.selectedGame.away)!;
       this.awayBoxScores = away;
 
-      this.selectSplits(StatsSource.Away, StatsSource.Home);
+      this.selectSplits();
     });
   }
 
-  selectSplits(defaultAwayStat?: StatsSource, defaultHomeStat?: StatsSource, ) {
+  selectSplits() {
     this.homeOffensiveStats = new OffensiveStats();
     this.awayOffensiveStats = new OffensiveStats();
 
-    if (defaultAwayStat !== undefined && defaultHomeStat !== undefined) {
-      this.homeBoxScores.forEach(BoxScore.addOffensiveStats(this.homeOffensiveStats, this.home.teamAbv, defaultHomeStat));
-      this.awayBoxScores.forEach(BoxScore.addOffensiveStats(this.awayOffensiveStats, this.away.teamAbv, defaultAwayStat));
-    } else {
-      this.homeBoxScores.forEach(BoxScore.addOffensiveStats(this.homeOffensiveStats, this.home.teamAbv, this.statsSource));
-      this.awayBoxScores.forEach(BoxScore.addOffensiveStats(this.awayOffensiveStats, this.away.teamAbv, this.statsSource));
-    }
+    this.homeBoxScores.forEach(BoxScore.addOffensiveStats(this.homeOffensiveStats, this.home.teamAbv, this.statsSource, Site.Home));
+    this.awayBoxScores.forEach(BoxScore.addOffensiveStats(this.awayOffensiveStats, this.away.teamAbv, this.statsSource, Site.Away));
+
 
     console.log(this.home.teamAbv, ' homeOffensiveStats: ', this.homeOffensiveStats);
   }

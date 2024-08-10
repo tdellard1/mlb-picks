@@ -1,8 +1,7 @@
 <mat-radio-group class="flex-row"
                  (change)="selectSplits()"
                  [(ngModel)]="statsSource">
-  <mat-radio-button [value]="StatsSource.Home">Home</mat-radio-button>
-  <mat-radio-button [value]="StatsSource.Away">Away</mat-radio-button>
+  <mat-radio-button [value]="StatsSource.Split">Split</mat-radio-button>
   <mat-radio-button [value]="StatsSource.Both" checked>Both</mat-radio-button>
 </mat-radio-group>
 
