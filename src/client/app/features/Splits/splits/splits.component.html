@@ -1,49 +1,65 @@
-<mat-tab-group  animationDuration="0ms">
-  <mat-tab label="Teams">
-    <div class="left">
-      <mat-button-toggle-group
-        class="button-group"
-        [(ngModel)]="statsSource"
-        (change)="selectSplits()"
-        [hideSingleSelectionIndicator]="true">
-        <mat-button-toggle class="button" (click)="navigate(StatsSource.Season)" [value]="StatsSource.Season">Season</mat-button-toggle>
-        <mat-button-toggle class="button" (click)="navigate(StatsSource.Split)" [value]="StatsSource.Split">Splits (Site)</mat-button-toggle>
-        <mat-button-toggle class="button" (click)="navigate(StatsSource.Teams)" [value]="StatsSource.Teams">vs Teams</mat-button-toggle>
-      </mat-button-toggle-group>
+<ng-container *ngIf="!(spinner$ | async); else spinner">
+
+  <mat-tab-group animationDuration="0ms">
+    <mat-tab label="Teams">
+      <div class="left">
+        <mat-button-toggle-group
+          class="button-group"
+          [(ngModel)]="statsSource"
+          (change)="selectSplits()"
+          [hideSingleSelectionIndicator]="true">
+          <mat-button-toggle class="button" (click)="navigate(StatsSource.Season)" [value]="StatsSource.Season">Season
+          </mat-button-toggle>
+          <mat-button-toggle class="button" (click)="navigate(StatsSource.Split)" [value]="StatsSource.Split">Splits (Site)
+          </mat-button-toggle>
+          <mat-button-toggle class="button" (click)="navigate(StatsSource.Teams)" [value]="StatsSource.Teams">vs Teams
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+    </mat-tab>
+    <mat-tab label="Pitchers">
+      <div class="right">
+        Pitchers
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+
+  <div class="frame">
+    <div class="flex-column" *ngIf="away">
+      <span>{{ away.teamName }}</span>
+      <span>{{ awayOffensiveStats.BattingAverage }}</span>
+      <span>{{ awayOffensiveStats.Slugging }}</span>
+      <span>{{ awayOffensiveStats.OnBasePercentage }}</span>
+      <span>{{ awayOffensiveStats.OnBasePlusSlugging }}</span>
+      <span>{{ awayOffensiveStats.weightedOnBaseAverage }}</span>
+      <span>{{ awayTeamGameCount }}</span>
     </div>
-  </mat-tab>
-  <mat-tab label="Pitchers">
-    <div class="right">
-      Pitchers
+
+    <div class="flex-column">
+      <span>Teams</span>
+      <span>Batting Average</span>
+      <span>Slugging</span>
+      <span>On Base Percentage</span>
+      <span>On Base plus Slug</span>
+      <span>Weighted OBA</span>
+      <span>Games Included</span>
     </div>
-  </mat-tab>
-</mat-tab-group>
 
-<div class="frame">
-  <div class="flex-column" *ngIf="away">
-    <span>{{away.teamName}}</span>
-    <span>{{awayOffensiveStats.BattingAverage}}</span>
-    <span>{{awayOffensiveStats.Slugging}}</span>
-    <span>{{awayOffensiveStats.OnBasePercentage}}</span>
-    <span>{{awayOffensiveStats.OnBasePlusSlugging}}</span>
-    <span>{{awayOffensiveStats.weightedOnBaseAverage}}</span>
+    <div class="flex-column" *ngIf="home">
+      <span>{{ home.teamName }}</span>
+      <span>{{ homeOffensiveStats.BattingAverage }}</span>
+      <span>{{ homeOffensiveStats.Slugging }}</span>
+      <span>{{ homeOffensiveStats.OnBasePercentage }}</span>
+      <span>{{ homeOffensiveStats.OnBasePlusSlugging }}</span>
+      <span>{{ homeOffensiveStats.weightedOnBaseAverage }}</span>
+      <span>{{ homeTeamGameCount }}</span>
+    </div>
   </div>
+</ng-container>
 
-  <div class="flex-column">
-    <span>Teams</span>
-    <span>Batting Average</span>
-    <span>Slugging</span>
-    <span>On Base Percentage</span>
-    <span>On Base plus Slug</span>
-    <span>Weighted OBA</span>
-  </div>
 
-  <div class="flex-column" *ngIf="home">
-    <span>{{home.teamName}}</span>
-    <span>{{homeOffensiveStats.BattingAverage}}</span>
-    <span>{{homeOffensiveStats.Slugging}}</span>
-    <span>{{homeOffensiveStats.OnBasePercentage}}</span>
-    <span>{{homeOffensiveStats.OnBasePlusSlugging}}</span>
-    <span>{{homeOffensiveStats.weightedOnBaseAverage}}</span>
+<ng-template #spinner>
+  <div class="spinner-container">
+    <mat-spinner></mat-spinner>
   </div>
-</div>
+</ng-template>

@@ -2,7 +2,28 @@ export interface TeamStats {
   Pitching: any;
   BaseRunning: any;
   Fielding: any;
-  Hitting: any;
+  Hitting: Hitting;
+}
+
+export interface Hitting {
+  BB: string;
+  AB: string;
+  battingOrder: string;
+  IBB: string;
+  H: string;
+  HR: string;
+  substitutionOrder: string;
+  TB: string;
+  ['3B']: string;
+  GIDP: string;
+  ['2B']: string;
+  R: string;
+  SF: string;
+  SAC: string;
+  HBP: string;
+  RBI: string;
+  SO: string;
+  AVG: string;
 }
 
 export class TeamStatsHitting {
@@ -24,7 +45,6 @@ export class TeamStatsHitting {
   private _avg: string;
 
   constructor(data: any) {
-    console.log('data for teamStatsHitting: ', data);
     this._D = this.assignIfValid(data['2B'], '2B');
     this._T = this.assignIfValid(data['3B'], '3B');
     this._AB = this.assignIfValid(data.AB, 'AB');

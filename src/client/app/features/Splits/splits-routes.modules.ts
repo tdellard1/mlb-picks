@@ -3,7 +3,6 @@ import {RouterModule, Routes} from "@angular/router";
 import {GameSelectorComponent} from "../../shared/components/game-selector/game-selector.component.js";
 import {SplitsComponent} from "./splits/splits.component.js";
 import {splitsResolver} from "../../core/resolvers/splits.resolver.js";
-import {rostersResolver} from "../../core/resolvers/rosters.resolver.js";
 
 export const routes: Routes = [
   {
@@ -15,8 +14,7 @@ export const routes: Routes = [
         component: SplitsComponent,
         runGuardsAndResolvers: 'always',
         resolve: {
-          splits: splitsResolver,
-          rosters: rostersResolver
+          splits: splitsResolver
         }
       }
     ]

@@ -3,10 +3,11 @@ import {RosterPlayer} from "../../models/players/roster-player.model.js";
 import {RedisClient} from "../../clients/redis-client.js";
 import {Schedule} from "../../models/schedules/schedule.model.js";
 import {PitcherUtils} from "../../utils/pitcher.utils.js";
-import {BoxScore, GameStatus} from "../../models/boxScores/box-scores.model.js";
+import {BoxScore} from "../../models/boxScores/box-scores.model.js";
 import {Game} from "../../models/schedules/games/game.model.js";
 import {AxiosResponse} from "axios";
 import {getBoxScore} from "../../services/tank-01.service.js";
+import {GameStatus} from "../../models/enums/game-status.enum.js";
 
 export declare type PlayersController = {
     fetchPlayersFromCache: (request: Request, response: Response, next: NextFunction) => Promise<void>,

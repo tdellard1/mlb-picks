@@ -2,16 +2,18 @@ import {Component} from '@angular/core';
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 import {SubscriptionHolder} from "../../../shared/components/subscription-holder.component.js";
-import {ActivatedRoute, Data, Params, Router, RouterLink} from "@angular/router";
+import {ActivatedRoute, Data, Event, NavigationEnd, NavigationStart, Params, Router, RouterLink} from "@angular/router";
 import {Team} from "../../../common/model/team.interface.js";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
-import {NgIf} from "@angular/common";
+import {AsyncPipe, NgIf} from "@angular/common";
 import {Game, Teams} from "../../../common/model/game.interface.js";
 import {WeightedFactors} from "../../../common/weighted-factors.constants.js";
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
-import {TeamStats, TeamStatsHitting} from "../../../common/model/team-stats.interface.js";
+import {Hitting, TeamStats, TeamStatsHitting} from "../../../common/model/team-stats.interface.js";
 import {BoxScore} from "../../../common/model/box-score.interface.js";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import {BehaviorSubject, Observable} from "rxjs";
 
 export enum StatsSource {
   Season = 'season',
@@ -140,7 +142,9 @@ export class OffensiveStats {
     NgIf,
     MatTab,
     MatTabGroup,
-    RouterLink
+    RouterLink,
+    MatProgressSpinner,
+    AsyncPipe
   ],
   templateUrl: './splits.component.html',
   styleUrl: './splits.component.css'
@@ -150,16 +154,22 @@ export class SplitsComponent extends SubscriptionHolder {
   private readonly games: Map<string, Game> = new Map<string, Game>();
 
   statsSource: StatsSource = StatsSource.Split;
+  awayTeamGameCount: number;
+  homeTeamGameCount: number;
 
   home: Team;
   away: Team;
 
-  homeBoxScores: BoxScore[];
-  awayBoxScores: BoxScore[];
+  homeBoxScores: Hitting[];
+  awayBoxScores: Hitting[];
 
   private selectedGameId: string = '';
   private selectedGame: Game = {} as Game;
 
+  _spinner: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  get spinner$(): Observable<boolean> {
+    return this._spinner.asObservable();
+  }
 
   homeOffensiveStats: OffensiveStats = new OffensiveStats();
   awayOffensiveStats: OffensiveStats = new OffensiveStats();
@@ -177,25 +187,44 @@ export class SplitsComponent extends SubscriptionHolder {
     });
 
     this.subscriptions.push(
-      this.activatedRoute.params.subscribe((params: Params) => this.selectedGameId = params['gameId'])
+      this.activatedRoute.params.subscribe((params: Params) => this.selectedGameId = params['gameId']),
+      this.router.events.subscribe((event: Event) => {
+        if (event instanceof NavigationStart) {
+          this._spinner.next(true);
+        }
+
+        if (event instanceof NavigationEnd) {
+          this._spinner.next(false);
+        }
+      })
     )
 
     this.activatedRoute.data.subscribe(({splits}: Data) => {
       this.selectedGame = this.games.get(this.selectedGameId)!;
 
-      const source: string = this.activatedRoute.snapshot.queryParams['source'] as string;
+      const source: StatsSource = this.activatedRoute.snapshot.queryParams['source'] as StatsSource;
 
-      console.log('initial source: ', source)
+      if (source) {
+        this.statsSource = source;
+      } else {
+        this.statsSource = StatsSource.Season;
+      }
 
       this.home = this.teams.get(this.selectedGame.home)!;
       this.away = this.teams.get(this.selectedGame.away)!;
 
-      const {home, away}: Teams<{name: string, stats: BoxScore[]}> = splits as Teams<{name: string, stats: BoxScore[]}>;
-
-      console.log('home: ', home);
+      const {home, away}: Teams<{name: string, stats: Hitting[]}> = splits as Teams<{name: string, stats: Hitting[]}>;
 
       this.homeBoxScores = home.stats;
       this.awayBoxScores = away.stats;
+
+      if (this.statsSource === StatsSource.Season) {
+        this.awayTeamGameCount = 117;
+        this.homeTeamGameCount = 117;
+      } else {
+        this.awayTeamGameCount = this.awayBoxScores.length;
+        this.homeTeamGameCount = this.homeBoxScores.length;
+      }
 
       this.selectSplits();
     });
@@ -205,19 +234,13 @@ export class SplitsComponent extends SubscriptionHolder {
     this.homeOffensiveStats = new OffensiveStats();
     this.awayOffensiveStats = new OffensiveStats();
 
-    console.log('Check Before Failure(Home): ', this.homeBoxScores);
-
-    this.homeBoxScores.forEach((boxScore: BoxScore) => {
-      const {Hitting} = boxScore.home === this.home.teamAbv ? boxScore.teamStats.home : boxScore.teamStats.away;
-      const teamStatsHitting: TeamStatsHitting = new TeamStatsHitting(Hitting);
+    this.homeBoxScores.forEach((hitting: Hitting) => {
+      const teamStatsHitting: TeamStatsHitting = new TeamStatsHitting(hitting);
       this.homeOffensiveStats.addTeamStatsHitting(teamStatsHitting);
     });
 
-    console.log('Check Before Failure(Away): ', this.awayBoxScores);
-
-    this.awayBoxScores.forEach((boxScore: BoxScore) => {
-      const {Hitting} = boxScore.home === this.away.teamAbv ? boxScore.teamStats.home : boxScore.teamStats.away;
-      const teamStatsHitting: TeamStatsHitting = new TeamStatsHitting(Hitting);
+    this.awayBoxScores.forEach((hitting: Hitting) => {
+      const teamStatsHitting: TeamStatsHitting = new TeamStatsHitting(hitting);
       this.awayOffensiveStats.addTeamStatsHitting(teamStatsHitting);
     });
   }

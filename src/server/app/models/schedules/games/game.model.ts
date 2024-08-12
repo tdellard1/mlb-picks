@@ -19,8 +19,11 @@
 }
 */
 
-import {LineScore, LineUp, Teams} from "./starting-lineups.model.js";
-import {BoxScore, GameStatus} from "../../boxScores/box-scores.model.js";
+import {ProbableLineUp} from "./starting-lineups.model.js";
+import {BoxScore} from "../../boxScores/box-scores.model.js";
+import {GameStatus} from "../../enums/game-status.enum.js";
+import {Sites} from "../../interfaces/teams.interface.js";
+import {LineScore} from "../../interfaces/line-score.interface.js";
 
 export class Game {
     gameID: string;
@@ -35,9 +38,9 @@ export class Game {
     gameTime: string;
     private readonly _gameTime_epoch: string;
     homeResult: string;
-    probableStartingLineups: Teams<LineUp>;
-    probableStartingPitchers: Teams<string>;
-    lineScore: Teams<LineScore>;
+    probableStartingLineups: Sites<ProbableLineUp>;
+    probableStartingPitchers: Sites<string>;
+    lineScore: Sites<LineScore>;
     gameStatusCode: string;
     boxScore: BoxScore;
 
@@ -95,6 +98,18 @@ export class Game {
     public static get isCompletedOrSuspended() {
         return (game: Game): boolean => {
             return game.gameStatus === GameStatus.Completed || game.gameStatus === GameStatus.Suspended;
+        }
+    }
+
+    public static teamIsHome(team: string) {
+        return (game: Game): boolean => {
+            return game.home === team;
+        }
+    }
+
+    public static teamIsAway(team: string) {
+        return (game: Game): boolean => {
+            return game.home === team;
         }
     }
 

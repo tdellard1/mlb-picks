@@ -1,32 +1,17 @@
-/*
-{
-  "gamesStarted": "90",
-  "Fielding": {},
-  "gamesPlayed": "92",
-  "Hitting": {},
-  "BaseRunning": {},
-  "longName": "Yainer Diaz",
-  "teamID": "11",
-  "teamAbv": "HOU",
-  "team": "HOU",
-  "Pitching": {}
-}
- */
-
-import {RosterPlayerPitching} from "./pitching.model.js";
-import {RosterPlayerBaseRunning} from "./base-running.model.js";
-import {RosterPlayerHitting} from "./hitting.model.js";
-import {RosterPlayerFielding} from "./fielding.model.js";
+import {Fielding} from "../../interfaces/fielding.interface.js";
+import {Hitting} from "../../interfaces/hitting.interface.js";
+import {BaseRunning} from "../../interfaces/base-running.interface.js";
+import {Pitching} from "../../interfaces/pitching.interface.js";
 
 export interface RosterPlayerStats {
     gamesStarted: string;
-    Fielding: RosterPlayerFielding;
+    Fielding: Fielding;
     gamesPlayed: string;
-    Hitting: RosterPlayerHitting;
-    BaseRunning: RosterPlayerBaseRunning;
+    Hitting: Hitting;
+    BaseRunning: BaseRunning;
     longName: string;
     teamID: string;
     teamAbv: string;
     team: string;
-    Pitching: RosterPlayerPitching;
+    Pitching: Pitching;
 }

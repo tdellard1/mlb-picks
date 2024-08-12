@@ -2,8 +2,9 @@ import {RosterPlayer} from "../models/players/roster-player.model.js";
 import {PlayerStats} from "../models/boxScores/player-stats.model.js";
 import {Schedule} from "../models/schedules/schedule.model.js";
 import {Game} from "../models/schedules/games/game.model.js";
-import {LineScore, Teams} from "../models/schedules/games/starting-lineups.model.js";
 import {BoxScore} from "../models/boxScores/box-scores.model.js";
+import {Sites} from "../models/interfaces/teams.interface.js";
+import {LineScore} from "../models/interfaces/line-score.interface.js";
 
 export class PitcherUtils {
     gamesMap: Map<string, (Game | BoxScore)> = new Map();
@@ -63,12 +64,12 @@ export class PitcherUtils {
             return `${streak}`;
         }
 
-        const playerStatsWithLineScore: [PlayerStats, Teams<LineScore>][] = games
+        const playerStatsWithLineScore: [PlayerStats, Sites<LineScore>][] = games
             .sort(PlayerStats.sortChronologically)
             .filter(PlayerStats.playerStarted)
             .map(PlayerStats.getStatsWithLineScore(this.gamesMap));
 
-        function pitcherThrewNoRunsInFirstInning([{team}, {home, away}]: [PlayerStats, Teams<LineScore>]) {
+        function pitcherThrewNoRunsInFirstInning([{team}, {home, away}]: [PlayerStats, Sites<LineScore>]) {
             const teamAbbreviation: string = team;
             if (away.team === teamAbbreviation) {
                 return home.scoresByInning['1'] === '0';
@@ -79,7 +80,7 @@ export class PitcherUtils {
             }
         }
 
-        let playerStatsAndLineScore: [PlayerStats, Teams<LineScore>] | undefined = playerStatsWithLineScore.pop();
+        let playerStatsAndLineScore: [PlayerStats, Sites<LineScore>] | undefined = playerStatsWithLineScore.pop();
 
         if (playerStatsAndLineScore) {
             const firstResult: boolean = pitcherThrewNoRunsInFirstInning(playerStatsAndLineScore);

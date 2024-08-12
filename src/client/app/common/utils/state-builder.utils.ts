@@ -91,7 +91,7 @@ export function addPlayersToTeamRoster(teams: Team[], rosterPlayers: Map<string,
 
 export function addTeamsAndBoxScoresToSchedule(schedules: TeamSchedule[], teams: Map<string, Team>, boxScores: Map<string, BoxScore>) {
   return schedules.map((teamSchedule: TeamSchedule) => {
-    /** Add Teams To Schedule */
+    /** Add Sites To Schedule */
     if (teams.has(teamSchedule.team)) {
       teamSchedule.teamDetails = teams.get(teamSchedule.team);
     }

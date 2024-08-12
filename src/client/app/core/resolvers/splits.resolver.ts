@@ -1,11 +1,10 @@
 import {ActivatedRouteSnapshot, ResolveFn} from '@angular/router';
 import {BackendApiService} from "../services/backend-api/backend-api.service.js";
 import {inject} from "@angular/core";
-import {Teams} from "../../common/model/game.interface.js";
-import {BoxScore} from "../../common/model/box-score.interface.js";
 import {StatsSource} from "../../features/Splits/splits/splits.component.js";
+import {Hitting} from "../../common/model/team-stats.interface.js";
 
-export const splitsResolver: ResolveFn<Teams<BoxScore[]>> = (activatedRouteSnapshot: ActivatedRouteSnapshot) => {
+export const splitsResolver: ResolveFn<Hitting> = (activatedRouteSnapshot: ActivatedRouteSnapshot) => {
   const source: string = activatedRouteSnapshot.queryParams['source'];
 
   const backendApiService: BackendApiService = inject(BackendApiService);
@@ -17,6 +16,4 @@ export const splitsResolver: ResolveFn<Teams<BoxScore[]>> = (activatedRouteSnaps
   } else {
     return backendApiService.getTeamStatsForTeams(teams, StatsSource.Season)
   }
-
-  // return backendApiService.getBoxScoreForTeams(teams);
 };

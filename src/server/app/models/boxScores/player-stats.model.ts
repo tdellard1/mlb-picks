@@ -1,6 +1,7 @@
 import {Game} from "../schedules/games/game.model.js";
 import {BoxScore} from "./box-scores.model.js";
-import {LineScore, Teams} from "../schedules/games/starting-lineups.model.js";
+import {Sites} from "../interfaces/teams.interface.js";
+import {LineScore} from "../interfaces/line-score.interface.js";
 
 export class PlayerStats {
     allPositionsPlayed: string;
@@ -50,12 +51,12 @@ export class PlayerStats {
     }
 
     public static getStatsWithLineScore (lineScores: Map<string, (Game | BoxScore)>) {
-        return (gameStats: PlayerStats): [PlayerStats, Teams<LineScore>] => {
+        return (gameStats: PlayerStats): [PlayerStats, Sites<LineScore>] => {
             if (lineScores.has(gameStats.gameID) && lineScores.get(gameStats.gameID)?.lineScore) {
                 return [gameStats, lineScores.get(gameStats.gameID)?.lineScore!];
             } else {
                 throw new Error('Can\'t find line score for gameID');
-                // return [gameStats, undefined] as unknown as [PlayerStats, Teams<LineScore>];
+                // return [gameStats, undefined] as unknown as [PlayerStats, Sites<LineScore>];
             }
         }
     }

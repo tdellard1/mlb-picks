@@ -9,6 +9,7 @@ import {HttpOptions} from "../../../common/model/http-options.model.js";
 import {NoRunsFirstInningElements} from "../../../features/Props/feature/props/props.component.js";
 import {Teams} from "../../../common/model/game.interface.js";
 import {BoxScore} from "../../../common/model/box-score.interface.js";
+import {Hitting} from "../../../common/model/team-stats.interface.js";
 
 @Injectable({
   providedIn: 'root'
@@ -77,7 +78,7 @@ export class BackendApiService {
       );
   }
 
-  getTeamStatsForTeams(teams: string[], source: string): Observable<Teams<BoxScore[]>> {
+  getTeamStatsForTeams(teams: string[], source: string): Observable<Hitting> {
     const options: HttpOptions = {params: {teams, source}};
     return this.apiService.get(this.serverUrl + 'api/boxScores/teamStats', options);
   }

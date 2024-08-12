@@ -76,30 +76,54 @@ export async function placeHolder(): Promise<void> {
     // console.log('response: ', response2);
 
 
+    const cache: RedisClient = getClient();
+    const boxScoreStrings: string[] = await cache.sMembers('boxScores');
+    const boxScores: BoxScore[] = boxScoreStrings.map((boxScoreString: string) => JSON.parse(boxScoreString));
+
+    const objectPropertyNames: string[] = ['decisions', 'bases']; // 'teamStats', 'lineScore', 'startingLineups', 'playerStats'
+    const propertyNames: string[] = [];
+
+    boxScores
+        .map(({bases}) => bases)
+        .forEach((stats) => {
+            // stats.forEach((stat: any) => {
+                Object.entries(stats).forEach(([key, value]) => {
+                    if (!propertyNames.includes(key)) {
+                        // if (!['startingLineups', 'lineScore', 'playerStats', 'teamStats', 'decisions'].includes(key)) {
+                        console.log(`${key}: ${typeof value} -> ${value}`);
+                        // }
+                        propertyNames.push(key);
+                    }
+                });
+            // });
+        });
+
+
+
 
 
 
 // From boxScores Cache to other caches
-    const cache: RedisClient = getClient();
-    const boxScoreStrings: string[] = await cache.sMembers('boxScores');
-    const boxScores: any[] = boxScoreStrings.map((boxScoreString: string) => JSON.parse(boxScoreString));
-
-    const teamStatsRequest: Promise<number>[] = boxScores.map((boxScore: any) => replaceInCache(`boxScore:teamStats:${boxScore.gameID}`, JSON.stringify(boxScore.teamStats, null, 0)));
-    const playerStatsRequest: Promise<number>[] = boxScores.map((boxScore: any) => replaceInCache(`boxScore:playerStats:${boxScore.gameID}`, JSON.stringify(boxScore.playerStats, null, 0)));
-    const boxScoreRequest: Promise<number>[] = boxScores.map((boxScore: any) => replaceInCache(`boxScore:${boxScore.gameID}`, JSON.stringify(boxScore, null, 0)));
-
-    const teamStatsResults: number[] = await Promise.all(teamStatsRequest);
-    const playerStatsResults: number[] = await Promise.all(playerStatsRequest);
-    const boxScoreResults: number[] = await Promise.all(boxScoreRequest);
-
-    const teamStatsSet: Set<number> = new Set<number>(teamStatsResults);
-    const playerStatsSet: Set<number> = new Set<number>(playerStatsResults);
-    const boxScoreSet: Set<number> = new Set<number>(boxScoreResults);
-
-
-    console.log('teamStatsSet: ', teamStatsSet);
-    console.log('playerStatsSet: ', playerStatsSet);
-    console.log('boxScoreSet: ', boxScoreSet);
+//     const cache: RedisClient = getClient();
+//     const boxScoreStrings: string[] = await cache.sMembers('boxScores');
+//     const boxScores: any[] = boxScoreStrings.map((boxScoreString: string) => JSON.parse(boxScoreString));
+//
+//     const teamStatsRequest: Promise<number>[] = boxScores.map((boxScore: any) => replaceInCache(`boxScore:teamStats:${boxScore.gameID}`, JSON.stringify(boxScore.teamStats, null, 0)));
+//     const playerStatsRequest: Promise<number>[] = boxScores.map((boxScore: any) => replaceInCache(`boxScore:playerStats:${boxScore.gameID}`, JSON.stringify(boxScore.playerStats, null, 0)));
+//     const boxScoreRequest: Promise<number>[] = boxScores.map((boxScore: any) => replaceInCache(`boxScore:${boxScore.gameID}`, JSON.stringify(boxScore, null, 0)));
+//
+//     const teamStatsResults: number[] = await Promise.all(teamStatsRequest);
+//     const playerStatsResults: number[] = await Promise.all(playerStatsRequest);
+//     const boxScoreResults: number[] = await Promise.all(boxScoreRequest);
+//
+//     const teamStatsSet: Set<number> = new Set<number>(teamStatsResults);
+//     const playerStatsSet: Set<number> = new Set<number>(playerStatsResults);
+//     const boxScoreSet: Set<number> = new Set<number>(boxScoreResults);
+//
+//
+//     console.log('teamStatsSet: ', teamStatsSet);
+//     console.log('playerStatsSet: ', playerStatsSet);
+//     console.log('boxScoreSet: ', boxScoreSet);
 }
 
 function getYesterdayDate(): string {

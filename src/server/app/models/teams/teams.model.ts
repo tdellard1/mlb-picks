@@ -1,3 +1,5 @@
+import {Stats} from "../interfaces/stats.interface.js";
+
 export class Team {
     DIFF?: string;
     RA?: string;
@@ -12,7 +14,7 @@ export class Team {
     teamCity?: string;
     teamID?: string;
     teamName?: string;
-    teamStats?: any;
+    teamStats?: Stats;
     topPerformers?: any;
     wins?: string;
 

@@ -29,7 +29,6 @@ app.use(express.static(path.join(__dirname, 'client/browser')));
 const job: Job = schedule.scheduleJob('0 */6 * * *', async () => await quarterDailyUpdate());
 const job2: Job = schedule.scheduleJob('30 */12 * * *', async () => await reconcileBoxScores());
 
-
 const api: Router = Router()
   .use('/boxScores', boxScoreRouter())
   .use('/analysis', analysisRouter())
