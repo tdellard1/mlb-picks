@@ -1,4 +1,4 @@
-import {Starter} from "../schedules/games/starting-lineups.model.js";
+import {Starter} from "./starter.interface.js";
 
 export interface LineUp {
     team: string;

@@ -64,7 +64,7 @@ function convertBoxScoresToListOfPlayerStats(boxScores: BoxScore[]): PlayerStats
     const arrayLength: number = boxScores.length;
 
     for (let i: number = 0; i < arrayLength; i++) {
-        const playerStatsFromBoxScores: PlayersStats | undefined = boxScores[i].playerStats;
+        const playerStatsFromBoxScores: PlayerStats[] = boxScores[i].playerStats;
         if (playerStatsFromBoxScores) {
             const playerStatsList: PlayerStats[] = Object.values(playerStatsFromBoxScores);
             const playerStatsLength: number = playerStatsList.length;
