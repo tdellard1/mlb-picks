@@ -10,8 +10,7 @@ import {AsyncPipe, NgIf} from "@angular/common";
 import {Game, Teams} from "../../../common/model/game.interface.js";
 import {WeightedFactors} from "../../../common/weighted-factors.constants.js";
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
-import {Hitting, TeamStats, TeamStatsHitting} from "../../../common/model/team-stats.interface.js";
-import {BoxScore} from "../../../common/model/box-score.interface.js";
+import {Hitting, TeamStatsHitting} from "../../../common/model/team-stats.interface.js";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {BehaviorSubject, Observable} from "rxjs";
 
@@ -75,8 +74,12 @@ export class OffensiveStats {
     this.HitByPitch += HBP;
     this.SacrificeFly += SF;
     this.SacrificeBunt += SAC;
-    this.PlateAppearance += this.AtBats + this.Walks + this.HitByPitch + this.SacrificeFly + this.SacrificeBunt;
-    this.Singles += this.Hits - this.Doubles - this.Triples - this.HomeRuns;
+  }
+
+  finalize() {
+    this.PlateAppearance = this.AtBats + this.Walks + this.HitByPitch + this.SacrificeFly + this.SacrificeBunt;
+    this.Singles = this.Hits - this.Doubles - this.Triples - this.HomeRuns;
+    console.log(this);
   }
 
   get BattingAverage(): string {
@@ -243,6 +246,9 @@ export class SplitsComponent extends SubscriptionHolder {
       const teamStatsHitting: TeamStatsHitting = new TeamStatsHitting(hitting);
       this.awayOffensiveStats.addTeamStatsHitting(teamStatsHitting);
     });
+
+    this.awayOffensiveStats.finalize();
+    this.homeOffensiveStats.finalize();
   }
 
   protected readonly StatsSource = StatsSource;
