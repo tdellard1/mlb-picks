@@ -2,18 +2,21 @@ import {Component} from '@angular/core';
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 import {SubscriptionHolder} from "../../../shared/components/subscription-holder.component.js";
-import {ActivatedRoute, Data, Params} from "@angular/router";
+import {ActivatedRoute, Data, Params, Router, RouterLink} from "@angular/router";
 import {Team} from "../../../common/model/team.interface.js";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
 import {NgIf} from "@angular/common";
-import {Game, Site, Teams} from "../../../common/model/game.interface.js";
-import {BoxScore} from "../../../common/model/box-score.interface.js";
+import {Game, Teams} from "../../../common/model/game.interface.js";
 import {WeightedFactors} from "../../../common/weighted-factors.constants.js";
+import {MatTab, MatTabGroup} from "@angular/material/tabs";
+import {TeamStats, TeamStatsHitting} from "../../../common/model/team-stats.interface.js";
+import {BoxScore} from "../../../common/model/box-score.interface.js";
 
 export enum StatsSource {
-  Both = 'both',
+  Season = 'season',
   Split = 'split',
+  Teams = 'teams',
 }
 
 export class OffensiveStats {
@@ -28,6 +31,7 @@ export class OffensiveStats {
   Walks: number;
   HitByPitch: number;
   SacrificeFly: number;
+  SacrificeBunt: number;
 
   constructor() {
     this.AtBats = 0;
@@ -41,6 +45,7 @@ export class OffensiveStats {
     this.Walks = 0;
     this.HitByPitch = 0;
     this.SacrificeFly = 0;
+    this.SacrificeBunt = 0;
   }
 
   add(offensiveStats: OffensiveStats) {
@@ -55,6 +60,21 @@ export class OffensiveStats {
     this.Walks += offensiveStats.Walks;
     this.HitByPitch += offensiveStats.HitByPitch;
     this.SacrificeFly += offensiveStats.SacrificeFly;
+  }
+
+  addTeamStatsHitting({AB, avg, D, BB, HR, H, HBP, IBB, R, SO, RBI, T, SAC, SF, TB, GIDP}: TeamStatsHitting) {
+    this.AtBats += AB;
+    this.Hits += H;
+    this.Doubles += D;
+    this.Triples += T;
+    this.HomeRuns += HR;
+    this.IntentionalWalks += IBB;
+    this.Walks += BB;
+    this.HitByPitch += HBP;
+    this.SacrificeFly += SF;
+    this.SacrificeBunt += SAC;
+    this.PlateAppearance += this.AtBats + this.Walks + this.HitByPitch + this.SacrificeFly + this.SacrificeBunt;
+    this.Singles += this.Hits - this.Doubles - this.Triples - this.HomeRuns;
   }
 
   get BattingAverage(): string {
@@ -117,45 +137,65 @@ export class OffensiveStats {
     MatRadioGroup,
     NgSelectModule,
     FormsModule,
-    NgIf
+    NgIf,
+    MatTab,
+    MatTabGroup,
+    RouterLink
   ],
   templateUrl: './splits.component.html',
   styleUrl: './splits.component.css'
 })
 export class SplitsComponent extends SubscriptionHolder {
-  private readonly teams: Team[] = this.activatedRoute.snapshot.data['teams'] as Team[];
-  private readonly dailySchedule: Game[] = this.activatedRoute.snapshot.data['dailySchedule'] as Game[];
+  private readonly teams: Map<string, Team> = new Map<string, Team>();
+  private readonly games: Map<string, Game> = new Map<string, Game>();
+
+  statsSource: StatsSource = StatsSource.Split;
 
   home: Team;
-  homeBoxScores: BoxScore[];
-
   away: Team;
+
+  homeBoxScores: BoxScore[];
   awayBoxScores: BoxScore[];
 
   private selectedGameId: string = '';
   private selectedGame: Game = {} as Game;
 
-  statsSource: StatsSource = StatsSource.Split;
 
   homeOffensiveStats: OffensiveStats = new OffensiveStats();
   awayOffensiveStats: OffensiveStats = new OffensiveStats();
 
-  constructor(private activatedRoute: ActivatedRoute) {
+  constructor(private activatedRoute: ActivatedRoute,
+              private router: Router) {
     super();
+
+    (this.activatedRoute.snapshot.data['teams'] as Team[]).forEach((team: Team) => {
+      this.teams.set(team.teamAbv, team);
+    });
+
+    (this.activatedRoute.snapshot.data['dailySchedule'] as Game[]).forEach((game: Game) => {
+      this.games.set(game.gameID, game);
+    });
 
     this.subscriptions.push(
       this.activatedRoute.params.subscribe((params: Params) => this.selectedGameId = params['gameId'])
     )
 
     this.activatedRoute.data.subscribe(({splits}: Data) => {
-      const {home, away}: Teams<BoxScore[]> = splits as Teams<BoxScore[]>;
-      this.selectedGame = this.dailySchedule.find(({gameID}) => gameID === this.selectedGameId)!;
+      this.selectedGame = this.games.get(this.selectedGameId)!;
 
-      this.home = this.teams.find(({teamAbv}) => teamAbv === this.selectedGame.home)!;
-      this.homeBoxScores = home;
+      const source: string = this.activatedRoute.snapshot.queryParams['source'] as string;
 
-      this.away = this.teams.find(({teamAbv}) => teamAbv === this.selectedGame.away)!;
-      this.awayBoxScores = away;
+      console.log('initial source: ', source)
+
+      this.home = this.teams.get(this.selectedGame.home)!;
+      this.away = this.teams.get(this.selectedGame.away)!;
+
+      const {home, away}: Teams<{name: string, stats: BoxScore[]}> = splits as Teams<{name: string, stats: BoxScore[]}>;
+
+      console.log('home: ', home);
+
+      this.homeBoxScores = home.stats;
+      this.awayBoxScores = away.stats;
 
       this.selectSplits();
     });
@@ -165,12 +205,27 @@ export class SplitsComponent extends SubscriptionHolder {
     this.homeOffensiveStats = new OffensiveStats();
     this.awayOffensiveStats = new OffensiveStats();
 
-    this.homeBoxScores.forEach(BoxScore.addOffensiveStats(this.homeOffensiveStats, this.home.teamAbv, this.statsSource, Site.Home));
-    this.awayBoxScores.forEach(BoxScore.addOffensiveStats(this.awayOffensiveStats, this.away.teamAbv, this.statsSource, Site.Away));
+    console.log('Check Before Failure(Home): ', this.homeBoxScores);
 
+    this.homeBoxScores.forEach((boxScore: BoxScore) => {
+      const {Hitting} = boxScore.home === this.home.teamAbv ? boxScore.teamStats.home : boxScore.teamStats.away;
+      const teamStatsHitting: TeamStatsHitting = new TeamStatsHitting(Hitting);
+      this.homeOffensiveStats.addTeamStatsHitting(teamStatsHitting);
+    });
 
-    console.log(this.home.teamAbv, ' homeOffensiveStats: ', this.homeOffensiveStats);
+    console.log('Check Before Failure(Away): ', this.awayBoxScores);
+
+    this.awayBoxScores.forEach((boxScore: BoxScore) => {
+      const {Hitting} = boxScore.home === this.away.teamAbv ? boxScore.teamStats.home : boxScore.teamStats.away;
+      const teamStatsHitting: TeamStatsHitting = new TeamStatsHitting(Hitting);
+      this.awayOffensiveStats.addTeamStatsHitting(teamStatsHitting);
+    });
   }
 
   protected readonly StatsSource = StatsSource;
+
+  navigate(source: StatsSource) {
+    this.router.navigate(['.'], {relativeTo: this.activatedRoute, queryParams: {source}, onSameUrlNavigation: "reload"});
+    console.log('event: ', source);
+  }
 }

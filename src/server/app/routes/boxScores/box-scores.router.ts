@@ -19,5 +19,9 @@ export default function boxScoreRouter(): Router {
         .route('/teams')
         .get(controller.fetchBoxScoresForTeam)
 
+    router
+        .route('/teamStats')
+        .get(controller.fetchTeamStatsFromBoxScores)
+
     return router
 }

@@ -20,7 +20,7 @@ export class Schedule {
         return schedule.slice()
             .filter(Game.isBeforeToday)
             /** FixMe Schedules aren't updated immediately, may need to filter gameStatus on Box Scores that have been added to schedules */
-            .filter(Game.gameIsCompleted)
+            .filter(Game.isCompleted)
             .sort(Game.sortChronologically)
             .slice(-15);
     }

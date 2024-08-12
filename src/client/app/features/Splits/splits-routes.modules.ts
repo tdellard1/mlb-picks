@@ -13,6 +13,7 @@ export const routes: Routes = [
       {
         path: ':gameId',
         component: SplitsComponent,
+        runGuardsAndResolvers: 'always',
         resolve: {
           splits: splitsResolver,
           rosters: rostersResolver

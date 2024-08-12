@@ -69,25 +69,51 @@ export class BoxScore {
 
 
 
-  public static addOffensiveStats(offensiveStats: OffensiveStats, targetedTeam: string, statsSource: StatsSource, site: Site) {
+  public static addOffensiveStats(
+    offensiveStats: OffensiveStats,
+    targetedTeam: string,
+    statsSource: StatsSource,
+    site: Site,
+    opposingTeam: string) {
     return (boxScore: BoxScore): any => {
       const newOffensiveStats: OffensiveStats = new OffensiveStats();
 
-      if (statsSource === StatsSource.Both || boxScore[site] === targetedTeam) {
-        newOffensiveStats.Hits = BoxScoreUtils.getHits(targetedTeam, boxScore);
-        newOffensiveStats.Doubles = BoxScoreUtils.getDoubles(targetedTeam, boxScore);
-        newOffensiveStats.AtBats = BoxScoreUtils.getAtBats(targetedTeam, boxScore);
-        newOffensiveStats.PlateAppearance = BoxScoreUtils.getPlateAppearances(targetedTeam, boxScore);
-        newOffensiveStats.Singles = BoxScoreUtils.getSingles(targetedTeam, boxScore);
-        newOffensiveStats.Triples = BoxScoreUtils.getTriples(targetedTeam, boxScore);
-        newOffensiveStats.HomeRuns = BoxScoreUtils.getHomeRuns(targetedTeam, boxScore);
-        newOffensiveStats.IntentionalWalks = BoxScoreUtils.getIntendedWalks(targetedTeam, boxScore);
-        newOffensiveStats.Walks = BoxScoreUtils.getTotalWalks(targetedTeam, boxScore);
-        newOffensiveStats.HitByPitch = BoxScoreUtils.getHitByPitch(targetedTeam, boxScore);
-        newOffensiveStats.SacrificeFly = BoxScoreUtils.getSacrificeFly(targetedTeam, boxScore);
+      const teamsMatch: boolean =
+        [boxScore[Site.Away], boxScore[Site.Home]].some((team: string) => team === targetedTeam) &&
+        [boxScore[Site.Away], boxScore[Site.Home]].some((team: string) => team === opposingTeam)
+
+      switch (statsSource) {
+        case StatsSource.Season:
+          collectOffensiveStatsFromBoxScore(newOffensiveStats, boxScore);
+          break;
+        case StatsSource.Split:
+          if (boxScore[site] === targetedTeam) {
+            collectOffensiveStatsFromBoxScore(newOffensiveStats, boxScore);
+          }
+          break;
+        case StatsSource.Teams:
+          if (teamsMatch) {
+          console.log(statsSource, boxScore.gameID, boxScore.teamStats);
+            collectOffensiveStatsFromBoxScore(newOffensiveStats, boxScore);
+          }
+          break;
       }
 
       offensiveStats.add(newOffensiveStats);
+
+      function collectOffensiveStatsFromBoxScore(os: OffensiveStats, b: BoxScore): void {
+        os.Hits = BoxScoreUtils.getHits(targetedTeam, b);
+        os.Doubles = BoxScoreUtils.getDoubles(targetedTeam, b);
+        os.AtBats = BoxScoreUtils.getAtBats(targetedTeam, b);
+        os.PlateAppearance = BoxScoreUtils.getPlateAppearances(targetedTeam, b);
+        os.Singles = BoxScoreUtils.getSingles(targetedTeam, b);
+        os.Triples = BoxScoreUtils.getTriples(targetedTeam, b);
+        os.HomeRuns = BoxScoreUtils.getHomeRuns(targetedTeam, b);
+        os.IntentionalWalks = BoxScoreUtils.getIntendedWalks(targetedTeam, b);
+        os.Walks = BoxScoreUtils.getTotalWalks(targetedTeam, b);
+        os.HitByPitch = BoxScoreUtils.getHitByPitch(targetedTeam, b);
+        os.SacrificeFly = BoxScoreUtils.getSacrificeFly(targetedTeam, b);
+      }
     }
   }
 }

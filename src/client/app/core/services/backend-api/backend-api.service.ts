@@ -76,6 +76,11 @@ export class BackendApiService {
         })
       );
   }
+
+  getTeamStatsForTeams(teams: string[], source: string): Observable<Teams<BoxScore[]>> {
+    const options: HttpOptions = {params: {teams, source}};
+    return this.apiService.get(this.serverUrl + 'api/boxScores/teamStats', options);
+  }
 }
 
 export declare type TeamsNRFIPercentage = {[team: string]: string};

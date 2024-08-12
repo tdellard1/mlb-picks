@@ -80,9 +80,21 @@ export class Game {
         return Number(this._gameTime_epoch) * 1000;
     }
 
-    public static get gameIsCompleted() {
+    public static get isPostponed() {
+        return (game: Game): boolean => {
+            return game.gameStatus === GameStatus.Postponed;
+        }
+    }
+
+    public static get isCompleted() {
         return (game: Game): boolean => {
             return game.gameStatus === GameStatus.Completed;
+        }
+    }
+
+    public static get isCompletedOrSuspended() {
+        return (game: Game): boolean => {
+            return game.gameStatus === GameStatus.Completed || game.gameStatus === GameStatus.Suspended;
         }
     }
 
@@ -111,6 +123,40 @@ export class Game {
     public static get sortChronologically() {
         return (game1: Game, game2: Game): number => {
             return game1.gameTime_epoch - game2.gameTime_epoch;
+        }
+    }
+
+    public static get sortReverseChronologically() {
+        return (game1: Game, game2: Game): number => {
+            return game2.gameTime_epoch - game1.gameTime_epoch;
+        }
+    }
+
+    public static isFromYesterday({gameDate}: Game) {
+        if (gameDate === undefined) {
+            return false;
+        }
+        const formattedDate: string = gameDate.replace(/(\d{4})(\d{2})(\d{2})/g, '$1/$2/$3');
+        const boxScoreDateTimeStamp: number = new Date(formattedDate).setHours(0, 0, 0, 0);
+        const boxScoreDate: Date = new Date(boxScoreDateTimeStamp);
+
+        const todayTimestamp: number = new Date().setHours(0, 0, 0, 0);
+        const yesterday: Date = new Date(todayTimestamp);
+        yesterday.setDate(yesterday.getDate() - 1);
+
+        return yesterday.getTime() === boxScoreDate.getTime();
+    }
+
+    public static getIfSource(target: string, source: string, site: string, opp: string) {
+        return (game: Game): boolean => {
+            switch (source) {
+                case 'split':
+                    return (site === 'away' && game.away === target || site === 'home' && game.home === target);
+                case 'teams':
+                    return (game.away === target || game.home === target) && (game.away === opp || game.home === opp);
+                default:
+                    throw new Error('There should be no default')
+            }
         }
     }
 }

@@ -36,8 +36,13 @@ export function getSchedule(teamAbv: string, season: string = '2024'): Promise<A
     return request.get<Schedule>('/getMLBTeamSchedule', {params: {teamAbv, season}});
 }
 
-export function getBoxScore<T>(gameID: string, startingLineups: boolean = true): Promise<AxiosResponse<T>> {
-    return request.get<T>('/getMLBBoxScore', {params: {gameID, startingLineups}});
+export function getBoxScore<T>(
+    gameID: string,
+    startingLineups: boolean = true,
+    playerStatsFormat: string = 'list',
+    fantasyPoints: boolean = false,
+): Promise<AxiosResponse<T>> {
+    return request.get<T>('/getMLBBoxScore', {params: {gameID, startingLineups, playerStatsFormat, fantasyPoints}});
 }
 
 export async function getDailySchedule(gameDate: string): Promise<Game[]> {
