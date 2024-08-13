@@ -2,13 +2,13 @@ import {BoxScore} from "../model/box-score.interface.js";
 import {PlayerStats} from "../model/player-stats.interface.js";
 
 export class BoxScoreUtils {
-  public static getHits(targetedTeam: string, {playerStatsMap, teamStats, home}: BoxScore): number {
+  public static getHits(targetedTeam: string, {playerStats, teamStats, home}: BoxScore): number {
     let teamHits: number = 0;
     let teamHitsFromString: number = 0;
     let opponentsGivenUpHits: number = 0;
     let teamStatsHits: number = targetedTeam === home ? Number(teamStats.home.Hitting.H) : Number(teamStats.away.Hitting.H);
 
-    playerStatsMap.forEach((playerStats: PlayerStats) => {
+    playerStats.forEach((playerStats: PlayerStats) => {
       if (playerStats.team === targetedTeam) {
         teamHits += playerStats.hits;
         teamHitsFromString += Number(playerStats.Hitting.H);
@@ -29,11 +29,11 @@ export class BoxScoreUtils {
     }
   }
 
-  public static getAtBats(targetedTeam: string, {playerStatsMap}: BoxScore): number {
+  public static getAtBats(targetedTeam: string, {playerStats}: BoxScore): number {
     let AtBats: number = 0;
 
 
-    playerStatsMap.forEach(({Hitting, team}: PlayerStats) => {
+    playerStats.forEach(({Hitting, team}: PlayerStats) => {
       if (team === targetedTeam) {
         AtBats += Number(Hitting.AB);
       }
@@ -46,11 +46,11 @@ export class BoxScoreUtils {
     return AtBats;
   }
 
-  public static getPlateAppearances(targetedTeam: string, {playerStatsMap}: BoxScore): number {
+  public static getPlateAppearances(targetedTeam: string, {playerStats}: BoxScore): number {
     let PlateAppearances: number = 0;
 
 
-    playerStatsMap.forEach(({Pitching, team}: PlayerStats) => {
+    playerStats.forEach(({Pitching, team}: PlayerStats) => {
       if (team !== targetedTeam) {
         PlateAppearances += Number(Pitching["Batters Faced"]);
       }
@@ -63,11 +63,11 @@ export class BoxScoreUtils {
     return PlateAppearances;
   }
 
-  public static getHomeRuns(targetedTeam: string, {playerStatsMap}: BoxScore): number {
+  public static getHomeRuns(targetedTeam: string, {playerStats}: BoxScore): number {
     let homeRuns: number = 0;
 
 
-    playerStatsMap.forEach(({Hitting, team}: PlayerStats) => {
+    playerStats.forEach(({Hitting, team}: PlayerStats) => {
       if (team === targetedTeam) {
         homeRuns += Number(Hitting.HR);
       }
@@ -76,11 +76,11 @@ export class BoxScoreUtils {
     return homeRuns;
   }
 
-  public static getDoubles(targetedTeam: string, {playerStatsMap}: BoxScore): number {
+  public static getDoubles(targetedTeam: string, {playerStats}: BoxScore): number {
     let doubles: number = 0;
 
 
-    playerStatsMap.forEach(({Hitting, team}: PlayerStats) => {
+    playerStats.forEach(({Hitting, team}: PlayerStats) => {
       if (team === targetedTeam) {
         doubles += Number(Hitting["2B"]);
       }
@@ -89,11 +89,11 @@ export class BoxScoreUtils {
     return doubles;
   }
 
-  public static getTriples(targetedTeam: string, {playerStatsMap}: BoxScore): number {
+  public static getTriples(targetedTeam: string, {playerStats}: BoxScore): number {
     let triples: number = 0;
 
 
-    playerStatsMap.forEach(({Hitting, team}: PlayerStats) => {
+    playerStats.forEach(({Hitting, team}: PlayerStats) => {
       if (team === targetedTeam) {
         triples += Number(Hitting["3B"]);
       }
@@ -102,10 +102,10 @@ export class BoxScoreUtils {
     return triples;
   }
 
-  public static getTotalWalks(targetedTeam: string, {teamStats, playerStatsMap, home, away}: BoxScore): number {
+  public static getTotalWalks(targetedTeam: string, {teamStats, playerStats, home, away}: BoxScore): number {
     let walks: number = 0;
 
-    playerStatsMap.forEach(({Hitting, team}: PlayerStats) => {
+    playerStats.forEach(({Hitting, team}: PlayerStats) => {
       if (team === targetedTeam) {
         walks += Number(Hitting.BB);
       }
@@ -122,10 +122,10 @@ export class BoxScoreUtils {
     return walks;
   }
 
-  public static getIntendedWalks(targetedTeam: string, {playerStatsMap}: BoxScore): number {
+  public static getIntendedWalks(targetedTeam: string, {playerStats}: BoxScore): number {
     let unintentionalWalks: number = 0;
 
-    playerStatsMap.forEach(({Hitting, team}: PlayerStats) => {
+    playerStats.forEach(({Hitting, team}: PlayerStats) => {
       if (team === targetedTeam) {
         unintentionalWalks += Number(Hitting.IBB);
       }
@@ -143,10 +143,10 @@ export class BoxScoreUtils {
     return hits - (doubles + triples + homeRuns);
   }
 
-  static getHitByPitch(targetedTeam: string, {playerStatsMap}: BoxScore) {
+  static getHitByPitch(targetedTeam: string, {playerStats}: BoxScore) {
     let unintentionalWalks: number = 0;
 
-    playerStatsMap.forEach(({Hitting, team}: PlayerStats) => {
+    playerStats.forEach(({Hitting, team}: PlayerStats) => {
       if (team === targetedTeam) {
         unintentionalWalks += Number(Hitting.HBP);
       }
@@ -155,10 +155,10 @@ export class BoxScoreUtils {
     return unintentionalWalks;
   }
 
-  static getSacrificeFly(targetedTeam: string, {playerStatsMap}: BoxScore) {
+  static getSacrificeFly(targetedTeam: string, {playerStats}: BoxScore) {
     let unintentionalWalks: number = 0;
 
-    playerStatsMap.forEach(({Hitting, team}: PlayerStats) => {
+    playerStats.forEach(({Hitting, team}: PlayerStats) => {
       if (team === targetedTeam) {
         unintentionalWalks += Number(Hitting.SF);
       }

@@ -1,19 +1,19 @@
 import {TeamFieldingStats, TeamHittingStats, TeamPitchingStats} from "./team-stats.interface";
 
 export class PlayerStats {
-  gameID: string;
+  BaseRunning: BaseRunning;
+  Fielding: PlayerFieldingStats;
+  Hitting: PlayerHittingStats;
   Pitching: PlayerPitchingStats;
   allPositionsPlayed: string;
-  note: string;
-  Hitting: PlayerHittingStats;
-  BaseRunning: BaseRunning;
-  started: string;
-  team: string;
-  startingPosition: string;
-  Fielding: PlayerFieldingStats;
-  teamID: string;
-  playerID: string;
+  gameID: string;
   mlbID: string;
+  note: string;
+  playerID: string;
+  started: string;
+  startingPosition: string;
+  team: string;
+  teamID: string;
 
 
   constructor(data?: any) {

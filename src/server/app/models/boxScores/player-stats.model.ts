@@ -4,18 +4,18 @@ import {Sites} from "../interfaces/teams.interface.js";
 import {LineScore} from "../interfaces/line-score.interface.js";
 
 export class PlayerStats {
+    BaseRunning: any;
+    Fielding: any;
+    Hitting: any;
+    Pitching: any;
     allPositionsPlayed: string;
     gameID: string;
-    Pitching: any;
-    Fielding: any;
-    teamID: string;
-    Hitting: any;
-    BaseRunning: any;
-    started: string;
-    team: string;
-    startingPosition: string;
-    playerID: string;
     note: string;
+    playerID: string;
+    started: string;
+    startingPosition: string;
+    team: string;
+    teamID: string;
 
     constructor(data: any) {
         this.allPositionsPlayed = data.allPositionsPlayed;

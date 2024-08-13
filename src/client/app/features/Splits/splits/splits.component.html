@@ -27,32 +27,34 @@
   <div class="frame">
     <div class="flex-column" *ngIf="away">
       <span>{{ away.teamName }}</span>
+      <span>{{ awayOffensiveStats.gamesRepresentedInData }}</span>
       <span>{{ awayOffensiveStats.BattingAverage }}</span>
       <span>{{ awayOffensiveStats.Slugging }}</span>
       <span>{{ awayOffensiveStats.OnBasePercentage }}</span>
       <span>{{ awayOffensiveStats.OnBasePlusSlugging }}</span>
       <span>{{ awayOffensiveStats.weightedOnBaseAverage }}</span>
-      <span>{{ awayTeamGameCount }}</span>
     </div>
 
     <div class="flex-column">
       <span>Teams</span>
+      <span>Games Included</span>
       <span>Batting Average</span>
       <span>Slugging</span>
       <span>On Base Percentage</span>
       <span>On Base plus Slug</span>
       <span>Weighted OBA</span>
-      <span>Games Included</span>
+      <span>wRC</span>
+      <span>Point Differential</span>
     </div>
 
     <div class="flex-column" *ngIf="home">
       <span>{{ home.teamName }}</span>
+      <span>{{ homeOffensiveStats.gamesRepresentedInData }}</span>
       <span>{{ homeOffensiveStats.BattingAverage }}</span>
       <span>{{ homeOffensiveStats.Slugging }}</span>
       <span>{{ homeOffensiveStats.OnBasePercentage }}</span>
       <span>{{ homeOffensiveStats.OnBasePlusSlugging }}</span>
       <span>{{ homeOffensiveStats.weightedOnBaseAverage }}</span>
-      <span>{{ homeTeamGameCount }}</span>
     </div>
   </div>
 </ng-container>

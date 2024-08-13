@@ -1,37 +1,36 @@
-import {LineScoreTeam, Site, Teams} from "./game.interface";
-import {TeamStats} from "./team-stats.interface";
 import {PlayerStats} from "./player-stats.interface";
-import {OffensiveStats, StatsSource} from "../../features/Splits/splits/splits.component.js";
-import {BoxScoreUtils} from "../utils/boxscore.utils.js";
 
 export class BoxScore {
+  Attendance: string;
+  Ejections: string;
+  FirstPitch: string;
   GameLength: string;
   Umpires: string;
-  gameStatus: string;
-  Attendance: string;
-  teamStats: Teams<TeamStats>;
-  gameDate: string;
   Venue: string;
-  currentCount: string;
-  homeResult: string;
-  away: string;
-  lineScore: Teams<LineScoreTeam>;
-  currentOuts: string;
-  FirstPitch: string;
-  Wind: string;
-  home: string;
-  playerStats: PlayersStats;
-  decisions: Decision[];
-  currentBatter: string;
-  bases: any;
-  awayResult: string;
   Weather: string;
-  currentPitcher: string;
+  Wind: string;
+  away: string;
+  awayResult: string;
+  bases: any;
+  currentBatter: string;
+  currentCount: string;
   currentInning: string;
-  gameID: string;
-  startingLineups: any;
+  currentOuts: string;
+  currentPitcher: string;
+  decisions!: Decision;
+  gameDate!: string;
+  gameID!: string;
+  gameStatus!: string;
+  gameStatusCode: string;
+  home: string;
+  homeResult: string;
+  lineScore!: any;
+  playerStats!: PlayerStats[];
+  startingLineups!: any;
+  teamIDAway: string;
+  teamIDHome: string;
+  teamStats!: any;
 
-  playerStatsMap: Map<string, PlayerStats> = new Map;
 
   constructor(data: any) {
     this.GameLength = data.GameLength;
@@ -59,62 +58,6 @@ export class BoxScore {
     this.currentInning = data.currentInning;
     this.gameID = data.gameID;
     this.startingLineups = data.startingLineups;
-
-    if (data.playerStats && Object.keys(data.playerStats).length > 0) {
-      const playerKeys: string[] = Object.keys(data.playerStats);
-
-      playerKeys.forEach(playerKey => this.playerStatsMap.set(playerKey, new PlayerStats(data.playerStats[playerKey])));
-    }
-  }
-
-
-
-  public static addOffensiveStats(
-    offensiveStats: OffensiveStats,
-    targetedTeam: string,
-    statsSource: StatsSource,
-    site: Site,
-    opposingTeam: string) {
-    return (boxScore: BoxScore): any => {
-      const newOffensiveStats: OffensiveStats = new OffensiveStats();
-
-      const teamsMatch: boolean =
-        [boxScore[Site.Away], boxScore[Site.Home]].some((team: string) => team === targetedTeam) &&
-        [boxScore[Site.Away], boxScore[Site.Home]].some((team: string) => team === opposingTeam)
-
-      switch (statsSource) {
-        case StatsSource.Season:
-          collectOffensiveStatsFromBoxScore(newOffensiveStats, boxScore);
-          break;
-        case StatsSource.Split:
-          if (boxScore[site] === targetedTeam) {
-            collectOffensiveStatsFromBoxScore(newOffensiveStats, boxScore);
-          }
-          break;
-        case StatsSource.Teams:
-          if (teamsMatch) {
-          console.log(statsSource, boxScore.gameID, boxScore.teamStats);
-            collectOffensiveStatsFromBoxScore(newOffensiveStats, boxScore);
-          }
-          break;
-      }
-
-      offensiveStats.add(newOffensiveStats);
-
-      function collectOffensiveStatsFromBoxScore(os: OffensiveStats, b: BoxScore): void {
-        os.Hits = BoxScoreUtils.getHits(targetedTeam, b);
-        os.Doubles = BoxScoreUtils.getDoubles(targetedTeam, b);
-        os.AtBats = BoxScoreUtils.getAtBats(targetedTeam, b);
-        os.PlateAppearance = BoxScoreUtils.getPlateAppearances(targetedTeam, b);
-        os.Singles = BoxScoreUtils.getSingles(targetedTeam, b);
-        os.Triples = BoxScoreUtils.getTriples(targetedTeam, b);
-        os.HomeRuns = BoxScoreUtils.getHomeRuns(targetedTeam, b);
-        os.IntentionalWalks = BoxScoreUtils.getIntendedWalks(targetedTeam, b);
-        os.Walks = BoxScoreUtils.getTotalWalks(targetedTeam, b);
-        os.HitByPitch = BoxScoreUtils.getHitByPitch(targetedTeam, b);
-        os.SacrificeFly = BoxScoreUtils.getSacrificeFly(targetedTeam, b);
-      }
-    }
   }
 }
 
