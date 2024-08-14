@@ -17,12 +17,14 @@ import analysisRouter from "./app/routes/analysis/analysis.router.js";
 import teamsRouter from "./app/routes/teams/teams.router.js";
 import slatesRouter from "./app/routes/slates/slates.router.js";
 import rosterRouter from "./app/routes/rosters/rosters.router.js";
+import updateRouter from "./app/routes/update/update.router.js";
 
 const app: Express = express();
 
 const __filename: string = fileURLToPath(import.meta.url);
 const __dirname: string = dirname(__filename);
 
+app.set('trust proxy', true);
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json({limit: '50mb'}));
@@ -42,6 +44,7 @@ const api: Router = Router()
   .use('/slates', slatesRouter())
   .use(schedulesController)
   .use('/teams', teamsRouter())
+  .use('/update', updateRouter())
   .use('/rosters', rosterRouter());
 
 app.use('/api', api);

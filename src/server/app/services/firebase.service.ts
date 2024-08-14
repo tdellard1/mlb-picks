@@ -8,27 +8,28 @@ import firebase from "../clients/firebase.client.js";
 const storage: FirebaseStorage = getStorage(firebase);
 
 export async function uploadFile<T>(fileName: string, fileData: T): Promise<any> {
-    const storageRef: StorageReference = ref(storage, `${fileName}.json`);
-
-    const fileString: string = JSON.stringify(fileData, null, 2);
-    const blob: Blob = new Blob([fileString], {type: 'application/json'});
-    const file: File = new File([blob], `${fileName}.json`);
-
-    const uploadTask: UploadTask = uploadBytesResumable(storageRef, file);
-    const progressBar: SingleBar = new CliProgress.SingleBar({
-        format: ' {bar} | {fileName} | {value}/{total}',
-        stopOnComplete: true
-    }, CliProgress.Presets.shades_classic);
-
-    progressBar.start(uploadTask.snapshot.totalBytes, 0);
-    uploadTask.on('state_changed',
-        ({bytesTransferred}: UploadTaskSnapshot): void => {
-            progressBar.update(bytesTransferred, {fileName});
-        });
-
-    return uploadTask.then(({state}: UploadTaskSnapshot) => {
-       return state;
-    });
+    return Promise.resolve('canceled');
+    // const storageRef: StorageReference = ref(storage, `${fileName}.json`);
+    //
+    // const fileString: string = JSON.stringify(fileData, null, 2);
+    // const blob: Blob = new Blob([fileString], {type: 'application/json'});
+    // const file: File = new File([blob], `${fileName}.json`);
+    //
+    // const uploadTask: UploadTask = uploadBytesResumable(storageRef, file);
+    // const progressBar: SingleBar = new CliProgress.SingleBar({
+    //     format: ' {bar} | {fileName} | {value}/{total}',
+    //     stopOnComplete: true
+    // }, CliProgress.Presets.shades_classic);
+    //
+    // progressBar.start(uploadTask.snapshot.totalBytes, 0);
+    // uploadTask.on('state_changed',
+    //     ({bytesTransferred}: UploadTaskSnapshot): void => {
+    //         progressBar.update(bytesTransferred, {fileName});
+    //     });
+    //
+    // return uploadTask.then(({state}: UploadTaskSnapshot) => {
+    //    return state;
+    // });
 }
 
 export async function downloadFile(keyFile: string): Promise<any[]> {

@@ -9,6 +9,7 @@ import {Game} from "../models/schedules/games/game.model.js";
 import {getDailySchedule} from "../services/tank-01.service.js";
 import {writeThroughBoxScores} from "../routes/boxScores/box-score.service.js";
 import {Schedule} from "../models/schedules/schedule.model.js";
+import {setNeedToUpdate} from "../routes/update/update.service.js";
 
 /**
  * Total Requests Made Per Day:
@@ -56,6 +57,7 @@ export async function reconcileBoxScores() {
     if (slateYesterday.length > 0 || absent.length > 0 || inProgress.length > 0) {
         const gameIDs: Set<string> = new Set<string>([...slateYesterday, ...absent, ...inProgress]);
         await writeThroughBoxScores([...gameIDs], preExisting);
+        await setNeedToUpdate();
     }
 }
 

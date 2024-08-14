@@ -82,6 +82,10 @@ export class BackendApiService {
     const options: HttpOptions = {params: {teams, source}};
     return this.apiService.get(this.serverUrl + 'api/boxScores/teamStats', options);
   }
+
+  getUpdateNeeded() {
+    return this.apiService.get(this.serverUrl + 'api/update');
+  }
 }
 
 export declare type TeamsNRFIPercentage = {[team: string]: string};

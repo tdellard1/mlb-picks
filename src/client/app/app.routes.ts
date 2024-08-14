@@ -3,11 +3,13 @@ import {dailyScheduleResolver} from "./core/resolvers/daily-schedule/daily-sched
 import {AppComponent} from "./app.component.js";
 import {teamsResolver} from "./core/resolvers/teams.resolver.js";
 import {playersResolver} from "./features/Pitchers/data-access/resolvers/players.resolver.js";
+import {dataGuard} from "./core/guards/data.guard.js";
 
 export const routes: Routes = [
   {
     path: '',
     component: AppComponent,
+    canActivate: [dataGuard],
     resolve: {
       dailySchedule: dailyScheduleResolver,
       players: playersResolver,
