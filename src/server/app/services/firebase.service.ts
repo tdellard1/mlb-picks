@@ -1,4 +1,4 @@
-import type {UploadTaskSnapshot, UploadTask} from '@firebase/storage';
+import {UploadTaskSnapshot, UploadTask, TaskState} from '@firebase/storage';
 import {FirebaseStorage, getStorage, ref, uploadBytesResumable} from "@firebase/storage";
 import {StorageReference, getDownloadURL} from "@firebase/storage";
 import {addToCache, exists} from "./cache.service.js";
@@ -73,28 +73,6 @@ export async function downloadFile(keyFile: string): Promise<any[]> {
 export async function downloadFileWithType<T>(keyFile: string, type: { new(parse: any): T }): Promise<T[]> {
     const results: any[] = await downloadFile(keyFile);
     return results.map((result: string) => new type(result));
-}
-
-export const loadData = async (fileKeys: string[]): Promise<void> => {
-    for (const fileKey of fileKeys) {
-        const length: number = await exists(fileKey);
-
-        if (length !== 0) {
-            const data: any[] = await downloadFile(fileKey);
-            console.log(`Adding ${fileKey} to Redis...`);
-
-            const sortedByProps: any[] = data.sort((a, b) => {
-                return Object.getOwnPropertyNames(a).length -Object.getOwnPropertyNames(b).length
-            });
-
-            const most = sortedByProps.pop();
-
-            console.log('first: ', Object.getOwnPropertyNames(most));
-            console.log('last: ', most);
-
-            // await addToCache(fileKey, data);
-        }
-    }
 }
 
 export declare type FirebaseClient = {

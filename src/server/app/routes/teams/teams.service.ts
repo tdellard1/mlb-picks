@@ -32,21 +32,6 @@ export async function replaceTeamsInCache(teams: Team[]): Promise<number> {
     return await replaceInCache(key, stringifyTeams);
 }
 
-
-export async function hasCachedTeams(): Promise<boolean> {
-    const length: number = await exists(key);
-    return length === 1;
-}
-
-export async function retrieveTeamsFromCache(): Promise<Team[]> {
-    return getFromCache(key, Team, 'set');
-}
-
-export async function retrieveTeamsFromDatabase(): Promise<Team[]> {
-    return downloadFileWithType(key, Team);
-}
-
-
 export async function retrieveTeamsFromTank01(): Promise<Team[]> {
     const {data}: AxiosResponse<Team[]> = await getTeams();
     return data;

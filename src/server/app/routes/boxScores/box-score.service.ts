@@ -3,6 +3,7 @@ import {BoxScore} from "../../models/boxScores/box-scores.model.js";
 import {uploadFile} from "../../services/firebase.service.js";
 import {AxiosResponse} from "axios";
 import {getBoxScore} from "../../services/tank-01.service.js";
+import {TaskState} from "@firebase/storage";
 
 const key: string = 'boxScores';
 
@@ -34,12 +35,15 @@ export async function writeThroughBoxScores(gameIDs: string[], oldBoxScores: Box
 
     const length: number = await replaceBoxScoresInCache(uniqueBoxScores);
     const lengthTwo: number[] = await addBoxScoresToMultipleSets(uniqueBoxScores);
+    const lengthThree: number[] = await addTeamStatsToMultipleSets(uniqueBoxScores);
+    const lengthFour: number[] = await addPlayerStatsToMultipleSets(uniqueBoxScores);
 
-    console.log('singleSetList: ', length);
-    console.log('multipleSets: ', new Set(lengthTwo));
-
-    if (length > 0 && lengthTwo.every(value => value === 1)) {
-        await addBoxScoresToDatabase(uniqueBoxScores);
+    if (length > 0 &&
+        lengthTwo.every(value => value === 1) &&
+        lengthThree.every(value => value === 1) &&
+        lengthFour.every(value => value === 1)) {
+        const result: TaskState = await addBoxScoresToDatabase(uniqueBoxScores);
+        console.log('Result of database upload for rosters is ', result);
     }
 }
 
@@ -48,20 +52,27 @@ export async function replaceBoxScoresInCache(boxScores: BoxScore[]): Promise<nu
     return await replaceInCache(key, stringifyBoxScores);
 }
 
-export async function addBoxScoresToDatabase(boxScores: BoxScore[]): Promise<void> {
-    await uploadFile(key, boxScores);
-}
-
-export async function retrieveBoxScoresFromTank01(gameIDs: string[]): Promise<BoxScore[]> {
-    const rostersPromises: Promise<AxiosResponse<BoxScore>>[] =
-        gameIDs.map((teamAbbreviation: string) => getBoxScore<BoxScore>(teamAbbreviation));
-    const rostersResolvers: AxiosResponse<BoxScore>[] = await Promise.all(rostersPromises);
-    return rostersResolvers.map(({data}: AxiosResponse<BoxScore>) => data);
+export async function addBoxScoresToDatabase(boxScores: BoxScore[]): Promise<any> {
+    return await uploadFile(key, boxScores);
 }
 
 async function addBoxScoresToMultipleSets(boxScores: BoxScore[]): Promise<number[]> {
     const redisUpdateRequests: Promise<number>[] = boxScores.map(async (boxScore: BoxScore) =>
         replaceInCache(`boxScore:${boxScore.gameID}`, JSON.stringify(boxScore)));
+
+    return await Promise.all(redisUpdateRequests);
+}
+
+async function addPlayerStatsToMultipleSets(boxScores: BoxScore[]): Promise<number[]> {
+    const redisUpdateRequests: Promise<number>[] = boxScores.map(async (boxScore: BoxScore) =>
+        replaceInCache(`boxScore:playerStats:${boxScore.gameID}`, JSON.stringify(boxScore.playerStats)));
+
+    return await Promise.all(redisUpdateRequests);
+}
+
+async function addTeamStatsToMultipleSets(boxScores: BoxScore[]): Promise<number[]> {
+    const redisUpdateRequests: Promise<number>[] = boxScores.map(async (boxScore: BoxScore) =>
+        replaceInCache(`boxScore:teamStats:${boxScore.gameID}`, JSON.stringify(boxScore.teamStats)));
 
     return await Promise.all(redisUpdateRequests);
 }

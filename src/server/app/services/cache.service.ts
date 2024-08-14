@@ -36,7 +36,7 @@ export async function addToCache(key: string, data: any): Promise<number> {
     }
 }
 
-export async function replaceInCache(key: string, data: any): Promise<number> {
+export async function replaceInCache(key: string, data: string | string[]): Promise<number> {
     const client: RedisClient = getClient();
     let result: number;
 
@@ -54,16 +54,6 @@ export async function replaceInCache(key: string, data: any): Promise<number> {
 
         return result;
     } catch (error) {
-        return 0;
-    }
-}
-
-export async function removeFromCache(key: string): Promise<number> {
-    const client: RedisClient = getClient();
-    const exists: number = await client.exists(key);
-    if (exists !== 0) {
-        return await client.del(key);
-    } else {
         return 0;
     }
 }

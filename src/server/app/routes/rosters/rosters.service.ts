@@ -4,6 +4,7 @@ import {downloadFileWithType, uploadFile} from "../../services/firebase.service.
 import {AxiosResponse} from "axios";
 import {getRoster} from "../../services/tank-01.service.js";
 import {Team} from "../../models/teams/teams.model.js";
+import {TaskState} from "@firebase/storage";
 
 const key: string = 'rosters';
 
@@ -11,39 +12,25 @@ const key: string = 'rosters';
 export async function updateRosters(teams: Team[]): Promise<void> {
     const teamAbbreviations: string[] = teams.map(({teamAbv}) => teamAbv);
     const rosters: Roster[] = await retrieveRostersFromTank01(teamAbbreviations);
-    if (rosters) {
+    if (rosters && rosters.length === teams.length && rosters.length === 30) {
         const lengthInCache: number = await replaceRostersInCache(rosters);
 
         if (lengthInCache > 0) {
-            await addRostersToDatabase(rosters);
+            const result: TaskState = await addRostersToDatabase(rosters);
+            console.log('Result of database upload for rosters is ', result);
         }
+    } else {
+        throw new Error('Rosters didn\'t match count of MLB Teams');
     }
 }
 
 export async function addRostersToDatabase(rosters: Roster[]) {
-    await uploadFile(key, rosters);
-}
-
-export async function addRostersToCache(rosters: Roster[]): Promise<number> {
-    return await addToCache(key, rosters);
+    return await uploadFile(key, rosters);
 }
 
 export async function replaceRostersInCache(rosters: Roster[]): Promise<number> {
     const stringifyRosters: string[] = rosters.map((roster: Roster) => JSON.stringify(roster, null, 0));
     return await replaceInCache(key, stringifyRosters);
-}
-
-export async function hasCachedRosters(): Promise<boolean> {
-    const length: number = await exists(key);
-    return length === 1;
-}
-
-export async function retrieveRostersFromCache(): Promise<Roster[]> {
-    return getFromCache(key, Roster, 'set');
-}
-
-export async function retrieveRostersFromDatabase(): Promise<Roster[]> {
-    return downloadFileWithType(key, Roster);
 }
 
 export async function retrieveRostersFromTank01(teamAbbreviations: string[]): Promise<Roster[]> {

@@ -6,7 +6,10 @@ import logger from 'morgan';
 import cors from "cors";
 import path, {dirname} from 'path';
 import {fileURLToPath} from 'url';
-import {placeHolder, quarterDailyUpdate, reconcileBoxScores} from "./app/scheduler/scheduler.js";
+import {
+    modernizeRostersSchedulesAndTeams,
+    reconcileBoxScores
+} from "./app/scheduler/scheduler.js";
 import playersRouter from "./app/routes/players/players.router.js";
 import schedulesController from "./app/routes/schedules/schedules.controller.js";
 import boxScoreRouter from "./app/routes/boxScores/box-scores.router.js";
@@ -26,8 +29,11 @@ app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'client/browser')));
 
-const job: Job = schedule.scheduleJob('0 */6 * * *', async () => await quarterDailyUpdate());
-const job2: Job = schedule.scheduleJob('30 */12 * * *', async () => await reconcileBoxScores());
+const EveryHour: string = '0 * * * *';
+const ThirtyMinutesAfterEveryTwoHours: string = '30 */2 * * *'; // 12am, 2am, 4am, 6am, 8am, 10am, 12pm, 2pm, 4pm, 6pm, 8pm, and 10pm
+
+const updateHourly: Job = schedule.scheduleJob(EveryHour, async () => await modernizeRostersSchedulesAndTeams());
+const duoHourly: Job = schedule.scheduleJob(ThirtyMinutesAfterEveryTwoHours, async () => await reconcileBoxScores());
 
 const api: Router = Router()
   .use('/boxScores', boxScoreRouter())
