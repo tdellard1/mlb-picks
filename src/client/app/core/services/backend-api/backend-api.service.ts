@@ -70,6 +70,10 @@ export class BackendApiService {
       );
   }
 
+  getBoxScores(): Observable<BoxScore[]> {
+    return this.apiService.get<BoxScore[]>(this.serverUrl + 'api/boxScores');
+  }
+
   getTeamStatsForTeams(teams: string[], source: string): Observable<Hitting> {
     const options: HttpOptions = {params: {teams, source}};
     return this.apiService.get(this.serverUrl + 'api/boxScores/teamStats', options);

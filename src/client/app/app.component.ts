@@ -5,8 +5,11 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatListItem, MatNavList} from "@angular/material/list";
 import {MatIcon} from "@angular/material/icon";
 import {MatIconButton} from "@angular/material/button";
-import {NgIf} from "@angular/common";
+import {AsyncPipe, NgIf} from "@angular/common";
 import {BreakpointObserver} from "@angular/cdk/layout";
+import {HomeSpinnerService} from "./core/services/home-spinner.service";
+import {Observable} from "rxjs";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-root',
@@ -19,20 +22,25 @@ import {BreakpointObserver} from "@angular/cdk/layout";
     MatNavList,
     MatIcon,
     MatIconButton,
-    NgIf
-],
+    NgIf,
+    MatProgressSpinner,
+    AsyncPipe
+  ],
   templateUrl: 'app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
   @ViewChild(MatSidenav) sidenav!: MatSidenav;
+  showSpinner$: Observable<boolean>;
 
   isMobile: boolean = true;
   isCollapsed: boolean = true;
   selectedPage: string = '';
 
   constructor(private router: Router,
+              spinnerService: HomeSpinnerService,
               private observer: BreakpointObserver) {
+    this.showSpinner$ = spinnerService.showSpinner$;
   }
 
   ngOnInit() {

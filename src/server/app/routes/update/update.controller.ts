@@ -16,7 +16,7 @@ export default function updateController(redis: RedisClient) {
             response.json(updateStatus);
         } else {
             await addClient(ip);
-            response.json(false);
+            response.json(true);
         }
 
     }
@@ -29,7 +29,7 @@ export default function updateController(redis: RedisClient) {
             return await getClientUpdateStatus(ip);
         } else {
             await addClient(ip);
-            return false;
+            return true;
         }
     }
 

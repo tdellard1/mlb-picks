@@ -1,39 +1,47 @@
-<mat-toolbar color="primary">
-  <button mat-icon-button aria-label="Menu icon" (click)="toggleMenu()">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <h1>{{ selectedPage }}</h1>
-</mat-toolbar>
-<mat-sidenav-container autosize>
-  <mat-sidenav mode="over">
-    <mat-nav-list>
-      <a mat-list-item (click)="navigate(RouterPages.NO_RUNS_FIRST_INNING)">
+<ng-template #content>
+  <mat-toolbar color="primary">
+    <button mat-icon-button aria-label="Menu icon" (click)="toggleMenu()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1>{{ selectedPage }}</h1>
+  </mat-toolbar>
+  <mat-sidenav-container autosize>
+    <mat-sidenav mode="over">
+      <mat-nav-list>
+        <a mat-list-item (click)="navigate(RouterPages.NO_RUNS_FIRST_INNING)">
         <span class="entry">
           <mat-icon>house</mat-icon>
           <span>NRFI</span>
         </span>
-      </a>
-      <a mat-list-item (click)="navigate(RouterPages.ANALYSIS)">
+        </a>
+        <a mat-list-item (click)="navigate(RouterPages.ANALYSIS)">
         <span class="entry">
           <mat-icon>house</mat-icon>
           <span>PROPS</span>
         </span>
-      </a>
-      <a mat-list-item (click)="navigate(RouterPages.PITCHERS)">
+        </a>
+        <a mat-list-item (click)="navigate(RouterPages.PITCHERS)">
         <span class="entry">
           <mat-icon>house</mat-icon>
           <span>PITCHERS</span>
         </span>
-      </a>
-      <a mat-list-item (click)="navigate(RouterPages.SPLITS)">
+        </a>
+        <a mat-list-item (click)="navigate(RouterPages.SPLITS)">
         <span class="entry">
           <mat-icon>house</mat-icon>
           <span>SPLITS</span>
         </span>
-      </a>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</ng-template>
+
+<ng-container *ngIf="(showSpinner$ | async); else content">
+  <div class="spinner-container">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-container>

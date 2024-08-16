@@ -6,6 +6,7 @@ import {BehaviorSubject} from "rxjs";
 })
 export class HomeSpinnerService {
   private _showSpinner: BehaviorSubject<boolean> = new BehaviorSubject(true);
+  private _showTransparentBackground: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
   get showSpinner$() {
     return this._showSpinner.asObservable();
@@ -15,7 +16,7 @@ export class HomeSpinnerService {
     this._showSpinner.next(false);
   }
 
-  displaySpinner() {
-    this._showSpinner.next(true);
+  hideTransparentBackground() {
+    this._showTransparentBackground.next(false);
   }
 }
