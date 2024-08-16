@@ -1,8 +1,7 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute, Data, Router, RouterOutlet} from "@angular/router";
-import {Game, Games} from "../../../../common/model/game.interface";
+import {Game} from "../../../../common/interfaces/game";
 import {SubscriptionHolder} from "../../../../shared/components/subscription-holder.component";
-import {RosterPlayer} from "../../../../common/model/roster.interface";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
 import {NgIf} from "@angular/common";
@@ -15,6 +14,8 @@ import {
   MatHeaderRowDef,
   MatRow, MatRowDef, MatTable
 } from "@angular/material/table";
+import {GameUtils} from "../../../../common/utils/game.utils";
+import {RosterPlayer} from "../../../../common/interfaces/players";
 
 @Component({
   selector: 'pitchers-container',
@@ -45,7 +46,7 @@ export class PitchersContainerComponent extends SubscriptionHolder {
           const games: Game[] = data['dailySchedule'] as Game[];
 
           if (games.length > 1) {
-            this.pitchersArray = new Games(games).sortedGames
+            this.pitchersArray = games.sort(GameUtils.sortGames)
               .map(({probableStartingPitchers}: Game) => [probableStartingPitchers.away, probableStartingPitchers.home])
               .flat()
               .filter(Boolean)

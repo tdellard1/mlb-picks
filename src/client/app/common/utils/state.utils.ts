@@ -1,10 +1,11 @@
-import {Roster, RosterPlayer} from "../model/roster.interface";
-import {TeamSchedule} from "../model/team-schedule.interface";
 import {deepCopy} from "./general.utils";
+import {Schedule} from "../interfaces/team-schedule.interface";
+import {Roster} from "../interfaces/roster";
+import {RosterPlayer} from "../interfaces/players";
 
 export class StateUtils {
-  static batterStreaks(schedules: TeamSchedule[]) {
-    const rosters: Roster[] = schedules.map((teamSchedule: TeamSchedule) => teamSchedule.teamDetails!.roster!).flat();
+  static batterStreaks(schedules: Schedule[]) {
+    const rosters: Roster[] = schedules.map((teamSchedule: Schedule) => teamSchedule.teamDetails!.roster!).flat();
     const players: RosterPlayer[] = rosters.map(({roster}: Roster) => roster).flat();
     const nonPitchingPlayers: RosterPlayer[] = players.filter(({pos}: RosterPlayer) => pos.toUpperCase() !== 'P');
     const playersAndHitStreak = nonPitchingPlayers.map(({team, longName, games, gamesMap}: RosterPlayer) => {

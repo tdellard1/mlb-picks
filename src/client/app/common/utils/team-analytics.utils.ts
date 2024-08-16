@@ -1,9 +1,10 @@
-import {BoxScore} from "../model/box-score.interface";
-import {PlayerStats} from "../model/player-stats.interface";
+import {BoxScore} from "../model/box.score.model";
+import {PlayerStats} from "../interfaces/player-stats";
 import {roundToDecimalPlace, sum} from "./general.utils";
-import {LineScoreTeam, Teams} from "../model/game.interface";
 import {ensure} from "./array.utils";
-import {WeightedFactors} from "../weighted-factors.constants";
+import {WeightedFactors} from "../constants/weighted-factors.constants";
+import {LineScore} from "../interfaces/line-score";
+import {Sites} from "../interfaces/sites";
 
 export class TeamAnalyticsUtils {
 
@@ -20,7 +21,7 @@ export class TeamAnalyticsUtils {
   }
 
   static getTeamBattingAverage(teamAbbreviation: string, boxScore: BoxScore): number {
-    const players: PlayerStats[] = Array.from(Object.values(boxScore?.playerStats));
+    const players: PlayerStats[] = Array.from(boxScore!.playerStats);
     const playersOnTeam: PlayerStats[] = players.filter((player: PlayerStats) => player.team === teamAbbreviation);
 
     const playersAtBats: number[] = playersOnTeam.map(({Hitting}: PlayerStats) => Number(Hitting.AB));
@@ -52,7 +53,7 @@ export class TeamAnalyticsUtils {
   }
 
   static getTeamRunsForGame(teamAbbreviation: string, boxScore: BoxScore) {
-    const {home, away}: Teams<LineScoreTeam> = ensure(boxScore?.lineScore);
+    const {home, away}: Sites<LineScore> = ensure(boxScore?.lineScore);
     if (home.team === teamAbbreviation) {
       return Number(home.R);
     } else if (away.team === teamAbbreviation) {

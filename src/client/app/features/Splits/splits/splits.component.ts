@@ -3,16 +3,17 @@ import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-to
 import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 import {SubscriptionHolder} from "../../../shared/components/subscription-holder.component.js";
 import {ActivatedRoute, Data, Event, NavigationEnd, NavigationStart, Params, Router, RouterLink} from "@angular/router";
-import {Team} from "../../../common/model/team.interface.js";
+import {Team} from "../../../common/interfaces/team.interface.js";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
 import {AsyncPipe, NgIf} from "@angular/common";
-import {Game, Teams} from "../../../common/model/game.interface.js";
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
-import {Hitting, TeamStatsHitting} from "../../../common/model/team-stats.interface.js";
+import {TeamStatsHitting} from "../../../common/model/team-stats.model.js";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {BehaviorSubject, Observable, Subscription} from "rxjs";
 import {OffensiveStats} from "../../../common/model/offensive-stats.modal.js";
+import {Sites} from "../../../common/interfaces/sites";
+import {Hitting} from "../../../common/interfaces/hitting";
 
 export enum StatsSource {
   Season = 'season',
@@ -95,7 +96,7 @@ export class SplitsComponent extends SubscriptionHolder {
       this.home = this.teams.get(homeName)!;
       this.away = this.teams.get(awayName)!;
 
-      const {home, away}: Teams<{name: string, stats: Hitting[]}> = splits as Teams<{name: string, stats: Hitting[]}>;
+      const {home, away}: Sites<{name: string, stats: Hitting[]}> = splits as Sites<{name: string, stats: Hitting[]}>;
 
       this.homeBoxScores = home.stats;
       this.awayBoxScores = away.stats;

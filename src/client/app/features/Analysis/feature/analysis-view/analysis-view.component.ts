@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
-import {Analytic, Analytics, TeamAnalytics} from "../../../../common/model/team-schedule.interface";
+import {Analytic, Analytics, TeamAnalytics} from "../../../../common/interfaces/team-schedule.interface";
 import {MatIcon} from "@angular/material/icon";
 import {MatFabButton} from "@angular/material/button";
 import {MatCard} from "@angular/material/card";
@@ -21,7 +21,7 @@ import {ActivatedRoute, Data, Event, NavigationEnd, NavigationStart, Router} fro
 import {SubscriptionHolder} from "../../../../shared/components/subscription-holder.component.js";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {BehaviorSubject, Observable} from "rxjs";
-import {Team} from "../../../../common/model/team.interface.js";
+import {Team} from "../../../../common/interfaces/team.interface.js";
 import {GameSelectedComponent} from "../../ui/game-selected/game-selected.component.js";
 import {GameDetailsComponent} from "../../ui/game-details/game-details.component.js";
 import {MatDivider} from "@angular/material/divider";

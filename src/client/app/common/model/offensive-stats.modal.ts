@@ -1,5 +1,5 @@
-import {TeamStatsHitting} from "./team-stats.interface.js";
-import {WeightedFactors} from "../weighted-factors.constants.js";
+import {TeamStatsHitting} from "./team-stats.model.js";
+import {WeightedFactors} from "../constants/weighted-factors.constants.js";
 
 export class OffensiveStats {
   AtBats: number;

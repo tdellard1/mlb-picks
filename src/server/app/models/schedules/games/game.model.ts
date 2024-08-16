@@ -19,7 +19,7 @@
 }
 */
 
-import {ProbableLineUp} from "./starting-lineups.model.js";
+import {Starter} from "./starter";
 import {BoxScore} from "../../boxScores/box-scores.model.js";
 import {GameStatus} from "../../enums/game-status.enum.js";
 import {Sites} from "../../interfaces/teams.interface.js";
@@ -38,7 +38,7 @@ export class Game {
     gameTime: string;
     private readonly _gameTime_epoch: string;
     homeResult: string;
-    probableStartingLineups: Sites<ProbableLineUp>;
+    probableStartingLineups: Sites<Starter[]>;
     probableStartingPitchers: Sites<string>;
     lineScore: Sites<LineScore>;
     gameStatusCode: string;

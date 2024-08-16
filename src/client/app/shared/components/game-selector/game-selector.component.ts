@@ -1,12 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatCard} from "@angular/material/card";
 import {AsyncPipe, NgIf, NgOptimizedImage} from "@angular/common";
-import {Game, Games} from "../../../common/model/game.interface.js";
-import {Team} from "../../../common/model/team.interface.js";
+import {Game} from "../../../common/interfaces/game.js";
+import {Team} from "../../../common/interfaces/team.interface.js";
 import {MatDivider} from "@angular/material/divider";
 import {map} from "rxjs/operators";
 import {ActivatedRoute, ActivatedRouteSnapshot, Data, Router, RouterLink, RouterOutlet} from "@angular/router";
 import {SubscriptionHolder} from "../subscription-holder.component.js";
+import {GameUtils} from "../../../common/utils/game.utils";
 
 @Component({
   selector: 'game-selector',
@@ -39,7 +40,7 @@ export class GameSelectorComponent extends SubscriptionHolder implements OnDestr
     this.subscriptions.push(
       this.activatedRoute.data.pipe(
         map(({dailySchedule}: Data) => dailySchedule as Game[]),
-        map((games: Game[]) => new Games(games).sortedGames)
+        map((games: Game[]) => games.sort(GameUtils.sortGames))
       ).subscribe((games: Game[]) => {
         this.dailySchedule = games;
         const childRoute: ActivatedRouteSnapshot | undefined = this.activatedRoute.snapshot.children[0];

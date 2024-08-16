@@ -1,5 +1,5 @@
-import {PlayerStats} from "../model/player-stats.interface";
-import {TeamAnalytics, TeamSchedule} from "../model/team-schedule.interface";
+import {PlayerStats} from "../interfaces/player-stats";
+import {TeamAnalytics, Schedule} from "../interfaces/team-schedule.interface";
 
 export function countKeys(t: any): any {
   switch (t?.constructor) {
@@ -57,7 +57,7 @@ export function convertPlayerStatsArrayToMap(playerStats: PlayerStats[]): Map<st
   return returnMap;
 }
 
-export function createAnalyticsFromSchedule(teamSchedules: Map<string, TeamSchedule>): Map<string, TeamAnalytics> {
+export function createAnalyticsFromSchedule(teamSchedules: Map<string, Schedule>): Map<string, TeamAnalytics> {
   const returnMap: Map<string, TeamAnalytics> = new Map();
 
   for (const [team, {schedule}] of teamSchedules) {

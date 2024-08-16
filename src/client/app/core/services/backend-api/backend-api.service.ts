@@ -2,14 +2,14 @@ import {Injectable, isDevMode} from '@angular/core';
 import {ApiService} from "../api-services/api.service.js";
 import {map, mergeAll, tap, toArray} from "rxjs/operators";
 import {first, Observable} from "rxjs";
-import {Slates} from "../../../features/Slate/data-access/slate.model.js";
-import {Team} from "../../../common/model/team.interface.js";
-import {Roster, RosterPlayer} from "../../../common/model/roster.interface.js";
-import {HttpOptions} from "../../../common/model/http-options.model.js";
+import {Team} from "../../../common/interfaces/team.interface.js";
+import {Roster} from "../../../common/interfaces/roster.js";
+import {HttpOptions} from "../../../common/interfaces/http-options.js";
 import {NoRunsFirstInningElements} from "../../../features/Props/feature/props/props.component.js";
-import {Teams} from "../../../common/model/game.interface.js";
-import {BoxScore} from "../../../common/model/box-score.interface.js";
-import {Hitting} from "../../../common/model/team-stats.interface.js";
+import {BoxScore} from "../../../common/model/box.score.model.js";
+import {Sites} from "../../../common/interfaces/sites";
+import {Hitting} from "../../../common/interfaces/hitting";
+import {RosterPlayer} from "../../../common/interfaces/players";
 
 @Injectable({
   providedIn: 'root'
@@ -22,17 +22,9 @@ export class BackendApiService {
     return this.apiService.get(this.serverUrl + `api/analysis/${gameId}`);
   }
 
-  updateSlates(slates: Slates) {
-    return this.apiService.post<Slates>(this.serverUrl + 'api/slates', slates).pipe(first());
-  }
-
   // ---------------------------------------------------------------
   // ------------------------- Get Domain --------------------------
   // ---------------------------------------------------------------
-
-  getSlates(): Observable<Slates> {
-    return this.apiService.get<Slates>(this.serverUrl + 'api/slates');
-  }
 
   getPlayers(): Observable<RosterPlayer[]> {
     return this.apiService.get<RosterPlayer[]>(this.serverUrl + 'api/players');
@@ -65,11 +57,11 @@ export class BackendApiService {
     return this.apiService.get<TeamsNRFIPercentage>(this.serverUrl + 'api/teams/nrfi');
   }
 
-  getBoxScoreForTeams(teams: string[]): Observable<Teams<BoxScore[]>> {
+  getBoxScoreForTeams(teams: string[]): Observable<Sites<BoxScore[]>> {
     const options: HttpOptions = {params: {teams}};
     return this.apiService.get(this.serverUrl + 'api/boxScores/teams', options)
       .pipe(
-        map(({away, home}: Teams<BoxScore[]>) => {
+        map(({away, home}: Sites<BoxScore[]>) => {
           const awayBoxScores: BoxScore[] = away.map((boxScore: any) => new BoxScore(boxScore));
           const homeBoxScores: BoxScore[] = home.map((boxScore: any) => new BoxScore(boxScore));
 

@@ -28,7 +28,7 @@ export default function analysisController(redis: RedisClient) {
         analysisSchedule.schedule = schedule.slice().map((game: Game) => {
             const boxScore: BoxScore | undefined = boxScores.find(({gameID}) => gameID === game.gameID);
 
-            if (!boxScore) throw new Error('BoxScore unavailable for scheduled game');
+            if (!boxScore) throw new Error('BoxScoreModel unavailable for scheduled game');
 
             game.boxScore = boxScore;
             return Game.toDTO(game);

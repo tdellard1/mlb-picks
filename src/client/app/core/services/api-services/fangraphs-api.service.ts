@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {HttpOptions} from "../../../common/model/http-options.model.js";
+import {HttpOptions} from "../../../common/interfaces/http-options.js";
 import {Game} from "../../../common/model/game.interface.js";
 
 @Injectable({

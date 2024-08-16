@@ -1,5 +1,5 @@
 import {ActivatedRouteSnapshot, ResolveFn} from '@angular/router';
-import {Game} from "../../../../common/model/game.interface.js";
+import {Game} from "../../../../common/interfaces/game.js";
 import {BackendApiService} from "../../../../core/services/backend-api/backend-api.service.js";
 import {inject} from "@angular/core";
 import {NoRunsFirstInningElements} from "../../../Props/feature/props/props.component.js";

@@ -9,14 +9,15 @@ import {
   MatRow, MatRowDef, MatTable
 } from "@angular/material/table";
 import {NgIf} from "@angular/common";
-import {RosterPlayer} from "../../../../common/model/roster.interface.js";
 import {ActivatedRoute, Params} from "@angular/router";
 import {SubscriptionHolder} from "../../../../shared/components/subscription-holder.component.js";
 import {sortByGameDate} from "../../../../common/utils/state-builder.utils.js";
-import {PlayerPitchingStats, PlayerStats} from "../../../../common/model/player-stats.interface.js";
+import {PlayerStats} from "../../../../common/interfaces/player-stats.js";
 import {BackendApiService} from "../../../../core/services/backend-api/backend-api.service.js";
 import {switchMap} from "rxjs";
 import {map} from "rxjs/operators";
+import {Pitching} from "../../../../common/interfaces/pitching";
+import {RosterPlayer} from "../../../../common/interfaces/players";
 
 @Component({
   selector: 'pitcher-view',
@@ -63,7 +64,7 @@ export class PitcherViewComponent extends SubscriptionHolder implements OnInit {
       ?.sort(sortByGameDate())
       .reverse()
       .forEach(({gameID, Pitching, started}: PlayerStats) => {
-        const {InningsPitched, H, R, ER, HR, BB, SO}: PlayerPitchingStats = Pitching;
+        const {InningsPitched, H, R, ER, HR, BB, SO}: Pitching = Pitching;
         this.dataSource.push({
           Date: this.getGameDate(gameID),
           IP: InningsPitched,

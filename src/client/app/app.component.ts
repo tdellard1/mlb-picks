@@ -62,9 +62,6 @@ export class AppComponent implements OnInit {
         case RouterPages.ANALYSIS:
           void this.router.navigate(['analysis']);
           break;
-        case RouterPages.SLATE:
-          void this.router.navigate(['slate']);
-          break;
         case RouterPages.PITCHERS:
           void this.router.navigate(['pitchers']);
           break;
@@ -81,7 +78,6 @@ export class AppComponent implements OnInit {
 export const RouterPages = {
   NO_RUNS_FIRST_INNING: 'No Runs First Inning',
   ANALYSIS: 'Game Analysis',
-  SLATE: 'Expert Picks',
   PITCHERS: 'Pitcher Stats',
   SPLITS: 'Splits'
 }

@@ -1,10 +1,10 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {AsyncPipe, NgIf} from "@angular/common";
-import {RosterPlayer} from "../../../../common/model/roster.interface";
-import {Game} from "../../../../common/model/game.interface";
-import {Team} from "../../../../common/model/team.interface";
+import {Game} from "../../../../common/interfaces/game";
+import {Team} from "../../../../common/interfaces/team.interface";
 import {ActivatedRoute, Data, RouterLink} from "@angular/router";
 import {SubscriptionHolder} from "../../../../shared/components/subscription-holder.component.js";
+import {RosterPlayer} from "../../../../common/interfaces/players";
 
 @Component({
   selector: 'game-details',

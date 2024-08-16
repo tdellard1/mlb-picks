@@ -17,10 +17,6 @@ export const routes: Routes = [
     },
     children: [
       {
-        path: 'slate',
-        loadChildren: () => import('./features/Slate/slate.module').then(m => m.SlateModule),
-      },
-      {
         path: 'nrfi',
         loadChildren: () => import('./features/Props/props.module').then(m => m.PropsModule),
       },

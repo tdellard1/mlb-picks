@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Game} from "../../../../common/model/game.interface";
-import {Team} from "../../../../common/model/team.interface";
+import {Game} from "../../../../common/interfaces/game";
+import {Team} from "../../../../common/interfaces/team.interface";
 import {AsyncPipe, DatePipe, NgIf, NgOptimizedImage} from "@angular/common";
 import {ActivatedRoute, Data} from "@angular/router";
 import {SubscriptionHolder} from "../../../../shared/components/subscription-holder.component.js";

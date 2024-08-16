@@ -2,7 +2,7 @@ import {ActivatedRouteSnapshot, ResolveFn} from '@angular/router';
 import {BackendApiService} from "../services/backend-api/backend-api.service.js";
 import {inject} from "@angular/core";
 import {StatsSource} from "../../features/Splits/splits/splits.component.js";
-import {Hitting} from "../../common/model/team-stats.interface.js";
+import {Hitting} from "../../common/interfaces/hitting";
 
 export const splitsResolver: ResolveFn<Hitting> = (activatedRouteSnapshot: ActivatedRouteSnapshot) => {
   const source: string = activatedRouteSnapshot.queryParams['source'];

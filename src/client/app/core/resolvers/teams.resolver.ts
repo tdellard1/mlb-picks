@@ -1,5 +1,5 @@
 import {ResolveFn} from '@angular/router';
-import {Team} from "../../common/model/team.interface.js";
+import {Team} from "../../common/interfaces/team.interface.js";
 import {BackendApiService} from "../services/backend-api/backend-api.service.js";
 import {inject} from "@angular/core";
 

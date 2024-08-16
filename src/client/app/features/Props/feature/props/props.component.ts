@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Data} from "@angular/router";
-import {Game, Games} from "../../../../common/model/game.interface";
+import {Game} from "../../../../common/interfaces/game";
 import {AsyncPipe, JsonPipe, NgIf, NgOptimizedImage} from "@angular/common";
 import {SubscriptionHolder} from "../../../../shared/components/subscription-holder.component";
 import {MatDivider} from "@angular/material/divider";
@@ -14,7 +14,8 @@ import {
   MatTable
 } from "@angular/material/table";
 import {TeamsNRFIPercentage} from "../../../../core/services/backend-api/backend-api.service.js";
-import {Team} from "../../../../common/model/team.interface.js";
+import {Team} from "../../../../common/interfaces/team.interface.js";
+import {GameUtils} from "../../../../common/utils/game.utils";
 
 export interface NoRunsFirstInningElements {
   teamAbv: string;
@@ -72,7 +73,7 @@ export class PropsComponent extends SubscriptionHolder implements OnDestroy, OnI
   }
 
   ngOnInit(): void {
-    new Games(this.dailySchedule).sortedGames.forEach(({away, home, probableStartingPitchers}: Game) => {
+    this.dailySchedule.sort(GameUtils.sortGames).forEach(({away, home, probableStartingPitchers}: Game) => {
       if (probableStartingPitchers.away || probableStartingPitchers.home) {
         const awayRow: NoRunsFirstInningElements = this.getNoRunsFirstInningLineData(probableStartingPitchers.away, away, home);
         const homeRow: NoRunsFirstInningElements = this.getNoRunsFirstInningLineData(probableStartingPitchers.home, home, away);
