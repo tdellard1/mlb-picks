@@ -26,7 +26,7 @@ export async function getFromCache<T>(key: string, type: { new(parse: any): T; }
     return [];
 }
 
-export async function addToCache(key: string, data: any): Promise<number> {
+export async function addToCache(key: string, data: string | string[]): Promise<number> {
     const client: RedisClient = getClient();
 
     try {

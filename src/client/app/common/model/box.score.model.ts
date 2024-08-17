@@ -36,7 +36,6 @@ export class BoxScore {
   teamIDHome: string;
   teamStats!: Sites<Stats>;
 
-
   constructor(data: any) {
     this.GameLength = data.GameLength;
     this.Umpires = data.Umpires;
@@ -64,8 +63,4 @@ export class BoxScore {
     this.gameID = data.gameID;
     this.startingLineups = data.startingLineups;
   }
-}
-
-export interface PlayersStats {
-  [playerId: string]: PlayerStats
 }

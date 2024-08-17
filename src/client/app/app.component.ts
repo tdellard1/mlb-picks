@@ -76,6 +76,9 @@ export class AppComponent implements OnInit {
         case RouterPages.SPLITS:
           void this.router.navigate(['splits']);
           break;
+        case RouterPages.STREAKS:
+          void this.router.navigate(['streaks']);
+          break;
       }
     });
   }
@@ -87,6 +90,7 @@ export const RouterPages = {
   NO_RUNS_FIRST_INNING: 'No Runs First Inning',
   ANALYSIS: 'Game Analysis',
   PITCHERS: 'Pitcher Stats',
-  SPLITS: 'Splits'
+  SPLITS: 'Splits',
+  STREAKS: 'Streaks'
 }
 

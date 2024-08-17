@@ -27,8 +27,8 @@ router.get(`/${key}`,
     },
     async (_: Request, response: Response): Promise<void> => {
         const schedules: Schedule[] = await retrieveSchedulesFromDatabase();
+        await addToCache(key, schedules.map(schedule => JSON.stringify(schedule)));
         response.json(schedules);
-        await addToCache(key, schedules);
     });
 
 export default router;

@@ -1,0 +1,13 @@
+.frame {
+  display: flex;
+  flex-direction: row;
+}
+
+div {
+  flex-grow: 1;
+}
+
+span {
+  text-align: center;
+}
+

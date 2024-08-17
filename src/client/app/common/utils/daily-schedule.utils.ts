@@ -1,4 +1,4 @@
-import {Game} from "../../../common/model/game.interface.js";
+import {Game} from "../interfaces/game";
 
 export function dailyScheduleStr(games: Game[]): string {
   const sortedSchedule = games.sort((game1, game2) =>

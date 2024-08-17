@@ -1,7 +1,6 @@
 import {UploadTaskSnapshot, UploadTask, TaskState} from '@firebase/storage';
 import {FirebaseStorage, getStorage, ref, uploadBytesResumable} from "@firebase/storage";
 import {StorageReference, getDownloadURL} from "@firebase/storage";
-import {addToCache, exists} from "./cache.service.js";
 import CliProgress, {SingleBar} from 'cli-progress';
 import firebase from "../clients/firebase.client.js";
 

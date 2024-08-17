@@ -22,13 +22,5 @@ export enum GameStatusCode {
   InProgress = "1", // Game is currently in progress
   CompletedOrFinal = "2", // Game is "completed" or "final"
   Postponed = "3", // Game has been "postponed"
-  Suspended = "4", // Game has been "suspended
-}
-
-export enum GameStatus {
-  Completed = 'Completed',
-  Suspended = 'Suspended',
-  LiveInProgress = 'Live - In Progress',
-  Final = 'Final',
-  EndGameCleanup = 'End Game Cleanup',
+  Suspended = "4", // Game has been "suspended"
 }

@@ -1,5 +1,5 @@
-import {BoxScore} from "../model/box-score.interface.js";
-import {PlayerStats} from "../model/player-stats.interface.js";
+import {BoxScore} from "../model/box.score.model";
+import {PlayerStats} from "../interfaces/player-stats";
 
 export class BoxScoreUtils {
   public static getHits(targetedTeam: string, {playerStats, teamStats, home}: BoxScore): number {
@@ -10,7 +10,7 @@ export class BoxScoreUtils {
 
     playerStats.forEach((playerStats: PlayerStats) => {
       if (playerStats.team === targetedTeam) {
-        teamHits += playerStats.hits;
+        teamHits += Number(playerStats.Hitting.H);
         teamHitsFromString += Number(playerStats.Hitting.H);
       } else {
         opponentsGivenUpHits += Number(playerStats.Pitching.H);
@@ -165,5 +165,17 @@ export class BoxScoreUtils {
     });
 
     return unintentionalWalks;
+  }
+
+  public static get sortChronologically() {
+    return (boxScore: BoxScore, boxScore2: BoxScore) => {
+      const gameDateOne: string = boxScore.gameID.split('_')[0].replace(/(\d{4})(\d{2})(\d{2})/g, '$1/$2/$3');
+      const aGameDate: Date = new Date(gameDateOne);
+
+      const gameDateTwo: string = boxScore2.gameID.split('_')[0].replace(/(\d{4})(\d{2})(\d{2})/g, '$1/$2/$3');
+      const bGameDate: Date = new Date(gameDateTwo);
+
+      return aGameDate.getTime() - bGameDate.getTime();
+    }
   }
 }

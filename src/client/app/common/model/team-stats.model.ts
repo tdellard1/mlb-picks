@@ -1,20 +1,22 @@
+import {Pitching} from "../interfaces/pitching";
+
 export class TeamStatsHitting {
-  private _D: string;
-  private _T: string;
-  private _AB: string;
-  private _BB: string;
-  private _GIDP: string;
-  private _H: string;
-  private _HBP: string;
-  private _HR: string;
-  private _IBB: string;
-  private _R: string;
-  private _RBI: string;
-  private _SAC: string;
-  private _SF: string;
-  private _SO: string;
-  private _TB: string;
-  private _avg: string;
+  private readonly _D: string;
+  private readonly _T: string;
+  private readonly _AB: string;
+  private readonly _BB: string;
+  private readonly _GIDP: string;
+  private readonly _H: string;
+  private readonly _HBP: string;
+  private readonly _HR: string;
+  private readonly _IBB: string;
+  private readonly _R: string;
+  private readonly _RBI: string;
+  private readonly _SAC: string;
+  private readonly _SF: string;
+  private readonly _SO: string;
+  private readonly _TB: string;
+  private readonly _avg: string;
 
   constructor(data: any) {
     this._D = this.assignIfValid(data['2B'], '2B');
@@ -97,6 +99,81 @@ export class TeamStatsHitting {
 
   get avg(): number {
     return Number(this._avg);
+  }
+
+  assignIfValid(value: any, key: string): any {
+    if (value === undefined) {
+      throw new Error(`${key} is undefined`);
+    }
+
+    return value;
+  }
+}
+
+export class TeamStatsPitching {
+  private readonly _Pitches: string;
+  private readonly _Strikes: string;
+  private readonly _H: string;
+  private readonly _HR: string;
+  private readonly _BB: string;
+  private readonly _ER: string;
+  private readonly _R: string;
+  private readonly _HBP: string;
+  private readonly _SO: string;
+  private readonly _InningsPitched: string;
+
+  constructor(data: Pitching) {
+    this._Pitches = this.assignIfValid(data.Pitches, 'Pitches');
+    this._Strikes = this.assignIfValid(data.Strikes, 'Strikes');
+    this._H = this.assignIfValid(data.H, 'H');
+    this._HR = this.assignIfValid(data.BB, 'HR');
+    this._BB = this.assignIfValid(data.BB, 'BB');
+    this._ER = this.assignIfValid(data.H, 'ER');
+    this._R = this.assignIfValid(data.HBP, 'R');
+    this._HBP = this.assignIfValid(data.HR, 'HBP');
+    this._SO = this.assignIfValid(data.SO, 'SO');
+    this._InningsPitched = this.assignIfValid(data.R, 'InningsPitched');
+  }
+
+
+  get Pitches(): number {
+    return Number(this._Pitches);
+  }
+
+  get Strikes(): number {
+    return Number(this._Strikes);
+  }
+
+  get H(): number {
+    return Number(this._H);
+  }
+
+  get HR(): number {
+    return Number(this._HR);
+  }
+
+  get BB(): number {
+    return Number(this._BB);
+  }
+
+  get ER(): number {
+    return Number(this._ER);
+  }
+
+  get R(): number {
+    return Number(this._R);
+  }
+
+  get HBP(): number {
+    return Number(this._HBP);
+  }
+
+  get SO(): number {
+    return Number(this._SO);
+  }
+
+  get InningsPitched(): number {
+    return Number(this._InningsPitched);
   }
 
   assignIfValid(value: any, key: string): any {

@@ -1,0 +1,48 @@
+<mat-button-toggle-group
+  class="button-group"
+  [(ngModel)]="statsSource"
+  (change)="selectSplits()"
+  [hideSingleSelectionIndicator]="true">
+  <mat-button-toggle class="button" [value]="StatsSource.Season">Season
+  </mat-button-toggle>
+  <mat-button-toggle class="button" [value]="StatsSource.Split">Splits
+    (Site)
+  </mat-button-toggle>
+  <mat-button-toggle class="button" [value]="StatsSource.Teams">vs Teams
+  </mat-button-toggle>
+</mat-button-toggle-group>
+
+<div class="frame">
+  <div class="flex-column" *ngIf="game.gameID">
+    <span>{{ players.get(game.probableStartingPitchers.away)?.longName }}</span>
+    <span>{{ awayPitcherStats.ERA }}</span>
+    <span>{{ awayPitcherStats.WHIP }}</span>
+    <span>{{ awayPitcherStats.FIP }}</span>
+    <span>{{ awayPitcherStats.homeRunsPer9 }}</span>
+    <span>{{ awayPitcherStats.hitsPer9 }}</span>
+    <span>{{ awayPitcherStats.baseRunnersPer9 }}</span>
+    <span>{{ awayPitcherStats.totalGames }}</span>
+  </div>
+
+  <div class="flex-column">
+    <span>Teams</span>
+    <span>ERA</span>
+    <span>WHIP</span>
+    <span>FIP</span>
+    <span>HR/9</span>
+    <span>H/9</span>
+    <span>BR/9</span>
+    <span>Games Played</span>
+  </div>
+
+  <div class="flex-column" *ngIf="game.gameID">
+    <span>{{ players.get(game.probableStartingPitchers.home)?.longName }}</span>
+    <span>{{ homePitcherStats.ERA }}</span>
+    <span>{{ homePitcherStats.WHIP }}</span>
+    <span>{{ homePitcherStats.FIP }}</span>
+    <span>{{ homePitcherStats.homeRunsPer9 }}</span>
+    <span>{{ homePitcherStats.hitsPer9 }}</span>
+    <span>{{ homePitcherStats.baseRunnersPer9 }}</span>
+    <span>{{ homePitcherStats.totalGames }}</span>
+  </div>
+</div>

@@ -28,6 +28,19 @@ export async function getClientUpdateStatus(clientName: string): Promise<boolean
     return clients.find(({client}) => client === clientName)!.update;
 }
 
+export async function updateClient(clientName: string, update: boolean): Promise<number> {
+    const clients: ClientUpdate[] = await getFromCache(key, ClientUpdate, 'set');
+    const clientIndex: number = clients.findIndex(({client}) => client === clientName);
+
+    if (clientIndex !== -1) {
+        clients[clientIndex].update = update
+    } else {
+        clients.push(new ClientUpdate({client: clientName, update}));
+    }
+
+    return await replaceInCache(key,clients.map(client => JSON.stringify(client)));
+}
+
 export class ClientUpdate {
     client: string;
     update: boolean;

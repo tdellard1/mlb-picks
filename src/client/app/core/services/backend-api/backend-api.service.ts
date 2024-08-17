@@ -10,6 +10,7 @@ import {BoxScore} from "../../../common/model/box.score.model.js";
 import {Sites} from "../../../common/interfaces/sites";
 import {Hitting} from "../../../common/interfaces/hitting";
 import {RosterPlayer} from "../../../common/interfaces/players";
+import {Schedule} from "../../../common/interfaces/team-schedule.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -72,6 +73,10 @@ export class BackendApiService {
 
   getBoxScores(): Observable<BoxScore[]> {
     return this.apiService.get<BoxScore[]>(this.serverUrl + 'api/boxScores');
+  }
+
+  getSchedules(): Observable<Schedule[]> {
+    return this.apiService.get<Schedule[]>(this.serverUrl + 'api/schedules');
   }
 
   getTeamStatsForTeams(teams: string[], source: string): Observable<Hitting> {

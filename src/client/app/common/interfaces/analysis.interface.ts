@@ -4,7 +4,6 @@ import {Game} from "./game";
 import {PlayerStats} from "./player-stats";
 import {BattingAveragePerGame} from "../model/batting-average-per-game.model.js";
 import {StrikeOutsPerGame} from "../model/strikeout-average-per-game.model.js";
-import {PlayersStats} from "../model/box.score.model.js";
 
 export class AnalysisData {
   averageRunsPerGameModel: AverageRunsPerGame;

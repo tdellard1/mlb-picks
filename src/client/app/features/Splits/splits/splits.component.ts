@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 import {SubscriptionHolder} from "../../../shared/components/subscription-holder.component.js";
-import {ActivatedRoute, Data, Event, NavigationEnd, NavigationStart, Params, Router, RouterLink} from "@angular/router";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 import {Team} from "../../../common/interfaces/team.interface.js";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {FormsModule} from "@angular/forms";
@@ -10,10 +10,17 @@ import {AsyncPipe, NgIf} from "@angular/common";
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
 import {TeamStatsHitting} from "../../../common/model/team-stats.model.js";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
-import {BehaviorSubject, Observable, Subscription} from "rxjs";
 import {OffensiveStats} from "../../../common/model/offensive-stats.modal.js";
-import {Sites} from "../../../common/interfaces/sites";
 import {Hitting} from "../../../common/interfaces/hitting";
+import {BoxScore} from "../../../common/model/box.score.model";
+import {TeamVsTeamComponent} from "./team-vs-team/team-vs-team.component";
+import {PitcherVsPitcherComponent} from "./pitcher-vs-pitcher/pitcher-vs-pitcher.component";
+import {Schedule} from "../../../common/interfaces/team-schedule.interface";
+import {Game} from "../../../common/interfaces/game";
+import {GameStatus} from "../../../common/constants/game-status";
+import {GameUtils} from "../../../common/utils/game.utils";
+import {StateUtils} from "../../../common/utils/state.utils";
+import {RosterPlayer} from "../../../common/interfaces/players";
 
 export enum StatsSource {
   Season = 'season',
@@ -36,101 +43,116 @@ export enum StatsSource {
     MatTabGroup,
     RouterLink,
     MatProgressSpinner,
-    AsyncPipe
+    AsyncPipe,
+    TeamVsTeamComponent,
+    PitcherVsPitcherComponent
   ],
   templateUrl: './splits.component.html',
   styleUrl: './splits.component.css'
 })
 export class SplitsComponent extends SubscriptionHolder {
   private readonly teams: Map<string, Team> = new Map((this.activatedRoute.snapshot.data['teams'] as Team[]).map((team: Team) => [team.teamAbv, team]));
+  private readonly schedules: Map<string, Schedule> = new Map((this.activatedRoute.snapshot.data['schedules'] as Schedule[]).map((schedule: Schedule) => [schedule.team, schedule]));
+  private readonly boxScoresMap: Map<string, BoxScore> = new Map((this.activatedRoute.snapshot.data['boxScores'] as BoxScore[]).map((boxScore: BoxScore) => [boxScore.gameID, boxScore]));
 
-  statsSource: StatsSource = StatsSource.Split;
-
-  home: Team;
-  away: Team;
-
-  homeBoxScores: Hitting[];
-  awayBoxScores: Hitting[];
+  private readonly dailySchedule: Map<string, Game> = new Map((this.activatedRoute.snapshot.data['dailySchedule'] as Game[]).map((game: Game) => [game.gameID, game]));
 
   private selectedGameId: string = '';
+  protected selectedGame: Game;
 
-  _spinner: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  get spinner$(): Observable<boolean> {
-    return this._spinner.asObservable();
-  }
+  Away: { team: Team, schedule: Schedule, boxScores: BoxScore[] } = {} as any;
+  Home: { team: Team, schedule: Schedule, boxScores: BoxScore[] } = {} as any;
+
+  statsSource: StatsSource = StatsSource.Season;
 
   homeOffensiveStats: OffensiveStats = new OffensiveStats();
   awayOffensiveStats: OffensiveStats = new OffensiveStats();
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private router: Router) {
+  constructor(private activatedRoute: ActivatedRoute) {
     super();
 
-    const selectedGameIDSubscription: Subscription = this.activatedRoute.params.subscribe((params: Params) => this.selectedGameId = params['gameId']);
-    const setUpSplitsSubscription: Subscription = this.setUpSplitsSubscription(this.activatedRoute.data);
-    const updateSpinnerSubscription: Subscription = this.router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationStart) {
-        this._spinner.next(true);
-      }
-
-      if (event instanceof NavigationEnd) {
-        this._spinner.next(false);
-      }
-    });
-
     this.subscriptions.push(
-      updateSpinnerSubscription,
-      selectedGameIDSubscription,
-      setUpSplitsSubscription
-    )
-  }
+      this.activatedRoute.params.subscribe((params) => {
+        this.setTeamsInfo(params['gameId']);
+        this.selectSplits();
+      })
+    );
 
-  setUpSplitsSubscription(data: Observable<Data>): Subscription {
-    return data.subscribe(({splits}: Data) => {
-      const [awayName, homeName]: string[] = this.selectedGameId.split('_')[1].split('@');
 
-      const source: StatsSource = this.activatedRoute.snapshot.queryParams['source'] as StatsSource;
-
-      this.statsSource = !!source ? source : StatsSource.Season;
-
-      this.home = this.teams.get(homeName)!;
-      this.away = this.teams.get(awayName)!;
-
-      const {home, away}: Sites<{name: string, stats: Hitting[]}> = splits as Sites<{name: string, stats: Hitting[]}>;
-
-      this.homeBoxScores = home.stats;
-      this.awayBoxScores = away.stats;
-
-      this.selectSplits();
-    });
   }
 
   selectSplits() {
+    const [awayName, homeName]: string[] = this.selectedGameId.split('_')[1].split('@');
+
+    this.Away.boxScores = this.getAwayBoxScores(awayName, this.Away.schedule, this.statsSource, homeName);
+    this.Home.boxScores = this.getHomeBoxScores(homeName, this.Home.schedule, this.statsSource, awayName);
+
     this.homeOffensiveStats = new OffensiveStats();
     this.awayOffensiveStats = new OffensiveStats();
 
-    this.homeBoxScores.forEach((hitting: Hitting) => {
+    this.Home.boxScores.map(({teamStats}) => teamStats.home.Hitting).forEach((hitting: Hitting) => {
       const teamStatsHitting: TeamStatsHitting = new TeamStatsHitting(hitting);
       this.homeOffensiveStats.addTeamStatsHitting(teamStatsHitting);
     });
 
-    this.awayBoxScores.forEach((hitting: Hitting) => {
+    this.Away.boxScores.map(({teamStats}) => teamStats.home.Hitting).forEach((hitting: Hitting) => {
       const teamStatsHitting: TeamStatsHitting = new TeamStatsHitting(hitting);
       this.awayOffensiveStats.addTeamStatsHitting(teamStatsHitting);
     });
 
-    if (this.statsSource === StatsSource.Season) {
-      this.awayOffensiveStats.finalize(117);
-      this.homeOffensiveStats.finalize(117);
-    } else {
-      this.awayOffensiveStats.finalize(this.awayBoxScores.length);
-      this.homeOffensiveStats.finalize(this.awayBoxScores.length);
-    }
+    this.awayOffensiveStats.finalize(this.Away.boxScores.length);
+    this.homeOffensiveStats.finalize(this.Home.boxScores.length);
+  }
+
+
+  setTeamsInfo(gameID: string) {
+    this.selectedGameId = gameID;
+    this.selectedGame = this.dailySchedule.get(this.selectedGameId)!;
+
+    const [away, home]: string[] = this.selectedGameId.split('_')[1].split('@');
+    this.Away.team = this.teams.get(away)!;
+    this.Home.team = this.teams.get(home)!;
+    this.Away.schedule = this.schedules.get(away)!;
+    this.Home.schedule = this.schedules.get(home)!;
   }
 
   protected readonly StatsSource = StatsSource;
 
-  navigate(source: StatsSource) {
-    this.router.navigate(['.'], {relativeTo: this.activatedRoute, queryParams: {source}, onSameUrlNavigation: "reload"});
+  private getAwayBoxScores(teamOfInterest: string, {schedule}: Schedule, statsSource: StatsSource, opposingTeam: string): BoxScore[] {
+    const playedSchedule: Game[] = schedule
+      .filter(({gameStatus}) => gameStatus === GameStatus.Completed)
+      .sort(GameUtils.sortGames);
+    const boxScores: BoxScore[] = playedSchedule.map(({gameID}) => this.boxScoresMap.get(gameID)!).filter(Boolean);
+
+    if (statsSource === StatsSource.Split) {
+      return boxScores.filter(({away}) => away === teamOfInterest);
+    }
+
+    if (statsSource === StatsSource.Teams) {
+      return boxScores.filter(({away, home}) =>
+        (away === teamOfInterest || home === teamOfInterest) && (away === opposingTeam || home === opposingTeam));
+    }
+
+    return boxScores;
+  }
+
+  private getHomeBoxScores(teamOfInterest: string, {schedule}: Schedule, statsSource: StatsSource, opposingTeam: string): BoxScore[] {
+    const playedSchedule: Game[] = schedule
+      .filter(({gameStatus}) => gameStatus === GameStatus.Completed)
+      .sort(GameUtils.sortGames);
+    const boxScores: BoxScore[] = playedSchedule.map(({gameID}) => this.boxScoresMap.get(gameID)!).filter(Boolean);
+
+    if (statsSource === StatsSource.Split) {
+      return boxScores.filter(({home}) => home === teamOfInterest);
+    }
+
+    if (statsSource === StatsSource.Teams) {
+      return boxScores.filter(({
+                                 away,
+                                 home
+                               }) => (away === teamOfInterest || home === teamOfInterest) && (away === opposingTeam || home === opposingTeam));
+    }
+
+    return boxScores;
   }
 }

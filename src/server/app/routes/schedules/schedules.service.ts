@@ -1,4 +1,4 @@
-import {addToCache, exists, getFromCache, replaceInCache} from "../../services/cache.service.js";
+import {exists, getFromCache, replaceInCache} from "../../services/cache.service.js";
 import {downloadFileWithType, uploadFile} from "../../services/firebase.service.js";
 import {AxiosResponse} from "axios";
 import {Team} from "../../models/teams/teams.model.js";
@@ -34,22 +34,6 @@ export async function addSchedulesToDatabase(schedules: Schedule[]) {
     await uploadFile(key, schedules);
 }
 
-
-export async function addSchedulesToCache(schedules: Schedule[]): Promise<number> {
-    return await addToCache(key, schedules);
-}
-
-
-export async function addSchedulePerSetInCache(schedules: Schedule[]): Promise<number[]> {
-    const redisSetRequests: Promise<number>[] = schedules.map((schedule: Schedule) => {
-        const key: string = `schedule:${schedule.team}`;
-        const data: string = JSON.stringify(schedule);
-        return addToCache(key, data);
-    });
-
-    return await Promise.all(redisSetRequests);
-}
-
 export async function replaceSchedulesInCache(schedules: Schedule[]): Promise<number> {
     const stringifySchedules: string[] = schedules.map((roster: Schedule) => JSON.stringify(roster, null, 0));
     return await replaceInCache(key, stringifySchedules);
@@ -75,41 +59,4 @@ export async function retrieveSchedulesFromTank01(teamAbbreviations: string[]): 
         teamAbbreviations.map((teamAbbreviation: string) => getSchedule(teamAbbreviation));
     const schedulesResolvers: AxiosResponse<Schedule>[] = await Promise.all(schedulesPromises);
     return schedulesResolvers.map(({data}: AxiosResponse<Schedule>) => data);
-}
-
-export async function gameIDsWithoutBoxScores(boxScores: BoxScore[]): Promise<string[]> {
-    const schedules: Schedule[] = await getFromCache('schedules', Schedule, 'set');
-    const schedulesWithBoxScores: Schedule[] = addBoxScoresToSchedule(boxScores, schedules);
-
-    const gamesMissingBoxScores: Game[] = getCompletedGamesMissingBoxScores(schedulesWithBoxScores);
-    return gamesMissingBoxScores.map(({gameID}) => gameID);
-}
-
-function addBoxScoresToSchedule(boxScores: BoxScore[], schedules: Schedule[]): Schedule[] {
-    const mBoxScores: Map<string, BoxScore> = new Map<string, BoxScore>();
-
-    boxScores.forEach((boxScore: BoxScore) =>
-        mBoxScores.set(boxScore.gameID, boxScore));
-
-    return schedules.map((schedule: Schedule) => {
-        const games: Game[] = schedule.schedule;
-
-        schedule.schedule = games.map((game: Game)=> {
-            if (mBoxScores.has(game.gameID)) {
-                game.boxScore = mBoxScores.get(game.gameID)!;
-            }
-
-            return game;
-        });
-
-        return schedule;
-    });
-}
-
-function getCompletedGamesMissingBoxScores(schedule: Schedule[]): Game[] {
-    return schedule.map((schedule: Schedule) => {
-        return schedule.schedule
-            .filter(({gameStatus}) => gameStatus === 'Completed')
-            .filter(({boxScore}) => !boxScore);
-    }).flat();
 }

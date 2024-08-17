@@ -1,9 +1,11 @@
 import { Routes } from '@angular/router';
-import {dailyScheduleResolver} from "./core/resolvers/daily-schedule/daily-schedule.resolver";
+import {dailyScheduleResolver} from "./core/resolvers/daily-schedule.resolver";
 import {AppComponent} from "./app.component.js";
 import {teamsResolver} from "./core/resolvers/teams.resolver.js";
 import {playersResolver} from "./features/Pitchers/data-access/resolvers/players.resolver.js";
 import {dataGuard} from "./core/guards/data.guard.js";
+import {boxScoresResolver} from "./core/resolvers/box-scores.resolver";
+import {schedulesResolver} from "./core/resolvers/schedules.resolver";
 
 export const routes: Routes = [
   {
@@ -12,8 +14,10 @@ export const routes: Routes = [
     canActivate: [dataGuard],
     resolve: {
       dailySchedule: dailyScheduleResolver,
+      schedules: schedulesResolver,
+      boxScores: boxScoresResolver,
       players: playersResolver,
-      teams: teamsResolver
+      teams: teamsResolver,
     },
     children: [
       {
@@ -31,6 +35,10 @@ export const routes: Routes = [
       {
         path: 'splits',
         loadChildren: () => import('./features/Splits/splits.module').then(m => m.SplitsModule),
+      },
+      {
+        path: 'streaks',
+        loadChildren: () => import('./features/Streaks/streaks.module').then(m => m.StreaksModule),
       }
     ]
   }

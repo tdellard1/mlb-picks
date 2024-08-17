@@ -1,6 +1,6 @@
-import {addToCache, exists, getFromCache, replaceInCache} from "../../services/cache.service.js";
+import {replaceInCache} from "../../services/cache.service.js";
 import {Roster} from "../../models/players/rosters.model.js";
-import {downloadFileWithType, uploadFile} from "../../services/firebase.service.js";
+import {uploadFile} from "../../services/firebase.service.js";
 import {AxiosResponse} from "axios";
 import {getRoster} from "../../services/tank-01.service.js";
 import {Team} from "../../models/teams/teams.model.js";
