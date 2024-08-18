@@ -20,6 +20,8 @@ import {Game} from "../../../common/interfaces/game";
 import {GameStatus} from "../../../common/constants/game-status";
 import {GameUtils} from "../../../common/utils/game.utils";
 import {HandedSplitsComponent} from "./handed-splits/handed-splits.component";
+import {Site} from "../../../common/constants/site";
+import {deepCopy} from "../../../common/utils/general.utils";
 
 export enum StatsSource {
   Season = 'season',
@@ -81,24 +83,48 @@ export class SplitsComponent extends SubscriptionHolder {
   selectSplits() {
     const [awayName, homeName]: string[] = this.selectedGameId.split('_')[1].split('@');
 
-    this.Away.boxScores = this.getAwayBoxScores(awayName, this.Away.schedule, this.statsSource, homeName);
     this.Home.boxScores = this.getHomeBoxScores(homeName, this.Home.schedule, this.statsSource, awayName);
-
     this.homeOffensiveStats = new OffensiveStats();
+    this.Home.boxScores
+      .map(({teamStats, away, home}) => {
+        if (away === this.Home.team.teamAbv) {
+          return teamStats.away.Hitting;
+        } else if (home === this.Home.team.teamAbv) {
+          return teamStats.home.Hitting;
+        } else {
+          console.log(`Away Team: ${away}, Home Team: ${home}, expected team: ${this.Home.team.teamAbv}`);
+          throw new Error('Home and Away teams don\'t match away team');
+        }
+      })
+      .forEach((hitting: Hitting) => {
+        const teamStatsHitting: TeamStatsHitting = new TeamStatsHitting(hitting);
+        this.homeOffensiveStats.addTeamStatsHitting(teamStatsHitting);
+      });
+
+    this.homeOffensiveStats.finalize(this.Home.boxScores.length);
+
+
+    this.Away.boxScores = this.getAwayBoxScores(this.Away.team.teamAbv, this.Away.schedule, this.statsSource, homeName);
     this.awayOffensiveStats = new OffensiveStats();
-
-    this.Home.boxScores.map(({teamStats}) => teamStats.home.Hitting).forEach((hitting: Hitting) => {
-      const teamStatsHitting: TeamStatsHitting = new TeamStatsHitting(hitting);
-      this.homeOffensiveStats.addTeamStatsHitting(teamStatsHitting);
-    });
-
-    this.Away.boxScores.map(({teamStats}) => teamStats.away.Hitting).forEach((hitting: Hitting) => {
-      const teamStatsHitting: TeamStatsHitting = new TeamStatsHitting(hitting);
-      this.awayOffensiveStats.addTeamStatsHitting(teamStatsHitting);
-    });
+    this.Away.boxScores
+      .map((boxScore: BoxScore) => {
+        if (boxScore.away === this.Away.team.teamAbv) {
+          return boxScore.teamStats.away.Hitting;
+        } else if (boxScore.home === this.Away.team.teamAbv) {
+          return boxScore.teamStats.home.Hitting;
+        } else {
+          console.log(`Away Team: ${boxScore.away}, Home Team: ${boxScore.home}, expected team: ${this.Away.team.teamAbv}`);
+          throw new Error('Home and Away teams don\'t match away team');
+        }
+      })
+      .forEach((hitting: Hitting) => {
+        const teamStatsHitting: TeamStatsHitting = new TeamStatsHitting(hitting);
+        this.awayOffensiveStats.addTeamStatsHitting(teamStatsHitting);
+      });
 
     this.awayOffensiveStats.finalize(this.Away.boxScores.length);
-    this.homeOffensiveStats.finalize(this.Home.boxScores.length);
+
+    console.log(this.awayOffensiveStats);
   }
 
 
@@ -119,6 +145,7 @@ export class SplitsComponent extends SubscriptionHolder {
     const playedSchedule: Game[] = schedule
       .filter(({gameStatus}) => gameStatus === GameStatus.Completed)
       .sort(GameUtils.sortGames);
+
     const boxScores: BoxScore[] = playedSchedule.map(({gameID}) => this.boxScoresMap.get(gameID)!).filter(Boolean);
 
     if (statsSource === StatsSource.Split) {
@@ -144,7 +171,7 @@ export class SplitsComponent extends SubscriptionHolder {
     }
 
     if (statsSource === StatsSource.Teams) {
-      return boxScores.filter(({away, home }) =>
+      return boxScores.filter(({away, home}) =>
         (away === teamOfInterest || home === teamOfInterest) && (away === opposingTeam || home === opposingTeam));
     }
 

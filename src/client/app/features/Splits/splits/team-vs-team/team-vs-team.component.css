@@ -3,7 +3,7 @@
   flex-direction: row;
 }
 
-div {
+.column, .frame {
   flex-grow: 1;
 }
 
@@ -11,3 +11,10 @@ span {
   text-align: center;
 }
 
+.stat-name {
+  justify-content: space-between;
+}
+
+.invisible {
+  visibility: hidden;
+}

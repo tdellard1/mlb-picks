@@ -89,9 +89,13 @@ export class OffensiveStats {
     return OPS.toFixed(3);
   }
 
-// wOBA = (0.690×uBB + 0.722×HBP + 0.888×1B + 1.271×2B + 1.616×3B +2.101×HR) / (AB + BB – IBB + SF + HBP)
   get weightedOnBaseAverage() {
-    const weightedWalks: number = this.Walks * WeightedFactors.wBB;
+    return this.weightedOnBaseAverageNumber.toFixed(3);
+  }
+
+  // wOBA = (0.690×uBB + 0.722×HBP + 0.888×1B + 1.271×2B + 1.616×3B +2.101×HR) / (AB + BB – IBB + SF + HBP)
+  get weightedOnBaseAverageNumber() {
+    const weightedWalks: number = (this.Walks - this.IntentionalWalks) * WeightedFactors.wBB;
     const weightedHitByPitch: number = this.HitByPitch * WeightedFactors.wHBP;
     const weightedSingles: number = this.Singles * WeightedFactors.w1B;
     const weightedDoubles: number = this.Doubles * WeightedFactors.w2B;
@@ -99,18 +103,15 @@ export class OffensiveStats {
     const weightedHomeRuns: number = this.HomeRuns * WeightedFactors.wHR;
 
 
-    const wOBA: number = (weightedWalks + weightedHitByPitch + weightedSingles + weightedDoubles + weightedTriples + weightedHomeRuns) /
+    return (weightedWalks + weightedHitByPitch + weightedSingles + weightedDoubles + weightedTriples + weightedHomeRuns) /
       (this.AtBats + this.Walks - this.IntentionalWalks + this.SacrificeFly + this.HitByPitch);
-
-    return wOBA.toFixed(3);
   }
 
   // wRC = (((wOBA – League wOBA/wOBA Scale) + (League R/PA)) * PA
-  // get weightedRunsCreated() {
-  //   const firstPart = this.weightedOnBaseAverage - (WeightedFactors.wOBA/WeightedFactors.wOBAScale);
-  //   const secondPart = firstPart + WeightedFactors.RoPA;
-  //
-  //
-  //   return secondPart * this.PlateAppearance;
-  // }
+  get weightedRunsCreated() {
+    const firstPart = (this.weightedOnBaseAverageNumber - WeightedFactors.wOBA)/WeightedFactors.wOBAScale;
+    const secondPart = WeightedFactors.RoPA / this.PlateAppearance;
+
+    return ((firstPart + WeightedFactors.RoPA) * this.PlateAppearance).toFixed(2);
+  }
 }

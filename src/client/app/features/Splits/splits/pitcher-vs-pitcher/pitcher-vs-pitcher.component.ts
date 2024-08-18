@@ -26,7 +26,8 @@ import {Site} from "../../../../common/constants/site";
 })
 export class PitcherVsPitcherComponent implements OnChanges, OnInit {
   protected readonly players: Map<string, RosterPlayer> = new Map((this.activatedRoute.snapshot.data['players'] as RosterPlayer[]).map((rosterPlayer: RosterPlayer) => [rosterPlayer.playerID, rosterPlayer]));
-  private readonly boxScores: Map<string, BoxScore> = new Map((this.activatedRoute.snapshot.data['boxScores'] as BoxScore[]).map((boxScore: BoxScore) => [boxScore.gameID, boxScore]));
+  private readonly boxScoresMap: Map<string, BoxScore> = new Map((this.activatedRoute.snapshot.data['boxScores'] as BoxScore[]).map((boxScore: BoxScore) => [boxScore.gameID, boxScore]));
+  private readonly boxScores: BoxScore[] = this.activatedRoute.snapshot.data['boxScores'] as BoxScore[];
 
   homePitcherStats: PitcherStats = new PitcherStats();
   awayPitcherStats: PitcherStats = new PitcherStats();
@@ -45,7 +46,7 @@ export class PitcherVsPitcherComponent implements OnChanges, OnInit {
     let pitcherStats: PitcherStats;
 
     const boxScores: BoxScore[] = [];
-    this.boxScores.forEach((boxScore: BoxScore) => {
+    this.boxScoresMap.forEach((boxScore: BoxScore) => {
       const hasPlayer: boolean = boxScore.playerStats.some(({playerID}) => playerID === pitcherID);
       if (hasPlayer) {
         boxScores.push(boxScore);

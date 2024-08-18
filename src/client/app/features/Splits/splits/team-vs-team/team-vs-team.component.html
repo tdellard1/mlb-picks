@@ -1,6 +1,6 @@
 <ng-content></ng-content>
 <div class="frame">
-  <div class="flex-column" *ngIf="away">
+  <div class="flex-column  column" *ngIf="away">
     <span>{{ away }}</span>
     <span>{{ awayOffensiveStats.gamesRepresentedInData }}</span>
     <span>{{ awayOffensiveStats.BattingAverage }}</span>
@@ -8,21 +8,53 @@
     <span>{{ awayOffensiveStats.OnBasePercentage }}</span>
     <span>{{ awayOffensiveStats.OnBasePlusSlugging }}</span>
     <span>{{ awayOffensiveStats.weightedOnBaseAverage }}</span>
+    <span>{{ awayOffensiveStats.weightedRunsCreated }}</span>
   </div>
 
-  <div class="flex-column">
+  <div class="flex-column  column">
     <span>Teams</span>
     <span>Games Included</span>
-    <span>Batting Average</span>
-    <span>Slugging</span>
-    <span>On Base Percentage</span>
-    <span>On Base plus Slug</span>
-    <span>Weighted OBA</span>
-    <span>wRC</span>
+
+    <div class="flex-row stat-name">
+      <mat-icon [class.invisible]="awayOffensiveStats.BattingAverage < homeOffensiveStats.BattingAverage">arrow_left</mat-icon>
+      <span>Batting Average</span>
+      <mat-icon [class.invisible]="awayOffensiveStats.BattingAverage > homeOffensiveStats.BattingAverage">arrow_right</mat-icon>
+    </div>
+
+    <div class="flex-row stat-name">
+      <mat-icon [class.invisible]="awayOffensiveStats.Slugging < homeOffensiveStats.Slugging">arrow_left</mat-icon>
+      <span>Slugging</span>
+      <mat-icon [class.invisible]="awayOffensiveStats.Slugging > homeOffensiveStats.Slugging">arrow_right</mat-icon>
+    </div>
+
+    <div class="flex-row stat-name">
+      <mat-icon [class.invisible]="awayOffensiveStats.OnBasePercentage < homeOffensiveStats.OnBasePercentage">arrow_left</mat-icon>
+      <span>On Base Percentage</span>
+      <mat-icon [class.invisible]="awayOffensiveStats.OnBasePercentage > homeOffensiveStats.OnBasePercentage">arrow_right</mat-icon>
+    </div>
+
+    <div class="flex-row stat-name">
+      <mat-icon [class.invisible]="awayOffensiveStats.OnBasePlusSlugging < homeOffensiveStats.OnBasePlusSlugging">arrow_left</mat-icon>
+      <span>On Base plus Slug</span>
+      <mat-icon [class.invisible]="awayOffensiveStats.OnBasePlusSlugging > homeOffensiveStats.OnBasePlusSlugging">arrow_right</mat-icon>
+    </div>
+
+    <div class="flex-row stat-name">
+      <mat-icon [class.invisible]="awayOffensiveStats.weightedOnBaseAverage < homeOffensiveStats.weightedOnBaseAverage">arrow_left</mat-icon>
+      <span>Weighted OBA</span>
+      <mat-icon [class.invisible]="awayOffensiveStats.weightedOnBaseAverage > homeOffensiveStats.weightedOnBaseAverage">arrow_right</mat-icon>
+    </div>
+
+    <div class="flex-row stat-name">
+      <mat-icon [class.invisible]="awayOffensiveStats.weightedRunsCreated < homeOffensiveStats.weightedRunsCreated">arrow_left</mat-icon>
+      <span>Weighted Runs Created</span>
+      <mat-icon [class.invisible]="awayOffensiveStats.weightedRunsCreated > homeOffensiveStats.weightedRunsCreated">arrow_right</mat-icon>
+    </div>
+
     <span>Point Differential</span>
   </div>
 
-  <div class="flex-column" *ngIf="home">
+  <div class="flex-column  column" *ngIf="home">
     <span>{{ home }}</span>
     <span>{{ homeOffensiveStats.gamesRepresentedInData }}</span>
     <span>{{ homeOffensiveStats.BattingAverage }}</span>
@@ -30,5 +62,6 @@
     <span>{{ homeOffensiveStats.OnBasePercentage }}</span>
     <span>{{ homeOffensiveStats.OnBasePlusSlugging }}</span>
     <span>{{ homeOffensiveStats.weightedOnBaseAverage }}</span>
+    <span>{{ homeOffensiveStats.weightedRunsCreated }}</span>
   </div>
 </div>
