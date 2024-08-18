@@ -36,12 +36,10 @@ export async function writeThroughBoxScores(gameIDs: string[], oldBoxScores: Box
     const length: number = await replaceBoxScoresInCache(uniqueBoxScores);
     const lengthTwo: number[] = await addBoxScoresToMultipleSets(uniqueBoxScores);
     const lengthThree: number[] = await addTeamStatsToMultipleSets(uniqueBoxScores);
-    const lengthFour: number[] = await addPlayerStatsToMultipleSets(uniqueBoxScores);
 
     if (length > 0 &&
         lengthTwo.every(value => value === 1) &&
-        lengthThree.every(value => value === 1) &&
-        lengthFour.every(value => value === 1)) {
+        lengthThree.every(value => value === 1)) {
         const result: TaskState = await addBoxScoresToDatabase(uniqueBoxScores);
         console.log('Result of database upload for rosters is ', result);
     }
@@ -59,13 +57,6 @@ export async function addBoxScoresToDatabase(boxScores: BoxScore[]): Promise<any
 async function addBoxScoresToMultipleSets(boxScores: BoxScore[]): Promise<number[]> {
     const redisUpdateRequests: Promise<number>[] = boxScores.map(async (boxScore: BoxScore) =>
         replaceInCache(`boxScore:${boxScore.gameID}`, JSON.stringify(boxScore)));
-
-    return await Promise.all(redisUpdateRequests);
-}
-
-async function addPlayerStatsToMultipleSets(boxScores: BoxScore[]): Promise<number[]> {
-    const redisUpdateRequests: Promise<number>[] = boxScores.map(async (boxScore: BoxScore) =>
-        replaceInCache(`boxScore:playerStats:${boxScore.gameID}`, JSON.stringify(boxScore.playerStats)));
 
     return await Promise.all(redisUpdateRequests);
 }

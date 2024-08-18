@@ -20,10 +20,14 @@ import {setNeedToUpdate} from "../routes/update/update.service.js";
  * 1 - All Players
  * Called Every Hour = 24 * (30 + 30 + 1 + 1) = 1488
  * */
-export async function modernizeRostersSchedulesAndTeams() {
+export async function modernizeRosters() {
+    const teams: Team[] = await getAndUpdateTeams();
+    await updateRosters(teams);
+}
+
+export async function modernizeSchedulesAndPlayers() {
     const teams: Team[] = await getAndUpdateTeams();
     await updateSchedules(teams);
-    await updateRosters(teams);
     await updatePlayers();
 }
 

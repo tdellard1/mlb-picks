@@ -3,7 +3,7 @@ import {dailyScheduleResolver} from "./core/resolvers/daily-schedule.resolver";
 import {AppComponent} from "./app.component.js";
 import {teamsResolver} from "./core/resolvers/teams.resolver.js";
 import {playersResolver} from "./features/Pitchers/data-access/resolvers/players.resolver.js";
-import {dataGuard} from "./core/guards/data.guard.js";
+import {boxScoreGuard} from "./core/guards/boxScoreGuard.js";
 import {boxScoresResolver} from "./core/resolvers/box-scores.resolver";
 import {schedulesResolver} from "./core/resolvers/schedules.resolver";
 
@@ -11,7 +11,7 @@ export const routes: Routes = [
   {
     path: '',
     component: AppComponent,
-    canActivate: [dataGuard],
+    canActivate: [boxScoreGuard],
     resolve: {
       dailySchedule: dailyScheduleResolver,
       schedules: schedulesResolver,

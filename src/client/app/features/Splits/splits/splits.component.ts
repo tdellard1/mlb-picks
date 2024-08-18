@@ -19,8 +19,7 @@ import {Schedule} from "../../../common/interfaces/team-schedule.interface";
 import {Game} from "../../../common/interfaces/game";
 import {GameStatus} from "../../../common/constants/game-status";
 import {GameUtils} from "../../../common/utils/game.utils";
-import {StateUtils} from "../../../common/utils/state.utils";
-import {RosterPlayer} from "../../../common/interfaces/players";
+import {HandedSplitsComponent} from "./handed-splits/handed-splits.component";
 
 export enum StatsSource {
   Season = 'season',
@@ -45,7 +44,8 @@ export enum StatsSource {
     MatProgressSpinner,
     AsyncPipe,
     TeamVsTeamComponent,
-    PitcherVsPitcherComponent
+    PitcherVsPitcherComponent,
+    HandedSplitsComponent
   ],
   templateUrl: './splits.component.html',
   styleUrl: './splits.component.css'
@@ -54,7 +54,6 @@ export class SplitsComponent extends SubscriptionHolder {
   private readonly teams: Map<string, Team> = new Map((this.activatedRoute.snapshot.data['teams'] as Team[]).map((team: Team) => [team.teamAbv, team]));
   private readonly schedules: Map<string, Schedule> = new Map((this.activatedRoute.snapshot.data['schedules'] as Schedule[]).map((schedule: Schedule) => [schedule.team, schedule]));
   private readonly boxScoresMap: Map<string, BoxScore> = new Map((this.activatedRoute.snapshot.data['boxScores'] as BoxScore[]).map((boxScore: BoxScore) => [boxScore.gameID, boxScore]));
-
   private readonly dailySchedule: Map<string, Game> = new Map((this.activatedRoute.snapshot.data['dailySchedule'] as Game[]).map((game: Game) => [game.gameID, game]));
 
   private selectedGameId: string = '';
@@ -77,8 +76,6 @@ export class SplitsComponent extends SubscriptionHolder {
         this.selectSplits();
       })
     );
-
-
   }
 
   selectSplits() {
@@ -95,7 +92,7 @@ export class SplitsComponent extends SubscriptionHolder {
       this.homeOffensiveStats.addTeamStatsHitting(teamStatsHitting);
     });
 
-    this.Away.boxScores.map(({teamStats}) => teamStats.home.Hitting).forEach((hitting: Hitting) => {
+    this.Away.boxScores.map(({teamStats}) => teamStats.away.Hitting).forEach((hitting: Hitting) => {
       const teamStatsHitting: TeamStatsHitting = new TeamStatsHitting(hitting);
       this.awayOffensiveStats.addTeamStatsHitting(teamStatsHitting);
     });
@@ -147,10 +144,8 @@ export class SplitsComponent extends SubscriptionHolder {
     }
 
     if (statsSource === StatsSource.Teams) {
-      return boxScores.filter(({
-                                 away,
-                                 home
-                               }) => (away === teamOfInterest || home === teamOfInterest) && (away === opposingTeam || home === opposingTeam));
+      return boxScores.filter(({away, home }) =>
+        (away === teamOfInterest || home === teamOfInterest) && (away === opposingTeam || home === opposingTeam));
     }
 
     return boxScores;

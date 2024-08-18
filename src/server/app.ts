@@ -7,7 +7,7 @@ import cors from "cors";
 import path, {dirname} from 'path';
 import {fileURLToPath} from 'url';
 import {
-    modernizeRostersSchedulesAndTeams,
+    modernizeRosters, modernizeSchedulesAndPlayers,
     reconcileBoxScores
 } from "./app/scheduler/scheduler.js";
 import playersRouter from "./app/routes/players/players.router.js";
@@ -32,9 +32,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'client/browser')));
 
 const EveryHour: string = '0 * * * *';
+const EveryHourBetween7AMand10AM: string = '0 7-10 * * *';
 const ThirtyMinutesAfterEveryTwoHours: string = '30 */2 * * *'; // 12am, 2am, 4am, 6am, 8am, 10am, 12pm, 2pm, 4pm, 6pm, 8pm, and 10pm
 
-const updateHourly: Job = schedule.scheduleJob(EveryHour, async () => await modernizeRostersSchedulesAndTeams());
+const updateHourly: Job = schedule.scheduleJob(EveryHour, async () => await modernizeRosters());
+const updateHourlyBetweenSevenAndTen: Job = schedule.scheduleJob(EveryHourBetween7AMand10AM, async () => await modernizeSchedulesAndPlayers());
 const duoHourly: Job = schedule.scheduleJob(ThirtyMinutesAfterEveryTwoHours, async () => await reconcileBoxScores());
 
 const api: Router = Router()

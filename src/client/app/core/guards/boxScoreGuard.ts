@@ -6,7 +6,7 @@ import {HomeSpinnerService} from "../services/home-spinner.service.js";
 import {BoxScore} from "../../common/model/box.score.model";
 import {db} from "../db";
 
-export const dataGuard: CanActivateFn = async () => {
+export const boxScoreGuard: CanActivateFn = async () => {
   const backendApiService: BackendApiService = inject(BackendApiService);
   const homeSpinnerService: HomeSpinnerService = inject(HomeSpinnerService);
 

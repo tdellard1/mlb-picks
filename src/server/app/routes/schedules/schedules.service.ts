@@ -2,12 +2,8 @@ import {exists, getFromCache, replaceInCache} from "../../services/cache.service
 import {downloadFileWithType, uploadFile} from "../../services/firebase.service.js";
 import {AxiosResponse} from "axios";
 import {Team} from "../../models/teams/teams.model.js";
-import {getRoster, getSchedule, getTeams} from "../../services/tank-01.service.js";
+import {getSchedule} from "../../services/tank-01.service.js";
 import {Schedule} from "../../models/schedules/schedule.model.js";
-import {Roster} from "../../models/players/rosters.model.js";
-import {BoxScore} from "../../models/boxScores/box-scores.model.js";
-import {Game} from "../../models/schedules/games/game.model.js";
-import schedule from "node-schedule";
 
 const key: string = 'schedules';
 
@@ -15,14 +11,11 @@ const key: string = 'schedules';
 export async function updateSchedules(teams: Team[]): Promise<Schedule[]> {
     const teamAbbreviations: string[] = teams.map(({teamAbv}) => teamAbv);
     const schedules: Schedule[] = await retrieveSchedulesFromTank01(teamAbbreviations);
+
     if (schedules) {
-
-
         const lengthInCache: number = await replaceSchedulesInCache(schedules);
-        const redisUpdateRequests: Promise<number>[] = schedules.map((schedule: Schedule) => replaceInCache(`schedule:${schedule.team}`, JSON.stringify(schedule)));
-        const lengthOfAllCacheKeys: number[] = await Promise.all(redisUpdateRequests);
 
-        if (lengthInCache > 0 && new Set(lengthOfAllCacheKeys).size === 1) {
+        if (lengthInCache > 0) {
             await addSchedulesToDatabase(schedules);
         }
     }

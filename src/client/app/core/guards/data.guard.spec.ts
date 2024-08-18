@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { CanActivateFn } from '@angular/router';
 
-import { dataGuard } from './data.guard';
+import { boxScoreGuard } from './boxScoreGuard';
 
 describe('dataGuard', () => {
-  const executeGuard: CanActivateFn = (...guardParameters) => 
-      TestBed.runInInjectionContext(() => dataGuard(...guardParameters));
+  const executeGuard: CanActivateFn = (...guardParameters) =>
+      TestBed.runInInjectionContext(() => boxScoreGuard(...guardParameters));
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

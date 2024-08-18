@@ -1,13 +1,11 @@
 import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {NgIf} from "@angular/common";
-import {Tank01ApiService} from "../../../../core/services/api-services/tank01-api.service";
 import {Game} from "../../../../common/interfaces/game";
 import {PitcherStats} from "../../../../common/model/pitcher-stats.model";
 import {PlayerStats} from "../../../../common/interfaces/player-stats";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import {StatsSource} from "../splits.component";
 import {FormsModule} from "@angular/forms";
-import {Schedule} from "../../../../common/interfaces/team-schedule.interface";
 import {BoxScore} from "../../../../common/model/box.score.model";
 import {ActivatedRoute} from "@angular/router";
 import {BoxScoreUtils} from "../../../../common/utils/boxscore.utils";
@@ -73,7 +71,6 @@ export class PitcherVsPitcherComponent implements OnChanges, OnInit {
         break;
     }
 
-    console.log('pitcherStats: ', pitcherStats);
     return pitcherStats;
   }
 
