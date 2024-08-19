@@ -12,3 +12,34 @@
   align-items: center;
   justify-content: center;
 }
+
+.radio-button-container {
+  padding-right: 15px;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+.mat-accent .mat-slider-track-fill {
+  background-color: red !important;
+}
+
+.mat-slider-thumb-label {
+  background-color: red !important;
+
+}
+
+mat-slider.mat-mdc-slider {
+  width: 100%;
+}
+
+.mat-slider-thumb {
+  background-color: red !important;
+}
+
+.white-space-no-wrap {
+  white-space: nowrap
+}
+
+.secondary-options {
+  gap: 10px;
+}

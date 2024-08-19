@@ -12,6 +12,7 @@ export interface Game {
   gameDate: string;
   gameStatus?: string;
   gameTime_epoch: string;
+  _gameTime_epoch: string;
   teamIDAway: string;
   probableStartingLineups: Sites<Starter[]>;
   probableStartingPitchers: Sites<string>;

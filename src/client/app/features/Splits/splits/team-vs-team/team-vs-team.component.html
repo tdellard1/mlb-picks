@@ -3,12 +3,12 @@
   <div class="flex-column  column" *ngIf="away">
     <span>{{ away }}</span>
     <span>{{ awayOffensiveStats.gamesRepresentedInData }}</span>
-    <span>{{ awayOffensiveStats.BattingAverage }}</span>
-    <span>{{ awayOffensiveStats.Slugging }}</span>
-    <span>{{ awayOffensiveStats.OnBasePercentage }}</span>
-    <span>{{ awayOffensiveStats.OnBasePlusSlugging }}</span>
-    <span>{{ awayOffensiveStats.weightedOnBaseAverage }}</span>
-    <span>{{ awayOffensiveStats.weightedRunsCreated }}</span>
+    <span>{{ awayOffensiveStats.AVG }}</span>
+    <span>{{ awayOffensiveStats.SLG }}</span>
+    <span>{{ awayOffensiveStats.OBP }}</span>
+    <span>{{ awayOffensiveStats.OPS }}</span>
+    <span>{{ awayOffensiveStats.wOBA }}</span>
+    <span>{{ awayOffensiveStats.wRC }}</span>
   </div>
 
   <div class="flex-column  column">
@@ -16,39 +16,39 @@
     <span>Games Included</span>
 
     <div class="flex-row stat-name">
-      <mat-icon [class.invisible]="awayOffensiveStats.BattingAverage < homeOffensiveStats.BattingAverage">arrow_left</mat-icon>
+      <mat-icon [class.invisible]="awayOffensiveStats.AVG < homeOffensiveStats.AVG">arrow_left</mat-icon>
       <span>Batting Average</span>
-      <mat-icon [class.invisible]="awayOffensiveStats.BattingAverage > homeOffensiveStats.BattingAverage">arrow_right</mat-icon>
+      <mat-icon [class.invisible]="awayOffensiveStats.AVG > homeOffensiveStats.AVG">arrow_right</mat-icon>
     </div>
 
     <div class="flex-row stat-name">
-      <mat-icon [class.invisible]="awayOffensiveStats.Slugging < homeOffensiveStats.Slugging">arrow_left</mat-icon>
+      <mat-icon [class.invisible]="awayOffensiveStats.SLG < homeOffensiveStats.SLG">arrow_left</mat-icon>
       <span>Slugging</span>
-      <mat-icon [class.invisible]="awayOffensiveStats.Slugging > homeOffensiveStats.Slugging">arrow_right</mat-icon>
+      <mat-icon [class.invisible]="awayOffensiveStats.SLG > homeOffensiveStats.SLG">arrow_right</mat-icon>
     </div>
 
     <div class="flex-row stat-name">
-      <mat-icon [class.invisible]="awayOffensiveStats.OnBasePercentage < homeOffensiveStats.OnBasePercentage">arrow_left</mat-icon>
+      <mat-icon [class.invisible]="awayOffensiveStats.OBP < homeOffensiveStats.OBP">arrow_left</mat-icon>
       <span>On Base Percentage</span>
-      <mat-icon [class.invisible]="awayOffensiveStats.OnBasePercentage > homeOffensiveStats.OnBasePercentage">arrow_right</mat-icon>
+      <mat-icon [class.invisible]="awayOffensiveStats.OBP > homeOffensiveStats.OBP">arrow_right</mat-icon>
     </div>
 
     <div class="flex-row stat-name">
-      <mat-icon [class.invisible]="awayOffensiveStats.OnBasePlusSlugging < homeOffensiveStats.OnBasePlusSlugging">arrow_left</mat-icon>
+      <mat-icon [class.invisible]="awayOffensiveStats.OPS < homeOffensiveStats.OPS">arrow_left</mat-icon>
       <span>On Base plus Slug</span>
-      <mat-icon [class.invisible]="awayOffensiveStats.OnBasePlusSlugging > homeOffensiveStats.OnBasePlusSlugging">arrow_right</mat-icon>
+      <mat-icon [class.invisible]="awayOffensiveStats.OPS > homeOffensiveStats.OPS">arrow_right</mat-icon>
     </div>
 
     <div class="flex-row stat-name">
-      <mat-icon [class.invisible]="awayOffensiveStats.weightedOnBaseAverage < homeOffensiveStats.weightedOnBaseAverage">arrow_left</mat-icon>
+      <mat-icon [class.invisible]="awayOffensiveStats.wOBA < homeOffensiveStats.wOBA">arrow_left</mat-icon>
       <span>Weighted OBA</span>
-      <mat-icon [class.invisible]="awayOffensiveStats.weightedOnBaseAverage > homeOffensiveStats.weightedOnBaseAverage">arrow_right</mat-icon>
+      <mat-icon [class.invisible]="awayOffensiveStats.wOBA > homeOffensiveStats.wOBA">arrow_right</mat-icon>
     </div>
 
     <div class="flex-row stat-name">
-      <mat-icon [class.invisible]="awayOffensiveStats.weightedRunsCreated < homeOffensiveStats.weightedRunsCreated">arrow_left</mat-icon>
+      <mat-icon [class.invisible]="awayOffensiveStats.wRC < homeOffensiveStats.wRC">arrow_left</mat-icon>
       <span>Weighted Runs Created</span>
-      <mat-icon [class.invisible]="awayOffensiveStats.weightedRunsCreated > homeOffensiveStats.weightedRunsCreated">arrow_right</mat-icon>
+      <mat-icon [class.invisible]="awayOffensiveStats.wRC > homeOffensiveStats.wRC">arrow_right</mat-icon>
     </div>
 
     <span>Point Differential</span>
@@ -57,11 +57,11 @@
   <div class="flex-column  column" *ngIf="home">
     <span>{{ home }}</span>
     <span>{{ homeOffensiveStats.gamesRepresentedInData }}</span>
-    <span>{{ homeOffensiveStats.BattingAverage }}</span>
-    <span>{{ homeOffensiveStats.Slugging }}</span>
-    <span>{{ homeOffensiveStats.OnBasePercentage }}</span>
-    <span>{{ homeOffensiveStats.OnBasePlusSlugging }}</span>
-    <span>{{ homeOffensiveStats.weightedOnBaseAverage }}</span>
-    <span>{{ homeOffensiveStats.weightedRunsCreated }}</span>
+    <span>{{ homeOffensiveStats.AVG }}</span>
+    <span>{{ homeOffensiveStats.SLG }}</span>
+    <span>{{ homeOffensiveStats.OBP }}</span>
+    <span>{{ homeOffensiveStats.OPS }}</span>
+    <span>{{ homeOffensiveStats.wOBA }}</span>
+    <span>{{ homeOffensiveStats.wRC }}</span>
   </div>
 </div>

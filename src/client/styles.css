@@ -40,8 +40,16 @@
   padding-left: 10px;
 }
 
+.padding-right-10 {
+  padding-right: 10px;
+}
+
 .margin-bottom-10 {
   margin-bottom: 10px;
+}
+
+.width-100 {
+  width: 100%;
 }
 
 html, body { height: 100%; }

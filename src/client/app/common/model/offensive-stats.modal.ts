@@ -9,6 +9,7 @@ export class OffensiveStats {
   Doubles: number;
   Triples: number;
   HomeRuns: number;
+  Runs: number;
   IntentionalWalks: number;
   Walks: number;
   HitByPitch: number;
@@ -24,6 +25,7 @@ export class OffensiveStats {
     this.Doubles = 0;
     this.Triples = 0;
     this.HomeRuns = 0;
+    this.Runs = 0;
     this.IntentionalWalks = 0;
     this.Walks = 0;
     this.HitByPitch = 0;
@@ -40,6 +42,7 @@ export class OffensiveStats {
     this.Doubles += offensiveStats.Doubles;
     this.Triples += offensiveStats.Triples;
     this.HomeRuns += offensiveStats.HomeRuns;
+    this.Runs += offensiveStats.Runs;
     this.IntentionalWalks += offensiveStats.IntentionalWalks;
     this.Walks += offensiveStats.Walks;
     this.HitByPitch += offensiveStats.HitByPitch;
@@ -52,6 +55,7 @@ export class OffensiveStats {
     this.Doubles += D;
     this.Triples += T;
     this.HomeRuns += HR;
+    this.Runs += R;
     this.IntentionalWalks += IBB;
     this.Walks += BB;
     this.HitByPitch += HBP;
@@ -65,31 +69,36 @@ export class OffensiveStats {
     this.gamesRepresentedInData = dataQuantity;
   }
 
-  get BattingAverage(): string {
-    const AVG: number = this.Hits / this.AtBats;
-    return AVG.toFixed(3);
+  get RUNS(): string {
+    const BattingAverage: number = this.Hits / this.AtBats;
+    return this.Runs.toString();
+  }
+
+  get AVG(): string {
+    const BattingAverage: number = this.Hits / this.AtBats;
+    return BattingAverage.toFixed(3);
   }
 
   // OBP = (H + BB + HBP) / (AB + BB + HBP + SF)
-  get OnBasePercentage() {
-    const OBP: number = (this.Hits + this.Walks + this.HitByPitch) / (this.AtBats + this.Walks + this.HitByPitch + this.SacrificeFly);
-    return OBP.toFixed(3);
+  get OBP() {
+    const OnBasePercentage: number = (this.Hits + this.Walks + this.HitByPitch) / (this.AtBats + this.Walks + this.HitByPitch + this.SacrificeFly);
+    return OnBasePercentage.toFixed(3);
   }
 
   // (1B + 2Bx2 + 3Bx3 + HRx4)/AB
-  get Slugging() {
-    const SLG: number = (this.Singles + (this.Doubles * 2) + (this.Triples * 3) + (this.HomeRuns * 4)) / this.AtBats;
-    return SLG.toFixed(3);
+  get SLG() {
+    const Slugging: number = (this.Singles + (this.Doubles * 2) + (this.Triples * 3) + (this.HomeRuns * 4)) / this.AtBats;
+    return Slugging.toFixed(3);
   }
 
-  get OnBasePlusSlugging() {
+  get OPS() {
     const OBP: number = (this.Hits + this.Walks + this.HitByPitch) / (this.AtBats + this.Walks + this.HitByPitch + this.SacrificeFly);
     const SLG: number = (this.Singles + (this.Doubles * 2) + (this.Triples * 3) + (this.HomeRuns * 4)) / this.AtBats;
-    const OPS: number = OBP + SLG;
-    return OPS.toFixed(3);
+    const OnBasePlusSlugging: number = OBP + SLG;
+    return OnBasePlusSlugging.toFixed(3);
   }
 
-  get weightedOnBaseAverage() {
+  get wOBA() {
     return this.weightedOnBaseAverageNumber.toFixed(3);
   }
 
@@ -108,7 +117,7 @@ export class OffensiveStats {
   }
 
   // wRC = (((wOBA – League wOBA/wOBA Scale) + (League R/PA)) * PA
-  get weightedRunsCreated() {
+  get wRC() {
     const firstPart = (this.weightedOnBaseAverageNumber - WeightedFactors.wOBA)/WeightedFactors.wOBAScale;
     const secondPart = WeightedFactors.RoPA / this.PlateAppearance;
 

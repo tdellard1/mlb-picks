@@ -2,11 +2,35 @@
   <game-selected></game-selected>
   <game-details></game-details>
 
-  <div class="analysis-container" *ngIf="home && away">
-    @for (chart of charts; track chart) {
-      <line-chart [chartData]="chart"></line-chart>
-    }
+  <mat-radio-group
+    [(ngModel)]="statType"
+    (change)="changeStatType()"
+    class="flex-row align-center justify-center white-space-no-wrap radio-button-container">
+    <mat-radio-button [value]="StatType.AVG">AVG</mat-radio-button>
+    <mat-radio-button [value]="StatType.RUNS">RUNS</mat-radio-button>
+    <mat-radio-button [value]="StatType.SLG">SLG</mat-radio-button>
+    <mat-radio-button [value]="StatType.OBP">OBP</mat-radio-button>
+    <mat-radio-button [value]="StatType.OPS">OPS</mat-radio-button>
+    <mat-radio-button [value]="StatType.wOBA">wOBA</mat-radio-button>
+  </mat-radio-group>
+
+  <div class="flex-row align-center padding-right-10 secondary-options">
+    <mat-slide-toggle
+      class="white-space-no-wrap"
+      (change)="changeCollectionType($event)">
+      {{ collectionType }}
+    </mat-slide-toggle>
+
+    <mat-slider min="1" max="20" step="1" class="width-100">
+      <input [(ngModel)]="lowerSliderValue" matSliderStartThumb (valueChange)="populateChart()">
+      <input [(ngModel)]="upperSliderValue" matSliderEndThumb (valueChange)="populateChart()">
+    </mat-slider>
+
+    <span class="white-space-no-wrap">{{ lowerSliderValue - 1 }} - {{ upperSliderValue - 1 }}</span>
   </div>
+
+  <line-chart [chartData]="chartData"></line-chart>
+
 </ng-container>
 
 <ng-template #spinner>

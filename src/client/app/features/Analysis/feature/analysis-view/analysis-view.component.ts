@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
-import {Analytic, Analytics, TeamAnalytics} from "../../../../common/interfaces/team-schedule.interface";
+import {Analytic, Analytics, Schedule, TeamAnalytics} from "../../../../common/interfaces/team-schedule.interface";
 import {MatIcon} from "@angular/material/icon";
 import {MatFabButton} from "@angular/material/button";
 import {MatCard} from "@angular/material/card";
@@ -25,6 +25,16 @@ import {Team} from "../../../../common/interfaces/team.interface.js";
 import {GameSelectedComponent} from "../../ui/game-selected/game-selected.component.js";
 import {GameDetailsComponent} from "../../ui/game-details/game-details.component.js";
 import {MatDivider} from "@angular/material/divider";
+import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
+import {MatSlideToggle} from "@angular/material/slide-toggle";
+import {MatSlider, MatSliderRangeThumb, MatSliderThumb} from "@angular/material/slider";
+import {FormsModule} from "@angular/forms";
+import {BoxScore} from "../../../../common/model/box.score.model";
+import {Game} from "../../../../common/interfaces/game";
+import {GameUtils} from "../../../../common/utils/game.utils";
+import {OffensiveStats} from "../../../../common/model/offensive-stats.modal";
+import {TeamStatsHitting} from "../../../../common/model/team-stats.model";
+import {Hitting} from "../../../../common/interfaces/hitting";
 
 @Component({
   selector: 'analysis-component-view',
@@ -38,20 +48,31 @@ import {MatDivider} from "@angular/material/divider";
     NgForOf,
     NgIf,
     LineChartComponent,
-    AsyncPipe, MatProgressSpinner, GameSelectedComponent, GameDetailsComponent, MatDivider
+    AsyncPipe, MatProgressSpinner, GameSelectedComponent, GameDetailsComponent, MatDivider, MatRadioButton, MatRadioGroup, MatSlideToggle, MatSliderThumb, MatSlider, MatSliderRangeThumb, FormsModule
   ],
   templateUrl: './analysis-view.component.html',
   styleUrl: './analysis-view.component.css',
   encapsulation: ViewEncapsulation.None
 })
 export class AnalysisViewComponent extends SubscriptionHolder implements OnInit {
-  homeAnalytics: TeamAnalytics;
+  private readonly teams: Map<string, Team> = new Map((this.activatedRoute.snapshot.data['teams'] as Team[]).map((team: Team) => [team.teamAbv, team]));
+  private readonly schedules: Map<string, Schedule> = new Map((this.activatedRoute.snapshot.data['schedules'] as Schedule[]).map((schedule: Schedule) => [schedule.team, schedule]));
+  private readonly boxScoresMap: Map<string, BoxScore> = new Map((this.activatedRoute.snapshot.data['boxScores'] as BoxScore[]).map((boxScore: BoxScore) => [boxScore.gameID, boxScore]));
+
+  upperSliderValue: number = 16;
+  lowerSliderValue: number = 1;
+
   home: Team;
+  homeSchedule: Schedule;
 
-  awayAnalytics: TeamAnalytics;
   away: Team;
+  awaySchedule: Schedule;
 
-  charts: ChartData[] = [];
+  collectionType: CollectionType = CollectionType.AVERAGE;
+  statType: StatType = StatType.AVG;
+
+  chartData: ChartData = {} as ChartData;
+
   _spinner: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   get spinner$(): Observable<boolean> {
@@ -64,15 +85,15 @@ export class AnalysisViewComponent extends SubscriptionHolder implements OnInit 
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.activatedRoute.data.subscribe(({matchUp}: Data) => {
-        const {home, away}: any = matchUp;
-        this.home = home.team;
-        this.away = away.team;
-        console.log(home.schedule);
-        this.homeAnalytics = new TeamAnalytics(this.home.teamAbv, home.schedule);
-        this.awayAnalytics = new TeamAnalytics(this.away.teamAbv, away.schedule);
-        this.charts = [];
-        this.populateCharts();
+      this.activatedRoute.params.subscribe(({gameId}) => {
+        const [away, home]: string[] = gameId.split('_')[1].split('@');
+
+        this.away = this.teams.get(away)!;
+        this.awaySchedule = this.schedules.get(away)!;
+        this.home = this.teams.get(home)!;
+        this.homeSchedule = this.schedules.get(home)!;
+
+        this.populateChart();
       }),
       this.router.events.subscribe((event: Event) => {
         if (event instanceof NavigationStart) {
@@ -86,16 +107,74 @@ export class AnalysisViewComponent extends SubscriptionHolder implements OnInit 
     )
   }
 
-  populateCharts() {
-    [...Analytic.keys()].forEach((key: string) => {
-      const homeStats: number[] = this.homeAnalytics.analytics!.slice().map((analytics: Analytics) => analytics[key]!)!;
-      const awayStats: number[] = this.awayAnalytics.analytics!.slice().map((analytics: Analytics) => analytics[key]!)!;
-      this.charts.push(this.createChart(Analytic.get(key)!,
-        `${this.home.teamAbv} - ${Analytic.get(key)}`,
-        homeStats,
-        `${this.away.teamAbv} - ${Analytic.get(key)}`,
-        awayStats));
-    });
+  populateChart() {
+    this.chartData = {} as ChartData;
+    const nameOfChart: string = STATS_TYPE_MAP.get(this.statType)[this.collectionType];
+    const homeTeam: string = this.home.teamName;
+    const awayTeam: string = this.away.teamName;
+    const homeTeamData: number[] = this.getTeamData(this.home.teamAbv, this.homeSchedule, this.statType, this.collectionType, this.boxScoresMap);
+    const awayTeamData: number[] = this.getTeamData(this.away.teamAbv, this.awaySchedule, this.statType, this.collectionType, this.boxScoresMap);
+    this.chartData = this.createChart(nameOfChart, homeTeam, homeTeamData, awayTeam, awayTeamData);
+  }
+
+  private getTeamData(team: string, {schedule}: Schedule, statType: StatType, collectionType: CollectionType, boxScoresMap: Map<string, BoxScore>): number[] {
+    const games = schedule
+      .filter(GameUtils.completedGames)
+      .sort(GameUtils.sortGames)
+      .reverse()
+      .slice(this.lowerSliderValue - 1, this.upperSliderValue - 1)
+      .reverse();
+
+    const stats: number[] = [];
+
+    if (collectionType === CollectionType.AVERAGE) {
+      const perGameStats: number[] = [];
+      games.map(({gameID}) => boxScoresMap.get(gameID)!).forEach(({teamStats, away, home}) => {
+        if (away === team) {
+          const teamHittingStats: TeamStatsHitting = new TeamStatsHitting(teamStats.away.Hitting);
+          const offensiveStats: OffensiveStats = new OffensiveStats();
+          offensiveStats.addTeamStatsHitting(teamHittingStats);
+          offensiveStats.finalize(1);
+          perGameStats.push(Number(offensiveStats[statType]));
+        } else if (home === team) {
+          const teamHittingStats: TeamStatsHitting = new TeamStatsHitting(teamStats.home.Hitting);
+          const offensiveStats: OffensiveStats = new OffensiveStats();
+          offensiveStats.addTeamStatsHitting(teamHittingStats);
+          offensiveStats.finalize(1);
+          perGameStats.push(Number(offensiveStats[statType]));
+        } else {
+          throw new Error('No team found in Box Score');
+        }
+      });
+
+      for (let i = 1; i < perGameStats.length + 1; i++) {
+        const total = perGameStats.slice(0, i).reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+
+        stats.push(Number((total / i).toFixed(3)));
+      }
+    } else {
+      games.map(({gameID}) => boxScoresMap.get(gameID)!).forEach(({teamStats, away, home}) => {
+        if (away === team) {
+          const teamHittingStats: TeamStatsHitting = new TeamStatsHitting(teamStats.away.Hitting);
+          const offensiveStats: OffensiveStats = new OffensiveStats();
+          offensiveStats.addTeamStatsHitting(teamHittingStats);
+          offensiveStats.finalize(1);
+          stats.push(Number(offensiveStats[statType]));
+        } else if (home === team) {
+          const teamHittingStats: TeamStatsHitting = new TeamStatsHitting(teamStats.home.Hitting);
+          const offensiveStats: OffensiveStats = new OffensiveStats();
+          offensiveStats.addTeamStatsHitting(teamHittingStats);
+          offensiveStats.finalize(1);
+          stats.push(Number(offensiveStats[statType]));
+        } else {
+          throw new Error('No team found in Box Score');
+        }
+      });
+    }
+
+    // console.log('stats: ', stats);
+    console.log('games: ', games.slice());
+    return stats;
   }
 
   private createChart(nameOfChart: string, homeTeamLabel: string, homeTeamData: number[], awayTeamLabel: string, awayTeamData: number[]) {
@@ -113,4 +192,60 @@ export class AnalysisViewComponent extends SubscriptionHolder implements OnInit 
       ]
     } as ChartData
   }
+
+  changeCollectionType({checked}: any) {
+    if (checked) {
+      this.collectionType = CollectionType.PER_GAME
+    } else if (!checked) {
+      this.collectionType = CollectionType.AVERAGE
+    }
+
+    this.populateChart();
+  }
+
+  protected readonly StatType = StatType;
+
+  changeStatType() {
+    this.populateChart();
+  }
 }
+
+export enum CollectionType {
+  PER_GAME = 'Per Game',
+  AVERAGE = 'Average'
+}
+
+export enum StatType {
+  AVG = 'AVG',
+  RUNS = 'RUNS',
+  SLG = 'SLG',
+  OBP = 'OBP',
+  OPS = 'OPS',
+  wOBA = 'wOBA'
+}
+
+export const STATS_TYPE_MAP = new Map()
+  .set(StatType.AVG, {
+    ['Per Game']: 'Batting Average Per Game',
+    Average: 'Batting Average Mean',
+  })
+  .set(StatType.RUNS, {
+    ['Per Game']: 'Runs Per Game',
+    Average: 'Runs Per Game Mean',
+  })
+  .set(StatType.SLG, {
+    ['Per Game']: 'Slugging Percentage Per Game',
+    Average: 'Slugging Percentage Mean',
+  })
+  .set(StatType.OBP, {
+    ['Per Game']: 'On Base Percentage Per Game',
+    Average: 'On Base Percentage Mean',
+  })
+  .set(StatType.OPS, {
+    ['Per Game']: 'On-base Plus Slugging Per Game',
+    Average: 'On-base Plus Slugging Mean',
+  })
+  .set(StatType.wOBA, {
+    ['Per Game']: 'weighted On Base Average Per Game',
+    Average: 'weighted On Base Average Mean',
+  });

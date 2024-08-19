@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -34,12 +34,18 @@ import {NgIf} from "@angular/common";
   templateUrl: './line-chart.component.html',
   styleUrl: './line-chart.component.css'
 })
-export class LineChartComponent implements OnInit {
+export class LineChartComponent implements OnInit , OnChanges{
   constructor(private breakpoint: BreakpointObserver) {}
 
   @Input() chartData!: ChartData;
   chartOptions: ChartOptions = {} as ChartOptions;
   handsetPortrait: boolean = false;
+
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.updateChat();
+  }
 
   ngOnInit(): void {
     this.breakpoint.observe(Breakpoints.HandsetPortrait)
@@ -47,6 +53,10 @@ export class LineChartComponent implements OnInit {
         this.handsetPortrait = bpState.matches;
       });
 
+    this.updateChat();
+  }
+
+  updateChat() {
     const series: ApexAxisChartSeries = this.apexAxisChartSeries(this.chartData);
     const chart: ApexChart = this.apexChart;
     const stroke: ApexStroke = this.apexStroke;
