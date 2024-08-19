@@ -43,6 +43,8 @@ export class GameSelectorComponent extends SubscriptionHolder implements OnDestr
         map((games: Game[]) => games.sort(GameUtils.sortGames))
       ).subscribe((games: Game[]) => {
         this.dailySchedule = games;
+
+        console.log(this.dailySchedule);
         const childRoute: ActivatedRouteSnapshot | undefined = this.activatedRoute.snapshot.children[0];
 
         if (childRoute) {

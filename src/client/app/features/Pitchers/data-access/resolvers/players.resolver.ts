@@ -1,10 +1,10 @@
 import { ResolveFn } from '@angular/router';
-import {BackendApiService} from "../../../../core/services/backend-api/backend-api.service.js";
 import {inject} from "@angular/core";
 import {Observable} from "rxjs";
-import {RosterPlayer} from "../../../../common/interfaces/players";
+import {RosterPlayer} from "@common/interfaces/players";
+import {Tank01ApiService} from "../../../../core/services/api-services/tank01-api.service";
 
 export const playersResolver: ResolveFn<Observable<RosterPlayer[]>> = () => {
-  const backendApiService: BackendApiService = inject(BackendApiService);
-  return backendApiService.getPlayers();
+  const tank01ApiService: Tank01ApiService = inject(Tank01ApiService);
+  return tank01ApiService.getPlayers();
 };

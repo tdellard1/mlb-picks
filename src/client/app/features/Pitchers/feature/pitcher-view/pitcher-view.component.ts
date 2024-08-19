@@ -11,13 +11,13 @@ import {
 import {NgIf} from "@angular/common";
 import {ActivatedRoute, Params} from "@angular/router";
 import {SubscriptionHolder} from "../../../../shared/components/subscription-holder.component.js";
-import {sortByGameDate} from "../../../../common/utils/state-builder.utils.js";
-import {PlayerStats} from "../../../../common/interfaces/player-stats.js";
-import {BackendApiService} from "../../../../core/services/backend-api/backend-api.service.js";
+import {sortByGameDate} from "@common/utils/state-builder.utils.js";
+import {PlayerStats} from "@common/interfaces/player-stats.js";
 import {switchMap} from "rxjs";
 import {map} from "rxjs/operators";
-import {Pitching} from "../../../../common/interfaces/pitching";
-import {RosterPlayer} from "../../../../common/interfaces/players";
+import {Pitching} from "@common/interfaces/pitching";
+import {RosterPlayer} from "@common/interfaces/players";
+import {Tank01ApiService} from "../../../../core/services/api-services/tank01-api.service";
 
 @Component({
   selector: 'pitcher-view',
@@ -43,7 +43,7 @@ export class PitcherViewComponent extends SubscriptionHolder implements OnInit {
   dataSource: PitcherStatsElements[] = [];
   selectedPitcher: RosterPlayer;
 
-  constructor(private backendApiService: BackendApiService,
+  constructor(private tank01ApiService: Tank01ApiService,
               private route: ActivatedRoute) {
     super();
   }
@@ -52,8 +52,11 @@ export class PitcherViewComponent extends SubscriptionHolder implements OnInit {
     this.subscriptions.push(
       this.route.params.pipe(
         map(({playerID}: Params) => playerID),
-        switchMap((playerId: string) => this.backendApiService.getPlayer(playerId))
-      ).subscribe((rosterPlayer: RosterPlayer) => this.selectPitcher(rosterPlayer))
+        switchMap((playerId: string) => this.tank01ApiService.getPlayer(playerId))
+      ).subscribe((rosterPlayer: RosterPlayer) => {
+        rosterPlayer.games = this.route.snapshot.data['pitcher'];
+        this.selectPitcher(rosterPlayer);
+      })
     );
   }
 
