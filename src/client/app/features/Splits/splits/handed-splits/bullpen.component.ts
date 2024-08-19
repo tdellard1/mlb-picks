@@ -9,7 +9,6 @@ import {BoxScoreUtils} from "@common/utils/boxscore.utils";
 import {Schedule} from "@common/interfaces/team-schedule.interface";
 import {GameUtils} from "@common/utils/game.utils";
 import {Pitching} from "@common/interfaces/pitching";
-import {StatsSupplierComponent} from "../../../../shared/components/stats-supplier.component";
 import {MatButtonToggle, MatButtonToggleGroup} from "@angular/material/button-toggle";
 import {SourceType} from "../splits.component";
 import {FormsModule} from "@angular/forms";
@@ -26,48 +25,50 @@ import {FormsModule} from "@angular/forms";
   templateUrl: './bullpen.component.html',
   styleUrl: './bullpen.component.css'
 })
-export class BullpenComponent extends StatsSupplierComponent implements OnChanges {
+export class BullpenComponent implements OnChanges {
+  protected readonly boxScoresMap: Map<string, BoxScore> = new Map((this.activatedRoute.snapshot.data['boxScores'] as BoxScore[]).map((boxScore: BoxScore) => [boxScore.gameID, boxScore]));
+  protected readonly schedulesMap: Map<string, Schedule> = new Map((this.activatedRoute.snapshot.data['schedules'] as Schedule[]).map((schedule: Schedule) => [schedule.team, schedule]));
+
   homePitcherStats: PitcherStats = new PitcherStats();
   awayPitcherStats: PitcherStats = new PitcherStats();
   @Input() game!: Game;
 
   statsSource: SourceType = SourceType.Season;
 
-  constructor(route: ActivatedRoute) {
-    super(route);
-  }
+  constructor(private activatedRoute: ActivatedRoute) {}
 
   getPitcherStats(site: Site): PitcherStats {
     let pitcherStats: PitcherStats;
 
-    const schedule: Schedule = this.getSchedule(this.game[site]);
+    const schedule: Schedule | undefined = this.schedulesMap.get(this.game[site]);
 
-    const boxScores: BoxScore[] = schedule.schedule
-      .filter(GameUtils.gameCompleted)
-      .map(({gameID}) => this.getBoxScore(gameID))
-      .sort(BoxScoreUtils.sortChronologically);
+    if (schedule) {
+      const boxScores: BoxScore[] = schedule.schedule
+        .filter(GameUtils.gameCompleted)
+        .map(({gameID}) => this.boxScoresMap.get(gameID)!)
+        .sort(BoxScoreUtils.sortChronologically);
 
-    switch (this.statsSource) {
-      case SourceType.Season:
-        pitcherStats = this.aggregateStats(boxScores);
-        break;
-      case SourceType.Split:
-        const siteBoxScores: BoxScore[] = boxScores.filter((boxScore: BoxScore) => boxScore[site] === this.game[site]);
-        pitcherStats = this.aggregateStats(siteBoxScores);
-        break;
-      case SourceType.Teams:
-        const sameTeamsBoxScores: BoxScore[] = boxScores.filter((boxScore: BoxScore) =>
-          [boxScore.away, boxScore.home].some((teamAbv: string) => teamAbv === this.game.away) &&
-          [boxScore.away, boxScore.home].some((teamAbv: string) => teamAbv === this.game.home));
+      switch (this.statsSource) {
+        case SourceType.Season:
+          pitcherStats = this.aggregateStats(boxScores);
+          break;
+        case SourceType.Split:
+          const siteBoxScores: BoxScore[] = boxScores.filter((boxScore: BoxScore) => boxScore[site] === this.game[site]);
+          pitcherStats = this.aggregateStats(siteBoxScores);
+          break;
+        case SourceType.Teams:
+          const sameTeamsBoxScores: BoxScore[] = boxScores.filter((boxScore: BoxScore) =>
+            [boxScore.away, boxScore.home].some((teamAbv: string) => teamAbv === this.game.away) &&
+            [boxScore.away, boxScore.home].some((teamAbv: string) => teamAbv === this.game.home));
 
-        pitcherStats = this.aggregateStats(sameTeamsBoxScores);
-        break;
+          pitcherStats = this.aggregateStats(sameTeamsBoxScores);
+          break;
+      }
+      return pitcherStats
+    } else {
+      throw new Error(`Can't find resource for ${this.game[site]}`);
     }
-
-    return pitcherStats
   }
-
-
 
   private aggregateStats(boxScores: BoxScore[]): PitcherStats {
     const pitcherStats: PitcherStats = new PitcherStats();

@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
-import {Analytic, Analytics, Schedule, TeamAnalytics} from "../../../../common/interfaces/team-schedule.interface";
+import {Analytic, Analytics, Schedule, TeamAnalytics} from "@common/interfaces/team-schedule.interface";
 import {MatIcon} from "@angular/material/icon";
 import {MatFabButton} from "@angular/material/button";
 import {MatCard} from "@angular/material/card";
@@ -20,7 +20,7 @@ import {
 import {ActivatedRoute, Event, NavigationEnd, NavigationStart, Router} from "@angular/router";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {BehaviorSubject, Observable} from "rxjs";
-import {Team} from "../../../../common/interfaces/team.interface.js";
+import {Team} from "@common/interfaces/team.interface.js";
 import {GameSelectedComponent} from "../../ui/game-selected/game-selected.component.js";
 import {GameDetailsComponent} from "../../ui/game-details/game-details.component.js";
 import {MatDivider} from "@angular/material/divider";
@@ -28,11 +28,11 @@ import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {MatSlider, MatSliderRangeThumb, MatSliderThumb} from "@angular/material/slider";
 import {FormsModule} from "@angular/forms";
-import {BoxScore} from "../../../../common/model/box.score.model";
-import {GameUtils} from "../../../../common/utils/game.utils";
-import {OffensiveStats} from "../../../../common/model/offensive-stats.modal";
-import {TeamStatsHitting} from "../../../../common/model/team-stats.model";
-import {StatsSupplierComponent} from "../../../../shared/components/stats-supplier.component";
+import {BoxScore} from "@common/model/box.score.model";
+import {GameUtils} from "@common/utils/game.utils";
+import {OffensiveStats} from "@common/model/offensive-stats.modal";
+import {TeamStatsHitting} from "@common/model/team-stats.model";
+import {SubscriptionHolder} from "../../../../shared/components/subscription-holder.component";
 
 @Component({
   selector: 'analysis-component-view',
@@ -52,7 +52,11 @@ import {StatsSupplierComponent} from "../../../../shared/components/stats-suppli
   styleUrl: './analysis-view.component.css',
   encapsulation: ViewEncapsulation.None
 })
-export class AnalysisViewComponent extends StatsSupplierComponent implements OnInit {
+export class AnalysisViewComponent extends SubscriptionHolder implements OnInit {
+  protected readonly teamsMap: Map<string, Team> = new Map((this.activatedRoute.snapshot.data['teams'] as Team[]).map((team: Team) => [team.teamAbv, team]));
+  protected readonly schedulesMap: Map<string, Schedule> = new Map((this.activatedRoute.snapshot.data['schedules'] as Schedule[]).map((schedule: Schedule) => [schedule.team, schedule]));
+  protected readonly boxScoresMap: Map<string, BoxScore> = new Map((this.activatedRoute.snapshot.data['boxScores'] as BoxScore[]).map((boxScore: BoxScore) => [boxScore.gameID, boxScore]));
+
   upperSliderValue: number = 16;
   lowerSliderValue: number = 1;
 
@@ -73,19 +77,19 @@ export class AnalysisViewComponent extends StatsSupplierComponent implements OnI
     return this._spinner.asObservable();
   }
 
-  constructor(private route: ActivatedRoute, private router: Router) {
-    super(route);
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) {
+    super();
   }
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.route.params.subscribe(({gameId}) => {
+      this.activatedRoute.params.subscribe(({gameId}) => {
         const [away, home]: string[] = gameId.split('_')[1].split('@');
 
-        this.away = this.getTeam(away);
-        this.awaySchedule = this.getSchedule(away);
-        this.home = this.getTeam(home);
-        this.homeSchedule = this.getSchedule(home);
+        this.away = this.teamsMap.get(away)!;
+        this.home = this.teamsMap.get(home)!;
+        this.awaySchedule = this.schedulesMap.get(away)!;
+        this.homeSchedule = this.schedulesMap.get(home)!;
 
         this.populateChart();
       }),

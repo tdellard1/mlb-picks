@@ -12,8 +12,9 @@ import {GameUtils} from "@common/utils/game.utils";
 import {BullpenComponent} from "./handed-splits/bullpen.component";
 import {BoxScoreUtils} from "@common/utils/boxscore.utils";
 import {Site} from "@common/constants/site";
-import {StatsSupplierComponent} from "../../../shared/components/stats-supplier.component";
 import {Hitting} from "@common/interfaces/hitting";
+import {SubscriptionHolder} from "../../../shared/components/subscription-holder.component";
+import {BoxScore} from "@common/model/box.score.model";
 
 export enum SourceType {
   Season = 'season',
@@ -37,7 +38,14 @@ export enum SourceType {
   templateUrl: './splits.component.html',
   styleUrl: './splits.component.css'
 })
-export class SplitsComponent extends StatsSupplierComponent {
+export class SplitsComponent extends SubscriptionHolder {
+  protected readonly boxScores: BoxScore[] = this.activatedRoute.snapshot.data['boxScores'] as BoxScore[];
+  protected readonly schedules: Schedule[] = this.activatedRoute.snapshot.data['schedules'] as Schedule[];
+  protected readonly dailySchedule: Game[] = this.activatedRoute.snapshot.data['dailySchedule'] as Game[];
+  protected readonly boxScoresMap: Map<string, BoxScore> = new Map((this.boxScores).map((boxScore: BoxScore) => [boxScore.gameID, boxScore]));
+  protected readonly schedulesMap: Map<string, Schedule> = new Map((this.schedules).map((schedule: Schedule) => [schedule.team, schedule]));
+  protected readonly dailyScheduleMap: Map<string, Game> = new Map((this.dailySchedule).map((game: Game) => [game.gameID, game]));
+
   protected selectedGame: Game;
 
   Away: string = '';
@@ -48,11 +56,11 @@ export class SplitsComponent extends StatsSupplierComponent {
   homeOffensiveStats: OffensiveStats = new OffensiveStats();
   awayOffensiveStats: OffensiveStats = new OffensiveStats();
 
-  constructor(private route: ActivatedRoute) {
-    super(route);
+  constructor(private activatedRoute: ActivatedRoute) {
+    super();
 
     this.subscriptions.push(
-      this.route.params.subscribe((params) => {
+      this.activatedRoute.params.subscribe((params) => {
         this.setTeamsInfo(params['gameId']);
         this.selectSplits();
       })
@@ -60,7 +68,13 @@ export class SplitsComponent extends StatsSupplierComponent {
   }
 
   setTeamsInfo(gameID: string) {
-    this.selectedGame = this.getGame(gameID);
+    const game: Game | undefined = this.dailyScheduleMap.get(gameID);
+
+    if (game) {
+      this.selectedGame = game;
+    } else {
+      throw new Error(`Can't find resource for ${gameID}`);
+    }
 
     const [away, home]: string[] = gameID.split('_')[1].split('@');
     this.Away = away;
@@ -78,20 +92,24 @@ export class SplitsComponent extends StatsSupplierComponent {
   protected readonly StatsSource = SourceType;
 
   private getOffensiveStats(team: string, opposing: string, site: Site): OffensiveStats {
-    const {schedule}: Schedule = this.getSchedule(team);
+    const schedule: Schedule | undefined = this.schedulesMap.get(team);
 
-    const offensiveStats: OffensiveStats = new OffensiveStats();
+    if (schedule) {
+      const offensiveStats: OffensiveStats = new OffensiveStats();
 
-    const HittingStats: Hitting[] = schedule
-      .filter(GameUtils.gameCompleted)
-      .map(({gameID}) => this.getBoxScore(gameID))
-      .filter(BoxScoreUtils.basedOnSplits(team, opposing, this.statsSource, site))
-      .map(BoxScoreUtils.getTeamStats(team));
+      const HittingStats: Hitting[] = schedule.schedule
+        .filter(GameUtils.gameCompleted)
+        .map(({gameID}) => this.boxScoresMap.get(gameID)!)
+        .filter(BoxScoreUtils.basedOnSplits(team, opposing, this.statsSource, site))
+        .map(BoxScoreUtils.getTeamStats(team));
 
-    HittingStats.forEach(offensiveStats.add.bind(offensiveStats));
+      HittingStats.forEach(offensiveStats.add.bind(offensiveStats));
 
-    offensiveStats.finalize(HittingStats.length);
+      offensiveStats.finalize(HittingStats.length);
 
-    return offensiveStats;
+      return offensiveStats;
+    } else {
+      throw new Error(`Can't find resource for ${team}`);
+    }
   }
 }

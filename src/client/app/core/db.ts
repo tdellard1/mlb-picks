@@ -1,26 +1,14 @@
 // db.ts
 import Dexie, { Table } from 'dexie';
-import {BoxScore} from "../common/model/box.score.model";
-import {Team} from "../common/interfaces/team.interface";
-import {Roster} from "../common/interfaces/roster";
-import {RosterPlayer} from "../common/interfaces/players";
-import {Schedule} from "../common/interfaces/team-schedule.interface";
+import {BoxScore} from "@common/model/box.score.model";
 
 export class AppDB extends Dexie {
-  schedules: Table<Schedule, string>;
-  teams: Table<Team, string>;
-  rosters: Table<Roster, string>;
   boxScores: Table<BoxScore, string>;
-  players: Table<RosterPlayer, string>
 
   constructor() {
     super('mlb-picks');
-    this.version(4).stores({
-      schedules: 'team',
-      teams: 'teamAbv, teamName, teamCity',
-      rosters: 'team',
+    this.version(5).stores({
       boxScores: 'gameID, home, away, gameStatus',
-      players: 'playerID, team',
     });
   }
 }
