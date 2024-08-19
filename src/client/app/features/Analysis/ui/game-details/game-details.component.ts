@@ -19,6 +19,9 @@ import {RosterPlayer} from "../../../../common/interfaces/players";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameDetailsComponent extends SubscriptionHolder implements OnInit, OnDestroy {
+  private readonly dailySchedule: Map<string, Game> = new Map((this.activatedRoute.snapshot.data['dailySchedule'] as Game[]).map((game: Game) => [game.gameID, game]));
+  private readonly teams: Map<string, Team> = new Map((this.activatedRoute.snapshot.data['teams'] as Team[]).map((team: Team) => [team.teamAbv, team]));
+
   playersMap: Map<string, RosterPlayer> = new Map();
   game: Game;
   away: Team;
@@ -30,27 +33,20 @@ export class GameDetailsComponent extends SubscriptionHolder implements OnInit, 
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.activatedRoute.data.subscribe((data: Data) => {
-        const gameID: string = this.activatedRoute.snapshot.params['gameId'];
-        const games: Game[] = data['dailySchedule'];
-        const players: RosterPlayer[] = data['players'] as RosterPlayer[];
-        const {away, home} = data['matchUp'];
+      this.activatedRoute.params.subscribe(({gameId}) => {
+        const game: Game | undefined = this.dailySchedule.get(gameId);
 
-        const timestamp: number = JSON.parse(JSON.stringify(Date.now()));
-        players.forEach((player: RosterPlayer) => {
-          this.playersMap.set(player.playerID, player);
-        });
+        if (!game) throw new Error('No game exists!');
+        this.game = game;
 
+        const away: Team | undefined = this.teams.get(this.game.away);
+        if (!away) throw new Error('Away team doesn\'t exist!');
+        this.away = away;
 
-        this.game = games.find(game => game.gameID === gameID)!;
-        this.home = home.team;
-        this.away = away.team;
-      })
-    )
-  }
-
-  get hasDataToDisplayPitchers() {
-    return this.game.gameID && (this.game.probableStartingPitchers.away || this.game.probableStartingPitchers.home);
+        const home: Team | undefined = this.teams.get(this.game.home);
+        if (!home) throw new Error('Home team doesn\'t exist!');
+        this.home = home;
+      }))
   }
 
   ngOnDestroy(): void {

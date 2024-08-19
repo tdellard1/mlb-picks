@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HandedSplitsComponent } from './handed-splits.component';
+import { BullpenComponent } from './bullpen.component';
 
 describe('HandedSplitsComponent', () => {
-  let component: HandedSplitsComponent;
-  let fixture: ComponentFixture<HandedSplitsComponent>;
+  let component: BullpenComponent;
+  let fixture: ComponentFixture<BullpenComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HandedSplitsComponent]
+      imports: [BullpenComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(HandedSplitsComponent);
+    fixture = TestBed.createComponent(BullpenComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -18,6 +18,9 @@ import {SubscriptionHolder} from "../../../../shared/components/subscription-hol
   styleUrl: './game-selected.component.css'
 })
 export class GameSelectedComponent extends SubscriptionHolder implements OnInit, OnDestroy {
+  private readonly dailySchedule: Map<string, Game> = new Map((this.activatedRoute.snapshot.data['dailySchedule'] as Game[]).map((game: Game) => [game.gameID, game]));
+  private readonly teams: Map<string, Team> = new Map((this.activatedRoute.snapshot.data['teams'] as Team[]).map((team: Team) => [team.teamAbv, team]));
+
   constructor(private activatedRoute: ActivatedRoute) {
     super();
   }
@@ -30,30 +33,23 @@ export class GameSelectedComponent extends SubscriptionHolder implements OnInit,
     return new Date(Number(gameTime_epoch) * 1000);
   }
 
-  get hasDataToDisplaySelectedGame() {
-    return this.game.gameID && this.game.gameTime_epoch
-      && this.away && this.hasTeamRequiredFields(this.away)
-      && this.home && this.hasTeamRequiredFields(this.home);
-  }
-
   ngOnInit(): void {
     this.subscriptions.push(
-      this.activatedRoute.data.subscribe((data: Data) => {
-      const gameID: string = this.activatedRoute.snapshot.params['gameId'];
-      const games: Game[] = data['dailySchedule'];
-      const {away, home} = data['matchUp'];
+      this.activatedRoute.params.subscribe(({gameId}) => {
+        const game: Game | undefined = this.dailySchedule.get(gameId);
 
-      this.game = games.find(game => game.gameID === gameID)!;
-      this.home = home.team;
-      this.away = away.team;
-    }))
-  }
+        if (!game) throw new Error('No game exists!');
+        this.game = game;
+        const {away, home}: Game = this.game;
 
-  hasTeamRequiredFields({espnLogo1, wins, loss}: Team) {
-    const hasLogo: boolean = !!espnLogo1;
-    const hasWins: boolean = !!wins;
-    const hasLoss: boolean = !!loss;
-    return hasLogo && hasWins && hasLoss;
+        let team: Team | undefined = this.teams.get(away);
+        if (!team) throw new Error('Away team doesn\'t exist!');
+        this.away = team;
+
+        team = this.teams.get(home);
+        if (!team) throw new Error('Home team doesn\'t exist!');
+        this.home = team;
+      }))
   }
 
   ngOnDestroy(): void {

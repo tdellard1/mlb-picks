@@ -2,8 +2,8 @@
   <mat-tab label="Teams">
     <div class="mat-tabs">
       <team-vs-team
-        [away]="Away.team.teamAbv"
-        [home]="Home.team.teamAbv"
+        [away]="Away"
+        [home]="Home"
         [awayOffensiveStats]="awayOffensiveStats"
         [homeOffensiveStats]="homeOffensiveStats">
         <mat-button-toggle-group
@@ -22,11 +22,11 @@
       </team-vs-team>
  </div>
   </mat-tab>
-  <mat-tab label="Team vs Pitchers">
+  <mat-tab label="Bullpen Splits">
     <div class="mat-tabs">
-      <handed-splits
+      <bullpen-splits
         [game]="selectedGame">
-      </handed-splits>
+      </bullpen-splits>
     </div>
   </mat-tab>
   <mat-tab label="Pitchers">

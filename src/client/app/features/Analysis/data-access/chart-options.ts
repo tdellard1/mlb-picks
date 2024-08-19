@@ -24,12 +24,12 @@ export interface ChartOptions {
   grid: ApexGrid;
   legend: ApexLegend;
   title: ApexTitleSubtitle;
-};
+}
 
 export interface ChartData {
   series: ChartSeriesData[],
   nameOfChart: string,
-};
+}
 
 export interface ChartSeriesData {
   name: string;

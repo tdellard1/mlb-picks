@@ -1,8 +1,7 @@
 <mat-button-toggle-group
   class="button-group"
   [(ngModel)]="statsSource"
-  (change)="selectSplits()"
-  [hideSingleSelectionIndicator]="true">
+  (change)="selectSplits()">
   <mat-button-toggle class="button" [value]="StatsSource.Season">Season
   </mat-button-toggle>
   <mat-button-toggle class="button" [value]="StatsSource.Split">Splits
@@ -14,7 +13,7 @@
 
 <div class="frame">
   <div class="flex-column" *ngIf="game.gameID">
-    <span>{{ players.get(game.probableStartingPitchers.away)?.longName || 'No Pitcher' }}</span>
+    <span>{{ game.away }}</span>
     <span>{{ awayPitcherStats.ERA }}</span>
     <span>{{ awayPitcherStats.WHIP }}</span>
     <span>{{ awayPitcherStats.FIP }}</span>
@@ -36,7 +35,7 @@
   </div>
 
   <div class="flex-column" *ngIf="game.gameID">
-    <span>{{ players.get(game.probableStartingPitchers.home)?.longName || 'No Pitcher' }}</span>
+    <span>{{ game.home }}</span>
     <span>{{ homePitcherStats.ERA }}</span>
     <span>{{ homePitcherStats.WHIP }}</span>
     <span>{{ homePitcherStats.FIP }}</span>

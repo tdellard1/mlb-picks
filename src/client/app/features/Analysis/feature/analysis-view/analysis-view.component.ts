@@ -17,8 +17,7 @@ import {
   MatExpansionPanelHeader,
   MatExpansionPanelTitle
 } from "@angular/material/expansion";
-import {ActivatedRoute, Data, Event, NavigationEnd, NavigationStart, Router} from "@angular/router";
-import {SubscriptionHolder} from "../../../../shared/components/subscription-holder.component.js";
+import {ActivatedRoute, Event, NavigationEnd, NavigationStart, Router} from "@angular/router";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Team} from "../../../../common/interfaces/team.interface.js";
@@ -30,11 +29,10 @@ import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {MatSlider, MatSliderRangeThumb, MatSliderThumb} from "@angular/material/slider";
 import {FormsModule} from "@angular/forms";
 import {BoxScore} from "../../../../common/model/box.score.model";
-import {Game} from "../../../../common/interfaces/game";
 import {GameUtils} from "../../../../common/utils/game.utils";
 import {OffensiveStats} from "../../../../common/model/offensive-stats.modal";
 import {TeamStatsHitting} from "../../../../common/model/team-stats.model";
-import {Hitting} from "../../../../common/interfaces/hitting";
+import {StatsSupplierComponent} from "../../../../shared/components/stats-supplier.component";
 
 @Component({
   selector: 'analysis-component-view',
@@ -54,11 +52,7 @@ import {Hitting} from "../../../../common/interfaces/hitting";
   styleUrl: './analysis-view.component.css',
   encapsulation: ViewEncapsulation.None
 })
-export class AnalysisViewComponent extends SubscriptionHolder implements OnInit {
-  private readonly teams: Map<string, Team> = new Map((this.activatedRoute.snapshot.data['teams'] as Team[]).map((team: Team) => [team.teamAbv, team]));
-  private readonly schedules: Map<string, Schedule> = new Map((this.activatedRoute.snapshot.data['schedules'] as Schedule[]).map((schedule: Schedule) => [schedule.team, schedule]));
-  private readonly boxScoresMap: Map<string, BoxScore> = new Map((this.activatedRoute.snapshot.data['boxScores'] as BoxScore[]).map((boxScore: BoxScore) => [boxScore.gameID, boxScore]));
-
+export class AnalysisViewComponent extends StatsSupplierComponent implements OnInit {
   upperSliderValue: number = 16;
   lowerSliderValue: number = 1;
 
@@ -79,19 +73,19 @@ export class AnalysisViewComponent extends SubscriptionHolder implements OnInit 
     return this._spinner.asObservable();
   }
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router) {
-    super();
+  constructor(private route: ActivatedRoute, private router: Router) {
+    super(route);
   }
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.activatedRoute.params.subscribe(({gameId}) => {
+      this.route.params.subscribe(({gameId}) => {
         const [away, home]: string[] = gameId.split('_')[1].split('@');
 
-        this.away = this.teams.get(away)!;
-        this.awaySchedule = this.schedules.get(away)!;
-        this.home = this.teams.get(home)!;
-        this.homeSchedule = this.schedules.get(home)!;
+        this.away = this.getTeam(away);
+        this.awaySchedule = this.getSchedule(away);
+        this.home = this.getTeam(home);
+        this.homeSchedule = this.getSchedule(home);
 
         this.populateChart();
       }),
@@ -119,7 +113,7 @@ export class AnalysisViewComponent extends SubscriptionHolder implements OnInit 
 
   private getTeamData(team: string, {schedule}: Schedule, statType: StatType, collectionType: CollectionType, boxScoresMap: Map<string, BoxScore>): number[] {
     const games = schedule
-      .filter(GameUtils.completedGames)
+      .filter(GameUtils.gameCompleted)
       .sort(GameUtils.sortGames)
       .reverse()
       .slice(this.lowerSliderValue - 1, this.upperSliderValue - 1)
@@ -172,8 +166,6 @@ export class AnalysisViewComponent extends SubscriptionHolder implements OnInit 
       });
     }
 
-    // console.log('stats: ', stats);
-    console.log('games: ', games.slice());
     return stats;
   }
 

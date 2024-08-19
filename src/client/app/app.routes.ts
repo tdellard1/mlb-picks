@@ -13,11 +13,11 @@ export const routes: Routes = [
     component: AppComponent,
     canActivate: [boxScoreGuard],
     resolve: {
-      dailySchedule: dailyScheduleResolver,
+      teams: teamsResolver,
+      players: playersResolver,
       schedules: schedulesResolver,
       boxScores: boxScoresResolver,
-      players: playersResolver,
-      teams: teamsResolver,
+      dailySchedule: dailyScheduleResolver,
     },
     children: [
       {

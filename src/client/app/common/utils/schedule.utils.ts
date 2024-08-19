@@ -1,8 +1,6 @@
-import {Game} from "../model/game.interface";
 import {getDateObject} from "./date.utils";
-import {TeamSchedule} from "../model/team-schedule.interface";
-import {BoxScore} from "../model/box-score.interface";
-import {ensure} from "./array.utils";
+import {Game} from "../interfaces/game";
+import {Schedule} from "../interfaces/team-schedule.interface";
 
 export function isGameBeforeToday(game: Game): boolean {
   const beginningOfToday: number = new Date().setHours(0, 0, 0, 0);
@@ -30,37 +28,7 @@ export function getNMostRecentGames(games: Game[], n: number): Game[] {
   return getGamesBeforeToday(games).reverse().slice(0, n);
 }
 
-export function getScheduleWithNMostRecentGames(schedule: TeamSchedule, n: number): TeamSchedule {
+export function getScheduleWithNMostRecentGames(schedule: Schedule, n: number): Schedule {
   schedule.schedule = getNMostRecentGames(schedule.schedule, n);
   return schedule;
-}
-
-export function getScheduleWith15MostRecentGames(schedule: TeamSchedule): TeamSchedule {
-  return getScheduleWithNMostRecentGames(schedule, 15);
-}
-
-
-export function addBoxScoresToSchedule(schedules: TeamSchedule[], boxScores: BoxScore[]): TeamSchedule[] {
-  const gameIDsFromBoxScores: string[] = boxScores.map(({gameID}: BoxScore) => gameID);
-
-  return schedules.map((schedule: TeamSchedule) => {
-    schedule.schedule = schedule.schedule.map((game: Game) => {
-      if (gameIDsFromBoxScores.includes(game.gameID)) {
-        game.boxScore = ensure(boxScores.find(boxScore => boxScore.gameID === game.gameID));
-      }
-
-      return game;
-    });
-    return schedule;
-  });
-}
-
-export function getGamesWithoutBoxScores(schedules: TeamSchedule[]): string[] {
-  const allGames: Game[] = schedules.map((teamSchedule: TeamSchedule) => {
-    return teamSchedule.schedule
-  }).flat();
-
-  return allGames
-    .filter((game: Game) => game.boxScore === undefined)
-    .map((game: Game) => game.gameID);
 }

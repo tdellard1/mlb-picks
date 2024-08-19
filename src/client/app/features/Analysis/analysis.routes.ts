@@ -11,10 +11,7 @@ export const routes: Routes = [
     children: [
       {
         path: ':gameId',
-        component: AnalysisViewComponent,
-        resolve: {
-          matchUp: gameResolver,
-        }
+        component: AnalysisViewComponent
       }
     ]
   },

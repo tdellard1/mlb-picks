@@ -1,7 +1,7 @@
 import {ActivatedRouteSnapshot, ResolveFn} from '@angular/router';
 import {BackendApiService} from "../services/backend-api/backend-api.service.js";
 import {inject} from "@angular/core";
-import {StatsSource} from "../../features/Splits/splits/splits.component.js";
+import {SourceType} from "../../features/Splits/splits/splits.component.js";
 import {Hitting} from "../../common/interfaces/hitting";
 
 export const splitsResolver: ResolveFn<Hitting> = (activatedRouteSnapshot: ActivatedRouteSnapshot) => {
@@ -14,6 +14,6 @@ export const splitsResolver: ResolveFn<Hitting> = (activatedRouteSnapshot: Activ
   if (source) {
     return backendApiService.getTeamStatsForTeams(teams, source)
   } else {
-    return backendApiService.getTeamStatsForTeams(teams, StatsSource.Season)
+    return backendApiService.getTeamStatsForTeams(teams, SourceType.Season)
   }
 };

@@ -11,7 +11,7 @@ export class GameUtils {
     }
   }
 
-  public static get completedGames() {
+  public static get gameCompleted() {
     return (game: Game): boolean => {
       return game.gameStatus === GameStatus.Completed;
     }

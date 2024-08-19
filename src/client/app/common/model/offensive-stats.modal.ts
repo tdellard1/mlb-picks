@@ -1,5 +1,6 @@
 import {TeamStatsHitting} from "./team-stats.model.js";
 import {WeightedFactors} from "../constants/weighted-factors.constants.js";
+import {Hitting} from "../interfaces/hitting";
 
 export class OffensiveStats {
   AtBats: number;
@@ -34,19 +35,18 @@ export class OffensiveStats {
     this.gamesRepresentedInData = 0;
   }
 
-  add(offensiveStats: OffensiveStats) {
-    this.AtBats += offensiveStats.AtBats;
-    this.PlateAppearance += offensiveStats.PlateAppearance;
-    this.Hits += offensiveStats.Hits;
-    this.Singles += offensiveStats.Singles;
-    this.Doubles += offensiveStats.Doubles;
-    this.Triples += offensiveStats.Triples;
-    this.HomeRuns += offensiveStats.HomeRuns;
-    this.Runs += offensiveStats.Runs;
-    this.IntentionalWalks += offensiveStats.IntentionalWalks;
-    this.Walks += offensiveStats.Walks;
-    this.HitByPitch += offensiveStats.HitByPitch;
-    this.SacrificeFly += offensiveStats.SacrificeFly;
+  add(hitting: Hitting) {
+    this.AtBats += Number(hitting.AB);
+    this.Hits += Number(hitting.H);
+    this.Doubles += Number(hitting['2B']);
+    this.Triples += Number(hitting['3B']);
+    this.HomeRuns += Number(hitting.HR);
+    this.Runs += Number(hitting.H);
+    this.IntentionalWalks += Number(hitting.IBB);
+    this.Walks += Number(hitting.BB);
+    this.HitByPitch += Number(hitting.HBP);
+    this.SacrificeFly += Number(hitting.SF);
+    this.SacrificeBunt += Number(hitting.SAC);
   }
 
   addTeamStatsHitting({AB, avg, D, BB, HR, H, HBP, IBB, R, SO, RBI, T, SAC, SF, TB, GIDP}: TeamStatsHitting) {

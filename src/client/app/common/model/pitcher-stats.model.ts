@@ -78,12 +78,13 @@ export class PitcherStats {
 
   get ERA() {
     const era: number = (this.earnedRuns / this.inningsPitched) * 9;
-    return era.toFixed(2);
+    return isNaN(era) ? '0' : era.toFixed(2);
   }
 
   get WHIP() {
-    const numerator: number = this.walksAllowed + this.hitsAllowed;
-    return (numerator / this.inningsPitched).toFixed(2);
+    const WH: number = this.walksAllowed + this.hitsAllowed;
+    const WHIP: number = WH / this.inningsPitched;
+    return isNaN(WHIP) ? '0' : WHIP.toFixed(2);
   }
 
   // ((HR x 13) + (3 x (BB + HBP)) - (2 x K)) / IP + FIP constant.
@@ -93,19 +94,22 @@ export class PitcherStats {
     const strikeOutMetric: number = this.strikeOuts * 2;
     const numerator: number = homeRunMetric + hitByPitchAndWalkMetric - strikeOutMetric;
     const FIP: number = (numerator / this.inningsPitched) + WeightedFactors.cFIP;
-    return FIP.toFixed(2);
+    return isNaN(FIP) ? '0' : FIP.toFixed(2);
   }
 
   get homeRunsPer9() {
-    return ((this.homeRunsAllowed / this.inningsPitched) * 9).toFixed(2);
+    const HRp9: number = (this.homeRunsAllowed / this.inningsPitched) * 9
+    return isNaN(HRp9) ? '0' : HRp9.toFixed(2);
   }
 
   get hitsPer9() {
-    return ((this.hitsAllowed / this.inningsPitched) * 9).toFixed(2);
+    const Hp9: number = (this.hitsAllowed / this.inningsPitched) * 9
+    return isNaN(Hp9) ? '0' : Hp9.toFixed(2);
   }
 
   get baseRunnersPer9() {
     const baseRunners: number = this.hitsAllowed + this.walksAllowed + this.hitByPitch;
-    return ((baseRunners / this.inningsPitched) * 9).toFixed(2);
+    const BRp9: number = (baseRunners / this.inningsPitched) * 9;
+    return isNaN(BRp9) ? '0' : BRp9.toFixed(2);
   }
 }
