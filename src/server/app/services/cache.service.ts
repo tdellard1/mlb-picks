@@ -1,20 +1,10 @@
 import {getClient, RedisClient} from "../clients/redis-client.js";
 
-export async function getFromCache<T>(key: string, type: { new(parse: any): T; }, dataType: string): Promise<T[]> {
+export async function getFromCache<T>(key: string, type: { new(parse: any): T; }): Promise<T[]> {
     const client: RedisClient = getClient();
 
     try {
-        let cacheResults: string[] = [];
-        switch (dataType) {
-            case 'set':
-                cacheResults = await client.sMembers(key);
-                break;
-            case 'list':
-                cacheResults = await client.lRange(key, 0, -1);
-                break;
-            default:
-                break;
-        }
+        let cacheResults: string[] = await client.sMembers(key);
 
         if (cacheResults.length > 0) {
             return cacheResults.map((result: string) => new type(JSON.parse(result)));

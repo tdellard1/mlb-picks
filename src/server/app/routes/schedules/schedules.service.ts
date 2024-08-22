@@ -10,7 +10,7 @@ const key: string = 'schedules';
 // Write-through Strategy
 export async function updateSchedules(teams: Team[]): Promise<Schedule[]> {
     const teamAbbreviations: string[] = teams.map(({teamAbv}) => teamAbv);
-    const schedules: Schedule[] = await retrieveSchedulesFromTank01(teamAbbreviations);
+    const schedules: any[] = await retrieveSchedulesFromTank01(teamAbbreviations);
 
     if (schedules) {
         const lengthInCache: number = await replaceSchedulesInCache(schedules);
@@ -27,8 +27,8 @@ export async function addSchedulesToDatabase(schedules: Schedule[]) {
     await uploadFile(key, schedules);
 }
 
-export async function replaceSchedulesInCache(schedules: Schedule[]): Promise<number> {
-    const stringifySchedules: string[] = schedules.map((roster: Schedule) => JSON.stringify(roster, null, 0));
+export async function replaceSchedulesInCache(schedules: any[]): Promise<number> {
+    const stringifySchedules: string[] = schedules.map((roster: any) => JSON.stringify(roster, null, 0));
     return await replaceInCache(key, stringifySchedules);
 }
 
@@ -39,17 +39,17 @@ export async function haveSchedules(): Promise<boolean> {
 
 
 export async function retrieveSchedulesFromCache(): Promise<Schedule[]> {
-    return getFromCache(key, Schedule, 'set');
+    return getFromCache(key, Schedule);
 }
 
 export async function retrieveSchedulesFromDatabase(): Promise<Schedule[]> {
     return downloadFileWithType(key, Schedule);
 }
 
-
-export async function retrieveSchedulesFromTank01(teamAbbreviations: string[]): Promise<Schedule[]> {
-    const schedulesPromises: Promise<AxiosResponse<Schedule>>[] =
+// Using any to get all properties in case model object doesn't have it
+export async function retrieveSchedulesFromTank01(teamAbbreviations: string[]): Promise<any[]> {
+    const schedulesPromises: Promise<AxiosResponse<any>>[] =
         teamAbbreviations.map((teamAbbreviation: string) => getSchedule(teamAbbreviation));
-    const schedulesResolvers: AxiosResponse<Schedule>[] = await Promise.all(schedulesPromises);
-    return schedulesResolvers.map(({data}: AxiosResponse<Schedule>) => data);
+    const schedulesResolvers: AxiosResponse<any>[] = await Promise.all(schedulesPromises);
+    return schedulesResolvers.map(({data}: AxiosResponse<any>) => data);
 }

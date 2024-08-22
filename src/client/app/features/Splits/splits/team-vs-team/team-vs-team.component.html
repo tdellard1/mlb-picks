@@ -1,5 +1,13 @@
 <ng-content></ng-content>
 <div class="frame">
+  <span>{{ awayOffensiveStats.AVG }}</span>
+  <div class="flex-row stat-name">
+    <mat-icon [class.invisible]="awayOffensiveStats.AVG < homeOffensiveStats.AVG">arrow_left</mat-icon>
+    <span>Batting Average</span>
+    <mat-icon [class.invisible]="awayOffensiveStats.AVG > homeOffensiveStats.AVG">arrow_right</mat-icon>
+  </div>
+  <span>{{ homeOffensiveStats.AVG }}</span>
+<!--
   <div class="flex-column  column" *ngIf="away">
     <span>{{ away }}</span>
     <span>{{ awayOffensiveStats.gamesRepresentedInData }}</span>
@@ -10,7 +18,6 @@
     <span>{{ awayOffensiveStats.wOBA }}</span>
     <span>{{ awayOffensiveStats.wRC }}</span>
   </div>
-
   <div class="flex-column  column">
     <span>Teams</span>
     <span>Games Included</span>
@@ -53,7 +60,6 @@
 
     <span>Point Differential</span>
   </div>
-
   <div class="flex-column  column" *ngIf="home">
     <span>{{ home }}</span>
     <span>{{ homeOffensiveStats.gamesRepresentedInData }}</span>
@@ -64,4 +70,5 @@
     <span>{{ homeOffensiveStats.wOBA }}</span>
     <span>{{ homeOffensiveStats.wRC }}</span>
   </div>
+  -->
 </div>

@@ -26,15 +26,15 @@ export async function modernizeRosters() {
 }
 
 export async function modernizeSchedulesAndPlayers() {
-    const teams: Team[] = await getAndUpdateTeams();
+    const teams: Team[] = await getFromCache('teams', Team);
     await updateSchedules(teams);
     await updatePlayers();
 }
 
 
 export async function reconcileBoxScores() {
-    const preExisting: BoxScore[] = await getFromCache('boxScores', BoxScore, 'set');
-    const schedules: Schedule[] = await getFromCache('schedules', Schedule, 'set');
+    const preExisting: BoxScore[] = await getFromCache('boxScores', BoxScore);
+    const schedules: Schedule[] = await getFromCache('schedules', Schedule);
     const absent: string[] = schedules
         .map(({schedule}) => schedule).flat()
         .filter(Game.isCompleted)

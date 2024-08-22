@@ -15,7 +15,6 @@ import schedulesController from "./app/routes/schedules/schedules.controller.js"
 import boxScoreRouter from "./app/routes/boxScores/box-scores.router.js";
 import analysisRouter from "./app/routes/analysis/analysis.router.js";
 import teamsRouter from "./app/routes/teams/teams.router.js";
-import slatesRouter from "./app/routes/slates/slates.router.js";
 import rosterRouter from "./app/routes/rosters/rosters.router.js";
 import updateRouter from "./app/routes/update/update.router.js";
 
@@ -32,18 +31,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'client/browser')));
 
 const EveryHour: string = '0 * * * *';
-const EveryHourBetween7AMand10AM: string = '0 7-10 * * *';
-const ThirtyMinutesAfterEveryTwoHours: string = '30 */2 * * *'; // 12am, 2am, 4am, 6am, 8am, 10am, 12pm, 2pm, 4pm, 6pm, 8pm, and 10pm
+const EveryDayAtNineThirtyAM: string = '30 9 * * *';
+const EveryDay9AM: string = '* 9 * * *';
 
 const updateHourly: Job = schedule.scheduleJob(EveryHour, async () => await modernizeRosters());
-const updateHourlyBetweenSevenAndTen: Job = schedule.scheduleJob(EveryHourBetween7AMand10AM, async () => await modernizeSchedulesAndPlayers());
-const duoHourly: Job = schedule.scheduleJob(ThirtyMinutesAfterEveryTwoHours, async () => await reconcileBoxScores());
+const updateHourlyBetweenSevenAndTen: Job = schedule.scheduleJob(EveryDay9AM, async () => await modernizeSchedulesAndPlayers());
+const duoHourly: Job = schedule.scheduleJob(EveryDayAtNineThirtyAM, async () => await reconcileBoxScores());
 
 const api: Router = Router()
   .use('/boxScores', boxScoreRouter())
   .use('/analysis', analysisRouter())
   .use('/players', playersRouter())
-  .use('/slates', slatesRouter())
   .use(schedulesController)
   .use('/teams', teamsRouter())
   .use('/update', updateRouter())

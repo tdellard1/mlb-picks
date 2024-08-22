@@ -19,17 +19,17 @@ export async function addClient(ipAddress: string): Promise<number> {
 }
 
 export async function getClientNames() {
-    const clients: ClientUpdate[] = await getFromCache(key, ClientUpdate, 'set');
+    const clients: ClientUpdate[] = await getFromCache(key, ClientUpdate);
     return clients.map(({client}) => client);
 }
 
 export async function getClientUpdateStatus(clientName: string): Promise<boolean> {
-    const clients: ClientUpdate[] = await getFromCache(key, ClientUpdate, 'set');
+    const clients: ClientUpdate[] = await getFromCache(key, ClientUpdate);
     return clients.find(({client}) => client === clientName)!.update;
 }
 
 export async function updateClient(clientName: string, update: boolean): Promise<number> {
-    const clients: ClientUpdate[] = await getFromCache(key, ClientUpdate, 'set');
+    const clients: ClientUpdate[] = await getFromCache(key, ClientUpdate);
     const clientIndex: number = clients.findIndex(({client}) => client === clientName);
 
     if (clientIndex !== -1) {
